@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Magic Mouse' target in the 'Magic Mouse' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif
