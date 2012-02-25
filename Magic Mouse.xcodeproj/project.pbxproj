@@ -7,46 +7,128 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA6F2CFE14F315000098AE57 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2CFD14F315000098AE57 /* Cocoa.framework */; };
-		FA6F2D0814F315000098AE57 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA6F2D0614F315000098AE57 /* InfoPlist.strings */; };
-		FA6F2D0A14F315000098AE57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6F2D0914F315000098AE57 /* main.m */; };
-		FA6F2D0E14F315000098AE57 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA6F2D0C14F315000098AE57 /* Credits.rtf */; };
-		FA6F2D1114F315000098AE57 /* MMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6F2D1014F315000098AE57 /* MMAppDelegate.m */; };
-		FA6F2D1414F315000098AE57 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6F2D1214F315000098AE57 /* MainMenu.xib */; };
+		FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */; };
+		FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */; };
+		FA319D3C14F353C50064E7CC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA319D3B14F353C50064E7CC /* Accelerate.framework */; };
+		FA6F2D2114F3150E0098AE57 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2D2014F3150E0098AE57 /* CoreFoundation.framework */; };
+		FA6F2D2414F3150E0098AE57 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = FA6F2D2314F3150E0098AE57 /* main.c */; };
+		FA6F2D2614F3150E0098AE57 /* magicmouse.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA6F2D2514F3150E0098AE57 /* magicmouse.1 */; };
+		FA6F2D2C14F3154E0098AE57 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */; };
+		FAD37AFF14F9836E00B7F09C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2CFD14F315000098AE57 /* Cocoa.framework */; };
+		FAD37B0114F9836E00B7F09C /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD37B0014F9836E00B7F09C /* PreferencePanes.framework */; };
+		FAD37B1714F983B900B7F09C /* Magic_Mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B1414F983B900B7F09C /* Magic_Mouse.h */; };
+		FAD37B1814F983B900B7F09C /* Magic_Mouse.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD37B1514F983B900B7F09C /* Magic_Mouse.m */; };
+		FAD37B1914F983B900B7F09C /* Magic_Mouse.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */; };
+		FAD37B2414F983D700B7F09C /* Magic_Mouse.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */; };
+		FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */; };
+		FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B2D14F983F000B7F09C /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FA6F2D1C14F3150E0098AE57 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				FA6F2D2614F3150E0098AE57 /* magicmouse.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		FA6F2CF914F315000098AE57 /* Magic Mouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Magic Mouse.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/Views/MMAnimatingImageView.h; sourceTree = "<group>"; };
+		FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/Views/MMAnimatingImageView.m; sourceTree = "<group>"; };
+		FA07747014F9A25400A1B91B /* CarbonHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonHelpers.h; sourceTree = "<group>"; };
+		FA07747114F9A25400A1B91B /* CGSAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSAccessibility.h; sourceTree = "<group>"; };
+		FA07747214F9A25400A1B91B /* CGSCIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSCIFilter.h; sourceTree = "<group>"; };
+		FA07747314F9A25400A1B91B /* CGSConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSConnection.h; sourceTree = "<group>"; };
+		FA07747414F9A25400A1B91B /* CGSCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSCursor.h; sourceTree = "<group>"; };
+		FA07747514F9A25400A1B91B /* CGSDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSDebug.h; sourceTree = "<group>"; };
+		FA07747614F9A25400A1B91B /* CGSDisplays.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSDisplays.h; sourceTree = "<group>"; };
+		FA07747714F9A25400A1B91B /* CGSHotKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSHotKeys.h; sourceTree = "<group>"; };
+		FA07747814F9A25400A1B91B /* CGSInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSInternal.h; sourceTree = "<group>"; };
+		FA07747914F9A25400A1B91B /* CGSMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSMisc.h; sourceTree = "<group>"; };
+		FA07747A14F9A25400A1B91B /* CGSNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSNotifications.h; sourceTree = "<group>"; };
+		FA07747B14F9A25400A1B91B /* CGSRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSRegion.h; sourceTree = "<group>"; };
+		FA07747C14F9A25400A1B91B /* CGSSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSSession.h; sourceTree = "<group>"; };
+		FA07747D14F9A25400A1B91B /* CGSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSTransitions.h; sourceTree = "<group>"; };
+		FA07747E14F9A25400A1B91B /* CGSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWindow.h; sourceTree = "<group>"; };
+		FA07747F14F9A25400A1B91B /* CGSWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
+		FA319D3B14F353C50064E7CC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FA6F2CFD14F315000098AE57 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FA6F2D0014F315000098AE57 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		FA6F2D0114F315000098AE57 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FA6F2D0214F315000098AE57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		FA6F2D0514F315000098AE57 /* Magic Mouse-Info.plist */ = {isa = PBXFileReference; path = "Magic Mouse-Info.plist"; sourceTree = "<group>"; };
-		FA6F2D0714F315000098AE57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FA6F2D0914F315000098AE57 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FA6F2D0B14F315000098AE57 /* Magic Mouse-Prefix.pch */ = {isa = PBXFileReference; path = "Magic Mouse-Prefix.pch"; sourceTree = "<group>"; };
-		FA6F2D0D14F315000098AE57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		FA6F2D0F14F315000098AE57 /* MMAppDelegate.h */ = {isa = PBXFileReference; path = MMAppDelegate.h; sourceTree = "<group>"; };
-		FA6F2D1014F315000098AE57 /* MMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMAppDelegate.m; sourceTree = "<group>"; };
-		FA6F2D1314F315000098AE57 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FA6F2D1E14F3150E0098AE57 /* magicmouse */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = magicmouse; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA6F2D2014F3150E0098AE57 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		FA6F2D2314F3150E0098AE57 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		FA6F2D2514F3150E0098AE57 /* magicmouse.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = magicmouse.1; sourceTree = "<group>"; };
+		FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		FAD37AF614F9830600B7F09C /* MMDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDefs.h; sourceTree = "<group>"; };
+		FAD37AFE14F9836E00B7F09C /* Magic Mouse.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Magic Mouse.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD37B0014F9836E00B7F09C /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
+		FAD37B1414F983B900B7F09C /* Magic_Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magic_Mouse.h; sourceTree = "<group>"; };
+		FAD37B1514F983B900B7F09C /* Magic_Mouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magic_Mouse.m; sourceTree = "<group>"; };
+		FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Magic_Mouse.tiff; sourceTree = "<group>"; };
+		FAD37B2314F983D700B7F09C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Magic_Mouse.xib; sourceTree = "<group>"; };
+		FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Magic Mouse-Info.plist"; sourceTree = "<group>"; };
+		FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Magic Mouse-Prefix.pch"; sourceTree = "<group>"; };
+		FAD37B2E14F983F000B7F09C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FA6F2CF614F315000098AE57 /* Frameworks */ = {
+		FA6F2D1B14F3150E0098AE57 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA6F2CFE14F315000098AE57 /* Cocoa.framework in Frameworks */,
+				FA319D3C14F353C50064E7CC /* Accelerate.framework in Frameworks */,
+				FA6F2D2114F3150E0098AE57 /* CoreFoundation.framework in Frameworks */,
+				FA6F2D2C14F3154E0098AE57 /* ApplicationServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAD37AF914F9836E00B7F09C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD37AFF14F9836E00B7F09C /* Cocoa.framework in Frameworks */,
+				FAD37B0114F9836E00B7F09C /* PreferencePanes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA07746F14F9A25400A1B91B /* CGSInternal */ = {
+			isa = PBXGroup;
+			children = (
+				FA07747014F9A25400A1B91B /* CarbonHelpers.h */,
+				FA07747114F9A25400A1B91B /* CGSAccessibility.h */,
+				FA07747214F9A25400A1B91B /* CGSCIFilter.h */,
+				FA07747314F9A25400A1B91B /* CGSConnection.h */,
+				FA07747414F9A25400A1B91B /* CGSCursor.h */,
+				FA07747514F9A25400A1B91B /* CGSDebug.h */,
+				FA07747614F9A25400A1B91B /* CGSDisplays.h */,
+				FA07747714F9A25400A1B91B /* CGSHotKeys.h */,
+				FA07747814F9A25400A1B91B /* CGSInternal.h */,
+				FA07747914F9A25400A1B91B /* CGSMisc.h */,
+				FA07747A14F9A25400A1B91B /* CGSNotifications.h */,
+				FA07747B14F9A25400A1B91B /* CGSRegion.h */,
+				FA07747C14F9A25400A1B91B /* CGSSession.h */,
+				FA07747D14F9A25400A1B91B /* CGSTransitions.h */,
+				FA07747E14F9A25400A1B91B /* CGSWindow.h */,
+				FA07747F14F9A25400A1B91B /* CGSWorkspace.h */,
+			);
+			path = CGSInternal;
+			sourceTree = "<group>";
+		};
 		FA6F2CEE14F314FF0098AE57 = {
 			isa = PBXGroup;
 			children = (
-				FA6F2D0314F315000098AE57 /* Magic Mouse */,
+				FA6F2D2214F3150E0098AE57 /* magicmouse */,
+				FAD37B0214F9836E00B7F09C /* Magic Mouse */,
 				FA6F2CFC14F315000098AE57 /* Frameworks */,
 				FA6F2CFA14F315000098AE57 /* Products */,
 			);
@@ -55,7 +137,8 @@
 		FA6F2CFA14F315000098AE57 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FA6F2CF914F315000098AE57 /* Magic Mouse.app */,
+				FA6F2D1E14F3150E0098AE57 /* magicmouse */,
+				FAD37AFE14F9836E00B7F09C /* Magic Mouse.prefPane */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,7 +146,11 @@
 		FA6F2CFC14F315000098AE57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA319D3B14F353C50064E7CC /* Accelerate.framework */,
+				FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */,
 				FA6F2CFD14F315000098AE57 /* Cocoa.framework */,
+				FA6F2D2014F3150E0098AE57 /* CoreFoundation.framework */,
+				FAD37B0014F9836E00B7F09C /* PreferencePanes.framework */,
 				FA6F2CFF14F315000098AE57 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -79,39 +166,83 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		FA6F2D0314F315000098AE57 /* Magic Mouse */ = {
+		FA6F2D2214F3150E0098AE57 /* magicmouse */ = {
 			isa = PBXGroup;
 			children = (
-				FA6F2D0F14F315000098AE57 /* MMAppDelegate.h */,
-				FA6F2D1014F315000098AE57 /* MMAppDelegate.m */,
-				FA6F2D1214F315000098AE57 /* MainMenu.xib */,
-				FA6F2D0414F315000098AE57 /* Supporting Files */,
+				FAD37AF614F9830600B7F09C /* MMDefs.h */,
+				FA07746F14F9A25400A1B91B /* CGSInternal */,
+				FA6F2D2314F3150E0098AE57 /* main.c */,
+				FA6F2D2514F3150E0098AE57 /* magicmouse.1 */,
+			);
+			path = magicmouse;
+			sourceTree = "<group>";
+		};
+		FAD37B0214F9836E00B7F09C /* Magic Mouse */ = {
+			isa = PBXGroup;
+			children = (
+				FAD37B1414F983B900B7F09C /* Magic_Mouse.h */,
+				FAD37B1514F983B900B7F09C /* Magic_Mouse.m */,
+				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
+				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
+				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
+				FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */,
+				FAD37B0314F9836E00B7F09C /* Supporting Files */,
 			);
 			path = "Magic Mouse";
 			sourceTree = "<group>";
 		};
-		FA6F2D0414F315000098AE57 /* Supporting Files */ = {
+		FAD37B0314F9836E00B7F09C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FA6F2D0514F315000098AE57 /* Magic Mouse-Info.plist */,
-				FA6F2D0614F315000098AE57 /* InfoPlist.strings */,
-				FA6F2D0914F315000098AE57 /* main.m */,
-				FA6F2D0B14F315000098AE57 /* Magic Mouse-Prefix.pch */,
-				FA6F2D0C14F315000098AE57 /* Credits.rtf */,
+				FAD37B2D14F983F000B7F09C /* InfoPlist.strings */,
+				FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */,
+				FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		FAD37AFA14F9836E00B7F09C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD37B1714F983B900B7F09C /* Magic_Mouse.h in Headers */,
+				FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */,
+				FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		FA6F2CF814F315000098AE57 /* Magic Mouse */ = {
+		FA6F2D1D14F3150E0098AE57 /* magicmouse */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FA6F2D1714F315000098AE57 /* Build configuration list for PBXNativeTarget "Magic Mouse" */;
+			buildConfigurationList = FA6F2D2714F3150E0098AE57 /* Build configuration list for PBXNativeTarget "magicmouse" */;
 			buildPhases = (
-				FA6F2CF514F315000098AE57 /* Sources */,
-				FA6F2CF614F315000098AE57 /* Frameworks */,
-				FA6F2CF714F315000098AE57 /* Resources */,
+				FA6F2D1A14F3150E0098AE57 /* Sources */,
+				FA6F2D1B14F3150E0098AE57 /* Frameworks */,
+				FA6F2D1C14F3150E0098AE57 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = magicmouse;
+			productName = magicmouse;
+			productReference = FA6F2D1E14F3150E0098AE57 /* magicmouse */;
+			productType = "com.apple.product-type.tool";
+		};
+		FAD37AFD14F9836E00B7F09C /* Magic Mouse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAD37B1114F9836E00B7F09C /* Build configuration list for PBXNativeTarget "Magic Mouse" */;
+			buildPhases = (
+				FAD37AF814F9836E00B7F09C /* Sources */,
+				FAD37AF914F9836E00B7F09C /* Frameworks */,
+				FAD37AFA14F9836E00B7F09C /* Headers */,
+				FAD37AFB14F9836E00B7F09C /* Resources */,
+				FAD37AFC14F9836E00B7F09C /* Rez */,
 			);
 			buildRules = (
 			);
@@ -119,8 +250,8 @@
 			);
 			name = "Magic Mouse";
 			productName = "Magic Mouse";
-			productReference = FA6F2CF914F315000098AE57 /* Magic Mouse.app */;
-			productType = "com.apple.product-type.application";
+			productReference = FAD37AFE14F9836E00B7F09C /* Magic Mouse.prefPane */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -143,59 +274,70 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FA6F2CF814F315000098AE57 /* Magic Mouse */,
+				FA6F2D1D14F3150E0098AE57 /* magicmouse */,
+				FAD37AFD14F9836E00B7F09C /* Magic Mouse */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FA6F2CF714F315000098AE57 /* Resources */ = {
+		FAD37AFB14F9836E00B7F09C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA6F2D0814F315000098AE57 /* InfoPlist.strings in Resources */,
-				FA6F2D0E14F315000098AE57 /* Credits.rtf in Resources */,
-				FA6F2D1414F315000098AE57 /* MainMenu.xib in Resources */,
+				FAD37B1914F983B900B7F09C /* Magic_Mouse.tiff in Resources */,
+				FAD37B2414F983D700B7F09C /* Magic_Mouse.xib in Resources */,
+				FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXRezBuildPhase section */
+		FAD37AFC14F9836E00B7F09C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		FA6F2CF514F315000098AE57 /* Sources */ = {
+		FA6F2D1A14F3150E0098AE57 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA6F2D0A14F315000098AE57 /* main.m in Sources */,
-				FA6F2D1114F315000098AE57 /* MMAppDelegate.m in Sources */,
+				FA6F2D2414F3150E0098AE57 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAD37AF814F9836E00B7F09C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAD37B1814F983B900B7F09C /* Magic_Mouse.m in Sources */,
+				FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FA6F2D0614F315000098AE57 /* InfoPlist.strings */ = {
+		FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FA6F2D0714F315000098AE57 /* en */,
+				FAD37B2314F983D700B7F09C /* en */,
+			);
+			name = Magic_Mouse.xib;
+			sourceTree = "<group>";
+		};
+		FAD37B2D14F983F000B7F09C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAD37B2E14F983F000B7F09C /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FA6F2D0C14F315000098AE57 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA6F2D0D14F315000098AE57 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		FA6F2D1214F315000098AE57 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA6F2D1314F315000098AE57 /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -246,25 +388,43 @@
 			};
 			name = Release;
 		};
-		FA6F2D1814F315000098AE57 /* Debug */ = {
+		FA6F2D2814F3150E0098AE57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Magic Mouse/Magic Mouse-Prefix.pch";
-				INFOPLIST_FILE = "Magic Mouse/Magic Mouse-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		FA6F2D1914F315000098AE57 /* Release */ = {
+		FA6F2D2914F3150E0098AE57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		FAD37B1214F9836E00B7F09C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Magic Mouse/Magic Mouse-Prefix.pch";
 				INFOPLIST_FILE = "Magic Mouse/Magic Mouse-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		FAD37B1314F9836E00B7F09C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Magic Mouse/Magic Mouse-Prefix.pch";
+				INFOPLIST_FILE = "Magic Mouse/Magic Mouse-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = prefPane;
 			};
 			name = Release;
 		};
@@ -280,13 +440,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FA6F2D1714F315000098AE57 /* Build configuration list for PBXNativeTarget "Magic Mouse" */ = {
+		FA6F2D2714F3150E0098AE57 /* Build configuration list for PBXNativeTarget "magicmouse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FA6F2D1814F315000098AE57 /* Debug */,
-				FA6F2D1914F315000098AE57 /* Release */,
+				FA6F2D2814F3150E0098AE57 /* Debug */,
+				FA6F2D2914F3150E0098AE57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAD37B1114F9836E00B7F09C /* Build configuration list for PBXNativeTarget "Magic Mouse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAD37B1214F9836E00B7F09C /* Debug */,
+				FAD37B1314F9836E00B7F09C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

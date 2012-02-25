@@ -3,32 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.alexzielenski.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.alexzielenski.magicmouse-prefs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<string>1.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Alex Zielenski. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>Magic_Mouse</string>
+	<key>NSPrefPaneIconFile</key>
+	<string>Magic_Mouse.tiff</string>
+	<key>NSPrefPaneIconLabel</key>
+	<string>Magic Mouse</string>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
+	<string>Magic_Mouse</string>
 </dict>
 </plist>
