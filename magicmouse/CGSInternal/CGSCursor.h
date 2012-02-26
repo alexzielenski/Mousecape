@@ -30,7 +30,7 @@ typedef int CGSCursorID;
 #pragma mark -
 // Verified, stable
 /*! Registers a cursor in the current CGSConnection or globally */
-CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, int frameCount, CFArrayRef imageArray, CGSize cursorSize, CGPoint hotspot, int *seed, CGRect bounds, float frameDuration, int repeatCount);
+CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, int frameCount, CFArrayRef imageArray, CGSize cursorSize, CGPoint hotspot, int *seed, CGRect bounds, CGFloat frameDuration, int repeatCount);
 
 /*! Sets the current cursor to a system defined cursor and returns the seed */
 CG_EXTERN void CGSSetSystemDefinedCursorWithSeed(CGSConnectionID connection, CGSCursorID systemCursor, CGSCursorID *cursorSeed);

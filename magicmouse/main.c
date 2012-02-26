@@ -423,7 +423,7 @@ static CGError dumpCursors(CFStringRef exportPath) {
 static void showUsage(void) {
 	MMLog("Usage:\n\tmagicmouse cursor.plist\n\tmagicmouse -r cursorReset.plist\n\tmagicmouse -d dump.plist\n\tmagicmouse -s scaleFactor\n\tmagicmouse -p\n");
 }
-int main (int argc, const char * argv[]) {	
+int main (int argc, const char * argv[]) {		
 	bool help;
 	bool dump;
 	bool scale;
