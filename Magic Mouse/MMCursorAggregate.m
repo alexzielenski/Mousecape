@@ -8,6 +8,7 @@
 
 #import "MMCursorAggregate.h"
 #import "MMDefs.h"
+
 #import <Accelerate/Accelerate.h>
 
 @implementation MMCursorAggregate
@@ -32,6 +33,34 @@
 		return;
 	[_cursors removeObjectForKey:domain];
 }
+- (NSDictionary*)dictionaryRepresentation {
+	NSMutableDictionary *root        = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *cursors     = [[NSMutableDictionary alloc] initWithCapacity:2];
+	NSMutableDictionary *cursorData  = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *global      = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *identifiers = [[NSMutableDictionary alloc] init];
+	
+	for (NSString *key in self.cursors) {
+		MMCursor *cursor = [self.cursors objectForKey:key];
+		[identifiers setObject:cursor.infoDictionary forKey:key];
+		[cursorData  setObject:cursor.cursorDictionary forKey:cursor.customKey];
+	}
+	
+	[global  setObject:identifiers            forKey:(NSString *)kCursorInfoIdentifiersKey];
+	[cursors setObject:cursorData             forKey:(NSString *)kCursorDataKey];
+	[cursors setObject:global                 forKey:(NSString *)kCursorInfoKey];
+	
+	[root    setObject:cursors                forKey:(NSString *)kCursorsKey];
+	[root    setObject:(NSString *)kMMVersion forKey:(NSString *)kMinimumVersionKey];
+	[root    setObject:(NSString *)kMMVersion forKey:(NSString *)kCreatorVersionKey];
+	
+	[identifiers release];
+	[cursorData  release];
+	[global      release];
+	[cursors     release];
+	
+	return [root autorelease];
+}
 @end
 
 @implementation MMCursor
@@ -46,6 +75,19 @@
 
 + (MMCursor*)cursorWithDictionary:(NSDictionary *)dict {
 	return [[[self alloc] initWithCursorDictionary:dict] autorelease];
+}
+
+- (id)init {
+	if ((self = [super init])) {
+		// Some default values
+		self.name            = @"";
+		self.customKey       = @"";
+		self.defaultKey      = @"";
+		self.tableIdentifier = @"";
+		self.frameCount      = 1;
+		self.frameDuration   = 0.0299999993294477;
+	}
+	return self;
 }
 
 - (id)initWithCursorDictionary:(NSDictionary *)dict {
@@ -156,6 +198,14 @@
 	[dict setObject:[NSNumber numberWithInteger:self.hotSpot.y]             forKey:(NSString *)kCursorDataHotspotYKey];
 	
 	return dict;
+}
+
+- (NSDictionary*)infoDictionary {
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+			self.defaultKey, (NSString *)kCursorInfoDefaultKey, 
+			self.customKey, (NSString*)kCursorInfoCustomKey, 
+			self.name, (NSString *)kCursorInfoNameKey, 
+			self.tableIdentifier, (NSString*)kCursorInfoTableIdentifierKey, nil];
 }
 
 @end

@@ -2,6 +2,8 @@
 #define kMMPrefsLocation CFSTR("/Library/Preferences/com.alexzielenski.magicmouse.plist")
 #define kMMPrefsAppID    CFSTR("com.alexzielenski.magicmouse")
 
+#define kMMVersion       CFSTR("1.02")
+
 #define kMMPrefsThemeLocationKey        CFSTR("CursorLocation")
 #define kMMPrefsCursorScaleKey          CFSTR("CursorScale")
 

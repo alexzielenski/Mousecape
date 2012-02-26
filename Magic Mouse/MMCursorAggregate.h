@@ -18,9 +18,12 @@
 @property (nonatomic, retain) NSString          *tableIdentifier;
 @property (nonatomic, retain) NSString          *defaultKey;
 @property (nonatomic, retain) NSString          *customKey;
+@property (nonatomic, retain) NSString          *name;
 
 + (MMCursor *)cursorWithDictionary:(NSDictionary *)dict;
 - (id)initWithCursorDictionary:(NSDictionary *)dict;
+- (NSDictionary*)cursorDictionary;
+- (NSDictionary*)infoDictionary;
 @end
 
 
