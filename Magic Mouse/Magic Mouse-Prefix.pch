@@ -6,4 +6,6 @@
 	#import <Cocoa/Cocoa.h>
 	#define kMMPrefsBundle [NSBundle bundleForClass:NSClassFromString(@"MMPrefPane")]
 	#define kMMToolPath [kMMPrefsBundle pathForAuxiliaryExecutable:@"magicmouse"]
+	#define kMMDonateURL [NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H6B999S6C3UX2"]
+	#define kMMWebsiteURL [NSURL URLWithString:@"http://alexzielenski.com"]
 #endif

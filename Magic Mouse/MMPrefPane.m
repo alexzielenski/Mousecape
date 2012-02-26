@@ -8,6 +8,8 @@
 
 #import "MMPrefPane.h"
 #import "MMDefs.h"
+#import "MMAnimatingImageView.h"
+#import "MMCursorAggregate.h"
 
 // Why does CFPreferences suck so much hard nuts?
 
@@ -108,15 +110,15 @@
 }
 
 - (IBAction)visitWebsite:(id)sender {
-	
+	[[NSWorkspace sharedWorkspace] openURL:kMMWebsiteURL];
 }
 
 - (IBAction)donate:(id)sender {
-	
+	[[NSWorkspace sharedWorkspace] openURL:kMMDonateURL];
 }
 
 - (IBAction)uninstall:(id)sender {
-	
+	// Remove the magicmouse binary, delete the prefpane, remove the launch daemon, remove the preferences
 }
 
 #pragma mark - Authorization Delegate
