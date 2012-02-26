@@ -465,6 +465,13 @@ int main (int argc, const char * argv[]) {
 	}
 	
 	if (scale) {
+		if (argc == 2) {
+			float scale;
+			CGSGetCursorScale(CGSMainConnectionID(), &scale);
+			MMLog("%f\n", scale);
+			return kCGErrorSuccess;
+		}
+		
 		const char *cf = argv[argc-1];
 		float factor = (float)atof(cf);
 		MMLog("Scaling cursor to %.0f%%\n", factor*100);

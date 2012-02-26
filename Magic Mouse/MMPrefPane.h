@@ -15,10 +15,12 @@
 	IBOutlet NSPopUpButton *cursorThemes;
 	IBOutlet NSTableView *table;
 	
-	IBOutlet NSTextField *scaleText;
+@private
+	CGFloat _cursorScale;
 }
-
+@property (nonatomic, assign) CGFloat cursorScale;
 - (void)mainViewDidLoad;
+- (void)initializeData;
 - (BOOL)isUnlocked;
 
 - (IBAction)applyCursors:(id)sender;
@@ -27,7 +29,5 @@
 - (IBAction)visitWebsite:(id)sender;
 - (IBAction)donate:(id)sender;
 - (IBAction)uninstall:(id)sender;
-
-- (IBAction)slideScale:(id)sender;
 
 @end

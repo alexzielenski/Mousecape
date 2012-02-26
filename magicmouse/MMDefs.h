@@ -1,3 +1,8 @@
+#ifndef MMDefs
+
+#define MMDefs
+#include <stdio.h>
+
 #define MMLog(format, ...) fprintf(stdout, format, ## __VA_ARGS__)
 #define kMMPrefsLocation CFSTR("/Library/Preferences/com.alexzielenski.magicmouse.plist")
 #define kMMPrefsAppID    CFSTR("com.alexzielenski.magicmouse")
@@ -31,3 +36,5 @@
 #define kCursorDataPixelsWideKey        CFSTR("PixelsWide")
 #define kCursorDataPixelsHighKey        CFSTR("PixelsHigh")
 #define kCursorDataSamplesPerPixelKey   CFSTR("SamplesPerPixel")
+
+#endif
