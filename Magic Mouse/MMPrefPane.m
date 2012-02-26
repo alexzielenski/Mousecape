@@ -9,45 +9,33 @@
 #import "MMPrefPane.h"
 #import "MMDefs.h"
 
-#define kLaunchdAgentPath [@"/Library/LaunchAgents/com.alexzielenski.magicmouse.plist" stringByExpandingTildeInPath]
+// Why does CFPreferences suck so much hard nuts?
+
 @implementation MMPrefPane
 - (void)mainViewDidLoad {
-	NSLog(@"%@", kMMPrefsBundle);
 	AuthorizationItem items = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights = {1, &items};
-	
     [authView setAuthorizationRights:&rights];
     authView.delegate = self;
-    
-	[authView updateStatus:nil];
-}
-- (void)createLaunchAgent {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:kLaunchdAgentPath])
-		return; // Launchd Agent already exists. Why create it again?
+    [authView updateStatus:nil];
 	
-	NSMutableDictionary *launchAgent = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-										[NSNumber numberWithBool:0], @"KeepAlive", 
-										[NSNumber numberWithBool:1], @"RunAtLoad", 
-										@"com.alexzielenski.magicmouse", @"Label", nil];
-	NSString *magicPath = [kMMPrefsBundle pathForAuxiliaryExecutable:@"magicmouse"];
-	NSString *prefsPath = [(NSString*)kMMPrefsLocation stringByExpandingTildeInPath];
-	
-	[launchAgent setObject:[NSArray arrayWithObjects:prefsPath, nil] forKey:@"WatchPaths"];
-	[launchAgent setObject:[NSArray arrayWithObjects:magicPath, @"-p", nil] forKey:@"ProgramArguments"];
-	
-	[launchAgent writeToFile:kLaunchdAgentPath atomically:NO];
+
 	
 }
+
 - (BOOL)isUnlocked {
     return ([authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
+
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
-	// Install the LaunchAgent
-	[self createLaunchAgent];
+	[self willChangeValueForKey:@"isUnlocked"];
 }
 
 - (void)authorizationViewDidDeauthorize:(SFAuthorizationView *)view {
+	[self willChangeValueForKey:@"isUnlocked"];
+	//let observers know
+	[self didChangeValueForKey:@"isUnlocked"];
 }
 
 @end

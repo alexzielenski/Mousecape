@@ -1,5 +1,6 @@
 #define MMLog(format, ...) fprintf(stdout, format, ## __VA_ARGS__)
-#define kMMPrefsLocation CFSTR("~/Library/Preferences/com.alexzielenski.magicmouse.plist")
+#define kMMPrefsLocation CFSTR("/Library/Preferences/com.alexzielenski.magicmouse.plist")
+#define kMMPrefsAppID    CFSTR("com.alexzielenski.magicmouse")
 
 #define kMMPrefsThemeLocationKey        CFSTR("CursorLocation")
 #define kMMPrefsCursorScaleKey          CFSTR("CursorScale")

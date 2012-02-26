@@ -14,8 +14,6 @@
 }
 
 - (void)mainViewDidLoad;
-- (void)createLaunchAgent;
-
 - (BOOL)isUnlocked;
 
 @end
