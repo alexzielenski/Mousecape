@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString          *defaultKey;
 @property (nonatomic, retain) NSString          *customKey;
 @property (nonatomic, retain) NSString          *name;
+@property (nonatomic, retain) NSString          *cursorIdentifier;
 
 + (MMCursor *)cursorWithDictionary:(NSDictionary *)dict;
 - (id)initWithCursorDictionary:(NSDictionary *)dict;
@@ -32,6 +33,13 @@
 	NSMutableDictionary *_cursors;
 }
 @property (nonatomic, retain) NSDictionary *cursors;
+@property (nonatomic, retain) NSString *minimumVersion;
+@property (nonatomic, retain) NSString *creatorVersion;
+
++ (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict;
+- (id)initWithAggregateDictionary:(NSDictionary *)dict;
+
 - (void)setCursor:(MMCursor *)cursor forDomain:(NSString *)domain;
 - (void)removeCursorForDomain:(NSString *)domain;
+- (NSDictionary*)dictionaryRepresentation;
 @end

@@ -13,9 +13,43 @@
 
 @implementation MMCursorAggregate
 @synthesize cursors = _cursors;
+@synthesize minimumVersion = _minimumVersion;
+@synthesize creatorVersion = _creatorVersion;
++ (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict {
+	return [[[self alloc] initWithAggregateDictionary:dict] autorelease];
+}
+- (id)initWithAggregateDictionary:(NSDictionary *)dict {
+	if ((self = [self init])) {
+		NSDictionary *cursors = [dict objectForKey:(NSString *)kCursorsKey];
+		NSDictionary *cursorData = [cursors objectForKey:(NSString *)kCursorDataKey];
+		
+		NSDictionary *global = [cursors objectForKey:(NSString *)kCursorInfoKey];
+		NSDictionary *identifiers = [global objectForKey:(NSString *)kCursorInfoIdentifiersKey];
+		
+		for (NSString *key in identifiers) {
+			NSDictionary *info = [identifiers objectForKey:key];
+			NSDictionary *data = [cursorData objectForKey:[info objectForKey:(NSString *)kCursorInfoCustomKey]];
+			
+			MMCursor *cursor        = [MMCursor cursorWithDictionary:data];
+			cursor.cursorIdentifier = key;
+			cursor.defaultKey       = [info objectForKey:(NSString *)kCursorInfoDefaultKey];
+			cursor.customKey        = [info objectForKey:(NSString *)kCursorInfoCustomKey];
+			cursor.name             = [info objectForKey:(NSString *)kCursorInfoNameKey];
+			cursor.tableIdentifier  = [info objectForKey:(NSString *)kCursorInfoTableIdentifierKey];
+			
+			[self setCursor:cursor forDomain:key];
+		}
+		
+		self.minimumVersion = [dict objectForKey:(NSString *)kMinimumVersionKey];
+		self.creatorVersion = [dict objectForKey:(NSString *)kCreatorVersionKey];
+	}
+	return self;
+}
 - (id)init {
 	if ((self = [super init])) {
 		_cursors = [NSMutableDictionary dictionary];
+		self.minimumVersion = @"1.02";
+		self.creatorVersion = @"1.02";
 	}
 	return self;
 }
@@ -51,8 +85,8 @@
 	[cursors setObject:global                 forKey:(NSString *)kCursorInfoKey];
 	
 	[root    setObject:cursors                forKey:(NSString *)kCursorsKey];
-	[root    setObject:(NSString *)kMMVersion forKey:(NSString *)kMinimumVersionKey];
-	[root    setObject:(NSString *)kMMVersion forKey:(NSString *)kCreatorVersionKey];
+	[root    setObject:self.minimumVersion    forKey:(NSString *)kMinimumVersionKey];
+	[root    setObject:self.creatorVersion    forKey:(NSString *)kCreatorVersionKey];
 	
 	[identifiers release];
 	[cursorData  release];
@@ -64,15 +98,16 @@
 @end
 
 @implementation MMCursor
-@synthesize image           = _image;
-@synthesize frameCount      = _frameCount;
-@synthesize frameDuration   = _frameDuration;
-@synthesize size            = _size;
-@synthesize hotSpot         = _hotSpot;
-@synthesize tableIdentifier = _tableIdentifier;
-@synthesize defaultKey      = _defaultKey;
-@synthesize customKey       = _customKey;
-@synthesize name            = _name;
+@synthesize image            = _image;
+@synthesize frameCount       = _frameCount;
+@synthesize frameDuration    = _frameDuration;
+@synthesize size             = _size;
+@synthesize hotSpot          = _hotSpot;
+@synthesize tableIdentifier  = _tableIdentifier;
+@synthesize defaultKey       = _defaultKey;
+@synthesize customKey        = _customKey;
+@synthesize name             = _name;
+@synthesize cursorIdentifier = _cursorIdentifier;
 
 + (MMCursor*)cursorWithDictionary:(NSDictionary *)dict {
 	return [[[self alloc] initWithCursorDictionary:dict] autorelease];
