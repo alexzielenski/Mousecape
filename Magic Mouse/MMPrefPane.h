@@ -14,6 +14,8 @@
 	IBOutlet NSPopUpButton *actionMenu;
 	IBOutlet NSPopUpButton *cursorThemes;
 	IBOutlet NSTableView *table;
+	
+	IBOutlet NSTextField *scaleText;
 }
 
 - (void)mainViewDidLoad;

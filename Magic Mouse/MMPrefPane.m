@@ -19,6 +19,15 @@
     authView.delegate = self;
     [authView updateStatus:nil];
 	[authView setAutoupdate:YES];
+	
+	// Action Menu
+	[[actionMenu cell] setUsesItemFromMenu:NO];
+	NSMenuItem *item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"" action:NULL keyEquivalent:@""];
+    [item setImage:[NSImage imageNamed:@"NSActionTemplate"]];
+    [item setOnStateImage:nil];
+    [item setMixedStateImage:nil];
+    [[actionMenu cell] setMenuItem:item];
+    [item release];
 }
 
 - (BOOL)isUnlocked {
