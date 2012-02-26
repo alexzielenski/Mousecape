@@ -16,12 +16,13 @@
 		FA6F2D2C14F3154E0098AE57 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */; };
 		FAD37AFF14F9836E00B7F09C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2CFD14F315000098AE57 /* Cocoa.framework */; };
 		FAD37B0114F9836E00B7F09C /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD37B0014F9836E00B7F09C /* PreferencePanes.framework */; };
-		FAD37B1714F983B900B7F09C /* Magic_Mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B1414F983B900B7F09C /* Magic_Mouse.h */; };
-		FAD37B1814F983B900B7F09C /* Magic_Mouse.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD37B1514F983B900B7F09C /* Magic_Mouse.m */; };
+		FAD37B1714F983B900B7F09C /* MMPrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B1414F983B900B7F09C /* MMPrefPane.h */; };
+		FAD37B1814F983B900B7F09C /* MMPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD37B1514F983B900B7F09C /* MMPrefPane.m */; };
 		FAD37B1914F983B900B7F09C /* Magic_Mouse.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */; };
 		FAD37B2414F983D700B7F09C /* Magic_Mouse.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */; };
 		FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */; };
 		FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B2D14F983F000B7F09C /* InfoPlist.strings */; };
+		FAFC6EAE14F9AD0D00379751 /* magicmouse in Copy magicmouse */ = {isa = PBXBuildFile; fileRef = FA6F2D1E14F3150E0098AE57 /* magicmouse */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,17 @@
 				FA6F2D2614F3150E0098AE57 /* magicmouse.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		FAFC6EAD14F9ACEF00379751 /* Copy magicmouse */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				FAFC6EAE14F9AD0D00379751 /* magicmouse in Copy magicmouse */,
+			);
+			name = "Copy magicmouse";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -69,8 +81,8 @@
 		FAD37AF614F9830600B7F09C /* MMDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDefs.h; sourceTree = "<group>"; };
 		FAD37AFE14F9836E00B7F09C /* Magic Mouse.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Magic Mouse.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD37B0014F9836E00B7F09C /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
-		FAD37B1414F983B900B7F09C /* Magic_Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magic_Mouse.h; sourceTree = "<group>"; };
-		FAD37B1514F983B900B7F09C /* Magic_Mouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magic_Mouse.m; sourceTree = "<group>"; };
+		FAD37B1414F983B900B7F09C /* MMPrefPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPrefPane.h; sourceTree = "<group>"; };
+		FAD37B1514F983B900B7F09C /* MMPrefPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPrefPane.m; sourceTree = "<group>"; };
 		FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Magic_Mouse.tiff; sourceTree = "<group>"; };
 		FAD37B2314F983D700B7F09C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Magic_Mouse.xib; sourceTree = "<group>"; };
 		FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Magic Mouse-Info.plist"; sourceTree = "<group>"; };
@@ -180,8 +192,8 @@
 		FAD37B0214F9836E00B7F09C /* Magic Mouse */ = {
 			isa = PBXGroup;
 			children = (
-				FAD37B1414F983B900B7F09C /* Magic_Mouse.h */,
-				FAD37B1514F983B900B7F09C /* Magic_Mouse.m */,
+				FAD37B1414F983B900B7F09C /* MMPrefPane.h */,
+				FAD37B1514F983B900B7F09C /* MMPrefPane.m */,
 				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
 				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
 				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
@@ -208,7 +220,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAD37B1714F983B900B7F09C /* Magic_Mouse.h in Headers */,
+				FAD37B1714F983B900B7F09C /* MMPrefPane.h in Headers */,
 				FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */,
 				FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */,
 			);
@@ -242,7 +254,7 @@
 				FAD37AF914F9836E00B7F09C /* Frameworks */,
 				FAD37AFA14F9836E00B7F09C /* Headers */,
 				FAD37AFB14F9836E00B7F09C /* Resources */,
-				FAD37AFC14F9836E00B7F09C /* Rez */,
+				FAFC6EAD14F9ACEF00379751 /* Copy magicmouse */,
 			);
 			buildRules = (
 			);
@@ -293,16 +305,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXRezBuildPhase section */
-		FAD37AFC14F9836E00B7F09C /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXRezBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		FA6F2D1A14F3150E0098AE57 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -316,7 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAD37B1814F983B900B7F09C /* Magic_Mouse.m in Sources */,
+				FAD37B1814F983B900B7F09C /* MMPrefPane.m in Sources */,
 				FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
