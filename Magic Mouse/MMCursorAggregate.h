@@ -23,8 +23,8 @@
 
 + (MMCursor *)cursorWithDictionary:(NSDictionary *)dict;
 - (id)initWithCursorDictionary:(NSDictionary *)dict;
-- (NSDictionary*)cursorDictionary;
-- (NSDictionary*)infoDictionary;
+- (NSDictionary *)cursorDictionary;
+- (NSDictionary *)infoDictionary;
 @end
 
 
@@ -41,5 +41,7 @@
 
 - (void)setCursor:(MMCursor *)cursor forDomain:(NSString *)domain;
 - (void)removeCursorForDomain:(NSString *)domain;
-- (NSDictionary*)dictionaryRepresentation;
+- (MMCursor *)cursorForTableIdentifier:(NSString *)identifier;
+
+- (NSDictionary *)dictionaryRepresentation;
 @end
