@@ -72,6 +72,7 @@
 @synthesize tableIdentifier = _tableIdentifier;
 @synthesize defaultKey      = _defaultKey;
 @synthesize customKey       = _customKey;
+@synthesize name            = _name;
 
 + (MMCursor*)cursorWithDictionary:(NSDictionary *)dict {
 	return [[[self alloc] initWithCursorDictionary:dict] autorelease];
