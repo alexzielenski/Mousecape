@@ -9,29 +9,29 @@
 #import "MMPrefPane.h"
 #import "MMDefs.h"
 #import "MMAnimatingImageView.h"
-#import "MMCursorAggregate.h"
 
 // Why does CFPreferences suck so much hard nuts?
-
 @implementation MMPrefPane
 @dynamic cursorScale;
 - (void)mainViewDidLoad {
 	AuthorizationItem items = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights = {1, &items};
-    [authView setAuthorizationRights:&rights];
-    authView.delegate = self;
-    [authView updateStatus:nil];
-	[authView setAutoupdate:YES];
+    [_authView setAuthorizationRights:&rights];
+    _authView.delegate = self;
+    [_authView updateStatus:nil];
+	[_authView setAutoupdate:YES];
 	
 	// Action Menu
-	[[actionMenu cell] setUsesItemFromMenu:NO];
+	[[_actionMenu cell] setUsesItemFromMenu:NO];
 	NSMenuItem *item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"" action:NULL keyEquivalent:@""];
     [item setImage:[NSImage imageNamed:@"NSActionTemplate"]];
     [item setOnStateImage:nil];
     [item setMixedStateImage:nil];
-    [[actionMenu cell] setMenuItem:item];
+    [[_actionMenu cell] setMenuItem:item];
     [item release];
-	
+}
+
+- (void)willSelect {
 	// Get the data values
 	[self initializeData];
 }
@@ -55,10 +55,13 @@
 	
 	[output release];
 	[task release];
+	
+	// Use magic mouse to dump the current cursor to a temporary location and initialize the current cursor off of that?
+	
 }
 
 - (BOOL)isUnlocked {
-    return ([authView authorizationState] == SFAuthorizationViewUnlockedState);
+    return ([_authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
 
 #pragma mark - Accessors
@@ -72,15 +75,6 @@
 	[self didChangeValueForKey:@"cursorScale"];
 	
 	NSNumber *scaleNum = [NSNumber numberWithDouble:cursorScale];
-	CFPreferencesSetValue(CFSTR("AdminHostInfo"),
-						  CFSTR("Time"),
-						  CFSTR("com.apple.loginwindow"),
-						  kCFPreferencesAnyUser,
-						  kCFPreferencesCurrentHost);
-	
-	CFPreferencesSynchronize(CFSTR("com.apple.loginwindow"),
-							 kCFPreferencesAnyUser,
-							 kCFPreferencesCurrentHost);
 	
 	CFPreferencesSetValue(kMMPrefsCursorScaleKey, 
 						  (CFPropertyListRef)scaleNum,
@@ -120,7 +114,15 @@
 - (IBAction)uninstall:(id)sender {
 	// Remove the magicmouse binary, delete the prefpane, remove the launch daemon, remove the preferences
 }
-
+#pragma mark - NSTableViewDataSource
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+	return 0;
+}
+#pragma mark - NSTableViewDelegate
+- (NSTableCellView*)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+	return nil;
+}
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];

@@ -8,15 +8,17 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 #import <SecurityInterface/SFAuthorizationView.h>
+#import "MMCursorAggregate.h"
 
-@interface MMPrefPane : NSPreferencePane {
-	IBOutlet SFAuthorizationView *authView;
-	IBOutlet NSPopUpButton *actionMenu;
-	IBOutlet NSPopUpButton *cursorThemes;
-	IBOutlet NSTableView *table;
+@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource> {
+	IBOutlet SFAuthorizationView *_authView;
+	IBOutlet NSPopUpButton       *_actionMenu;
+	IBOutlet NSPopUpButton       *_cursorThemes;
+	IBOutlet NSTableView         *_tableView;
 	
 @private
-	CGFloat _cursorScale;
+	CGFloat            _cursorScale;
+	MMCursorAggregate *_currentCursor;
 }
 @property (nonatomic, assign) CGFloat cursorScale;
 - (void)mainViewDidLoad;

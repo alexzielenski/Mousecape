@@ -67,7 +67,10 @@
 		return;
 	[_cursors removeObjectForKey:domain];
 }
-- (NSDictionary*)dictionaryRepresentation {
+- (MMCursor *)cursorForTableIdentifier:(NSString *)identifier {
+	return [[self.cursors.allValues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tableIdentifier == %@", identifier]] objectAtIndex:0];
+}
+- (NSDictionary *)dictionaryRepresentation {
 	NSMutableDictionary *root        = [[NSMutableDictionary alloc] init];
 	NSMutableDictionary *cursors     = [[NSMutableDictionary alloc] initWithCapacity:2];
 	NSMutableDictionary *cursorData  = [[NSMutableDictionary alloc] init];
@@ -164,7 +167,7 @@
 	return self;
 }
 
-- (NSDictionary*)cursorDictionary {
+- (NSDictionary *)cursorDictionary {
 	// Creates and returns a dictionary representation for use with magic mouse
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:11];
 	
@@ -236,7 +239,7 @@
 	return dict;
 }
 
-- (NSDictionary*)infoDictionary {
+- (NSDictionary *)infoDictionary {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 			self.defaultKey, (NSString *)kCursorInfoDefaultKey, 
 			self.customKey, (NSString*)kCursorInfoCustomKey, 
