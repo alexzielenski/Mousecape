@@ -27,7 +27,7 @@
 	<key>NSMainNibFile</key>
 	<string>Magic_Mouse</string>
 	<key>NSPrefPaneIconFile</key>
-	<string>Magic_Mouse.tiff</string>
+	<string>cursor.png</string>
 	<key>NSPrefPaneIconLabel</key>
 	<string>Magic Mouse</string>
 	<key>NSPrincipalClass</key>
