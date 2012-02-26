@@ -20,15 +20,15 @@
 }
 - (id)initWithAggregateDictionary:(NSDictionary *)dict {
 	if ((self = [self init])) {
-		NSDictionary *cursors = [dict objectForKey:(NSString *)kCursorsKey];
-		NSDictionary *cursorData = [cursors objectForKey:(NSString *)kCursorDataKey];
+		NSDictionary *cursors       = [dict objectForKey:(NSString *)kCursorsKey];
+		NSDictionary *cursorData    = [cursors objectForKey:(NSString *)kCursorDataKey];
 		
-		NSDictionary *global = [cursors objectForKey:(NSString *)kCursorInfoKey];
-		NSDictionary *identifiers = [global objectForKey:(NSString *)kCursorInfoIdentifiersKey];
+		NSDictionary *global        = [cursors objectForKey:(NSString *)kCursorInfoKey];
+		NSDictionary *identifiers   = [global objectForKey:(NSString *)kCursorInfoIdentifiersKey];
 		
 		for (NSString *key in identifiers) {
-			NSDictionary *info = [identifiers objectForKey:key];
-			NSDictionary *data = [cursorData objectForKey:[info objectForKey:(NSString *)kCursorInfoCustomKey]];
+			NSDictionary *info      = [identifiers objectForKey:key];
+			NSDictionary *data      = [cursorData objectForKey:[info objectForKey:(NSString *)kCursorInfoCustomKey]];
 			
 			MMCursor *cursor        = [MMCursor cursorWithDictionary:data];
 			cursor.cursorIdentifier = key;
