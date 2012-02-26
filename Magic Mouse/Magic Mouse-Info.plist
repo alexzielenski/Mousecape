@@ -31,6 +31,6 @@
 	<key>NSPrefPaneIconLabel</key>
 	<string>Magic Mouse</string>
 	<key>NSPrincipalClass</key>
-	<string>Magic_Mouse</string>
+	<string>MMPrefPane</string>
 </dict>
 </plist>
