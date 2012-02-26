@@ -13,6 +13,13 @@
 @implementation MMPrefPane
 - (void)mainViewDidLoad {
 	NSLog(@"%@", kMMPrefsBundle);
+	AuthorizationItem items = {kAuthorizationRightExecute, 0, NULL, 0};
+    AuthorizationRights rights = {1, &items};
+	
+    [authView setAuthorizationRights:&rights];
+    authView.delegate = self;
+    
+	[authView updateStatus:nil];
 }
 - (void)createLaunchAgent {
 	if ([[NSFileManager defaultManager] fileExistsAtPath:kLaunchdAgentPath])
