@@ -25,6 +25,31 @@
     return ([authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
 
+#pragma mark - User Interface Actions
+- (IBAction)applyCursors:(id)sender {
+	
+}
+	
+- (IBAction)resetCursors:(id)sender {
+	
+}
+
+- (IBAction)visitWebsite:(id)sender {
+	
+}
+
+- (IBAction)donate:(id)sender {
+	
+}
+
+- (IBAction)uninstall:(id)sender {
+	
+}
+
+- (IBAction)slideScale:(id)sender {
+	
+}
+
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];

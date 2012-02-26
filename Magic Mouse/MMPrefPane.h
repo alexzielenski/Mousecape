@@ -11,9 +11,21 @@
 
 @interface MMPrefPane : NSPreferencePane {
 	IBOutlet SFAuthorizationView *authView;
+	IBOutlet NSPopUpButton *actionMenu;
+	IBOutlet NSPopUpButton *cursorThemes;
+	IBOutlet NSTableView *table;
 }
 
 - (void)mainViewDidLoad;
 - (BOOL)isUnlocked;
+
+- (IBAction)applyCursors:(id)sender;
+- (IBAction)resetCursors:(id)sender;
+
+- (IBAction)visitWebsite:(id)sender;
+- (IBAction)donate:(id)sender;
+- (IBAction)uninstall:(id)sender;
+
+- (IBAction)slideScale:(id)sender;
 
 @end

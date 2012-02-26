@@ -56,7 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E7C3CC414F9FB1A0003A5FE /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cursor.png; sourceTree = "<group>"; };
+		0E7C3CC414F9FB1A0003A5FE /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cursor.png; path = ../cursor.png; sourceTree = "<group>"; };
 		FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/Views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/Views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FA07747014F9A25400A1B91B /* CarbonHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonHelpers.h; sourceTree = "<group>"; };
@@ -127,14 +127,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E7C3CC314F9FAFB0003A5FE /* Resoures */ = {
-			isa = PBXGroup;
-			children = (
-				0E7C3CC414F9FB1A0003A5FE /* cursor.png */,
-			);
-			name = Resoures;
-			sourceTree = "<group>";
-		};
 		FA07746F14F9A25400A1B91B /* CGSInternal */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +153,6 @@
 		FA6F2CEE14F314FF0098AE57 = {
 			isa = PBXGroup;
 			children = (
-				0E7C3CC314F9FAFB0003A5FE /* Resoures */,
 				FA6F2D2214F3150E0098AE57 /* magicmouse */,
 				FAD37B0214F9836E00B7F09C /* Magic Mouse */,
 				FA6F2CFC14F315000098AE57 /* Frameworks */,
@@ -231,6 +222,7 @@
 		FAD37B0314F9836E00B7F09C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E7C3CC414F9FB1A0003A5FE /* cursor.png */,
 				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
 				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
 				FAD37B2D14F983F000B7F09C /* InfoPlist.strings */,
