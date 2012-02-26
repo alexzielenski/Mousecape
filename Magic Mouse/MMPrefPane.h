@@ -7,9 +7,15 @@
 //
 
 #import <PreferencePanes/PreferencePanes.h>
+#import <SecurityInterface/SFAuthorizationView.h>
 
-@interface MMPrefPane : NSPreferencePane
+@interface MMPrefPane : NSPreferencePane {
+	IBOutlet SFAuthorizationView *authView;
+}
 
 - (void)mainViewDidLoad;
+- (void)createLaunchAgent;
+
+- (BOOL)isUnlocked;
 
 @end

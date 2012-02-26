@@ -1,15 +1,15 @@
 #define MMLog(format, ...) fprintf(stdout, format, ## __VA_ARGS__)
 #define kMMPrefsLocation CFSTR("~/Library/Preferences/com.alexzielenski.magicmouse.plist")
 
-#define kMMPrefsThemeLocationKey CFSTR("CursorLocation")
-#define kMMPrefsCursorScaleKey   CFSTR("CursorScale")
+#define kMMPrefsThemeLocationKey        CFSTR("CursorLocation")
+#define kMMPrefsCursorScaleKey          CFSTR("CursorScale")
 
-#define kMinimumVersionKey CFSTR("MinimumVersion")
-#define kCreatorVersionKey CFSTR("Version")
+#define kMinimumVersionKey              CFSTR("MinimumVersion")
+#define kCreatorVersionKey              CFSTR("Version")
 
-#define kCursorsKey    CFSTR("Cursors")
-#define kCursorInfoKey CFSTR("Global")
-#define kCursorDataKey CFSTR("Cursor Data")
+#define kCursorsKey                     CFSTR("Cursors")
+#define kCursorInfoKey                  CFSTR("Global")
+#define kCursorDataKey                  CFSTR("Cursor Data")
 
 #define kCursorInfoIdentifiersKey       CFSTR("Identifiers")
 #define kCursorInfoDefaultKey           CFSTR("Default Key")

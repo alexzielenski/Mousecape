@@ -23,6 +23,8 @@
 		FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */; };
 		FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAD37B2D14F983F000B7F09C /* InfoPlist.strings */; };
 		FAFC6EAE14F9AD0D00379751 /* magicmouse in Copy magicmouse */ = {isa = PBXBuildFile; fileRef = FA6F2D1E14F3150E0098AE57 /* magicmouse */; };
+		FAFC6EB414F9C1C300379751 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB214F9C1C300379751 /* Security.framework */; };
+		FAFC6EB514F9C1C300379751 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,6 +90,8 @@
 		FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Magic Mouse-Info.plist"; sourceTree = "<group>"; };
 		FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Magic Mouse-Prefix.pch"; sourceTree = "<group>"; };
 		FAD37B2E14F983F000B7F09C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAFC6EB214F9C1C300379751 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFC6EB414F9C1C300379751 /* Security.framework in Frameworks */,
+				FAFC6EB514F9C1C300379751 /* SecurityInterface.framework in Frameworks */,
 				FAD37AFF14F9836E00B7F09C /* Cocoa.framework in Frameworks */,
 				FAD37B0114F9836E00B7F09C /* PreferencePanes.framework in Frameworks */,
 			);
@@ -158,6 +164,8 @@
 		FA6F2CFC14F315000098AE57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAFC6EB214F9C1C300379751 /* Security.framework */,
+				FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */,
 				FA319D3B14F353C50064E7CC /* Accelerate.framework */,
 				FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */,
 				FA6F2CFD14F315000098AE57 /* Cocoa.framework */,
