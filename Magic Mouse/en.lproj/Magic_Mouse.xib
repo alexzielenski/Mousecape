@@ -602,17 +602,18 @@
 													<string key="NSKeyEquivalent"/>
 													<int key="NSPeriodicDelay">400</int>
 													<int key="NSPeriodicInterval">75</int>
-													<object class="NSMenuItem" key="NSMenuItem" id="1006442572">
+													<object class="NSMenuItem" key="NSMenuItem" id="208104504">
 														<reference key="NSMenu" ref="193379467"/>
-														<string key="NSTitle">Current Theme</string>
+														<string key="NSTitle">Item 1</string>
 														<string key="NSKeyEquiv"/>
 														<int key="NSKeyEquivModMask">1048576</int>
 														<int key="NSMnemonicLoc">2147483647</int>
-														<object class="NSCustomResource" key="NSOnImage" id="255224911">
+														<int key="NSState">1</int>
+														<object class="NSCustomResource" key="NSOnImage" id="38164032">
 															<string key="NSClassName">NSImage</string>
 															<string key="NSResourceName">NSMenuCheckmark</string>
 														</object>
-														<object class="NSCustomResource" key="NSMixedImage" id="1041382681">
+														<object class="NSCustomResource" key="NSMixedImage" id="409359114">
 															<string key="NSClassName">NSImage</string>
 															<string key="NSResourceName">NSMenuMixedState</string>
 														</object>
@@ -623,27 +624,26 @@
 													<object class="NSMenu" key="NSMenu" id="193379467">
 														<string key="NSTitle">OtherViews</string>
 														<array class="NSMutableArray" key="NSMenuItems">
-															<object class="NSMenuItem" id="208104504">
+															<reference ref="208104504"/>
+															<object class="NSMenuItem" id="1006442572">
 																<reference key="NSMenu" ref="193379467"/>
-																<string key="NSTitle">Item 1</string>
+																<string key="NSTitle">Current Theme</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
-																<int key="NSState">1</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
+																<reference key="NSOnImage" ref="38164032"/>
+																<reference key="NSMixedImage" ref="409359114"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<reference key="NSTarget" ref="835983607"/>
 															</object>
-															<reference ref="1006442572"/>
 															<object class="NSMenuItem" id="137129524">
 																<reference key="NSMenu" ref="193379467"/>
 																<string key="NSTitle">Item 3</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
+																<reference key="NSOnImage" ref="38164032"/>
+																<reference key="NSMixedImage" ref="409359114"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<reference key="NSTarget" ref="835983607"/>
 															</object>
@@ -779,30 +779,31 @@
 													<string key="NSKeyEquivalent"/>
 													<int key="NSPeriodicDelay">400</int>
 													<int key="NSPeriodicInterval">75</int>
-													<nil key="NSMenuItem"/>
+													<object class="NSMenuItem" key="NSMenuItem" id="739379859">
+														<reference key="NSMenu" ref="792977548"/>
+														<string key="NSTitle">Export Cursors</string>
+														<string key="NSKeyEquiv"/>
+														<int key="NSKeyEquivModMask">1048576</int>
+														<int key="NSMnemonicLoc">2147483647</int>
+														<int key="NSState">1</int>
+														<reference key="NSOnImage" ref="38164032"/>
+														<reference key="NSMixedImage" ref="409359114"/>
+														<string key="NSAction">_popUpItemAction:</string>
+														<reference key="NSTarget" ref="244478748"/>
+													</object>
 													<bool key="NSMenuItemRespectAlignment">YES</bool>
 													<object class="NSMenu" key="NSMenu" id="792977548">
 														<string key="NSTitle">OtherViews</string>
 														<array class="NSMutableArray" key="NSMenuItems">
-															<object class="NSMenuItem" id="739379859">
-																<reference key="NSMenu" ref="792977548"/>
-																<string key="NSTitle">Export Cursors</string>
-																<string key="NSKeyEquiv"/>
-																<int key="NSKeyEquivModMask">1048576</int>
-																<int key="NSMnemonicLoc">2147483647</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
-																<string key="NSAction">_popUpItemAction:</string>
-																<reference key="NSTarget" ref="244478748"/>
-															</object>
+															<reference ref="739379859"/>
 															<object class="NSMenuItem" id="1072015101">
 																<reference key="NSMenu" ref="792977548"/>
 																<string key="NSTitle">Import Cursors</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
+																<reference key="NSOnImage" ref="38164032"/>
+																<reference key="NSMixedImage" ref="409359114"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<reference key="NSTarget" ref="244478748"/>
 															</object>
@@ -813,8 +814,8 @@
 																<string key="NSTitle"/>
 																<string key="NSKeyEquiv"/>
 																<int key="NSMnemonicLoc">2147483647</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
+																<reference key="NSOnImage" ref="38164032"/>
+																<reference key="NSMixedImage" ref="409359114"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<reference key="NSTarget" ref="244478748"/>
 															</object>
@@ -823,8 +824,8 @@
 																<string key="NSTitle">Advanced Edit</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSMnemonicLoc">2147483647</int>
-																<reference key="NSOnImage" ref="255224911"/>
-																<reference key="NSMixedImage" ref="1041382681"/>
+																<reference key="NSOnImage" ref="38164032"/>
+																<reference key="NSMixedImage" ref="409359114"/>
 																<string key="NSAction">_popUpItemAction:</string>
 																<reference key="NSTarget" ref="244478748"/>
 															</object>
@@ -859,7 +860,6 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{459, -41}, {182, 32}}</string>
 												<reference key="NSSuperview" ref="263053284"/>
-												<reference key="NSNextKeyView" ref="127750468"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="707311167">
@@ -959,7 +959,7 @@
 																<int key="NSvFlags">2322</int>
 																<string key="NSFrameSize">{327, 107}</string>
 																<reference key="NSSuperview" ref="643438308"/>
-																<reference key="NSNextKeyView" ref="1034110537"/>
+																<reference key="NSNextKeyView" ref="584014515"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<object class="NSTextContainer" key="NSTextContainer" id="739154350">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1075,7 +1075,7 @@
 												</array>
 												<string key="NSFrame">{{22, 17}, {329, 200}}</string>
 												<reference key="NSSuperview" ref="263053284"/>
-												<reference key="NSNextKeyView" ref="584014515"/>
+												<reference key="NSNextKeyView" ref="643438308"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133138</int>
 												<reference key="NSVScroller" ref="1034110537"/>
@@ -1323,6 +1323,38 @@
 						<reference key="destination" ref="476708338"/>
 					</object>
 					<int key="connectionID">358</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportCursor:</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="739379859"/>
+					</object>
+					<int key="connectionID">363</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">importCursor:</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="1072015101"/>
+					</object>
+					<int key="connectionID">364</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">advancedEdit:</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="339929745"/>
+					</object>
+					<int key="connectionID">365</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_tableView</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="740957332"/>
+					</object>
+					<int key="connectionID">366</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2769,7 +2801,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">362</int>
+			<int key="maxID">366</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2777,48 +2809,59 @@
 					<string key="className">MMPrefPane</string>
 					<string key="superclassName">NSPreferencePane</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="applyCursors:">id</string>
-						<string key="donate:">id</string>
-						<string key="resetCursors:">id</string>
-						<string key="uninstall:">id</string>
-						<string key="visitWebsite:">id</string>
+						<string key="advancedEdit:">NSMenuItem</string>
+						<string key="applyCursors:">NSButton</string>
+						<string key="donate:">NSButton</string>
+						<string key="exportCursor:">NSMenuItem</string>
+						<string key="importCursor:">NSMenuItem</string>
+						<string key="resetCursors:">NSButton</string>
+						<string key="uninstall:">NSButton</string>
+						<string key="visitWebsite:">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="advancedEdit:">
+							<string key="name">advancedEdit:</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
 						<object class="IBActionInfo" key="applyCursors:">
 							<string key="name">applyCursors:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBActionInfo" key="donate:">
 							<string key="name">donate:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="exportCursor:">
+							<string key="name">exportCursor:</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBActionInfo" key="importCursor:">
+							<string key="name">importCursor:</string>
+							<string key="candidateClassName">NSMenuItem</string>
 						</object>
 						<object class="IBActionInfo" key="resetCursors:">
 							<string key="name">resetCursors:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBActionInfo" key="uninstall:">
 							<string key="name">uninstall:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBActionInfo" key="visitWebsite:">
 							<string key="name">visitWebsite:</string>
-							<string key="candidateClassName">id</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_actionMenu">NSPopUpButton</string>
-						<string key="_authView">SFAuthorizationView</string>
 						<string key="_cursorThemes">NSPopUpButton</string>
 						<string key="_tableView">NSTableView</string>
+						<string key="authView">SFAuthorizationView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_actionMenu">
 							<string key="name">_actionMenu</string>
 							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="_authView">
-							<string key="name">_authView</string>
-							<string key="candidateClassName">SFAuthorizationView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_cursorThemes">
 							<string key="name">_cursorThemes</string>
@@ -2827,6 +2870,10 @@
 						<object class="IBToOneOutletInfo" key="_tableView">
 							<string key="name">_tableView</string>
 							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="authView">
+							<string key="name">authView</string>
+							<string key="candidateClassName">SFAuthorizationView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

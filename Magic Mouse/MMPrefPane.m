@@ -13,6 +13,9 @@
 // Why does CFPreferences suck so much hard nuts?
 @implementation MMPrefPane
 @dynamic cursorScale;
+@synthesize authView      = _authView;
+@synthesize currentCursor = _currentCursor;
+
 - (void)mainViewDidLoad {
 	AuthorizationItem items = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights = {1, &items};
@@ -95,34 +98,49 @@
 }
 
 #pragma mark - User Interface Actions
-- (IBAction)applyCursors:(id)sender {
+- (IBAction)applyCursors:(NSButton *)sender {
 	
 }
 	
-- (IBAction)resetCursors:(id)sender {
+- (IBAction)resetCursors:(NSButton *)sender {
 	
 }
 
-- (IBAction)visitWebsite:(id)sender {
+- (IBAction)visitWebsite:(NSButton *)sender {
 	[[NSWorkspace sharedWorkspace] openURL:kMMWebsiteURL];
 }
 
-- (IBAction)donate:(id)sender {
+- (IBAction)donate:(NSButton *)sender {
 	[[NSWorkspace sharedWorkspace] openURL:kMMDonateURL];
 }
 
-- (IBAction)uninstall:(id)sender {
+- (IBAction)uninstall:(NSButton *)sender {
 	// Remove the magicmouse binary, delete the prefpane, remove the launch daemon, remove the preferences
 }
+
+- (IBAction)importCursor:(NSMenuItem *)sender {
+	
+}
+
+- (IBAction)exportCursor:(NSMenuItem *)sender {
+	
+}
+
+- (IBAction)advancedEdit:(NSMenuItem *)sender {
+	
+}
+
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
 	return 0;
 }
+
 #pragma mark - NSTableViewDelegate
 - (NSTableCellView*)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 	NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 	return nil;
 }
+
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];

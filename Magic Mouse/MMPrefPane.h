@@ -11,25 +11,29 @@
 #import "MMCursorAggregate.h"
 
 @interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource> {
-	IBOutlet SFAuthorizationView *_authView;
 	IBOutlet NSPopUpButton       *_actionMenu;
 	IBOutlet NSPopUpButton       *_cursorThemes;
 	IBOutlet NSTableView         *_tableView;
 	
 @private
 	CGFloat            _cursorScale;
-	MMCursorAggregate *_currentCursor;
 }
 @property (nonatomic, assign) CGFloat cursorScale;
+@property (nonatomic, assign) IBOutlet SFAuthorizationView *authView;
+@property (nonatomic, retain) MMCursorAggregate *currentCursor;
 - (void)mainViewDidLoad;
 - (void)initializeData;
 - (BOOL)isUnlocked;
 
-- (IBAction)applyCursors:(id)sender;
-- (IBAction)resetCursors:(id)sender;
+- (IBAction)applyCursors:(NSButton *)sender;
+- (IBAction)resetCursors:(NSButton *)sender;
 
-- (IBAction)visitWebsite:(id)sender;
-- (IBAction)donate:(id)sender;
-- (IBAction)uninstall:(id)sender;
+- (IBAction)visitWebsite:(NSButton *)sender;
+- (IBAction)donate:(NSButton *)sender;
+- (IBAction)uninstall:(NSButton *)sender;
+
+- (IBAction)importCursor:(NSMenuItem *)sender;
+- (IBAction)exportCursor:(NSMenuItem *)sender;
+- (IBAction)advancedEdit:(NSMenuItem *)sender;
 
 @end
