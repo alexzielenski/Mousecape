@@ -20,6 +20,7 @@
 }
 - (void)dealloc {
 	self.cursors = nil;
+	[super dealloc];
 }
 - (void)setCursor:(MMCursor *)cursor forDomain:(NSString *)domain {
 	if (!domain||!cursor)
