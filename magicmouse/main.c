@@ -227,7 +227,10 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	
 	CGFloat animationHeight = height*frameCount;
 	CGDataProviderRef dataProvider    = CGDataProviderCreateWithCFData(imageData);
-	CGImageRef cursorImage = CGImageCreate(width, animationHeight, bps, bpp, bpr, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrder32Big | kCGImageAlphaFirst, dataProvider, NULL, false, kCGRenderingIntentDefault);
+	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+	CGImageRef cursorImage = CGImageCreate(width, animationHeight, bps, bpp, bpr, colorspace, kCGBitmapByteOrder32Big | kCGImageAlphaFirst, dataProvider, NULL, false, kCGRenderingIntentDefault);
+	CGColorSpaceRelease(colorspace);
+	CGDataProviderRelease(dataProvider);
 	
 	if (cursorImage==NULL) {
 		MMLog("Invalid cursor image for %s. Skipping...\n", CKey);
