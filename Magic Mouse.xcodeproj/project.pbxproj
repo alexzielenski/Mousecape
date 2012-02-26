@@ -25,6 +25,9 @@
 		FAFC6EAE14F9AD0D00379751 /* magicmouse in Copy magicmouse */ = {isa = PBXBuildFile; fileRef = FA6F2D1E14F3150E0098AE57 /* magicmouse */; };
 		FAFC6EB414F9C1C300379751 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB214F9C1C300379751 /* Security.framework */; };
 		FAFC6EB514F9C1C300379751 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */; };
+		FAFC6EB814F9E3F500379751 /* MMCursorAggregate.h in Headers */ = {isa = PBXBuildFile; fileRef = FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */; };
+		FAFC6EB914F9E3F500379751 /* MMCursorAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFC6EB714F9E3F500379751 /* MMCursorAggregate.m */; };
+		FAFC6EBA14F9EA9F00379751 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA319D3B14F353C50064E7CC /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +95,8 @@
 		FAD37B2E14F983F000B7F09C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FAFC6EB214F9C1C300379751 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCursorAggregate.h; sourceTree = "<group>"; };
+		FAFC6EB714F9E3F500379751 /* MMCursorAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCursorAggregate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +117,7 @@
 				FAFC6EB414F9C1C300379751 /* Security.framework in Frameworks */,
 				FAFC6EB514F9C1C300379751 /* SecurityInterface.framework in Frameworks */,
 				FAD37AFF14F9836E00B7F09C /* Cocoa.framework in Frameworks */,
+				FAFC6EBA14F9EA9F00379751 /* Accelerate.framework in Frameworks */,
 				FAD37B0114F9836E00B7F09C /* PreferencePanes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,8 +208,8 @@
 			children = (
 				FAD37B1414F983B900B7F09C /* MMPrefPane.h */,
 				FAD37B1514F983B900B7F09C /* MMPrefPane.m */,
-				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
-				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
+				FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */,
+				FAFC6EB714F9E3F500379751 /* MMCursorAggregate.m */,
 				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
 				FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */,
 				FAD37B0314F9836E00B7F09C /* Supporting Files */,
@@ -214,6 +220,8 @@
 		FAD37B0314F9836E00B7F09C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
+				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
 				FAD37B2D14F983F000B7F09C /* InfoPlist.strings */,
 				FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */,
 				FAD37B2A14F983E800B7F09C /* Magic Mouse-Prefix.pch */,
@@ -231,6 +239,7 @@
 				FAD37B1714F983B900B7F09C /* MMPrefPane.h in Headers */,
 				FAD37B2C14F983E800B7F09C /* Magic Mouse-Prefix.pch in Headers */,
 				FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */,
+				FAFC6EB814F9E3F500379751 /* MMCursorAggregate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +337,7 @@
 			files = (
 				FAD37B1814F983B900B7F09C /* MMPrefPane.m in Sources */,
 				FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */,
+				FAFC6EB914F9E3F500379751 /* MMCursorAggregate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
