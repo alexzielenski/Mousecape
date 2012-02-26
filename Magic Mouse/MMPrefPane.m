@@ -18,9 +18,7 @@
     [authView setAuthorizationRights:&rights];
     authView.delegate = self;
     [authView updateStatus:nil];
-	
-
-	
+	[authView setAutoupdate:YES];
 }
 
 - (BOOL)isUnlocked {
@@ -30,6 +28,7 @@
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];
+	[self didChangeValueForKey:@"isUnlocked"];
 }
 
 - (void)authorizationViewDidDeauthorize:(SFAuthorizationView *)view {
