@@ -16,6 +16,7 @@
 @dynamic image;
 @dynamic frameCount;
 @dynamic frameDuration;
+
 - (id)init {
 	if ((self = [super init])) {
 		_frameCount = 1;
@@ -23,6 +24,7 @@
 	}
 	return self;
 }
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	if ((self = [super initWithCoder:aDecoder])) {
 		_frameCount = 1;
@@ -30,6 +32,7 @@
 	}
 	return self;
 }
+
 - (id)initWithFrame:(NSRect)frameRect {
 	if ((self = [super initWithFrame:frameRect])) {
 		_frameCount = 1;
@@ -37,6 +40,7 @@
 	}
 	return self;
 }
+
 - (void)viewDidMoveToSuperview {
 	[self resetAnimation];
 }
@@ -65,17 +69,14 @@
 	if (frameTimer)
 		[frameTimer invalidate];
 	
-	imageWidth  = self.image.pixelsWide;
-	imageHeight = self.image.pixelsHigh/self.frameCount;
+	imageWidth   = self.image.pixelsWide;
+	imageHeight  = self.image.pixelsHigh/self.frameCount;
 	
 	// Read from bottom to top
 	currentFrame = self.frameCount-1;
-	
-	[self timerAction:nil];
-	
-	imageSize = NSMakeSize(imageWidth, imageHeight);
+	imageSize    = NSMakeSize(imageWidth, imageHeight);
 
-	[self setNeedsDisplay:YES];
+	[self timerAction:nil];
 	
 	if (self.frameCount>1) {
 		frameTimer = [NSTimer scheduledTimerWithTimeInterval:self.frameDuration 
@@ -105,7 +106,7 @@
 	if (_image) {
 		[_image release];
 	}
-	_image = [image retain];
+	_image        = [image retain];
 	[self didChangeValueForKey:@"image"];
 }
 
@@ -115,7 +116,7 @@
 
 - (void)setFrameCount:(NSInteger)frameCount {
 	[self willChangeValueForKey:@"frameCount"];
-	_frameCount = frameCount;
+	_frameCount   = frameCount;
 	[self didChangeValueForKey:@"frameCount"];
 }
 

@@ -8,6 +8,7 @@
 
 #import <AppKit/AppKit.h>
 #import "MMAnimatingImageView.h"
+
 @interface MMAnimatingImageTableCellView : NSTableCellView
 @property (nonatomic, retain) IBOutlet MMAnimatingImageView *animatingImageView;
 @end
