@@ -68,7 +68,10 @@
 	[_cursors removeObjectForKey:domain];
 }
 - (MMCursor *)cursorForTableIdentifier:(NSString *)identifier {
-	return [[self.cursors.allValues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tableIdentifier == %@", identifier]] objectAtIndex:0];
+	NSArray *ar = [self.cursors.allValues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"tableIdentifier == %@", identifier]];
+	if (ar.count>0)
+		return [ar objectAtIndex:0];
+	return nil;
 }
 - (NSDictionary *)dictionaryRepresentation {
 	NSMutableDictionary *root        = [[NSMutableDictionary alloc] init];
@@ -139,7 +142,7 @@
 		NSNumber *bytesPerRow     = [dict objectForKey:(NSString *)kCursorDataBytesPerRowKey];
 		NSNumber *bitsPerSample   = [dict objectForKey:(NSString *)kCursorDataBitsPerSampleKey];
 		NSNumber *bitsPerPixel    = [dict objectForKey:(NSString *)kCursorDataBitsPerPixelKey];
-		NSNumber *samplesPerPixel = [dict objectForKey:(NSString *)kCursorDataSamplesPerPixelKey];
+//		NSNumber *samplesPerPixel = [dict objectForKey:(NSString *)kCursorDataSamplesPerPixelKey];
 		NSNumber *frameCount      = [dict objectForKey:(NSString *)kCursorDataFrameCountKey];
 		NSNumber *frameDuration   = [dict objectForKey:(NSString *)kCursorDataFrameDurationKey];
 		
@@ -147,21 +150,27 @@
 		self.frameDuration        = frameDuration.doubleValue;
 		self.size                 = NSMakeSize(width.integerValue, height.integerValue);
 		self.hotSpot              = NSMakePoint(hotSpotX.floatValue, hotSpotY.floatValue);
-		
+				
 		// Convert the raw data into a presentable format
-		NSBitmapImageRep *rep     = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:(void*)rawData.bytes 
-																		pixelsWide:self.size.width
-																		pixelsHigh:self.size.height
-																	 bitsPerSample:bitsPerSample.integerValue
-																   samplesPerPixel:samplesPerPixel.integerValue 
-																		  hasAlpha:YES 
-																		  isPlanar:NO
-																	colorSpaceName:NSDeviceRGBColorSpace 
-																	  bitmapFormat:NSAlphaNonpremultipliedBitmapFormat | NSAlphaFirstBitmapFormat | kCGBitmapByteOrder32Big
-																	   bytesPerRow:bytesPerRow.integerValue
-																	  bitsPerPixel:bitsPerPixel.integerValue];
+		CGDataProviderRef dataProvider    = CGDataProviderCreateWithCFData((CFDataRef)rawData);
+		CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+		CGImageRef cursorImage = CGImageCreate(self.size.width,
+											   self.size.height * self.frameCount, 
+											   bitsPerSample.intValue, 
+											   bitsPerPixel.intValue, 
+											   bytesPerRow.intValue, 
+											   colorspace, 
+											   kCGBitmapByteOrder32Big | kCGImageAlphaFirst, 
+											   dataProvider, NULL, false, kCGRenderingIntentDefault);
+		CGColorSpaceRelease(colorspace);
+		CGDataProviderRelease(dataProvider);
+		
+		NSBitmapImageRep *rep     = [[NSBitmapImageRep alloc] initWithCGImage:cursorImage];
 		self.image                = rep;
+		CGImageRelease(cursorImage);
 		[rep release];
+		
+		NSLog(@"%ld, %f, %@, %@, %@", (long)self.frameCount, self.frameDuration, NSStringFromSize(self.size), NSStringFromPoint(self.hotSpot), self.image);
 		
 	}
 	return self;

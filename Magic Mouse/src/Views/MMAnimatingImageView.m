@@ -16,6 +16,31 @@
 @dynamic image;
 @dynamic frameCount;
 @dynamic frameDuration;
+- (id)init {
+	if ((self = [super init])) {
+		_frameCount = 1;
+		_frameDuration = 1;
+	}
+	return self;
+}
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	if ((self = [super initWithCoder:aDecoder])) {
+		_frameCount = 1;
+		_frameDuration = 1;
+	}
+	return self;
+}
+- (id)initWithFrame:(NSRect)frameRect {
+	if ((self = [super initWithFrame:frameRect])) {
+		_frameCount = 1;
+		_frameDuration = 1;
+	}
+	return self;
+}
+- (void)viewDidMoveToSuperview {
+	NSLog(@"View moved to superview");
+	[self resetAnimation];
+}
 
 - (void)dealloc {
 	if (frameTimer)
@@ -26,31 +51,26 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
-	[self.image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height)
-				  fromRect:currentImageFrame
-				 operation:NSCompositeCopy 
-				  fraction:1.0
-			respectFlipped:YES
-					 hints:nil];
+	[super drawRect:dirtyRect];
+	if (self.image && self.frameCount > 0) {
+		[self.image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height)
+					  fromRect:currentImageFrame
+					 operation:NSCompositeSourceOver
+					  fraction:1.0
+				respectFlipped:YES
+						 hints:nil];
+	}
 }
 
 - (void)resetAnimation {
+	NSLog(@"Reset animation");
 	if (frameTimer)
 		[frameTimer invalidate];
 	
-	if (self.frameCount>1) {
-		frameTimer = [NSTimer timerWithTimeInterval:self.frameDuration 
-											 target:self 
-										   selector:@selector(timerAction:) 
-										   userInfo:nil 
-											repeats:YES];
-	}
+	imageWidth  = self.image.pixelsWide;
+	imageHeight = self.image.pixelsHigh/self.frameCount;
 	
-	imageWidth  = self.image.size.width/self.frameCount;
-	imageHeight = self.image.size.height/self.frameCount;
-	
-	currentFrame = 0;
+	currentFrame = 1;
 	currentImageFrame = NSMakeRect(0,
 								   0, 
 								   imageWidth,
@@ -58,23 +78,34 @@
 	
 	imageSize = NSMakeSize(imageWidth, imageHeight);
 
-	[self setNeedsDisplay:YES];
+//	[self setNeedsDisplay:YES];
+	[self display];
 	
-	if (frameTimer)
-		[frameTimer fire];
+	if (self.frameCount>1) {
+		frameTimer = [NSTimer scheduledTimerWithTimeInterval:self.frameDuration 
+													  target:self 
+													selector:@selector(timerAction:) 
+													userInfo:nil 
+													 repeats:YES];
+	}
 }
 
-- (void)timerAction:(NSTimer*)timer {
+- (void)timerAction:(NSTimer *)timer {	
+	if (currentFrame >= self.frameCount)
+		currentFrame = 1;
+	
 	currentImageFrame = NSMakeRect(0, 
-								   imageHeight * ++currentFrame, 
+								   imageHeight * currentFrame++, 
 								   imageSize.width, 
 								   imageSize.height);
+
 	
-	[self setNeedsDisplay:YES];
+//	[self setNeedsDisplay:YES];
+	[self display];
 }
 
 #pragma mark - Accessors
-- (void)setImage:(NSImage *)image {
+- (void)setImage:(NSBitmapImageRep *)image {
 	[self willChangeValueForKey:@"image"];
 	if (_image) {
 		[_image release];
@@ -83,7 +114,7 @@
 	[self didChangeValueForKey:@"image"];
 }
 
-- (NSImage*)image {
+- (NSBitmapImageRep *)image {
 	return _image;
 }
 

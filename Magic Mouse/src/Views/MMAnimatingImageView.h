@@ -8,20 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 @interface MMAnimatingImageView : NSView {
-	NSImage   *_image;
-	CGFloat   _frameDuration;
-	NSInteger _frameCount;
+	NSBitmapImageRep   *_image;
+	CGFloat            _frameDuration;
+	NSInteger          _frameCount;
 	
 @private
-	NSTimer   *frameTimer;
-	NSSize    imageSize;
-	NSRect    currentImageFrame;
-	NSInteger currentFrame;
-	CGFloat   imageHeight;
-	CGFloat   imageWidth;
+	NSTimer            *frameTimer;
+	NSSize             imageSize;
+	NSRect             currentImageFrame;
+	NSInteger          currentFrame;
+	CGFloat            imageHeight;
+	CGFloat            imageWidth;
 }
-@property (nonatomic, retain) NSImage   *image;
-@property (nonatomic, assign) CGFloat   frameDuration;
-@property (nonatomic, assign) NSInteger frameCount;
+@property (nonatomic, retain) NSBitmapImageRep   *image;
+@property (nonatomic, assign) CGFloat            frameDuration;
+@property (nonatomic, assign) NSInteger          frameCount;
 - (void)resetAnimation;
 @end

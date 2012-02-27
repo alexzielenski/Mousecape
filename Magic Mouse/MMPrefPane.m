@@ -8,7 +8,8 @@
 
 #import "MMPrefPane.h"
 #import "MMDefs.h"
-#import "MMAnimatingImageView.h"
+#import "MMAnimatingImageTableCellView.h"
+#import "NSCursor_Private.h"
 
 // Why does CFPreferences suck so much hard nuts?
 @implementation MMPrefPane
@@ -32,6 +33,11 @@
     [item setMixedStateImage:nil];
     [[_actionMenu cell] setMenuItem:item];
     [item release];
+	
+	NSString *cursorDump = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
+	[self dumpCursorsToFile:cursorDump];
+	
+	self.currentCursor = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
 
 - (void)willSelect {
@@ -130,15 +136,40 @@
 	
 }
 
+- (void)dumpCursorsToFile:(NSString*)filePath {
+	// Tell NSCursor to init some cursors that may not be registered
+	[[NSCursor operationNotAllowedCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor dragCopyCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor dragLinkCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _moveCursor] _getImageAndHotSpotFromCoreCursor];
+	
+	NSTask *task = [[NSTask alloc] init];
+	task.launchPath = kMMToolPath;
+	task.arguments  = [NSArray arrayWithObjects:@"-d", filePath, nil];
+	[task launch];
+	[task waitUntilExit];
+	[task release];
+}
+
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-	return 0;
+	return 1;
 }
 
 #pragma mark - NSTableViewDelegate
-- (NSTableCellView*)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-	NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-	return nil;
+- (NSTableCellView *)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	
+	MMAnimatingImageTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+	
+	MMCursor *cursor = [self.currentCursor cursorForTableIdentifier:tableColumn.identifier];
+	if (cursor) {
+		cellView.animatingImageView.image = cursor.image;
+		cellView.animatingImageView.frameCount = cursor.frameCount;
+		cellView.animatingImageView.frameDuration = cursor.frameDuration;
+		
+		[cellView.animatingImageView resetAnimation];
+	}
+	return cellView;
 }
 
 #pragma mark - Authorization Delegate

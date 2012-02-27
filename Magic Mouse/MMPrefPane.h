@@ -36,4 +36,6 @@
 - (IBAction)exportCursor:(NSMenuItem *)sender;
 - (IBAction)advancedEdit:(NSMenuItem *)sender;
 
+- (void)dumpCursorsToFile:(NSString*)filePath;
+
 @end
