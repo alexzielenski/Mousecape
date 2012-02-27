@@ -391,7 +391,7 @@ static CGError dumpCursors(CFStringRef exportPath) {
 	CFDictionarySetValue(cursors, kCursorInfoKey, global);
 	CFDictionarySetValue(cursors, kCursorDataKey, cursorData);
 	
-	CFStringRef version = CFSTR("3.0");
+	CFStringRef version = kMMVersion;
 	
 	CFDictionarySetValue(mouseFile, kMinimumVersionKey, version);
 	CFDictionarySetValue(mouseFile, kCreatorVersionKey, version);
