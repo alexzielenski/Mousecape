@@ -43,29 +43,30 @@
 }
 
 - (void)initializeData {
+	[self willChangeValueForKey:@"cursorScale"];
 	// Get the current cursor scale. It needs to be synchronous so that the text field is always in sync
-	NSTask *task = [[NSTask alloc] init];
-	task.launchPath = kMMToolPath;
-	task.arguments = [NSArray arrayWithObject:@"-s"];
-	task.standardOutput = [NSPipe pipe];
+	NSTask *task                = [[NSTask alloc] init];
+	task.launchPath             = kMMToolPath;
+	task.arguments              = [NSArray arrayWithObject:@"-s"];
+	task.standardOutput         = [NSPipe pipe];
+	
 	[task launch];
 	[task waitUntilExit];
 	
 	NSFileHandle *outFileHandle = [task.standardOutput fileHandleForReading];
-	NSData *data = [outFileHandle availableData];
-	NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	NSData *data                = [outFileHandle availableData];
+	NSString *output            = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	
-	[self willChangeValueForKey:@"cursorScale"];
-	_cursorScale = output.doubleValue;
+	_cursorScale                = output.doubleValue;
 	[self didChangeValueForKey:@"cursorScale"];
 	
 	[output release];
 	[task release];
 	
 	
-	NSString *cursorDump = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
+	NSString *cursorDump        = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
 	[self dumpCursorsToFile:cursorDump];
-	self.currentCursor   = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
+	self.currentCursor          = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
 
 - (BOOL)isUnlocked {
@@ -79,24 +80,14 @@
 - (void)setCursorScale:(CGFloat)cursorScale {
 	// Tell the observers it change, write it out to prefs, and use magicmouse tool to change the scale
 	[self willChangeValueForKey:@"cursorScale"];
-	_cursorScale = cursorScale;
+	_cursorScale       = cursorScale;
 	[self didChangeValueForKey:@"cursorScale"];
 	
 	NSNumber *scaleNum = [NSNumber numberWithDouble:cursorScale];
+	NSTask *task       = [[NSTask alloc] init];
+	task.launchPath    = kMMToolPath;
+	task.arguments     = [NSArray arrayWithObjects:@"-s", scaleNum.stringValue, nil];
 	
-	CFPreferencesSetValue(kMMPrefsCursorScaleKey, 
-						  (CFPropertyListRef)scaleNum,
-						  kMMPrefsAppID, 
-						  kCFPreferencesAnyUser,
-						  kCFPreferencesCurrentHost);
-	
-	CFPreferencesSynchronize(kMMPrefsAppID, 
-							 kCFPreferencesAnyUser, 
-							 kCFPreferencesCurrentHost);
-	
-	NSTask *task = [[NSTask alloc] init];
-	task.launchPath = kMMToolPath;
-	task.arguments = [NSArray arrayWithObjects:@"-s", scaleNum.stringValue, nil];
 	[task launch];
 	[task waitUntilExit];
 	[task release];
@@ -138,13 +129,14 @@
 - (void)dumpCursorsToFile:(NSString*)filePath {
 	// Tell NSCursor to init some cursors that may not be registered
 	[[NSCursor operationNotAllowedCursor] _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor dragCopyCursor] _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor dragLinkCursor] _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor _moveCursor] _getImageAndHotSpotFromCoreCursor];
-	
-	NSTask *task = [[NSTask alloc] init];
+	[[NSCursor dragCopyCursor]            _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor dragLinkCursor]            _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _moveCursor]               _getImageAndHotSpotFromCoreCursor];
+
+	NSTask *task    = [[NSTask alloc] init];
 	task.launchPath = kMMToolPath;
 	task.arguments  = [NSArray arrayWithObjects:@"-d", filePath, nil];
+	
 	[task launch];
 	[task waitUntilExit];
 	[task release];
@@ -158,16 +150,17 @@
 #pragma mark - NSTableViewDelegate
 - (NSTableCellView *)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 	
-	MMAnimatingImageTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+	MMAnimatingImageTableCellView *cellView       = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+	MMCursor *cursor                              = [self.currentCursor cursorForTableIdentifier:tableColumn.identifier];
 	
-	MMCursor *cursor = [self.currentCursor cursorForTableIdentifier:tableColumn.identifier];
 	if (cursor) {
-		cellView.animatingImageView.image = cursor.image;
-		cellView.animatingImageView.frameCount = cursor.frameCount;
+		cellView.animatingImageView.image         = cursor.image;
+		cellView.animatingImageView.frameCount    = cursor.frameCount;
 		cellView.animatingImageView.frameDuration = cursor.frameDuration;
 		
 		[cellView.animatingImageView resetAnimation];
 	}
+	
 	return cellView;
 }
 
