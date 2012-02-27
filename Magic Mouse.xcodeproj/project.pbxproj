@@ -34,6 +34,16 @@
 		FAFC6EBA14F9EA9F00379751 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA319D3B14F353C50064E7CC /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FADA4A5514FB05C900517F22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA6F2CF014F314FF0098AE57 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA6F2D1D14F3150E0098AE57;
+			remoteInfo = magicmouse;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		FA6F2D1C14F3150E0098AE57 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -290,6 +300,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FADA4A5614FB05C900517F22 /* PBXTargetDependency */,
 			);
 			name = "Magic Mouse";
 			productName = "Magic Mouse";
@@ -358,6 +369,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FADA4A5614FB05C900517F22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA6F2D1D14F3150E0098AE57 /* magicmouse */;
+			targetProxy = FADA4A5514FB05C900517F22 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */ = {
