@@ -18,26 +18,27 @@
 @synthesize currentCursor = _currentCursor;
 
 - (void)mainViewDidLoad {
-	AuthorizationItem items = {kAuthorizationRightExecute, 0, NULL, 0};
-    AuthorizationRights rights = {1, &items};
-    [_authView setAuthorizationRights:&rights];
-    _authView.delegate = self;
-    [_authView updateStatus:nil];
-	[_authView setAutoupdate:YES];
+	AuthorizationItem items       = {kAuthorizationRightExecute, 0, NULL, 0};
+    AuthorizationRights rights    = {1, &items};
+	_authView.authorizationRights = &rights;
+    _authView.delegate            = self;
+	_authView.autoupdate          = YES;
 	
-	// Action Menu
-	[[_actionMenu cell] setUsesItemFromMenu:NO];
-	NSMenuItem *item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"" action:NULL keyEquivalent:@""];
-    [item setImage:[NSImage imageNamed:@"NSActionTemplate"]];
-    [item setOnStateImage:nil];
-    [item setMixedStateImage:nil];
-    [[_actionMenu cell] setMenuItem:item];
+    [_authView updateStatus:nil];
+	
+	// Action Menu – Force it to have the gear
+	[_actionMenu.cell setUsesItemFromMenu:NO];
+	NSMenuItem *item     = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"" action:NULL keyEquivalent:@""];
+	item.image           = [NSImage imageNamed:@"NSActionTemplate"];
+	item.onStateImage    = nil;
+	item.mixedStateImage = nil;
+	
+    [_actionMenu.cell setMenuItem:item];
     [item release];
 	
 	NSString *cursorDump = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
 	[self dumpCursorsToFile:cursorDump];
-	
-	self.currentCursor = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
+	self.currentCursor   = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
 
 - (void)willSelect {

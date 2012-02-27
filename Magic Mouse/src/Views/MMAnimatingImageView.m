@@ -38,7 +38,6 @@
 	return self;
 }
 - (void)viewDidMoveToSuperview {
-	NSLog(@"View moved to superview");
 	[self resetAnimation];
 }
 
