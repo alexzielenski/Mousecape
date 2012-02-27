@@ -53,7 +53,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
 	if (self.image && self.frameCount > 0) {
-		[self.image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height)
+		[self.image drawInRect:NSMakeRect(round(NSMidX(self.bounds)-imageSize.width/2), round(NSMidY(self.bounds)-imageSize.height/2), imageSize.width, imageSize.height)
 					  fromRect:currentImageFrame
 					 operation:NSCompositeSourceOver
 					  fraction:1.0
@@ -63,7 +63,6 @@
 }
 
 - (void)resetAnimation {
-	NSLog(@"Reset animation");
 	if (frameTimer)
 		[frameTimer invalidate];
 	
@@ -78,8 +77,7 @@
 	
 	imageSize = NSMakeSize(imageWidth, imageHeight);
 
-//	[self setNeedsDisplay:YES];
-	[self display];
+	[self setNeedsDisplay:YES];
 	
 	if (self.frameCount>1) {
 		frameTimer = [NSTimer scheduledTimerWithTimeInterval:self.frameDuration 
@@ -100,8 +98,7 @@
 								   imageSize.height);
 
 	
-//	[self setNeedsDisplay:YES];
-	[self display];
+	[self setNeedsDisplay:YES];
 }
 
 #pragma mark - Accessors
