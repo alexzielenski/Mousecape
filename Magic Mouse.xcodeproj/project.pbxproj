@@ -96,7 +96,7 @@
 		FA6F2D1E14F3150E0098AE57 /* magicmouse */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = magicmouse; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6F2D2014F3150E0098AE57 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		FA6F2D2314F3150E0098AE57 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		FA6F2D2514F3150E0098AE57 /* magicmouse.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = magicmouse.1; sourceTree = "<group>"; };
+		FA6F2D2514F3150E0098AE57 /* magicmouse.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = magicmouse.1; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.man; };
 		FA6F2D2A14F315490098AE57 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FAD37AF614F9830600B7F09C /* MMDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDefs.h; sourceTree = "<group>"; };
 		FAD37AFE14F9836E00B7F09C /* Magic Mouse.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Magic Mouse.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
