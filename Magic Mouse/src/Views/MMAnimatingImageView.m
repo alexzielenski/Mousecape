@@ -69,11 +69,10 @@
 	imageWidth  = self.image.pixelsWide;
 	imageHeight = self.image.pixelsHigh/self.frameCount;
 	
-	currentFrame = 1;
-	currentImageFrame = NSMakeRect(0,
-								   0, 
-								   imageWidth,
-								   imageHeight);
+	// Read from bottom to top
+	currentFrame = self.frameCount-1;
+	
+	[self timerAction:nil];
 	
 	imageSize = NSMakeSize(imageWidth, imageHeight);
 
@@ -88,12 +87,12 @@
 	}
 }
 
-- (void)timerAction:(NSTimer *)timer {	
-	if (currentFrame >= self.frameCount)
-		currentFrame = 1;
+- (void)timerAction:(NSTimer *)timer {		
+	if (currentFrame < 0)
+		currentFrame = self.frameCount-1;
 	
 	currentImageFrame = NSMakeRect(0, 
-								   imageHeight * currentFrame++, 
+								   imageHeight * currentFrame--, 
 								   imageSize.width, 
 								   imageSize.height);
 
