@@ -35,14 +35,10 @@
 	
     [_actionMenu.cell setMenuItem:item];
     [item release];
-	
-	NSString *cursorDump = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
-	[self dumpCursorsToFile:cursorDump];
-	self.currentCursor   = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
 
 - (void)willSelect {
-	// Get the data values
+	// Renew data every time the prefpane opens
 	[self initializeData];
 }
 
@@ -66,8 +62,10 @@
 	[output release];
 	[task release];
 	
-	// Use magic mouse to dump the current cursor to a temporary location and initialize the current cursor off of that?
 	
+	NSString *cursorDump = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
+	[self dumpCursorsToFile:cursorDump];
+	self.currentCursor   = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
 
 - (BOOL)isUnlocked {
