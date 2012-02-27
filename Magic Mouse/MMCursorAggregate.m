@@ -169,9 +169,6 @@
 		self.image                = rep;
 		CGImageRelease(cursorImage);
 		[rep release];
-		
-		NSLog(@"%ld, %f, %@, %@, %@", (long)self.frameCount, self.frameDuration, NSStringFromSize(self.size), NSStringFromPoint(self.hotSpot), self.image);
-		
 	}
 	return self;
 }
