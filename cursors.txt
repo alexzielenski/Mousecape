@@ -1,0 +1,41 @@
+Arrow:                com.apple.coregraphics.Arrow
+Ibeam:                com.apple.coregraphics.IBeam
+IBeamXOR:             com.apple.coregraphics.IBeamXOR
+Alias:                com.apple.coregraphics.Alias
+Copy:                 com.apple.coregraphics.Copy
+Move:                 com.apple.coregraphics.Move
+ArrowCtx:             com.apple.coregraphics.ArrowCtx
+Wait:                 com.apple.coregraphics.Wait
+Empty:                com.apple.coregraphics.Empty
+
+Drag Link:            com.apple.cursor.2
+Forbidden:            com.apple.cursor.3
+Busy but clickable:   com.apple.cursor.4
+Drag Copy:            com.apple.cursor.5
+Closed hand:          com.apple.cursor.11
+Open Hand:            com.apple.cursor.12
+Pointing Hand:        com.apple.cursor.13
+Resize Left:          com.apple.cursor.17
+Resize Right:         com.apple.cursor.18
+Resize Left Right:    com.apple.cursor.19
+Crosshair:            com.apple.cursor.20
+Resize Up:            com.apple.cursor.21
+Resize Down:          com.apple.cursor.22
+Resize Up Down:       com.apple.cursor.23
+Contextual menu:      com.apple.cursor.24
+Disappearing:         com.apple.cursor.25
+Horizontal IBEAM:     com.apple.cursor.26
+Window east:          com.apple.cursor.27
+Window east west:     com.apple.cursor.28
+Window north east:    com.apple.cursor.29
+Window ne sw:         com.apple.cursor.30
+Window north:         com.apple.cursor.31
+Window north south:   com.apple.cursor.32
+Window north west:    com.apple.cursor.33
+Window nw se:         com.apple.cursor.34
+Window south east:    com.apple.cursor.35
+Window south:         com.apple.cursor.36
+Window south west:    com.apple.cursor.37
+Window west:          com.apple.cursor.38
+Zoom in:              com.apple.cursor.42
+Zoom out:             com.apple.cursor.43
