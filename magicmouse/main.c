@@ -93,7 +93,7 @@ CFStringRef tableIdentifierFromInt(int x) {
 			rtn = CFSTR("Global.Identifiers.I-Beam (XOR)");
 			break;
 		case 3:
-			rtn = CFSTR("Global.Identifiers.Alias");
+			rtn = CFSTR("Global.Identifiers.Small Alias");
 			break;
 		case 4:
 			rtn = CFSTR("Global.Identifiers.Small Copy");
