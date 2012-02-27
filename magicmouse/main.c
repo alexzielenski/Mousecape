@@ -225,10 +225,10 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	CFNumberGetValue(nspp,           kCFNumberIntType, &spp);
 	
 	
-	CGFloat animationHeight = height*frameCount;
+	CGFloat animationHeight           = height*frameCount;
 	CGDataProviderRef dataProvider    = CGDataProviderCreateWithCFData(imageData);
-	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-	CGImageRef cursorImage = CGImageCreate(width, animationHeight, bps, bpp, bpr, colorspace, kCGBitmapByteOrder32Big | kCGImageAlphaFirst, dataProvider, NULL, false, kCGRenderingIntentDefault);
+	CGColorSpaceRef colorspace        = CGColorSpaceCreateDeviceRGB();
+	CGImageRef cursorImage            = CGImageCreate(width, animationHeight, bps, bpp, bpr, colorspace, kCGBitmapByteOrder32Big | kCGImageAlphaFirst, dataProvider, NULL, false, kCGRenderingIntentDefault);
 	CGColorSpaceRelease(colorspace);
 	CGDataProviderRelease(dataProvider);
 	
@@ -398,7 +398,10 @@ static CGError dumpCursors(CFStringRef exportPath) {
 	CFDictionarySetValue(mouseFile, kCursorsKey, cursors);
 	
 	if (exportPath != NULL) {
+		CFShow(exportPath);
+		
 		CFURLRef path = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, exportPath, kCFURLPOSIXPathStyle, false);
+		
 		CFErrorRef err = NULL;
 		CFDataRef plistData = CFPropertyListCreateData(kCFAllocatorDefault,
 													   (CFPropertyListRef)mouseFile,
@@ -483,6 +486,7 @@ int main (int argc, const char * argv[]) {
 	
 	MMLog("Magic Mouse Initialized.\n---\n");
 	const char *plistLocation = argv[argc-1];
+	
 	if (usePrefs) {
 		// Read the prefs to find out the location of the plist
 		CFDataRef prefsData;
@@ -518,7 +522,14 @@ int main (int argc, const char * argv[]) {
 		CGSSetCursorScale(CGSMainConnectionID(), scaleFactor);
 	}
 	
-	CFStringRef path = CFStringCreateWithCString(NULL, plistLocation, kCFStringEncodingUTF8);
+	CFStringRef path = CFStringCreateWithCString(kCFAllocatorDefault, plistLocation, kCFStringEncodingUTF8);
+	
+	if (dump) {
+		CGError err = dumpCursors(path);
+		CFRelease(path);
+		return err;
+	}
+	
 	CFURLRef cursorPlist = CFURLCreateWithFileSystemPath(NULL, path, kCFURLPOSIXPathStyle, false);
 	CFRelease(path);
 	
@@ -526,12 +537,6 @@ int main (int argc, const char * argv[]) {
 		MMLog("Invalid or unspecified path to plist.\n");
 		showUsage();
 		return kCGErrorIllegalArgument;
-	}
-	
-	if (dump) {
-		CGError err = dumpCursors(path);
-		CFRelease(cursorPlist);
-		return err;
 	}
 	
 	CFDataRef cursorPlistData = NULL;
