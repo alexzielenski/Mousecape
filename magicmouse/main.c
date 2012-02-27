@@ -424,6 +424,8 @@ static CGError dumpCursors(CFStringRef exportPath) {
 	CFRelease(cursors);
 	CFRelease(mouseFile);
 	
+	MMLog("---\nFin.\n");
+	
 	return kCGErrorSuccess;
 }
 static void showUsage(void) {
