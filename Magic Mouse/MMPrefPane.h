@@ -18,13 +18,15 @@
 @private
 	CGFloat            _cursorScale;
 }
-@property (nonatomic, assign) CGFloat cursorScale;
 @property (nonatomic, assign) IBOutlet SFAuthorizationView *authView;
+@property (nonatomic, assign) CGFloat cursorScale;
 @property (nonatomic, retain) MMCursorAggregate *currentCursor;
+
 - (void)mainViewDidLoad;
 - (void)initializeData;
 - (BOOL)isUnlocked;
 
+// Interface actions
 - (IBAction)applyCursors:(NSButton *)sender;
 - (IBAction)resetCursors:(NSButton *)sender;
 

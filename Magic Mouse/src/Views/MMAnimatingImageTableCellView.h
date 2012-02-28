@@ -9,6 +9,7 @@
 #import <AppKit/AppKit.h>
 #import "MMAnimatingImageView.h"
 
+// This is just a simple table cell subclass with an animating image view property. No big deal
 @interface MMAnimatingImageTableCellView : NSTableCellView
 @property (nonatomic, retain) IBOutlet MMAnimatingImageView *animatingImageView;
 @end

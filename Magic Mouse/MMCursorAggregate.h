@@ -21,10 +21,14 @@
 @property (nonatomic, retain) NSString          *name;
 @property (nonatomic, retain) NSString          *cursorIdentifier;
 
+// creating a cursor from a dictionary
 + (MMCursor *)cursorWithDictionary:(NSDictionary *)dict;
 - (id)initWithCursorDictionary:(NSDictionary *)dict;
+
+// Creating a dictionary from the cursor
 - (NSDictionary *)cursorDictionary;
 - (NSDictionary *)infoDictionary;
+
 @end
 
 
@@ -39,9 +43,13 @@
 + (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict;
 - (id)initWithAggregateDictionary:(NSDictionary *)dict;
 
+// A domain would be the internal reverse-dns identifier used to tag cursors like com.apple.coregraphics.Arrow
 - (void)setCursor:(MMCursor *)cursor forDomain:(NSString *)domain;
 - (void)removeCursorForDomain:(NSString *)domain;
+
+// Retrieves (if it exists) a cursor in the _cursors ivar with the specified table identifier
 - (MMCursor *)cursorForTableIdentifier:(NSString *)identifier;
 
 - (NSDictionary *)dictionaryRepresentation;
+
 @end

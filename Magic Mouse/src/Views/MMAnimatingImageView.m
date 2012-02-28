@@ -19,12 +19,14 @@
 
 - (id)init {
 	if ((self = [super init])) {
+		// We cannot have a frame count of 0.
 		_frameCount = 1;
 		_frameDuration = 1;
 	}
 	return self;
 }
 
+// Assorted init methods
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	if ((self = [super initWithCoder:aDecoder])) {
 		_frameCount = 1;
@@ -41,6 +43,7 @@
 	return self;
 }
 
+// I guess we can safely reset the animation when the view is moved to a new superview
 - (void)viewDidMoveToSuperview {
 	[self resetAnimation];
 }
@@ -55,6 +58,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
+	
 	if (self.image && self.frameCount > 0) {
 		[self.image drawInRect:NSMakeRect(round(NSMidX(self.bounds)-imageSize.width/2), round(NSMidY(self.bounds)-imageSize.height/2), imageSize.width, imageSize.height)
 					  fromRect:currentImageFrame
@@ -69,8 +73,8 @@
 	if (frameTimer)
 		[frameTimer invalidate];
 	
-	imageWidth   = self.image.pixelsWide;
-	imageHeight  = self.image.pixelsHigh/self.frameCount;
+	size_t imageWidth   = self.image.pixelsWide;
+	size_t imageHeight  = self.image.pixelsHigh/self.frameCount;
 	
 	// Read from bottom to top
 	currentFrame = self.frameCount-1;
@@ -92,7 +96,7 @@
 		currentFrame = self.frameCount-1;
 	
 	currentImageFrame = NSMakeRect(0, 
-								   imageHeight * currentFrame--, 
+								   imageSize.height * currentFrame--, 
 								   imageSize.width, 
 								   imageSize.height);
 

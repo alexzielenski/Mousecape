@@ -15,15 +15,19 @@
 @implementation MMPrefPane
 @dynamic cursorScale;
 @synthesize authView      = _authView;
+
+// Let objective-c runtime release this for me
 @synthesize currentCursor = _currentCursor;
 
 - (void)mainViewDidLoad {
+	// Gather some authorization rights for the lock.
 	AuthorizationItem items       = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights    = {1, &items};
 	_authView.authorizationRights = &rights;
     _authView.delegate            = self;
 	_authView.autoupdate          = YES;
 	
+	// Update the lock for our new rights
     [_authView updateStatus:nil];
 	
 	// Action Menu – Force it to have the gear
@@ -53,6 +57,7 @@
 	[task launch];
 	[task waitUntilExit];
 	
+	// We need a way to view the output because the tool logs the current cursor scale.
 	NSFileHandle *outFileHandle = [task.standardOutput fileHandleForReading];
 	NSData *data                = [outFileHandle availableData];
 	NSString *output            = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -63,7 +68,7 @@
 	[output release];
 	[task release];
 	
-	
+	// Dump the current cursors to a temporary location for the initial table view.
 	NSString *cursorDump        = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
 	[self dumpCursorsToFile:cursorDump];
 	self.currentCursor          = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
@@ -77,6 +82,7 @@
 - (CGFloat)cursorScale {
 	return _cursorScale;
 }
+
 - (void)setCursorScale:(CGFloat)cursorScale {
 	// Tell the observers it change, write it out to prefs, and use magicmouse tool to change the scale
 	[self willChangeValueForKey:@"cursorScale"];
@@ -93,9 +99,22 @@
 	[task release];
 }
 
+- (MMCursorAggregate *)currentCursor {
+	return _currentCursor;
+}
+
+- (void)setCurrentCursor:(MMCursorAggregate *)currentCursor {
+	[self willChangeValueForKey:@"currentCursor"];
+	if (_currentCursor)
+		[_currentCursor release];
+	_currentCursor = [currentCursor retain];
+	[self didChangeValueForKey:@"currentCursor"];
+	
+	[_tableView reloadData];
+}
+
 #pragma mark - User Interface Actions
 - (IBAction)applyCursors:(NSButton *)sender {
-	
 }
 	
 - (IBAction)resetCursors:(NSButton *)sender {
@@ -133,6 +152,7 @@
 	[[NSCursor dragLinkCursor]            _getImageAndHotSpotFromCoreCursor];
 	[[NSCursor _moveCursor]               _getImageAndHotSpotFromCoreCursor];
 
+	// Ask the tool to dump
 	NSTask *task    = [[NSTask alloc] init];
 	task.launchPath = kMMToolPath;
 	task.arguments  = [NSArray arrayWithObjects:@"-d", filePath, nil];
@@ -144,13 +164,20 @@
 
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+	// We only have 1 row, but 9 columns
 	return 1;
 }
 
 #pragma mark - NSTableViewDelegate
+//*****************************************************************************************************************************************//
+//** Each table column has an identifier that would correspond with an identifier built into one of the cursors ("TableIdentifier" key). **//
+//** We use that identifier to retrieve the cursor and display it accoringly.                                                            **//
+//*****************************************************************************************************************************************//
 - (NSTableCellView *)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	// This identifier is set in the xib
+	static NSString *cellIdentifier = @"MMCursorCell";
 	
-	MMAnimatingImageTableCellView *cellView       = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+	MMAnimatingImageTableCellView *cellView       = [tableView makeViewWithIdentifier:cellIdentifier owner:self];
 	MMCursor *cursor                              = [self.currentCursor cursorForTableIdentifier:tableColumn.identifier];
 	
 	if (cursor) {
@@ -158,6 +185,7 @@
 		cellView.animatingImageView.frameCount    = cursor.frameCount;
 		cellView.animatingImageView.frameDuration = cursor.frameDuration;
 		
+		// We set our values, now we need to reset the animation to reflect our changes
 		[cellView.animatingImageView resetAnimation];
 	}
 	
@@ -167,12 +195,13 @@
 #pragma mark - Authorization Delegate
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];
+	// Let observers know.
 	[self didChangeValueForKey:@"isUnlocked"];
 }
 
 - (void)authorizationViewDidDeauthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];
-	//let observers know
+	// Let observers know.
 	[self didChangeValueForKey:@"isUnlocked"];
 }
 
