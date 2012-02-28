@@ -1,5 +1,5 @@
 //
-//  Magic_Mouse.h
+//  MMPrefPane.h
 //  Magic Mouse
 //
 //  Created by Alex Zielenski on 2/25/12.
