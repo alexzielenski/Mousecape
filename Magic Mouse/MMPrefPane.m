@@ -193,6 +193,11 @@
 	return cellView;
 }
 
+// Disable tableview selection
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex {
+	return NO;
+}
+
 #pragma mark - MMAnimatingImageCellViewDelegate
 - (NSDragOperation)tableCellView:(MMAnimatingImageTableCellView*)cellView draggingEntered:(id <NSDraggingInfo>)drop {
 	return (self.isUnlocked) ? NSDragOperationCopy : NSDragOperationNone;
