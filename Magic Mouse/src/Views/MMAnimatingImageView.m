@@ -83,11 +83,14 @@
 	[self timerAction:nil];
 	
 	if (self.frameCount>1) {
-		frameTimer = [NSTimer scheduledTimerWithTimeInterval:self.frameDuration 
-													  target:self 
-													selector:@selector(timerAction:) 
-													userInfo:nil 
-													 repeats:YES];
+		frameTimer = [NSTimer timerWithTimeInterval:self.frameDuration 
+											 target:self 
+										   selector:@selector(timerAction:) 
+										   userInfo:nil 
+											repeats:YES];
+		
+		// Keep the images animating even during runloop blocking events.
+		[[NSRunLoop mainRunLoop] addTimer:frameTimer forMode:NSRunLoopCommonModes];
 	}
 }
 
