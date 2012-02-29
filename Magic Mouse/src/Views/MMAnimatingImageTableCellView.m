@@ -7,7 +7,6 @@
 //
 
 #import "MMAnimatingImageTableCellView.h"
-#import "NSBitmapImageRep+PasteboardReading.h"
 
 @implementation MMAnimatingImageTableCellView
 @synthesize animatingImageView, delegate;
