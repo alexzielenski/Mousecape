@@ -77,8 +77,6 @@ CFStringRef nameFromInt(int x) {
 		case 11:
 			rtn = CFSTR("Big Copy");
 			break;
-		default:
-			break;
 	}
 	return rtn;
 }
@@ -122,8 +120,6 @@ CFStringRef tableIdentifierFromInt(int x) {
 		case 11:
 			rtn = CFSTR("Global.Identifiers.Big Copy");
 			break;
-		default:
-			break;
 	}
 	return rtn;
 }
@@ -145,7 +141,6 @@ CFStringRef cursorIdentifierFromInt(int x) {
 	// com.apple.cursor.2              = Large Alias
 	// com.apple.cursor.3              = Unavailable/Forbidden
 	// com.apple.cursor.5              = Large Copy
-	
 	CFStringRef rtn = CFSTR("");
 	switch (x) {
 		case 0:
@@ -184,9 +179,7 @@ CFStringRef cursorIdentifierFromInt(int x) {
 		case 11:
 			rtn = CFSTR("com.apple.cursor.5");
 			break;
-		default:
-			break;
-	}
+	}	
 	return rtn;
 }
 // bool used if the '-r' option is specified which uses the default cursor key rather than the custom one
@@ -201,8 +194,10 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	CFDictionaryRef currentCursorInfo = (CFDictionaryRef)cci;
 	CFDictionaryRef cursorData = (CFDictionaryRef)cd;
 	
-	char *CKey = (char*)malloc(PATH_MAX);
-	CFStringGetCString(key, CKey, PATH_MAX, kCFStringEncodingUTF8);
+	CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(key), kCFStringEncodingUTF8) + 1;
+	
+	char *CKey = (char*)malloc(bufferLength);
+	CFStringGetCString(key, CKey, bufferLength, kCFStringEncodingUTF8);
 	
 	/*! Get down to the cursor data in the dictionary structure. */
 	// Get the key for our cursor data
@@ -241,6 +236,7 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	// The dictionary does not hold the actual height of the image. Since the animations are the cursor height multiplied
 	// by the frame count. We can assume that this is how high the image will be
 	CGFloat animationHeight           = height*frameCount;
+	
 	// Create the image for replacing
 	CGDataProviderRef dataProvider    = CGDataProviderCreateWithCFData(imageData);
 	CGColorSpaceRef colorspace        = CGColorSpaceCreateDeviceRGB();
@@ -248,7 +244,7 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	CGColorSpaceRelease(colorspace);
 	CGDataProviderRelease(dataProvider);
 	
-	if (cursorImage==NULL) {
+	if (cursorImage == NULL) {
 		MMLog("Invalid cursor image for %s. Skipping...\n", CKey);
 		return;
 	}
@@ -256,14 +252,14 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	// We need to turn it into an array for use in the CoreGraphics function to register the cursor
 	void *arrayValues[1];
 	arrayValues[0] = cursorImage;	
-	CFArrayRef ar = CFArrayCreate(NULL, (const void**)arrayValues, 1, NULL);	
+	CFArrayRef ar  = CFArrayCreate(NULL, (const void**)arrayValues, 1, NULL);	
 	
 	MMLog("Hooking cursor: %s\n", CKey);
 	
 	// This is a cursor seed returned when our function comes back. It doesn't really have much uses to us.
 	int seed;
 	// Perform our replacement of Apple's cursors
-	CGError err = CGSRegisterCursorWithImages(CGSMainConnectionID(), CKey, true, true, frameCount, ar, CGSizeMake(width, height), CGPointMake(hotSpotX, hotSpotY), &seed, CGRectMake(hotSpotX,hotSpotY,width,height), frameDuration, 0);
+	CGError err    = CGSRegisterCursorWithImages(CGSMainConnectionID(), CKey, true, true, frameCount, ar, CGSizeMake(width, height), CGPointMake(hotSpotX, hotSpotY), &seed, CGRectMake(hotSpotX,hotSpotY,width,height), frameDuration, 0);
 	
 	if (err != kCGErrorSuccess) {
 		MMLog("Error number %i while hooking cursor %s", err, CKey);
@@ -297,8 +293,12 @@ static CGError dumpCursors(CFStringRef exportPath) {
 	for (int x = 0; x<=11; x++) {
 		// Get the cursor 
 		CFStringRef strIdent = cursorIdentifierFromInt(x);
-		char *ident = malloc(CFStringGetLength(strIdent));
-		CFStringGetCString(strIdent, ident, CFStringGetLength(strIdent), kCFStringEncodingUTF8);
+		CFShow(strIdent);
+		
+		CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(strIdent), kCFStringEncodingUTF8) + 1;
+		
+		char *ident = malloc(bufferLength);
+		CFStringGetCString(strIdent, ident, bufferLength, kCFStringEncodingUTF8);
 		
 		MMLog("Dumping %s\n", ident);
 				
