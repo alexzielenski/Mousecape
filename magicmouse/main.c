@@ -511,7 +511,7 @@ int main (int argc, const char * argv[]) {
 	bool usePrefs;
 	int c;
 	
-	// Check for what operation we'll be performings
+	// Check for what operation we'll be performing
 	while ((c = getopt (argc, (char *const*)argv, "hhelpr:d:sp")) != -1) {
 		switch (c) {
 			case 'r':
