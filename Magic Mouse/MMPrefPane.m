@@ -88,10 +88,11 @@
 	_cursorScale       = cursorScale;
 	[self didChangeValueForKey:@"cursorScale"];
 	
-	NSNumber *scaleNum = [NSNumber numberWithDouble:cursorScale];
-	NSTask *task       = [[NSTask alloc] init];
-	task.launchPath    = kMMToolPath;
-	task.arguments     = [NSArray arrayWithObjects:@"-s", scaleNum.stringValue, nil];
+	NSNumber *scaleNum  = [NSNumber numberWithDouble:cursorScale];
+	NSTask *task        = [[NSTask alloc] init];
+	task.launchPath     = kMMToolPath;
+	task.arguments      = [NSArray arrayWithObjects:@"-s", scaleNum.stringValue, nil];
+	task.standardOutput = [NSPipe pipe]; // We don't want to spam the console with the output from this
 	
 	[task launch];
 	[task waitUntilExit];
@@ -168,10 +169,10 @@
 }
 
 #pragma mark - NSTableViewDelegate
-//*****************************************************************************************************************************************//
-//** Each table column has an identifier that would correspond with an identifier built into one of the cursors ("TableIdentifier" key). **//
-//** We use that identifier to retrieve the cursor and display it accoringly.                                                            **//
-//*****************************************************************************************************************************************//
+//!*****************************************************************************************************************************************//
+//!** Each table column has an identifier that would correspond with an identifier built into one of the cursors ("TableIdentifier" key). **//
+//!** We use that identifier to retrieve the cursor and display it accoringly.                                                            **//
+//!*****************************************************************************************************************************************//
 - (NSTableCellView *)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 	// This identifier is set in the xib
 	static NSString *cellIdentifier = @"MMCursorCell";

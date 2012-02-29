@@ -18,10 +18,10 @@
 + (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict {
 	return [[[self alloc] initWithAggregateDictionary:dict] autorelease];
 }
-//*****************************************************************************************************************************************//
-//** The cursor files are merely plists. They have a root dict with a minimum version, and creator version, and a child dictionary with  **//
-//** an Identifiers dictionary and a Cursor data dictionary. each contain neccssary information to override the internal system cursors. **//
-//*****************************************************************************************************************************************//
+//!*****************************************************************************************************************************************//
+//!** The cursor files are merely plists. They have a root dict with a minimum version, and creator version, and a child dictionary with  **//
+//!** an Identifiers dictionary and a Cursor data dictionary. each contain neccssary information to override the internal system cursors. **//
+//!*****************************************************************************************************************************************//
 - (id)initWithAggregateDictionary:(NSDictionary *)dict {
 	if ((self = [self init])) {
 		NSDictionary *cursors       = [dict objectForKey:(NSString *)kCursorsKey];
@@ -142,10 +142,10 @@
 	}
 	return self;
 }
-//*******************************************************************************************************************************************//
-//** The dictionary passed would be one of the subdictionaries in the cursor data field. This method retrieves all the required info for   **//
-//** creating a bitmap from keys in this dictionary. Other values from the identifiers dictionary are added in the parent cursor aggregate.**//
-//*******************************************************************************************************************************************//
+//!*******************************************************************************************************************************************//
+//!** The dictionary passed would be one of the subdictionaries in the cursor data field. This method retrieves all the required info for   **//
+//!** creating a bitmap from keys in this dictionary. Other values from the identifiers dictionary are added in the parent cursor aggregate.**//
+//!*******************************************************************************************************************************************//
 - (id)initWithCursorDictionary:(NSDictionary *)dict {
 	if ((self = [self init])) {
 		NSData *rawData           = [dict objectForKey:(NSString *)kCursorDataDataKey];
@@ -190,10 +190,10 @@
 	}
 	return self;
 }
-//*****************************************************************************************************************************************//
-//** In this method the values are taken from the MMCursor properties and converted for use in the plist. Specifically, the raw pixel    **//
-//** data gets reformatted to ARGB 32-big pixel format to ensure consistency among all of the cursors so that magic mouse can read it.   **//
-//*****************************************************************************************************************************************//
+//!*****************************************************************************************************************************************//
+//!** In this method the values are taken from the MMCursor properties and converted for use in the plist. Specifically, the raw pixel    **//
+//!** data gets reformatted to ARGB 32-big pixel format to ensure consistency among all of the cursors so that magic mouse can read it.   **//
+//!*****************************************************************************************************************************************//
 - (NSDictionary *)cursorDictionary {
 	// Creates and returns a dictionary representation for use with magic mouse
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:11];
@@ -212,8 +212,8 @@
 	
 	uint8_t permuteMap[4];
 	
-	// Arrange the bytes to 32 big order and alpha non-premultiplied first. It is imperative that all of tha raw data follows the same format
-	// (ARGB, 32-big byte order) otherwise consequences will ensue.
+	//! Arrange the bytes to 32 big order and alpha non-premultiplied first. It is imperative that all of tha raw data follows the same format
+	//! (ARGB, 32-big byte order) otherwise consequences will ensue.
 	if (alphaFirst) {
 		if (littleByteOrder) {
 			// BGRA to ARGB
@@ -270,10 +270,10 @@
 	return dict;
 }
 
-//*****************************************************************************************************************************************//
-//** This method creates the dictionary for use in the Identifiers dictionary. (As opposed to cursor data above). These values are       **//
-//** assigned during initialization in the cursor aggregate and are used to see which cursor image replaces what and where to display it **//
-//*****************************************************************************************************************************************//
+//!*****************************************************************************************************************************************//
+//!** This method creates the dictionary for use in the Identifiers dictionary. (As opposed to cursor data above). These values are       **//
+//!** assigned during initialization in the cursor aggregate and are used to see which cursor image replaces what and where to display it **//
+//!*****************************************************************************************************************************************//
 - (NSDictionary *)infoDictionary {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 			self.defaultKey, (NSString *)kCursorInfoDefaultKey, 
