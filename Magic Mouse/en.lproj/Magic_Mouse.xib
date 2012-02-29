@@ -77,7 +77,6 @@
 							<string key="NSFrame">{{20, 20}, {364, 42}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1192</string>
 							<string key="NSClassName">SFAuthorizationView</string>
 						</object>
@@ -87,7 +86,6 @@
 							<string key="NSFrame">{{13, 60}, {644, 330}}</string>
 							<reference key="NSSuperview" ref="1037298196"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="774709862"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="652888780">
@@ -110,7 +108,7 @@
 																<string key="NSFrameSize">{614, 69}</string>
 																<reference key="NSSuperview" ref="970750943"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="607218855"/>
+																<reference key="NSNextKeyView" ref="510810881"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="859001820">
@@ -429,13 +427,13 @@
 																	</object>
 																</object>
 																<double key="NSRowHeight">66</double>
-																<int key="NSTvFlags">-700416000</int>
+																<int key="NSTvFlags">37781504</int>
 																<reference key="NSDelegate"/>
 																<reference key="NSDataSource"/>
 																<int key="NSColumnAutoresizingStyle">1</int>
 																<int key="NSDraggingSourceMaskForLocal">15</int>
 																<int key="NSDraggingSourceMaskForNonLocal">0</int>
-																<bool key="NSAllowsTypeSelect">YES</bool>
+																<bool key="NSAllowsTypeSelect">NO</bool>
 																<int key="NSTableViewDraggingDestinationStyle">0</int>
 																<int key="NSTableViewGroupRowStyle">1</int>
 															</object>
@@ -494,7 +492,7 @@
 												<string key="NSFrame">{{4, 162}, {616, 87}}</string>
 												<reference key="NSSuperview" ref="774709862"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="510810881"/>
+												<reference key="NSNextKeyView" ref="970750943"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">154162</int>
 												<reference key="NSVScroller" ref="7430828"/>
