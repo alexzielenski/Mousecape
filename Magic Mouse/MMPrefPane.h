@@ -9,8 +9,9 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import <SecurityInterface/SFAuthorizationView.h>
 #import "MMCursorAggregate.h"
+#import "MMAnimatingImageTableCellView.h"
 
-@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource> {
+@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource, MMAnimatingTableCellViewDelegate> {
 	IBOutlet NSPopUpButton       *_actionMenu;
 	IBOutlet NSPopUpButton       *_cursorThemes;
 	IBOutlet NSTableView         *_tableView;

@@ -8,7 +8,6 @@
 
 #import "MMPrefPane.h"
 #import "MMDefs.h"
-#import "MMAnimatingImageTableCellView.h"
 #import "NSCursor_Private.h"
 
 // Why does CFPreferences suck so much hard nuts?
@@ -184,12 +183,30 @@
 		cellView.animatingImageView.image         = cursor.image;
 		cellView.animatingImageView.frameCount    = cursor.frameCount;
 		cellView.animatingImageView.frameDuration = cursor.frameDuration;
+		cellView.delegate                         = self;
 		
 		// We set our values, now we need to reset the animation to reflect our changes
 		[cellView.animatingImageView resetAnimation];
 	}
 	
 	return cellView;
+}
+
+#pragma mark - MMAnimatingImageCellViewDelegate
+- (NSDragOperation)tableCellView:(MMAnimatingImageTableCellView*)cellView draggingEntered:(id <NSDraggingInfo>)drop {
+	return (self.isUnlocked) ? NSDragOperationCopy : NSDragOperationNone;
+}
+
+- (BOOL)tableCellView:(MMAnimatingImageTableCellView*)cellView shouldPrepareForDragOperation:(id <NSDraggingInfo>)drop {
+	return self.isUnlocked;
+}
+
+- (BOOL)tableCellView:(MMAnimatingImageTableCellView*)cellView shouldPerformDragOperation:(id <NSDraggingInfo>)drop {
+	return self.isUnlocked;
+}
+
+- (void)tableCellView:(MMAnimatingImageTableCellView*)cellView didAcceptDroppedImages:(NSArray *)images {
+	
 }
 
 #pragma mark - Authorization Delegate
