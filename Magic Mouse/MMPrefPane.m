@@ -80,6 +80,63 @@
     return ([_authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
 
+// return the controller just incase we want to do extra things to it
+- (MMAdvancedEditViewController *)displayPopoverForColumn:(NSInteger)columnIdx {
+	if (columnIdx < 0 || columnIdx >= self.tableView.tableColumns.count)
+		return nil;
+	
+	// Find the column that was dragged into
+	NSTableColumn *column = [self.tableView.tableColumns objectAtIndex:columnIdx];
+	// Get the associated MMCursor* for the cell
+	MMCursor *cursor      = [self.currentCursor cursorForTableIdentifier:column.identifier];
+	
+	if (!cursor) {
+		NSLog(@"No cursor for column (%@, %lu)?", column.identifier, (unsigned long)columnIdx);
+		return nil;
+	}
+	
+	// There is guaranteed to be atleast one image and (and no more than one for now)
+	MMAdvancedEditViewController *advancedEdit = [[MMAdvancedEditViewController alloc] initWithNibName:@"AdvancedEdit"
+																								bundle:kMMPrefsBundle];
+	
+	// create a popover to display
+	__block NSPopover *popover = [[NSPopover alloc] init];
+	popover.contentViewController                = advancedEdit;
+	popover.behavior                             = NSPopoverBehaviorApplicationDefined;
+	popover.appearance                           = NSPopoverAppearanceMinimal;
+	
+	NSView *imageView = [self.tableView viewAtColumn:columnIdx row:0 makeIfNecessary:NO];
+	
+	if (!imageView)
+		return nil;
+	
+	// load the nib
+	[popover showRelativeToRect:imageView.bounds
+						 ofView:imageView
+				  preferredEdge:NSMinYEdge];
+	
+	[advancedEdit release]; // decrease the retain count so that the popover is the only owner
+	
+	advancedEdit.cursor                          = cursor;
+	advancedEdit.appliesChangesImmediately       = NO; // we only want changes applied when the user clicks "Done"
+	advancedEdit.identifierField.editable        = NO; // make the identifier field uneditable. (read the highlighted comment below)
+	advancedEdit.nameField.editable              = NO; // same as above
+	
+	[advancedEdit.imageView resetAnimation];
+	
+	__block MMPrefPane *selfRef = self;
+	
+	advancedEdit.didEndBlock                     = ^(BOOL finished) {
+		[selfRef.tableView reloadData]; // reload the table for updated data
+		
+		[popover close];
+		[popover release]; // get rid of the popover
+		popover = nil;
+	};
+	
+	return advancedEdit;
+}
+
 #pragma mark - Accessors
 - (CGFloat)cursorScale {
 	return _cursorScale;
@@ -226,55 +283,13 @@
 		return;
 	}
 	
-	// Find the column that was dragged into
-	NSTableColumn *column = [_tableView.tableColumns objectAtIndex:columnIdx];
-	// Get the associated MMCursor* for the cell
-	MMCursor *cursor      = [self.currentCursor cursorForTableIdentifier:column.identifier];
-	
-	if (!cursor) {
-		NSLog(@"No cursor for column (%@, %lu)?", column.identifier, (unsigned long)columnIdx);
-		return;
-	}
-	
-	// There is guaranteed to be atleast one image and (and no more than one for now)
-	NSBitmapImageRep *image = [images objectAtIndex:0];
-	MMAdvancedEditViewController *advancedEdit = [[MMAdvancedEditViewController alloc] initWithNibName:@"AdvancedEdit"
-																								bundle:kMMPrefsBundle];
-	
-	// create a popover to display
-	__block NSPopover *popover = [[NSPopover alloc] init];
-	popover.contentViewController                = advancedEdit;
-	popover.behavior                             = NSPopoverBehaviorApplicationDefined;
-	popover.appearance                           = NSPopoverAppearanceMinimal;
-	
-	// load the nib
-	[popover showRelativeToRect:imageView.superview.bounds
-						 ofView:imageView.superview
-				  preferredEdge:NSMinYEdge];
-	
-	[advancedEdit release]; // decrease the retain count so that the popover is the only owner
-	
 	// set the dragged image to the image of the animating image view on the popover
-	advancedEdit.cursor = cursor;
-	advancedEdit.imageView.image                 = image;
-	advancedEdit.imageView.frameDuration         = 1;
-	advancedEdit.imageView.frameCount            = 1;
-	advancedEdit.frameCountField.integerValue    = 1;
-	advancedEdit.frameDurationField.integerValue = 1; 
-	advancedEdit.appliesChangesImmediately       = NO; // we only want changes applied when the user clicks "Done"
-	advancedEdit.identifierField.editable        = NO; // make the identifier field uneditable. (read the highlighted comment above)
-	
-	[advancedEdit.imageView resetAnimation];
-	
-	advancedEdit.didEndBlock                     = ^(BOOL finished) {
-		[popover close];
-		[popover release]; // get rid of the popover
-		popover = nil;
-	};
-	
-
-
-	
+	MMAdvancedEditViewController *vc   = [self displayPopoverForColumn:columnIdx];
+	vc.imageView.image                 = [images objectAtIndex:0];
+	vc.imageView.frameDuration         = 1;
+	vc.imageView.frameCount            = 1;
+	vc.frameCountField.integerValue    = 1;
+	vc.frameDurationField.integerValue = 1; 
 }
 
 #pragma mark - Authorization Delegate

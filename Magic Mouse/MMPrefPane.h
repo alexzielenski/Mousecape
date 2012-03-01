@@ -10,6 +10,7 @@
 #import <SecurityInterface/SFAuthorizationView.h>
 #import "MMCursorAggregate.h"
 #import "MMAnimatingImageTableCellView.h"
+#import "MMAdvancedEditViewController.h"
 
 @interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource, MMAnimatingImageViewDelegate> {
 	IBOutlet NSPopUpButton       *_actionMenu;
@@ -26,6 +27,8 @@
 - (void)mainViewDidLoad;
 - (void)initializeData;
 - (BOOL)isUnlocked;
+
+- (MMAdvancedEditViewController *)displayPopoverForColumn:(NSInteger)column;
 
 // Interface actions
 - (IBAction)applyCursors:(NSButton *)sender;

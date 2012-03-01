@@ -51,46 +51,74 @@
 		self.imageView.image                = self.cursor.image;
 		self.imageView.frameCount           = self.cursor.frameCount;
 		self.imageView.frameDuration        = self.cursor.frameDuration;
-				
-		[self.imageView resetAnimation];
+	} else {
+		self.nameField.stringValue          = @"";
+		self.xField.integerValue            = 0;
+		self.yField.integerValue            = 0;
+		self.frameCountField.integerValue   = 1;
+		self.frameDurationField.doubleValue = 1.0;
+		self.identifierField.stringValue    = @"";
+		self.imageView.image                = nil;
 	}
-	
+	[self.imageView resetAnimation];
 }
 
 #pragma mark - Actions
 - (IBAction)nameChange:(NSTextField *)sender {
-	
+	if (self.appliesChangesImmediately) {
+		self.cursor.name = sender.stringValue;
+	}
 }
 
 - (IBAction)xChange:(NSTextField *)sender {
-	
+	if (self.appliesChangesImmediately) {
+		self.cursor.hotSpot = NSMakePoint(sender.floatValue, self.cursor.hotSpot.y);
+	}
 }
 
 - (IBAction)yChange:(NSTextField *)sender {
-	
+	if (self.appliesChangesImmediately) {
+		self.cursor.hotSpot = NSMakePoint(self.cursor.hotSpot.x, sender.floatValue);
+	}
 }
 
 - (IBAction)frameCountChange:(id)sender { // The image view needs to be updated when there is a a framecount/duration change
+	if (self.appliesChangesImmediately) {
+		self.cursor.frameCount = [sender integerValue];
+	}
 	self.imageView.frameCount = self.frameCountField.integerValue;
 	[self.imageView resetAnimation];
 }
 
 - (IBAction)frameDurationChange:(id)sender {
+	if (self.appliesChangesImmediately) {
+		self.cursor.frameDuration = [sender doubleValue];
+	}
 	self.imageView.frameDuration = self.frameDurationField.doubleValue;
 	[self.imageView resetAnimation];
 }
 
 - (IBAction)identifierChange:(NSTextField *)sender {
-	
+	if (self.appliesChangesImmediately) {
+		self.cursor.cursorIdentifier = sender.stringValue;
+	}
 }
 
 - (IBAction)done:(NSButton *)sender {
 	NSAssert(self.didEndBlock != NULL, @"For done: to be called & implemented, didEndBlock must not be NULL");
+	
+	self.cursor.name             = self.nameField.stringValue;
+	self.cursor.hotSpot          = NSMakePoint(self.xField.floatValue, self.yField.floatValue);
+	self.cursor.frameCount       = self.frameCountField.integerValue;
+	self.cursor.frameDuration    = self.frameDurationField.doubleValue;
+	self.cursor.cursorIdentifier = self.identifierField.stringValue;
+	self.cursor.image            = self.imageView.image;
+	
 	self.didEndBlock(YES);
 }
 
 - (IBAction)cancel:(NSButton *)sender {
-	NSAssert(self.didEndBlock != NULL, @"For cancelled: to be called & implemented, didEndBlock must not be NULL");
+	NSAssert(self.didEndBlock != NULL, @"For cancel: to be called & implemented, didEndBlock must not be NULL");
 	self.didEndBlock(NO);
 }
 
@@ -108,6 +136,10 @@
 }
 
 - (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {
+	if (self.appliesChangesImmediately) {
+		self.cursor.image = [images objectAtIndex:0];
+	}
+	[imageView resetAnimation];
 }
 
 @end
