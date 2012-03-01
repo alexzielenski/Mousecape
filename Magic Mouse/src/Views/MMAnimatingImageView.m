@@ -13,9 +13,9 @@
 @end
 
 @implementation MMAnimatingImageView
-@dynamic image;
-@dynamic frameCount;
-@dynamic frameDuration;
+@synthesize image         = _image;
+@synthesize frameCount    = _frameCount;
+@synthesize frameDuration = _frameDuration;
 
 - (id)init {
 	if ((self = [super init])) {
@@ -52,7 +52,6 @@
 	if (frameTimer)
 		[frameTimer invalidate];
 	frameTimer = nil;
-	[_image release];
 	[super dealloc];
 }
 
@@ -105,40 +104,6 @@
 
 	
 	[self setNeedsDisplay:YES];
-}
-
-#pragma mark - Accessors
-- (void)setImage:(NSBitmapImageRep *)image {
-	[self willChangeValueForKey:@"image"];
-	if (_image) {
-		[_image release];
-	}
-	_image        = [image retain];
-	[self didChangeValueForKey:@"image"];
-}
-
-- (NSBitmapImageRep *)image {
-	return _image;
-}
-
-- (void)setFrameCount:(NSInteger)frameCount {
-	[self willChangeValueForKey:@"frameCount"];
-	_frameCount   = frameCount;
-	[self didChangeValueForKey:@"frameCount"];
-}
-
-- (NSInteger)frameCount {
-	return _frameCount;
-}
-
-- (void)setFrameDuration:(CGFloat)frameDuration {
-	[self willChangeValueForKey:@"frameDuration"];
-	_frameDuration = frameDuration;
-	[self didChangeValueForKey:@"frameDuration"];
-}
-
-- (CGFloat)frameDuration {
-	return _frameDuration;
 }
 
 @end
