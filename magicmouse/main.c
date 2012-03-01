@@ -6,6 +6,14 @@
 //  Copyright (c) 2012 Alex Zielenski. All rights reserved.
 //
 
+/*! Perhaps it would be a good idea to store the original cursor under a different identifier
+ while hooking the cursors so that we don't have a need to store them in the file or even use the one in the file. 
+ We can wheck to see if the cursor is registered first and if not, register the original cursor and leave it be afterwards. 
+ Then, it would be trivial to reset the cursors and a lot safer. The problem here is using NSCursor methods to get cursors that aren't
+ registered at login (instead are registered only when used). eg. Dragging Copy. There might be a possibility the login window wouldn't let us
+ use these methods since we aren't allowed a GUI there. But we would get a retry at that once the user logs in so it might not be a problem. 
+ This fix would of course involve changing the extension of this file to .m and embedding Objective-C. */
+
 #include <CoreFoundation/CoreFoundation.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <Accelerate/Accelerate.h>
