@@ -9,14 +9,17 @@
 #import "MMPrefPane.h"
 #import "MMDefs.h"
 #import "NSCursor_Private.h"
+#import "MMAdvancedEditViewController.h"
 
 // Why does CFPreferences suck so much hard nuts?
 @implementation MMPrefPane
 @dynamic cursorScale;
 @synthesize authView      = _authView;
+@synthesize tableView     = _tableView;
 
 // Let objective-c runtime release this for me
 @synthesize currentCursor = _currentCursor;
+
 
 - (void)mainViewDidLoad {
 	// Gather some authorization rights for the lock.
@@ -184,7 +187,7 @@
 		cellView.animatingImageView.image         = cursor.image;
 		cellView.animatingImageView.frameCount    = cursor.frameCount;
 		cellView.animatingImageView.frameDuration = cursor.frameDuration;
-		cellView.delegate                         = self;
+		cellView.animatingImageView.delegate                         = self;
 		
 		// We set our values, now we need to reset the animation to reflect our changes
 		[cellView.animatingImageView resetAnimation];
@@ -199,25 +202,79 @@
 }
 
 #pragma mark - MMAnimatingImageCellViewDelegate
-- (NSDragOperation)tableCellView:(MMAnimatingImageTableCellView*)cellView draggingEntered:(id <NSDraggingInfo>)drop {
+- (NSDragOperation)imageView:(MMAnimatingImageView *)imageView draggingEntered:(id <NSDraggingInfo>)drop {
 	return (self.isUnlocked) ? NSDragOperationCopy : NSDragOperationNone;
 }
 
-- (BOOL)tableCellView:(MMAnimatingImageTableCellView*)cellView shouldPrepareForDragOperation:(id <NSDraggingInfo>)drop {
+- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPrepareForDragOperation:(id <NSDraggingInfo>)drop {
 	return self.isUnlocked;
 }
 
-- (BOOL)tableCellView:(MMAnimatingImageTableCellView*)cellView shouldPerformDragOperation:(id <NSDraggingInfo>)drop {
+- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPerformDragOperation:(id <NSDraggingInfo>)drop {
 	return self.isUnlocked;
 }
 
-- (void)tableCellView:(MMAnimatingImageTableCellView*)cellView didAcceptDroppedImages:(NSArray *)images {
-	MMAnimatingImageView *iv = cellView.animatingImageView;
-	// for now images is guaranteed to have one item and its guaranteed to be NSBitmapImageRep…
-	NSLog(@"%ld", (long)[_tableView columnAtPoint:cellView.frame.origin]);
+//!**********************************************************************************************************************************************/
+//!** When the user drops an image onto a table item, we show then a quick edit popover for them to be able to quickly customize some of       **/
+//!** the settings. If they click "Done" these changes are applied. We make the identifier field uneditable because we don't want the user     **/
+//!** changing the identifier value for any of the cursors in the table since they have preset identifier values that must stay static to work **/
+//!**********************************************************************************************************************************************/
+- (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {	
+	NSUInteger columnIdx  = [_tableView columnAtPoint:imageView.superview.frame.origin];
+	if (columnIdx == -1) {
+		NSLog(@"No column found at specified point (%@) after drag operation.", NSStringFromPoint(imageView.superview.frame.origin));
+		return;
+	}
 	
+	// Find the column that was dragged into
+	NSTableColumn *column = [_tableView.tableColumns objectAtIndex:columnIdx];
 	// Get the associated MMCursor* for the cell
-	iv.image = [images objectAtIndex:0];
+	MMCursor *cursor      = [self.currentCursor cursorForTableIdentifier:column.identifier];
+	
+	if (!cursor) {
+		NSLog(@"No cursor for column (%@, %lu)?", column.identifier, (unsigned long)columnIdx);
+		return;
+	}
+	
+	// There is guaranteed to be atleast one image and (and no more than one for now)
+	NSBitmapImageRep *image = [images objectAtIndex:0];
+	MMAdvancedEditViewController *advancedEdit = [[MMAdvancedEditViewController alloc] initWithNibName:@"AdvancedEdit"
+																								bundle:kMMPrefsBundle];
+	
+	// create a popover to display
+	__block NSPopover *popover = [[NSPopover alloc] init];
+	popover.contentViewController                = advancedEdit;
+	popover.behavior                             = NSPopoverBehaviorApplicationDefined;
+	popover.appearance                           = NSPopoverAppearanceMinimal;
+	
+	// load the nib
+	[popover showRelativeToRect:imageView.superview.bounds
+						 ofView:imageView.superview
+				  preferredEdge:NSMinYEdge];
+	
+	[advancedEdit release]; // decrease the retain count so that the popover is the only owner
+	
+	// set the dragged image to the image of the animating image view on the popover
+	advancedEdit.cursor = cursor;
+	advancedEdit.imageView.image                 = image;
+	advancedEdit.imageView.frameDuration         = 1;
+	advancedEdit.imageView.frameCount            = 1;
+	advancedEdit.frameCountField.integerValue    = 1;
+	advancedEdit.frameDurationField.integerValue = 1; 
+	advancedEdit.appliesChangesImmediately       = NO; // we only want changes applied when the user clicks "Done"
+	advancedEdit.identifierField.editable        = NO; // make the identifier field uneditable. (read the highlighted comment above)
+	
+	[advancedEdit.imageView resetAnimation];
+	
+	advancedEdit.didEndBlock                     = ^(BOOL finished) {
+		[popover close];
+		[popover release]; // get rid of the popover
+		popover = nil;
+	};
+	
+
+
+	
 }
 
 #pragma mark - Authorization Delegate

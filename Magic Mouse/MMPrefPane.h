@@ -11,15 +11,15 @@
 #import "MMCursorAggregate.h"
 #import "MMAnimatingImageTableCellView.h"
 
-@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource, MMAnimatingTableCellViewDelegate> {
+@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource, MMAnimatingImageViewDelegate> {
 	IBOutlet NSPopUpButton       *_actionMenu;
 	IBOutlet NSPopUpButton       *_cursorThemes;
-	IBOutlet NSTableView         *_tableView;
 	
 @private
 	CGFloat            _cursorScale;
 }
 @property (nonatomic, assign) IBOutlet SFAuthorizationView *authView;
+@property (nonatomic, retain) IBOutlet NSTableView *tableView;
 @property (nonatomic, assign) CGFloat cursorScale;
 @property (nonatomic, retain) MMCursorAggregate *currentCursor;
 

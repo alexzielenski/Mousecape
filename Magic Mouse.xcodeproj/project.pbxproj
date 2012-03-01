@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0E7C3CC514F9FB1A0003A5FE /* cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7C3CC414F9FB1A0003A5FE /* cursor.png */; };
+		FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */; };
+		FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */; };
+		FA02424814FF0993006E6FE1 /* AdvancedEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */; };
 		FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */; };
 		FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */; };
 		FA319D3C14F353C50064E7CC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA319D3B14F353C50064E7CC /* Accelerate.framework */; };
@@ -70,6 +73,9 @@
 
 /* Begin PBXFileReference section */
 		0E7C3CC414F9FB1A0003A5FE /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cursor.png; path = ../cursor.png; sourceTree = "<group>"; };
+		FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAdvancedEditViewController.h; path = src/Controllers/MMAdvancedEditViewController.h; sourceTree = "<group>"; };
+		FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAdvancedEditViewController.m; path = src/Controllers/MMAdvancedEditViewController.m; sourceTree = "<group>"; };
+		FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AdvancedEdit.xib; path = src/Controllers/AdvancedEdit.xib; sourceTree = "<group>"; };
 		FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/Views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/Views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FA07747014F9A25400A1B91B /* CarbonHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonHelpers.h; sourceTree = "<group>"; };
@@ -233,6 +239,8 @@
 				FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */,
 				FADA4A4B14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h */,
 				FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */,
+				FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */,
+				FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */,
 				FAD37B0314F9836E00B7F09C /* Supporting Files */,
 			);
 			path = "Magic Mouse";
@@ -243,6 +251,7 @@
 			children = (
 				0E7C3CC414F9FB1A0003A5FE /* cursor.png */,
 				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
+				FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */,
 				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
 				FAD37B2D14F983F000B7F09C /* InfoPlist.strings */,
 				FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */,
@@ -264,6 +273,7 @@
 				FAFC6EB814F9E3F500379751 /* MMCursorAggregate.h in Headers */,
 				FADA4A4D14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h in Headers */,
 				FADA4A5414FB017400517F22 /* NSCursor_Private.h in Headers */,
+				FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +353,7 @@
 				FAD37B2414F983D700B7F09C /* Magic_Mouse.xib in Resources */,
 				FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */,
 				0E7C3CC514F9FB1A0003A5FE /* cursor.png in Resources */,
+				FA02424814FF0993006E6FE1 /* AdvancedEdit.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +376,7 @@
 				FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */,
 				FAFC6EB914F9E3F500379751 /* MMCursorAggregate.m in Sources */,
 				FADA4A4E14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m in Sources */,
+				FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
