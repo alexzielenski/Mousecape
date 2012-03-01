@@ -29,6 +29,7 @@
 CFStringRef tableIdentifierFromInt(int x);
 CFStringRef nameFromInt(int x);
 CFStringRef cursorIdentifierFromInt(int x);
+CFStringRef createBackupIdentifierForIdentifier(CFStringRef ident);
 
 // Method I used for debugging
 static void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
@@ -45,6 +46,7 @@ static void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
 	
     CFRelease(destination);
 }
+
 // This method gets the name for the cursor plist dump in the identifiers dictionary
 CFStringRef nameFromInt(int x) {
 	CFStringRef rtn = CFSTR("");
@@ -190,26 +192,165 @@ CFStringRef cursorIdentifierFromInt(int x) {
 	}	
 	return rtn;
 }
+
+
+CFStringRef createBackupIdentifierForIdentifier(CFStringRef ident) {
+	// Just take all the items after the first two and append them to com.alexzielenski.magicmouse
+	return CFStringCreateWithFormat(0, NULL, CFSTR("com.alexzielenski.magicmouse.%@"), ident);
+}
+
+//! Gets data from one cursor and sets it to another. Though both co-exist
+static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinationName) {
+	CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(originalName), kCFStringEncodingUTF8) + 1;
+	
+	char *CKey = (char*)malloc(bufferLength);
+	CFStringGetCString(originalName, CKey, bufferLength, kCFStringEncodingUTF8);
+	
+	int dataSize = 0;
+	CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), 
+								   CKey, 
+								   &dataSize);
+	if (dataSize <= 0) {
+		MMLog("Cannot swap cursors. Original one (%s) is nonexistant", CKey);
+		free(CKey);
+		return;
+	}
+	
+	
+	// Get the name we are going to register the new cursor under
+	bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(destinationName), kCFStringEncodingUTF8);
+	char *BKey = (char*)malloc(bufferLength);
+	
+	CFStringGetCString(destinationName, BKey, bufferLength, kCFStringEncodingUTF8);
+		
+	
+	void *data = malloc(dataSize);
+	CGSize imageSize, cursorSize;
+	CGPoint hotSpot;
+	int bpp, bps, bpr, frameCount, spp;
+	float frameDuration;
+	
+	// Get the original data
+	CGSGetRegisteredCursorData2(CGSMainConnectionID(), 
+								CKey, 
+								data, 
+								&dataSize,
+								&bpr,
+								&imageSize,
+								&cursorSize,
+								&hotSpot,
+								&bpp,
+								&spp,
+								&bps,
+								&frameCount,
+								&frameDuration);
+	
+	if (imageSize.width == 0 || imageSize.height) {
+		MMLog("Cannot swap cursors. Original one (%s) is nonexistant", CKey);
+		free(CKey);
+		free(BKey);
+		return;
+	}
+	
+	CFDataRef dt = CFDataCreate(0, (UInt8*)data, dataSize);
+	CGDataProviderRef provider = CGDataProviderCreateWithCFData(dt);
+	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+	
+	CGImageRef originalCursor = CGImageCreate(imageSize.width, imageSize.height,
+											  bps, bpp, bpr, colorspace, kCGBitmapByteOrder32Little | kCGImageAlphaFirst, 
+											  provider, NULL, false32b, kCGRenderingIntentDefault);
+	
+	int seed;
+	void *originalValues[1] = { originalCursor };
+	CFArrayRef originalArray = CFArrayCreate(0, (const void**)originalValues, 1, NULL);
+	
+	// Register the original cursor under a different name
+	CGError err = CGSRegisterCursorWithImages(CGSMainConnectionID(), 
+											  BKey, 
+											  true, false, 
+											  frameCount, 
+											  originalArray,
+											  cursorSize,
+											  hotSpot,
+											  &seed, 
+											  CGRectMake(hotSpot.x, hotSpot.y, imageSize.width, imageSize.height),
+											  frameDuration, 0);
+	
+	if (err != kCGErrorSuccess) {
+		MMLog("Recieved error (%i) while swapping cursor. (%s)\n", err, CKey);
+	}
+	
+	free(CKey);
+	free(BKey);
+	CFRelease(dt);
+	CGImageRelease(originalCursor);
+	CGDataProviderRelease(provider);
+	CGColorSpaceRelease(colorspace);
+}
+
+//!******************************************************************************************************************************************************************/
+//! This function gets the registered data for an original cursor before magic mouse replaces it and registers it under a different name that would never be used. **/
+//! This is a safe & necessary way to backup the cursor locally without distributing it with every theme.                                                          **/
+//!******************************************************************************************************************************************************************/
+static void BackupCursor(CFStringRef originalIdentifier) {
+	// Get the name we are going to register the new cursor under
+	CFStringRef backupIdentifier = createBackupIdentifierForIdentifier(originalIdentifier);
+	CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(backupIdentifier), kCFStringEncodingUTF8) + 1;
+	
+	char *CKey = (char*)malloc(bufferLength);
+	CFStringGetCString(backupIdentifier, CKey, bufferLength, kCFStringEncodingUTF8);
+	
+	int dataSize = 1;
+	CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), 
+								   CKey, 
+								   &dataSize);
+	
+	// We don't want to back up the cursor if it has already been backed up.
+	if (dataSize > 4) {
+		MMLog("Cursor already backed up (size %i)\n", dataSize);
+		free(CKey);
+		CFRelease(backupIdentifier);
+		return;
+	}
+	
+	MMLog("Backing up cursor to %s\n", CKey);
+	ReplaceCursorWithName(originalIdentifier, backupIdentifier);
+	CFRelease(backupIdentifier);
+}
+
 // bool used if the '-r' option is specified which uses the default cursor key rather than the custom one
 // from the plist file.
 static bool useDefault = false;
 
-/*! Registers out cursors over Apple's. This function is called while looping through the identifiers dictionary
-    so 'cci' is the dictionary for the key 'k' and 'cd' is userInfo passed which is in this case the cursor data dictionary. */
+//!*******************************************************************************************************************************/
+//! Registers out cursors over Apple's. This function is called while looping through the identifiers dictionary                **/
+//!    so 'cci' is the dictionary for the key 'k' and 'cd' is userInfo passed which is in this case the cursor data dictionary. **/
+//!*******************************************************************************************************************************/
 static void HookCursor(const void* k, const void* cci, void* cd) {
 	// Let the compiler know the types of our variables
 	CFStringRef key = (CFStringRef)k;	
 	CFDictionaryRef currentCursorInfo = (CFDictionaryRef)cci;
 	CFDictionaryRef cursorData = (CFDictionaryRef)cd;
+
 	
 	CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(key), kCFStringEncodingUTF8) + 1;
 	
 	char *CKey = (char*)malloc(bufferLength);
 	CFStringGetCString(key, CKey, bufferLength, kCFStringEncodingUTF8);
 	
+	
+	if (useDefault) {
+		CFStringRef backupIdentifier = createBackupIdentifierForIdentifier(key);
+		MMLog("Resetting cursor: %s\n", CKey);
+		ReplaceCursorWithName(backupIdentifier, key);
+		CFRelease(backupIdentifier);
+		free(CKey);
+		return;
+	}
+	
 	/*! Get down to the cursor data in the dictionary structure. */
 	// Get the key for our cursor data
-	CFStringRef cursorKey             = (CFStringRef)CFDictionaryGetValue(currentCursorInfo, (useDefault) ? kCursorInfoDefaultKey : kCursorInfoCustomKey);
+	CFStringRef cursorKey             = (CFStringRef)CFDictionaryGetValue(currentCursorInfo, kCursorInfoCustomKey);
 	// Dictionary that holds our cursor data
 	CFDictionaryRef currentCursorData = (CFDictionaryRef)CFDictionaryGetValue(cursorData, cursorKey);
 	
@@ -228,7 +369,8 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	
 	/*! Turn the CFNumbers into primitive types to use in the initialization of the image */
 	int bpp, bps, bpr, frameCount, spp;
-	CGFloat frameDuration, hotSpotX, hotSpotY, width, height;
+	CGFloat hotSpotX, hotSpotY, width, height;
+	float frameDuration;
 	
 	CFNumberGetValue(nbpp,           kCFNumberIntType, &bpp);
 	CFNumberGetValue(nbps,           kCFNumberIntType, &bps);
@@ -240,6 +382,9 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	CFNumberGetValue(nwidth,         kCFNumberCGFloatType, &width);
 	CFNumberGetValue(nheight,        kCFNumberCGFloatType, &height);
 	CFNumberGetValue(nspp,           kCFNumberIntType, &spp);
+	
+	// We need to backup the original cursor
+	BackupCursor(key);
 	
 	// The dictionary does not hold the actual height of the image. Since the animations are the cursor height multiplied
 	// by the frame count. We can assume that this is how high the image will be
@@ -261,6 +406,7 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	void *arrayValues[1];
 	arrayValues[0] = cursorImage;	
 	CFArrayRef ar  = CFArrayCreate(NULL, (const void**)arrayValues, 1, NULL);	
+	
 	
 	MMLog("Hooking cursor: %s\n", CKey);
 	
@@ -327,7 +473,7 @@ static CGError dumpCursors(CFStringRef exportPath) {
 		// Get some data to put in the cursor data dictionary
 		int fc, bpr, bpp, bps, spp; 
 		float fd;
-		size_t size;
+		int size;
 		
 		CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), ident, &size);
 		
