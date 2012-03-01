@@ -301,8 +301,6 @@ static CGError dumpCursors(CFStringRef exportPath) {
 	for (int x = 0; x<=11; x++) {
 		// Get the cursor 
 		CFStringRef strIdent = cursorIdentifierFromInt(x);
-		CFShow(strIdent);
-		
 		CFIndex bufferLength = CFStringGetMaximumSizeForEncoding(CFStringGetLength(strIdent), kCFStringEncodingUTF8) + 1;
 		
 		char *ident = malloc(bufferLength);
