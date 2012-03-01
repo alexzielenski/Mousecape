@@ -212,7 +212,12 @@
 }
 
 - (void)tableCellView:(MMAnimatingImageTableCellView*)cellView didAcceptDroppedImages:(NSArray *)images {
+	MMAnimatingImageView *iv = cellView.animatingImageView;
+	// for now images is guaranteed to have one item and its guaranteed to be NSBitmapImageRep…
+	NSLog(@"%ld", (long)[_tableView columnAtPoint:cellView.frame.origin]);
 	
+	// Get the associated MMCursor* for the cell
+	iv.image = [images objectAtIndex:0];
 }
 
 #pragma mark - Authorization Delegate

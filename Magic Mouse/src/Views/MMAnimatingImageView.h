@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-//*****************************************************************************************************************************************//
-//** This is a specialized view class for animating the cursors used in magic mouse. These animated cursors have a height that is their  **//
-//** frame count multiplied by the normal image height so every time the timer fires, it moves the y offset displayed by the image.      **//
-//*****************************************************************************************************************************************//
+//!*****************************************************************************************************************************************//
+//!** This is a specialized view class for animating the cursors used in magic mouse. These animated cursors have a height that is their  **//
+//!** frame count multiplied by the normal image height so every time the timer fires, it moves the y offset displayed by the image.      **//
+//!*****************************************************************************************************************************************//
 @interface MMAnimatingImageView : NSView {
 	// Image to animate
 	NSBitmapImageRep   *_image;
@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSBitmapImageRep   *image;
 @property (nonatomic, assign) CGFloat            frameDuration;
 @property (nonatomic, assign) NSInteger          frameCount;
+
 // Resets the timer and current frame for the animation. Should be used when new parameters are specified.
 // The reason this isn't called automatically when each new parameter is set because that would waste resources.
 - (void)resetAnimation;
