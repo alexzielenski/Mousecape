@@ -39,7 +39,7 @@ CG_EXTERN void CGSSetSystemDefinedCursorWithSeed(CGSConnectionID connection, CGS
 CG_EXTERN void CGSSetDockCursorOverride(CGSConnectionID cid, bool flag);
 
 /*! Gets size in bytes of the raw ARGB data for the indicated cursor */
-CG_EXTERN CGError CGSGetRegisteredCursorDataSize(CGSConnectionID cid, char *cursorName, int *size);
+CG_EXTERN CGError CGSGetRegisteredCursorDataSize(CGSConnectionID cid, char *cursorName, size_t *size);
 
 /*! Creates and returns a CGImage representation and the hotspot of a cursor for a name. Ownership follows the Create Rule */
 CG_EXTERN CGImageRef CGSCreateRegisteredCursorImage(CGSConnectionID cid, char *cursorName, CGPoint *hotSpot);
@@ -48,7 +48,7 @@ CG_EXTERN CGImageRef CGSCreateRegisteredCursorImage(CGSConnectionID cid, char *c
 CG_EXTERN CGError CGSSetRegisteredCursor(CGSConnectionID cid, char *cursorName, CGSCursorID *seed);
 
 /*! Retrieves registered ARGB cursor data and some other important info for it */
-CG_EXTERN CGError CGSGetRegisteredCursorData2(CGSConnectionID cid, char *cursorName, void *data, int *dataSize, int *bytesPerRow, CGSize *imageSize, CGSize *cursorSize, CGPoint *hotSpot, int *bitsPerPixel, int *samplesPerPixel, int *bitsPerSample, int *frameCount, float *frameDuration);
+CG_EXTERN CGError CGSGetRegisteredCursorData2(CGSConnectionID cid, char *cursorName, void *data, size_t *dataSize, int *bytesPerRow, CGSize *imageSize, CGSize *cursorSize, CGPoint *hotSpot, int *bitsPerPixel, int *samplesPerPixel, int *bitsPerSample, int *frameCount, float *frameDuration);
 
 // Not fully reversed/researched. Should not be used
 CG_EXTERN CGError CGSRemoveRegisteredCursor(CGSConnectionID cid, char *cursorName, bool unknownFlag);

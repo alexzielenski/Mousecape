@@ -300,14 +300,14 @@ static void BackupCursor(CFStringRef originalIdentifier) {
 	char *CKey = (char*)malloc(bufferLength);
 	CFStringGetCString(backupIdentifier, CKey, bufferLength, kCFStringEncodingUTF8);
 	
-	int dataSize = 1;
+	size_t dataSize = 0;
 	CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), 
 								   CKey, 
 								   &dataSize);
 	
 	// We don't want to back up the cursor if it has already been backed up.
 	if (dataSize > 4) {
-		MMLog("Cursor already backed up (size %i)\n", dataSize);
+		MMLog("Cursor already backed up (size %lu)\n", dataSize);
 		free(CKey);
 		CFRelease(backupIdentifier);
 		return;
