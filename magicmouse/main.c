@@ -206,7 +206,7 @@ static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinat
 	char *CKey = (char*)malloc(bufferLength);
 	CFStringGetCString(originalName, CKey, bufferLength, kCFStringEncodingUTF8);
 	
-	int dataSize = 0;
+	size_t dataSize;
 	CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), 
 								   CKey, 
 								   &dataSize);
@@ -245,7 +245,7 @@ static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinat
 								&frameCount,
 								&frameDuration);
 	
-	if (imageSize.width == 0 || imageSize.height) {
+	if (imageSize.width == 0 || imageSize.height == 0) {
 		MMLog("Cannot swap cursors. Original one (%s) is nonexistant\n", CKey);
 		free(CKey);
 		free(BKey);
@@ -369,8 +369,7 @@ static void HookCursor(const void* k, const void* cci, void* cd) {
 	
 	/*! Turn the CFNumbers into primitive types to use in the initialization of the image */
 	int bpp, bps, bpr, frameCount, spp;
-	CGFloat hotSpotX, hotSpotY, width, height;
-	float frameDuration;
+	CGFloat frameDuration, hotSpotX, hotSpotY, width, height;
 	
 	CFNumberGetValue(nbpp,           kCFNumberIntType, &bpp);
 	CFNumberGetValue(nbps,           kCFNumberIntType, &bps);
@@ -787,7 +786,7 @@ int main (int argc, const char * argv[]) {
 	CFRelease(cursorPlist);
 	
 	if (success == false) {
-		MMLog("Invalid cursor plist.\n");
+		MMLog("Invalid cursor plist. (e1)\n");
 		return kCGErrorFailure;
 	}
 	
@@ -795,7 +794,7 @@ int main (int argc, const char * argv[]) {
 	CFRelease(cursorPlistData);
 	
 	if (!rootDict) {
-		MMLog("Invalid cursor plist\n");
+		MMLog("Invalid cursor plist. (e2)\n");
 		return kCGErrorIllegalArgument;
 	}
 	
