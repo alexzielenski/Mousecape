@@ -202,7 +202,7 @@
 	NSSavePanel *sp = [NSSavePanel savePanel];
 	sp.title = @"Export Cursor";
 	sp.prompt = @"Select where to export the cursor.";
-	sp.allowedFileTypes = @"mightymouse";
+	sp.allowedFileTypes = [NSArray arrayWithObject:@"mightymouse"];
 	[sp beginSheetModalForWindow:self.tableView.window 
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {

@@ -306,6 +306,7 @@
 				FAD37AFA14F9836E00B7F09C /* Headers */,
 				FAD37AFB14F9836E00B7F09C /* Resources */,
 				FAFC6EAD14F9ACEF00379751 /* Copy magicmouse */,
+				FA129BAC151297FF00F28572 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -358,6 +359,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FA129BAC151297FF00F28572 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"Magic Mouse/Magic Mouse-Info.plist\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"Magic Mouse/Magic Mouse-Info.plist\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FA6F2D1A14F3150E0098AE57 /* Sources */ = {
