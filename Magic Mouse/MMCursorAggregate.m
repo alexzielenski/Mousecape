@@ -156,8 +156,7 @@
 		NSNumber *bytesPerRow     = [dict objectForKey:(NSString *)kCursorDataBytesPerRowKey];
 		NSNumber *bitsPerSample   = [dict objectForKey:(NSString *)kCursorDataBitsPerSampleKey];
 		NSNumber *bitsPerPixel    = [dict objectForKey:(NSString *)kCursorDataBitsPerPixelKey];
-		// This key is not needed
-//		NSNumber *samplesPerPixel = [dict objectForKey:(NSString *)kCursorDataSamplesPerPixelKey];
+//		NSNumber *samplesPerPixel = [dict objectForKey:(NSString *)kCursorDataSamplesPerPixelKey]; // This key is not needed
 		NSNumber *frameCount      = [dict objectForKey:(NSString *)kCursorDataFrameCountKey];
 		NSNumber *frameDuration   = [dict objectForKey:(NSString *)kCursorDataFrameDurationKey];
 		
@@ -165,10 +164,7 @@
 		self.frameDuration        = frameDuration.doubleValue;
 		self.size                 = NSMakeSize(width.integerValue, height.integerValue);
 		self.hotSpot              = NSMakePoint(hotSpotX.floatValue, hotSpotY.floatValue);
-				
-		
-		NSLog(@"%f", self.frameDuration);
-		
+
 		// Convert the raw data into a presentable format.
 		
 		// For some crazy reason, It won't let me create the image straight using the NSBitmapImageRep. (32big & Alpha first). 
