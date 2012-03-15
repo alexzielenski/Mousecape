@@ -175,6 +175,7 @@
 
 #pragma mark - User Interface Actions
 - (IBAction)applyCursors:(NSButton *)sender {
+	
 }
 	
 - (IBAction)resetCursors:(NSButton *)sender {
@@ -190,7 +191,7 @@
 }
 
 - (IBAction)uninstall:(NSButton *)sender {
-	// Remove the magicmouse binary, delete the prefpane, remove the launch daemon, remove the preferences
+	// Delete the prefpane, remove the launch daemon, remove the preferences
 }
 
 - (IBAction)importCursor:(NSMenuItem *)sender {
@@ -198,7 +199,16 @@
 }
 
 - (IBAction)exportCursor:(NSMenuItem *)sender {
-	
+	NSSavePanel *sp = [NSSavePanel savePanel];
+	sp.title = @"Export Cursor";
+	sp.prompt = @"Select where to export the cursor.";
+	sp.allowedFileTypes = @"mightymouse";
+	[sp beginSheetModalForWindow:self.tableView.window 
+			   completionHandler:^(NSInteger result){
+				   if (result == NSFileHandlingPanelOKButton) {
+					   [self.currentCursor.dictionaryRepresentation writeToURL:sp.URL atomically:YES];
+				   }
+			   }];
 }
 
 - (IBAction)advancedEdit:(NSMenuItem *)sender {
