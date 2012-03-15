@@ -166,6 +166,9 @@
 		self.size                 = NSMakeSize(width.integerValue, height.integerValue);
 		self.hotSpot              = NSMakePoint(hotSpotX.floatValue, hotSpotY.floatValue);
 				
+		
+		NSLog(@"%f", self.frameDuration);
+		
 		// Convert the raw data into a presentable format.
 		
 		// For some crazy reason, It won't let me create the image straight using the NSBitmapImageRep. (32big & Alpha first). 

@@ -211,7 +211,7 @@ static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinat
 								   CKey, 
 								   &dataSize);
 	if (dataSize <= 0) {
-		MMLog("Cannot swap cursors. Original one (%s) is nonexistant", CKey);
+		MMLog("Cannot swap cursors. Original one (%s) is nonexistant\n", CKey);
 		free(CKey);
 		return;
 	}
@@ -246,7 +246,7 @@ static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinat
 								&frameDuration);
 	
 	if (imageSize.width == 0 || imageSize.height) {
-		MMLog("Cannot swap cursors. Original one (%s) is nonexistant", CKey);
+		MMLog("Cannot swap cursors. Original one (%s) is nonexistant\n", CKey);
 		free(CKey);
 		free(BKey);
 		return;
@@ -273,7 +273,7 @@ static void ReplaceCursorWithName(CFStringRef originalName, CFStringRef destinat
 											  cursorSize,
 											  hotSpot,
 											  &seed, 
-											  CGRectMake(hotSpot.x, hotSpot.y, imageSize.width, imageSize.height),
+											  CGRectMake(0, 0, imageSize.width, imageSize.height),
 											  frameDuration, 0);
 	
 	if (err != kCGErrorSuccess) {
@@ -471,12 +471,13 @@ static CGError dumpCursors(CFStringRef exportPath) {
 		CFDictionarySetValue(currentIdentifier, kCursorInfoCustomKey, dataKey);
 		
 		// Get some data to put in the cursor data dictionary
-		int fc, bpr, bpp, bps, spp; 
+		int bpr, bpp, bps, spp; 
 		float fd;
-		int size;
+		size_t size;
+		int fc;
 		
 		CGSGetRegisteredCursorDataSize(CGSMainConnectionID(), ident, &size);
-		
+
 		// Sometimes cursors with the name like "com.apple.cursor.5" are not
 		// registered unless they have been used. Here we skip them if so.
 		if (size <= 0) {
@@ -492,6 +493,15 @@ static CGError dumpCursors(CFStringRef exportPath) {
 		
 		// Create some space in ram for the cursor image data
 		void *data = malloc(size);
+		
+		if (!data) {
+			MMLog("Error allocating space for image data in memory.\n");
+			
+			CFRelease(dataKey);
+			CFRelease(currentCursorData);
+			CFRelease(currentIdentifier);
+			return kCGErrorFailure;
+		}
 		
 		CGSize cursorSize;
 		CGSize imageSize;
@@ -511,7 +521,7 @@ static CGError dumpCursors(CFStringRef exportPath) {
 										  &bps,                   // Bits per sample (should be at least 8)
 										  &fc,                    // Frame count
 										  &fd);                   // Frame duration
-		
+				
 		if (err != kCGErrorSuccess) {
 			MMLog("Cursor dump received error code: %i on cursor: %s\n", err, ident);
 			
@@ -529,11 +539,13 @@ static CGError dumpCursors(CFStringRef exportPath) {
 		    We know it is currently little endian because Lion requires intel processors.
 			It needs to be Big Endian because that is what the Mighty Mouse format originally supported
 		    because it was made first for PPC computers which are big endian. */
+		
 		vImage_Buffer buffer;
-		buffer.data = data;
-		buffer.width = imageSize.width;
-		buffer.height = imageSize.height;
+		buffer.data     = data;
+		buffer.width    = imageSize.width;
+		buffer.height   = imageSize.height;
 		buffer.rowBytes = bpr;
+	
 		
 		// The conversion from little to big endian (or vice versa) is a matter of flipping the values
 		uint8_t permuteMap[4] = {3,2,1,0};
@@ -656,7 +668,7 @@ static CGError dumpCursors(CFStringRef exportPath) {
 static void showUsage(void) {
 	MMLog("Usage:\n\tmagicmouse cursor.plist\n\tmagicmouse -r cursorReset.plist\n\tmagicmouse -d dump.plist\n\tmagicmouse -s scaleFactor\n\tmagicmouse -p\n");
 }
-int main (int argc, const char * argv[]) {		
+int main (int argc, const char * argv[]) {
 	bool help;
 	bool dump;
 	bool scale;

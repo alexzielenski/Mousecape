@@ -206,6 +206,8 @@
 }
 
 - (void)dumpCursorsToFile:(NSString*)filePath {
+	[[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+	
 	// Tell NSCursor to init some cursors that may not be registered
 	[[NSCursor operationNotAllowedCursor] _getImageAndHotSpotFromCoreCursor];
 	[[NSCursor dragCopyCursor]            _getImageAndHotSpotFromCoreCursor];
@@ -216,7 +218,6 @@
 	NSTask *task    = [[NSTask alloc] init];
 	task.launchPath = kMMToolPath;
 	task.arguments  = [NSArray arrayWithObjects:@"-d", filePath, nil];
-	
 	[task launch];
 	[task waitUntilExit];
 	[task release];

@@ -121,8 +121,8 @@
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist
-		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                       // Only Accept Images
-		sender.draggingPasteboard.pasteboardItems.count == 1) {                            // Only accept one item
+		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images
+		sender.draggingPasteboard.pasteboardItems.count == 1) {                        // Only accept one item
 		return [self.delegate imageView:self draggingEntered:sender];
 	}
 	return NSDragOperationNone;
