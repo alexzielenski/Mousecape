@@ -324,7 +324,7 @@
 		FA6F2CF014F314FF0098AE57 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Alex Zielenski";
 			};
 			buildConfigurationList = FA6F2CF314F314FF0098AE57 /* Build configuration list for PBXProject "Magic Mouse" */;
