@@ -1,3 +1,5 @@
+# .gitignore in use by Joris Kluivers
+
 *.DS_Store
 
 # Xcode
