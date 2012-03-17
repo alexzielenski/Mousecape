@@ -26,6 +26,7 @@
 
 - (void)mainViewDidLoad;
 - (void)initializeData;
+- (void)initializeCursorData;
 - (BOOL)isUnlocked;
 
 - (MMAdvancedEditViewController *)displayPopoverForColumn:(NSInteger)column;

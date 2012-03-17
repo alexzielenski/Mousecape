@@ -20,8 +20,9 @@
 // Let objective-c runtime release this for me
 @synthesize currentCursor = _currentCursor;
 
-
 - (void)mainViewDidLoad {
+	[self initializeCursorData];
+	
 	// Gather some authorization rights for the lock.
 	AuthorizationItem items       = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights    = {1, &items};
@@ -74,6 +75,58 @@
 	NSString *cursorDump        = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
 	[self dumpCursorsToFile:cursorDump];
 	self.currentCursor          = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
+}
+- (void)initializeCursorData {
+	// These methods tell CoreGraphics to register the images internally. I don't know how it does it–but it does.
+	[[NSCursor contextualMenuCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor arrowCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor IBeamCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor pointingHandCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor closedHandCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor openHandCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeLeftCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeRightCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeLeftRightCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeUpCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeDownCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor resizeUpDownCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor crosshairCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor disappearingItemCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor operationNotAllowedCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor busyButClickableCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor contextualMenuCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor IBeamCursorForVerticalLayout] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor dragCopyCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor dragLinkCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _genericDragCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _handCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _closedHandCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _moveCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _waitCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _crosshairCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _horizontalResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _verticalResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _bottomLeftResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _topLeftResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _bottomRightResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _topRightResizeCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _resizeLeftCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _resizeRightCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _resizeLeftRightCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _zoomInCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _zoomOutCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeEastCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeEastWestCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthEastCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthEastSouthWestCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthSouthCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthWestCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeNorthWestSouthEastCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeSouthCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeSouthEastCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeSouthWestCursor] _getImageAndHotSpotFromCoreCursor];
+	[[NSCursor _windowResizeWestCursor] _getImageAndHotSpotFromCoreCursor];
 }
 
 - (BOOL)isUnlocked {
@@ -218,13 +271,7 @@
 - (void)dumpCursorsToFile:(NSString*)filePath {
 	[[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
 	
-	// Tell NSCursor to init some cursors that may not be registered
-	[[NSCursor operationNotAllowedCursor] _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor dragCopyCursor]            _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor dragLinkCursor]            _getImageAndHotSpotFromCoreCursor];
-	[[NSCursor _moveCursor]               _getImageAndHotSpotFromCoreCursor];
-
-	// Ask the tool to dump
+	// Ask the tool to dump the cursors
 	NSTask *task    = [[NSTask alloc] init];
 	task.launchPath = kMMToolPath;
 	task.arguments  = [NSArray arrayWithObjects:@"-d", filePath, nil];
