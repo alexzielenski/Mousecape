@@ -9,27 +9,19 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import <SecurityInterface/SFAuthorizationView.h>
 #import "MMCursorAggregate.h"
-#import "MMAnimatingImageTableCellView.h"
-#import "MMAdvancedEditViewController.h"
+#import "MMCursorViewController.h"
 
-@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate, NSTableViewDataSource, MMAnimatingImageViewDelegate> {
-	IBOutlet NSPopUpButton       *_actionMenu;
-	IBOutlet NSPopUpButton       *_cursorThemes;
-	
-@private
-	CGFloat            _cursorScale;
-}
+@interface MMPrefPane : NSPreferencePane <NSTabViewDelegate>
+
 @property (nonatomic, assign) IBOutlet SFAuthorizationView *authView;
-@property (nonatomic, retain) IBOutlet NSTableView *tableView;
 @property (nonatomic, assign) CGFloat cursorScale;
 @property (nonatomic, retain) MMCursorAggregate *currentCursor;
+@property (nonatomic, retain) IBOutlet MMCursorViewController *cursorViewController;
 
 - (void)mainViewDidLoad;
 - (void)initializeData;
 - (void)initializeCursorData;
 - (BOOL)isUnlocked;
-
-- (MMAdvancedEditViewController *)displayPopoverForColumn:(NSInteger)column;
 
 // Interface actions
 - (IBAction)applyCursors:(NSButton *)sender;

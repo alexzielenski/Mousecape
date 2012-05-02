@@ -13,6 +13,8 @@
 		FA02424814FF0993006E6FE1 /* AdvancedEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */; };
 		FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */; };
 		FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */; };
+		FA21EF981550C642002D688E /* MMCursorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA21EF961550C642002D688E /* MMCursorViewController.h */; };
+		FA21EF991550C642002D688E /* MMCursorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA21EF971550C642002D688E /* MMCursorViewController.m */; };
 		FA319D3C14F353C50064E7CC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA319D3B14F353C50064E7CC /* Accelerate.framework */; };
 		FA6F2D2114F3150E0098AE57 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6F2D2014F3150E0098AE57 /* CoreFoundation.framework */; };
 		FA6F2D2414F3150E0098AE57 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = FA6F2D2314F3150E0098AE57 /* main.c */; };
@@ -94,6 +96,8 @@
 		FA07747D14F9A25400A1B91B /* CGSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSTransitions.h; sourceTree = "<group>"; };
 		FA07747E14F9A25400A1B91B /* CGSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWindow.h; sourceTree = "<group>"; };
 		FA07747F14F9A25400A1B91B /* CGSWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
+		FA21EF961550C642002D688E /* MMCursorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMCursorViewController.h; path = src/Controllers/MMCursorViewController.h; sourceTree = "<group>"; };
+		FA21EF971550C642002D688E /* MMCursorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMCursorViewController.m; path = src/Controllers/MMCursorViewController.m; sourceTree = "<group>"; };
 		FA319D3B14F353C50064E7CC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FA6F2CFD14F315000098AE57 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FA6F2D0014F315000098AE57 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -233,6 +237,8 @@
 				FADA4A5314FB017400517F22 /* NSCursor_Private.h */,
 				FAD37B1414F983B900B7F09C /* MMPrefPane.h */,
 				FAD37B1514F983B900B7F09C /* MMPrefPane.m */,
+				FA21EF961550C642002D688E /* MMCursorViewController.h */,
+				FA21EF971550C642002D688E /* MMCursorViewController.m */,
 				FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */,
 				FAFC6EB714F9E3F500379751 /* MMCursorAggregate.m */,
 				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
@@ -274,6 +280,7 @@
 				FADA4A4D14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h in Headers */,
 				FADA4A5414FB017400517F22 /* NSCursor_Private.h in Headers */,
 				FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */,
+				FA21EF981550C642002D688E /* MMCursorViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +401,7 @@
 				FAFC6EB914F9E3F500379751 /* MMCursorAggregate.m in Sources */,
 				FADA4A4E14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m in Sources */,
 				FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */,
+				FA21EF991550C642002D688E /* MMCursorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +441,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -450,7 +459,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -461,6 +470,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -470,7 +480,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
@@ -491,6 +501,8 @@
 		FAD37B1214F9836E00B7F09C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Magic Mouse/Magic Mouse-Prefix.pch";
@@ -504,6 +516,8 @@
 		FAD37B1314F9836E00B7F09C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Magic Mouse/Magic Mouse-Prefix.pch";

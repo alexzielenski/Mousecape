@@ -11,37 +11,69 @@
 #import "NSCursor_Private.h"
 #import "MMAdvancedEditViewController.h"
 
+@interface MMPrefPane () {
+	CGFloat _cursorScale;
+	dispatch_queue_t _actionQueue;
+}
+
+@property (nonatomic, assign) IBOutlet NSPopUpButton *_cursorThemes;
+@property (nonatomic, assign) IBOutlet NSPopUpButton *_actionMenu;
+
+@end
+
 // Why does CFPreferences suck so much hard nuts?
 @implementation MMPrefPane
-@dynamic cursorScale;
-@synthesize authView      = _authView;
-@synthesize tableView     = _tableView;
 
-// Let objective-c runtime release this for me
-@synthesize currentCursor = _currentCursor;
+#pragma mark - Private Properties
+
+@synthesize _cursorThemes;
+@synthesize _actionMenu;
+
+#pragma mark - Public Properties
+
+@dynamic cursorScale;
+@dynamic currentCursor;
+@synthesize authView             = _authView;
+@synthesize cursorViewController = _cursorViewController;
+
+#pragma mark - Lifecycle
+
+- (void)dealloc {
+	[self.cursorViewController unbind:@"enabled"];
+	[self.cursorViewController unbind:@"cursor"];
+	
+	self.authView = nil;
+	self.cursorViewController = nil;
+	
+	[super dealloc];
+}
 
 - (void)mainViewDidLoad {
+	_actionQueue = dispatch_queue_create("com.alexzielenski.magicmouse.action.queue", 0);
+	
 	[self initializeCursorData];
 	
 	// Gather some authorization rights for the lock.
-	AuthorizationItem items       = {kAuthorizationRightExecute, 0, NULL, 0};
-    AuthorizationRights rights    = {1, &items};
-	_authView.authorizationRights = &rights;
-    _authView.delegate            = self;
-	_authView.autoupdate          = YES;
+	AuthorizationItem items           = {kAuthorizationRightExecute, 0, NULL, 0};
+    AuthorizationRights rights        = {1, &items};
+	self.authView.authorizationRights = &rights;
+    self.authView.delegate            = self;
+	self.authView.autoupdate          = YES;
 	
 	// Update the lock for our new rights
-    [_authView updateStatus:nil];
+    [self.authView updateStatus:nil];
 	
 	// Action Menu – Force it to have the gear
-	[_actionMenu.cell setUsesItemFromMenu:NO];
-	NSMenuItem *item     = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"" action:NULL keyEquivalent:@""];
+	[self._actionMenu.cell setUsesItemFromMenu:NO];
+	NSMenuItem *item     = [[[NSMenuItem alloc] initWithTitle:@"" action:NULL keyEquivalent:@""] autorelease];
 	item.image           = [NSImage imageNamed:@"NSActionTemplate"];
 	item.onStateImage    = nil;
 	item.mixedStateImage = nil;
 	
-    [_actionMenu.cell setMenuItem:item];
-    [item release];
+    [self._actionMenu.cell setMenuItem:item];
+	
+	[self.cursorViewController bind:@"enabled" toObject:self withKeyPath:@"isUnlocked" options:nil];
+	[self.cursorViewController bind:@"cursor" toObject:self withKeyPath:@"currentCursor" options:nil];
 }
 
 - (void)willSelect {
@@ -51,6 +83,7 @@
 
 - (void)initializeData {
 	[self willChangeValueForKey:@"cursorScale"];
+	
 	// Get the current cursor scale. It needs to be synchronous so that the text field is always in sync
 	NSTask *task                = [[NSTask alloc] init];
 	task.launchPath             = kMMToolPath;
@@ -76,6 +109,7 @@
 	[self dumpCursorsToFile:cursorDump];
 	self.currentCursor          = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
 }
+
 - (void)initializeCursorData {
 	// These methods tell CoreGraphics to register the images internally. I don't know how it does it–but it does.
 	[[NSCursor contextualMenuCursor] _getImageAndHotSpotFromCoreCursor];
@@ -129,68 +163,11 @@
 	[[NSCursor _windowResizeWestCursor] _getImageAndHotSpotFromCoreCursor];
 }
 
-- (BOOL)isUnlocked {
-    return ([_authView authorizationState] == SFAuthorizationViewUnlockedState);
-}
-
-// return the controller just incase we want to do extra things to it
-- (MMAdvancedEditViewController *)displayPopoverForColumn:(NSInteger)columnIdx {
-	if (columnIdx < 0 || columnIdx >= self.tableView.tableColumns.count)
-		return nil;
-	
-	// Find the column that was dragged into
-	NSTableColumn *column = [self.tableView.tableColumns objectAtIndex:columnIdx];
-	// Get the associated MMCursor* for the cell
-	MMCursor *cursor      = [self.currentCursor cursorForTableIdentifier:column.identifier];
-	
-	if (!cursor) {
-		NSLog(@"No cursor for column (%@, %lu)?", column.identifier, (unsigned long)columnIdx);
-		return nil;
-	}
-	
-	// There is guaranteed to be atleast one image and (and no more than one for now)
-	MMAdvancedEditViewController *advancedEdit = [[MMAdvancedEditViewController alloc] initWithNibName:@"AdvancedEdit"
-																								bundle:kMMPrefsBundle];
-	
-	// create a popover to display
-	__block NSPopover *popover = [[NSPopover alloc] init];
-	popover.contentViewController                = advancedEdit;
-	popover.behavior                             = NSPopoverBehaviorApplicationDefined;
-	popover.appearance                           = NSPopoverAppearanceMinimal;
-	
-	NSView *imageView = [self.tableView viewAtColumn:columnIdx row:0 makeIfNecessary:NO];
-	
-	if (!imageView)
-		return nil;
-	
-	// load the nib
-	[popover showRelativeToRect:imageView.bounds
-						 ofView:imageView
-				  preferredEdge:NSMinYEdge];
-	
-	[advancedEdit release]; // decrease the retain count so that the popover is the only owner
-	
-	advancedEdit.cursor                          = cursor;
-	advancedEdit.appliesChangesImmediately       = NO; // we only want changes applied when the user clicks "Done"
-	advancedEdit.identifierField.editable        = NO; // make the identifier field uneditable. (read the highlighted comment below)
-	advancedEdit.nameField.editable              = NO; // same as above
-	
-	[advancedEdit.imageView resetAnimation];
-	
-	__block MMPrefPane *selfRef = self;
-	
-	advancedEdit.didEndBlock                     = ^(BOOL finished) {
-		[selfRef.tableView reloadData]; // reload the table for updated data
-		
-		[popover close];
-		[popover release]; // get rid of the popover
-		popover = nil;
-	};
-	
-	return advancedEdit;
-}
-
 #pragma mark - Accessors
+#import <objc/runtime.h>
+
+static char MMCurrentCursor;
+
 - (CGFloat)cursorScale {
 	return _cursorScale;
 }
@@ -212,27 +189,54 @@
 	[task release];
 }
 
+
 - (MMCursorAggregate *)currentCursor {
-	return _currentCursor;
+	return objc_getAssociatedObject(self, &MMCurrentCursor);
 }
 
 - (void)setCurrentCursor:(MMCursorAggregate *)currentCursor {
 	[self willChangeValueForKey:@"currentCursor"];
-	if (_currentCursor)
-		[_currentCursor release];
-	_currentCursor = [currentCursor retain];
+	
+	objc_setAssociatedObject(self, &MMCurrentCursor, currentCursor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	
 	[self didChangeValueForKey:@"currentCursor"];
 	
-	[_tableView reloadData];
+	[self.cursorViewController.tableView reloadData];
+}
+
+- (BOOL)isUnlocked {
+    return ([_authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
 
 #pragma mark - User Interface Actions
+
 - (IBAction)applyCursors:(NSButton *)sender {
+	// Save the current cursor to a temporary location and then apply it with the command line tool.
+	
+	NSString *location = [NSTemporaryDirectory() stringByAppendingPathComponent:@"MagicMouseTemporary.MightyMouse"];
+	[self.currentCursor.dictionaryRepresentation writeToFile:location atomically:NO];
+	
+	dispatch_async(_actionQueue, ^{		
+		NSTask *task                = [[NSTask alloc] init];
+		task.launchPath             = kMMToolPath;
+		task.arguments              = [NSArray arrayWithObject:location];
+		task.standardOutput         = [NSPipe pipe];
+		
+		[task launch];
+		[task waitUntilExit];
+		
+		// Update the cursor
+		//! TODO: Find some way to update the cursor live
+		[NSCursor _clearOverrideCursorAndSetArrow];
+		NSLog(@"%@", [NSCursor _makeCursors]);
+		[NSCursor _clearOverrideCursorAndSetArrow];
+	});
 	
 }
-	
+
 - (IBAction)resetCursors:(NSButton *)sender {
-	
+	[self initializeData];
+	[self.cursorViewController.tableView reloadData];
 }
 
 - (IBAction)visitWebsite:(NSButton *)sender {
@@ -248,15 +252,32 @@
 }
 
 - (IBAction)importCursor:(NSMenuItem *)sender {
+	NSOpenPanel *sp = [NSOpenPanel openPanel];
+	sp.title   = @"Import Cursor";
+	sp.message = @"Select a cursor to import into your library."; 
+	sp.prompt  = @"Import";
 	
+	sp.allowedFileTypes = [NSArray arrayWithObject:@"MightyMouse"];
+	
+	[sp beginSheetModalForWindow:self.authView.window 
+			   completionHandler:^(NSInteger result){
+				   if (result == NSFileHandlingPanelOKButton) {
+					   
+					   self.currentCursor = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfURL:sp.URL]];
+					   
+				   }
+			   }];
 }
 
 - (IBAction)exportCursor:(NSMenuItem *)sender {
 	NSSavePanel *sp = [NSSavePanel savePanel];
-	sp.title = @"Export Cursor";
-	sp.prompt = @"Select where to export the cursor.";
-	sp.allowedFileTypes = [NSArray arrayWithObject:@"mightymouse"];
-	[sp beginSheetModalForWindow:self.tableView.window 
+	sp.title   = @"Export Cursor";
+	sp.message = @"Select where to export the cursor."; 
+	sp.prompt  = @"Export";
+	
+	sp.allowedFileTypes = [NSArray arrayWithObject:@"MightyMouse"];
+	
+	[sp beginSheetModalForWindow:self.authView.window 
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {
 					   [self.currentCursor.dictionaryRepresentation writeToURL:sp.URL atomically:YES];
@@ -280,77 +301,8 @@
 	[task release];
 }
 
-#pragma mark - NSTableViewDataSource
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-	// We only have 1 row, but 9 columns
-	return 1;
-}
-
-#pragma mark - NSTableViewDelegate
-//!*****************************************************************************************************************************************//
-//!** Each table column has an identifier that would correspond with an identifier built into one of the cursors ("TableIdentifier" key). **//
-//!** We use that identifier to retrieve the cursor and display it accoringly.                                                            **//
-//!*****************************************************************************************************************************************//
-- (NSTableCellView *)tableView:(NSTableView*)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-	// This identifier is set in the xib
-	static NSString *cellIdentifier = @"MMCursorCell";
-	
-	MMAnimatingImageTableCellView *cellView       = [tableView makeViewWithIdentifier:cellIdentifier owner:self];
-	MMCursor *cursor                              = [self.currentCursor cursorForTableIdentifier:tableColumn.identifier];
-	
-	if (cursor) {
-		cellView.animatingImageView.image         = cursor.image;
-		cellView.animatingImageView.frameCount    = cursor.frameCount;
-		cellView.animatingImageView.frameDuration = cursor.frameDuration;
-		cellView.animatingImageView.delegate                         = self;
-		
-		// We set our values, now we need to reset the animation to reflect our changes
-		[cellView.animatingImageView resetAnimation];
-	}
-	
-	return cellView;
-}
-
-// Disable tableview selection
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex {
-	return NO;
-}
-
-#pragma mark - MMAnimatingImageCellViewDelegate
-- (NSDragOperation)imageView:(MMAnimatingImageView *)imageView draggingEntered:(id <NSDraggingInfo>)drop {
-	return (self.isUnlocked) ? NSDragOperationCopy : NSDragOperationNone;
-}
-
-- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPrepareForDragOperation:(id <NSDraggingInfo>)drop {
-	return self.isUnlocked;
-}
-
-- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPerformDragOperation:(id <NSDraggingInfo>)drop {
-	return self.isUnlocked;
-}
-
-//!**********************************************************************************************************************************************/
-//!** When the user drops an image onto a table item, we show then a quick edit popover for them to be able to quickly customize some of       **/
-//!** the settings. If they click "Done" these changes are applied. We make the identifier field uneditable because we don't want the user     **/
-//!** changing the identifier value for any of the cursors in the table since they have preset identifier values that must stay static to work **/
-//!**********************************************************************************************************************************************/
-- (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {	
-	NSUInteger columnIdx  = [_tableView columnAtPoint:imageView.superview.frame.origin];
-	if (columnIdx == -1) {
-		NSLog(@"No column found at specified point (%@) after drag operation.", NSStringFromPoint(imageView.superview.frame.origin));
-		return;
-	}
-	
-	// set the dragged image to the image of the animating image view on the popover
-	MMAdvancedEditViewController *vc   = [self displayPopoverForColumn:columnIdx];
-	vc.imageView.image                 = [images objectAtIndex:0];
-	vc.imageView.frameDuration         = 1;
-	vc.imageView.frameCount            = 1;
-	vc.frameCountField.integerValue    = 1;
-	vc.frameDurationField.integerValue = 1; 
-}
-
 #pragma mark - Authorization Delegate
+
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view {
 	[self willChangeValueForKey:@"isUnlocked"];
 	// Let observers know.

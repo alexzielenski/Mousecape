@@ -18,6 +18,7 @@ typedef void(^MMAdvancedEditDidEndBlock)(BOOL doneClicked); // doneClicked = if 
 @interface MMAdvancedEditViewController : NSViewController <MMAnimatingImageViewDelegate> {
 	MMCursor *_cursor;
 }
+
 /* Properties and outlets for the views */
 @property (nonatomic, retain) IBOutlet NSTextField          *nameField;
 @property (nonatomic, retain) IBOutlet NSTextField          *xField;
