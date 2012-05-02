@@ -15,11 +15,11 @@
 @property (nonatomic, assign) NSSize            size;
 @property (nonatomic, assign) NSPoint           hotSpot;
 
-@property (nonatomic, retain) NSString          *tableIdentifier;
-@property (nonatomic, retain) NSString          *defaultKey;
-@property (nonatomic, retain) NSString          *customKey;
-@property (nonatomic, retain) NSString          *name;
-@property (nonatomic, retain) NSString          *cursorIdentifier;
+@property (nonatomic, copy)   NSString          *tableIdentifier;
+@property (nonatomic, copy)   NSString          *defaultKey;
+@property (nonatomic, copy)   NSString          *customKey;
+@property (nonatomic, copy)   NSString          *name;
+@property (nonatomic, copy)   NSString          *cursorIdentifier;
 
 // creating a cursor from a dictionary
 + (MMCursor *)cursorWithDictionary:(NSDictionary *)dict;

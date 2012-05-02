@@ -7,7 +7,6 @@
 //
 
 #import "MMPrefPane.h"
-#import "MMDefs.h"
 #import "NSCursor_Private.h"
 #import "MMAdvancedEditViewController.h"
 
@@ -35,6 +34,7 @@
 @dynamic currentCursor;
 @synthesize authView             = _authView;
 @synthesize cursorViewController = _cursorViewController;
+@synthesize advancedEditWindowController = _advancedEditWindowController;
 
 #pragma mark - Lifecycle
 
@@ -44,6 +44,7 @@
 	
 	self.authView = nil;
 	self.cursorViewController = nil;
+	self.advancedEditWindowController = nil;
 	
 	[super dealloc];
 }
@@ -52,6 +53,8 @@
 	_actionQueue = dispatch_queue_create("com.alexzielenski.magicmouse.action.queue", 0);
 	
 	[self initializeCursorData];
+	
+	self.advancedEditWindowController = [[[MMAdvancedEditWindowController alloc] initWithWindowNibName:@"EditWindow"] autorelease];
 	
 	// Gather some authorization rights for the lock.
 	AuthorizationItem items           = {kAuthorizationRightExecute, 0, NULL, 0};
@@ -205,7 +208,7 @@ static char MMCurrentCursor;
 }
 
 - (BOOL)isUnlocked {
-    return ([_authView authorizationState] == SFAuthorizationViewUnlockedState);
+    return YES;//([_authView authorizationState] == SFAuthorizationViewUnlockedState);
 }
 
 #pragma mark - User Interface Actions
@@ -259,7 +262,7 @@ static char MMCurrentCursor;
 	
 	sp.allowedFileTypes = [NSArray arrayWithObject:@"MightyMouse"];
 	
-	[sp beginSheetModalForWindow:self.authView.window 
+	[sp beginSheetModalForWindow:[NSApp mainWindow]
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {
 					   
@@ -277,7 +280,7 @@ static char MMCurrentCursor;
 	
 	sp.allowedFileTypes = [NSArray arrayWithObject:@"MightyMouse"];
 	
-	[sp beginSheetModalForWindow:self.authView.window 
+	[sp beginSheetModalForWindow:[NSApp mainWindow] 
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {
 					   [self.currentCursor.dictionaryRepresentation writeToURL:sp.URL atomically:YES];
@@ -286,7 +289,7 @@ static char MMCurrentCursor;
 }
 
 - (IBAction)advancedEdit:(NSMenuItem *)sender {
-	
+	[self.advancedEditWindowController displayForWindow:[NSApp mainWindow] cursor:self.currentCursor];
 }
 
 - (void)dumpCursorsToFile:(NSString*)filePath {

@@ -10,6 +10,7 @@
 #import <SecurityInterface/SFAuthorizationView.h>
 #import "MMCursorAggregate.h"
 #import "MMCursorViewController.h"
+#import "MMAdvancedEditWindowController.h"
 
 @interface MMPrefPane : NSPreferencePane <NSTabViewDelegate>
 
@@ -17,6 +18,7 @@
 @property (nonatomic, assign) CGFloat cursorScale;
 @property (nonatomic, retain) MMCursorAggregate *currentCursor;
 @property (nonatomic, retain) IBOutlet MMCursorViewController *cursorViewController;
+@property (nonatomic, retain) MMAdvancedEditWindowController *advancedEditWindowController;
 
 - (void)mainViewDidLoad;
 - (void)initializeData;

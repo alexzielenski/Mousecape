@@ -31,6 +31,9 @@
 		FADA4A4D14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = FADA4A4B14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h */; };
 		FADA4A4E14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */; };
 		FADA4A5414FB017400517F22 /* NSCursor_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = FADA4A5314FB017400517F22 /* NSCursor_Private.h */; };
+		FAEBD4AD1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = FAEBD4AA1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h */; };
+		FAEBD4AE1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEBD4AB1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m */; };
+		FAEBD4AF1551DBAA00F4B4D9 /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAEBD4AC1551DBAA00F4B4D9 /* EditWindow.xib */; };
 		FAFC6EAE14F9AD0D00379751 /* magicmouse in Copy magicmouse */ = {isa = PBXBuildFile; fileRef = FA6F2D1E14F3150E0098AE57 /* magicmouse */; };
 		FAFC6EB414F9C1C300379751 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB214F9C1C300379751 /* Security.framework */; };
 		FAFC6EB514F9C1C300379751 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */; };
@@ -121,6 +124,9 @@
 		FADA4A4B14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageTableCellView.h; path = src/Views/MMAnimatingImageTableCellView.h; sourceTree = "<group>"; };
 		FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageTableCellView.m; path = src/Views/MMAnimatingImageTableCellView.m; sourceTree = "<group>"; };
 		FADA4A5314FB017400517F22 /* NSCursor_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCursor_Private.h; sourceTree = "<group>"; };
+		FAEBD4AA1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAdvancedEditWindowController.h; path = src/Controllers/MMAdvancedEditWindowController.h; sourceTree = "<group>"; };
+		FAEBD4AB1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAdvancedEditWindowController.m; path = src/Controllers/MMAdvancedEditWindowController.m; sourceTree = "<group>"; };
+		FAEBD4AC1551DBAA00F4B4D9 /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/Controllers/EditWindow.xib; sourceTree = "<group>"; };
 		FAFC6EB214F9C1C300379751 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FAFC6EB314F9C1C300379751 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCursorAggregate.h; sourceTree = "<group>"; };
@@ -247,6 +253,8 @@
 				FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */,
 				FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */,
 				FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */,
+				FAEBD4AA1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h */,
+				FAEBD4AB1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m */,
 				FAD37B0314F9836E00B7F09C /* Supporting Files */,
 			);
 			path = "Magic Mouse";
@@ -258,6 +266,7 @@
 				0E7C3CC414F9FB1A0003A5FE /* cursor.png */,
 				FAD37B1614F983B900B7F09C /* Magic_Mouse.tiff */,
 				FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */,
+				FAEBD4AC1551DBAA00F4B4D9 /* EditWindow.xib */,
 				FAD37B2214F983D700B7F09C /* Magic_Mouse.xib */,
 				FAD37B2D14F983F000B7F09C /* InfoPlist.strings */,
 				FAD37B2914F983E800B7F09C /* Magic Mouse-Info.plist */,
@@ -281,6 +290,7 @@
 				FADA4A5414FB017400517F22 /* NSCursor_Private.h in Headers */,
 				FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */,
 				FA21EF981550C642002D688E /* MMCursorViewController.h in Headers */,
+				FAEBD4AD1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +372,7 @@
 				FAD37B2F14F983F000B7F09C /* InfoPlist.strings in Resources */,
 				0E7C3CC514F9FB1A0003A5FE /* cursor.png in Resources */,
 				FA02424814FF0993006E6FE1 /* AdvancedEdit.xib in Resources */,
+				FAEBD4AF1551DBAA00F4B4D9 /* EditWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +413,7 @@
 				FADA4A4E14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m in Sources */,
 				FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */,
 				FA21EF991550C642002D688E /* MMCursorViewController.m in Sources */,
+				FAEBD4AE1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
