@@ -75,19 +75,15 @@
 	[self showWindow:self];
 }
 
-- (void)showWindow:(id)sender {
-	if (self.cursor.cursors.count > 0)
-		[self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-	
+- (void)showWindow:(id)sender {	
 	[NSApp beginSheet:self.window 
 	   modalForWindow:self.parentWindow 
 		modalDelegate:self 
 	   didEndSelector:NULL
 		  contextInfo:nil];
-}
-
-- (void)windowDidClose:(id)sender {
-	NSLog(@"%@ : %@", __PRETTY_FUNCTION__, sender);
+	
+	if (self.cursor.cursors.count > 0)
+		[self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
 #pragma mark - NSTableViewDataSource
