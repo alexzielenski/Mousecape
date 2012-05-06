@@ -35,12 +35,13 @@
 @synthesize authView             = _authView;
 @synthesize cursorViewController = _cursorViewController;
 @synthesize advancedEditWindowController = _advancedEditWindowController;
+@synthesize cursorLibrary        = _cursorLibrary;
+@synthesize cursorPicker         = _cursorPicker;
 
 #pragma mark - Lifecycle
 
 - (void)dealloc {
 	[self.cursorViewController unbind:@"enabled"];
-	[self.cursorViewController unbind:@"cursor"];
 	
 	self.authView = nil;
 	self.cursorViewController = nil;
@@ -50,6 +51,13 @@
 }
 
 - (void)mainViewDidLoad {
+	NSArray *supports = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+															NSUserDomainMask,
+															YES);
+	
+	NSString *appSupport = [[supports objectAtIndex:0] stringByAppendingPathComponent:@"MagicMouse"];
+	self.cursorLibrary = [MMCursorLibrary libraryWithPath:appSupport];
+	
 	_actionQueue = dispatch_queue_create("com.alexzielenski.magicmouse.action.queue", 0);
 	
 	[self initializeCursorData];
@@ -76,7 +84,16 @@
     [self._actionMenu.cell setMenuItem:item];
 	
 	[self.cursorViewController bind:@"enabled" toObject:self withKeyPath:@"isUnlocked" options:nil];
-	[self.cursorViewController bind:@"cursor" toObject:self withKeyPath:@"currentCursor" options:nil];
+	
+	self.cursorPicker.action = @selector(chooseCursor:);
+	self.cursorPicker.target = self;
+	self.cursorPicker.menu.delegate = self;
+	
+	// Size to fit
+	[self chooseCursor:self.cursorPicker];
+	
+	[self menuNeedsUpdate:self.cursorPicker.menu];
+	[self.cursorPicker selectItemAtIndex:0];
 }
 
 - (void)willSelect {
@@ -110,7 +127,7 @@
 	// Dump the current cursors to a temporary location for the initial table view.
 	NSString *cursorDump        = [NSTemporaryDirectory() stringByAppendingPathComponent:@"magicmousecursordump.plist"];
 	[self dumpCursorsToFile:cursorDump];
-	self.currentCursor          = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfFile:cursorDump]];
+	self.currentCursor          = [MMCursorAggregate aggregateWithContentsOfFile:cursorDump];
 }
 
 - (void)initializeCursorData {
@@ -216,10 +233,14 @@ static char MMCurrentCursor;
 - (IBAction)applyCursors:(NSButton *)sender {
 	// Save the current cursor to a temporary location and then apply it with the command line tool.
 	
-	NSString *location = [NSTemporaryDirectory() stringByAppendingPathComponent:@"MagicMouseTemporary.MightyMouse"];
-	[self.currentCursor.dictionaryRepresentation writeToFile:location atomically:NO];
+	NSString *location = self.cursorViewController.cursor.path;
 	
-	dispatch_async(_actionQueue, ^{		
+	if (!location) {
+		[NSTemporaryDirectory() stringByAppendingPathComponent:@"MagicMouseTemporary.MightyMouse"];
+		[self.cursorViewController.cursor.dictionaryRepresentation writeToFile:location atomically:NO];
+	}
+	
+	dispatch_async(_actionQueue, ^{
 		NSTask *task                = [[NSTask alloc] init];
 		task.launchPath             = kMMToolPath;
 		task.arguments              = [NSArray arrayWithObject:location];
@@ -227,11 +248,12 @@ static char MMCurrentCursor;
 		
 		[task launch];
 		[task waitUntilExit];
+		[task release];
 		
 		// Update the cursor
 		//! TODO: Find some way to update the cursor live
 		[NSCursor _clearOverrideCursorAndSetArrow];
-		NSLog(@"%@", [NSCursor _makeCursors]);
+		[NSCursor _makeCursors];
 		[NSCursor _clearOverrideCursorAndSetArrow];
 	});
 	
@@ -266,7 +288,8 @@ static char MMCurrentCursor;
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {
 					   
-					   self.currentCursor = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfURL:sp.URL]];
+//					   self.currentCursor = [MMCursorAggregate aggregateWithDictionary:[NSDictionary dictionaryWithContentsOfURL:sp.URL]];
+					   [self.cursorLibrary addCursorAtPath:sp.URL.path];
 					   
 				   }
 			   }];
@@ -283,13 +306,19 @@ static char MMCurrentCursor;
 	[sp beginSheetModalForWindow:[NSApp mainWindow] 
 			   completionHandler:^(NSInteger result){
 				   if (result == NSFileHandlingPanelOKButton) {
-					   [self.currentCursor.dictionaryRepresentation writeToURL:sp.URL atomically:YES];
+					   [self.cursorViewController.cursor.dictionaryRepresentation writeToURL:sp.URL atomically:YES];
 				   }
 			   }];
 }
 
+- (void)chooseCursor:(NSPopUpButton *)sender
+{
+	[sender sizeToFit];
+	sender.frameOrigin = NSMakePoint(round(sender.superview.bounds.size.width / 2 - sender.frame.size.width / 2), sender.frame.origin.y);
+}
+
 - (IBAction)advancedEdit:(NSMenuItem *)sender {
-	[self.advancedEditWindowController displayForWindow:[NSApp mainWindow] cursor:self.currentCursor];
+	[self.advancedEditWindowController displayForWindow:[NSApp mainWindow] cursor:self.cursorViewController.cursor];
 }
 
 - (void)dumpCursorsToFile:(NSString*)filePath {
@@ -302,6 +331,42 @@ static char MMCurrentCursor;
 	[task launch];
 	[task waitUntilExit];
 	[task release];
+}
+
+#pragma mark - NSMenuDelegate
+
+- (NSInteger)numberOfItemsInMenu:(NSMenu *)menu
+{
+	return self.cursorLibrary.cursors.count + 1; // For the currently applied cursor, of course.
+}
+
+- (void)menuNeedsUpdate:(NSMenu *)menu
+{
+	NSInteger count = [self numberOfItemsInMenu:menu];
+	while ([menu numberOfItems] < count)
+		[menu insertItem:[[NSMenuItem new] autorelease] atIndex:0];
+	while ([menu numberOfItems] > count)
+		[menu removeItemAtIndex:0];
+	for (NSInteger index = 0; index < count; index++)
+		[self menu:menu updateItem:[menu itemAtIndex:index] atIndex:index shouldCancel:NO];
+}
+
+- (BOOL)menu:(NSMenu *)menu updateItem:(NSMenuItem *)item atIndex:(NSInteger)index shouldCancel:(BOOL)shouldCancel
+{
+	if (shouldCancel)
+		return NO;
+	
+	if (index == 0) {
+		[item setTitle:@"Current"];
+		return YES;
+	}
+	
+	MMCursorAggregate *cursor = [self.cursorLibrary.cursors.allObjects objectAtIndex:0];
+	
+	item.title = cursor.path.lastPathComponent.stringByDeletingPathExtension;
+	
+	return YES;
+	
 }
 
 #pragma mark - Authorization Delegate

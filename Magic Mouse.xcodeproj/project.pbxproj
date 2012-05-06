@@ -11,6 +11,8 @@
 		FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */; };
 		FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */; };
 		FA02424814FF0993006E6FE1 /* AdvancedEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */; };
+		FA05ED1115571D7800BEC0AC /* MMCursorLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = FA05ED0F15571D7800BEC0AC /* MMCursorLibrary.h */; };
+		FA05ED1215571D7800BEC0AC /* MMCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FA05ED1015571D7800BEC0AC /* MMCursorLibrary.m */; };
 		FA07748014F9A70A00A1B91B /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */; };
 		FA07748114F9A70E00A1B91B /* MMAnimatingImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */; };
 		FA21EF981550C642002D688E /* MMCursorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA21EF961550C642002D688E /* MMCursorViewController.h */; };
@@ -81,6 +83,8 @@
 		FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAdvancedEditViewController.h; path = src/Controllers/MMAdvancedEditViewController.h; sourceTree = "<group>"; };
 		FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAdvancedEditViewController.m; path = src/Controllers/MMAdvancedEditViewController.m; sourceTree = "<group>"; };
 		FA02424514FF0993006E6FE1 /* AdvancedEdit.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AdvancedEdit.xib; path = src/Controllers/AdvancedEdit.xib; sourceTree = "<group>"; };
+		FA05ED0F15571D7800BEC0AC /* MMCursorLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMCursorLibrary.h; path = src/Controllers/MMCursorLibrary.h; sourceTree = "<group>"; };
+		FA05ED1015571D7800BEC0AC /* MMCursorLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMCursorLibrary.m; path = src/Controllers/MMCursorLibrary.m; sourceTree = "<group>"; };
 		FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/Views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/Views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FA07747014F9A25400A1B91B /* CarbonHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonHelpers.h; sourceTree = "<group>"; };
@@ -159,6 +163,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA05ED1A1557286500BEC0AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
+				FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */,
+				FADA4A4B14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h */,
+				FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		FA07746F14F9A25400A1B91B /* CGSInternal */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,14 +262,13 @@
 				FA21EF971550C642002D688E /* MMCursorViewController.m */,
 				FAFC6EB614F9E3F500379751 /* MMCursorAggregate.h */,
 				FAFC6EB714F9E3F500379751 /* MMCursorAggregate.m */,
-				FA07746B14F9976100A1B91B /* MMAnimatingImageView.h */,
-				FA07746C14F9976100A1B91B /* MMAnimatingImageView.m */,
-				FADA4A4B14FAEA4F00517F22 /* MMAnimatingImageTableCellView.h */,
-				FADA4A4C14FAEA4F00517F22 /* MMAnimatingImageTableCellView.m */,
 				FA02424314FF0993006E6FE1 /* MMAdvancedEditViewController.h */,
 				FA02424414FF0993006E6FE1 /* MMAdvancedEditViewController.m */,
 				FAEBD4AA1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h */,
 				FAEBD4AB1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m */,
+				FA05ED0F15571D7800BEC0AC /* MMCursorLibrary.h */,
+				FA05ED1015571D7800BEC0AC /* MMCursorLibrary.m */,
+				FA05ED1A1557286500BEC0AC /* Views */,
 				FAD37B0314F9836E00B7F09C /* Supporting Files */,
 			);
 			path = "Magic Mouse";
@@ -291,6 +305,7 @@
 				FA02424614FF0993006E6FE1 /* MMAdvancedEditViewController.h in Headers */,
 				FA21EF981550C642002D688E /* MMCursorViewController.h in Headers */,
 				FAEBD4AD1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.h in Headers */,
+				FA05ED1115571D7800BEC0AC /* MMCursorLibrary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +429,7 @@
 				FA02424714FF0993006E6FE1 /* MMAdvancedEditViewController.m in Sources */,
 				FA21EF991550C642002D688E /* MMCursorViewController.m in Sources */,
 				FAEBD4AE1551DBAA00F4B4D9 /* MMAdvancedEditWindowController.m in Sources */,
+				FA05ED1215571D7800BEC0AC /* MMCursorLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -532,7 +532,7 @@
 											<object class="NSButton" id="920480871">
 												<reference key="NSNextResponder" ref="774709862"/>
 												<int key="NSvFlags">289</int>
-												<string key="NSFrame">{{370, 9}, {128, 32}}</string>
+												<string key="NSFrame">{{357, 9}, {128, 32}}</string>
 												<reference key="NSSuperview" ref="774709862"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="893230316"/>
@@ -556,7 +556,7 @@
 											<object class="NSButton" id="893230316">
 												<reference key="NSNextResponder" ref="774709862"/>
 												<int key="NSvFlags">289</int>
-												<string key="NSFrame">{{498, 9}, {128, 32}}</string>
+												<string key="NSFrame">{{485, 9}, {128, 32}}</string>
 												<reference key="NSSuperview" ref="774709862"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="127750468"/>
@@ -1198,7 +1198,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="558859723"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{668, 418}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -1325,6 +1325,14 @@
 						<reference key="destination" ref="912878986"/>
 					</object>
 					<int key="connectionID">403</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cursorPicker</string>
+						<reference key="source" ref="294453543"/>
+						<reference key="destination" ref="476708338"/>
+					</object>
+					<int key="connectionID">408</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1689,13 +1697,13 @@
 						<reference key="object" ref="774709862"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1001928502"/>
-							<reference ref="920480871"/>
-							<reference ref="893230316"/>
 							<reference ref="762728348"/>
 							<reference ref="1052818882"/>
 							<reference ref="282823586"/>
 							<reference ref="476708338"/>
 							<reference ref="351389062"/>
+							<reference ref="893230316"/>
+							<reference ref="920480871"/>
 						</array>
 						<reference key="parent" ref="652888780"/>
 					</object>
@@ -2315,7 +2323,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">403</int>
+			<int key="maxID">408</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2427,6 +2435,7 @@
 						<string key="_actionMenu">NSPopUpButton</string>
 						<string key="_cursorThemes">NSPopUpButton</string>
 						<string key="authView">SFAuthorizationView</string>
+						<string key="cursorPicker">NSPopUpButton</string>
 						<string key="cursorViewController">MMCursorViewController</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -2441,6 +2450,10 @@
 						<object class="IBToOneOutletInfo" key="authView">
 							<string key="name">authView</string>
 							<string key="candidateClassName">SFAuthorizationView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cursorPicker">
+							<string key="name">cursorPicker</string>
+							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="cursorViewController">
 							<string key="name">cursorViewController</string>

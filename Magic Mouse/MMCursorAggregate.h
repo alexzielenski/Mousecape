@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface MMCursor : NSObject
+
 @property (nonatomic, retain) NSBitmapImageRep  *image;
 @property (nonatomic, assign) CGFloat           frameDuration;
 @property (nonatomic, assign) NSInteger         frameCount;
@@ -36,9 +37,14 @@
 @private
 	NSMutableDictionary *_cursors;
 }
+@property (nonatomic, copy, readonly) NSString *path;
 @property (nonatomic, retain) NSDictionary *cursors;
 @property (nonatomic, retain) NSString *minimumVersion;
 @property (nonatomic, retain) NSString *creatorVersion;
+
+// creating an aggregate from a file
++ (MMCursorAggregate *)aggregateWithContentsOfFile:(NSString *)path;
+- (id)initWithContentsOfFile:(NSString *)path;
 
 + (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict;
 - (id)initWithAggregateDictionary:(NSDictionary *)dict;

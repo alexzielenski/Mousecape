@@ -11,11 +11,29 @@
 
 #import <Accelerate/Accelerate.h>
 
-@implementation MMCursorAggregate
+@interface MMCursorAggregate ()
+@property (nonatomic, copy, readwrite) NSString *path;
+@end
 
-@synthesize cursors = _cursors;
+@implementation MMCursorAggregate
+@synthesize path           = _path;
+@synthesize cursors        = _cursors;
 @synthesize minimumVersion = _minimumVersion;
 @synthesize creatorVersion = _creatorVersion;
+
+// creating an aggregate from a file
++ (MMCursorAggregate *)aggregateWithContentsOfFile:(NSString *)path
+{
+	return [[[self alloc] initWithContentsOfFile:path] autorelease];
+}
+
+- (id)initWithContentsOfFile:(NSString *)path
+{
+	if ((self = [self initWithAggregateDictionary:[NSDictionary dictionaryWithContentsOfFile:path]]))
+		self.path = path;
+	
+	return self;
+}
 
 + (MMCursorAggregate *)aggregateWithDictionary:(NSDictionary *)dict {
 	return [[[self alloc] initWithAggregateDictionary:dict] autorelease];
