@@ -1,0 +1,305 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA139FCD16C57A1E00AF6D2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */; };
+		FA139FD716C57A1E00AF6D2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA139FD516C57A1E00AF6D2E /* InfoPlist.strings */; };
+		FA139FD916C57A1E00AF6D2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FD816C57A1E00AF6D2E /* main.m */; };
+		FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA139FDB16C57A1E00AF6D2E /* Credits.rtf */; };
+		FA139FE016C57A1E00AF6D2E /* MCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */; };
+		FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA139FE116C57A1E00AF6D2E /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA139FC816C57A1E00AF6D2E /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FA139FCF16C57A1E00AF6D2E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		FA139FD016C57A1E00AF6D2E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FA139FD116C57A1E00AF6D2E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA139FD416C57A1E00AF6D2E /* Mousecape-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mousecape-Info.plist"; sourceTree = "<group>"; };
+		FA139FD616C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA139FD816C57A1E00AF6D2E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FA139FDA16C57A1E00AF6D2E /* Mousecape-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mousecape-Prefix.pch"; sourceTree = "<group>"; };
+		FA139FDC16C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCAppDelegate.h; sourceTree = "<group>"; };
+		FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCAppDelegate.m; sourceTree = "<group>"; };
+		FA139FE216C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA139FC516C57A1E00AF6D2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA139FCD16C57A1E00AF6D2E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA139FBD16C57A1E00AF6D2E = {
+			isa = PBXGroup;
+			children = (
+				FA139FD216C57A1E00AF6D2E /* Mousecape */,
+				FA139FCB16C57A1E00AF6D2E /* Frameworks */,
+				FA139FC916C57A1E00AF6D2E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA139FC916C57A1E00AF6D2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FC816C57A1E00AF6D2E /* Mousecape.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA139FCB16C57A1E00AF6D2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */,
+				FA139FCE16C57A1E00AF6D2E /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA139FCE16C57A1E00AF6D2E /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FCF16C57A1E00AF6D2E /* AppKit.framework */,
+				FA139FD016C57A1E00AF6D2E /* CoreData.framework */,
+				FA139FD116C57A1E00AF6D2E /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		FA139FD216C57A1E00AF6D2E /* Mousecape */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */,
+				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
+				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
+				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
+			);
+			path = Mousecape;
+			sourceTree = "<group>";
+		};
+		FA139FD316C57A1E00AF6D2E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FD416C57A1E00AF6D2E /* Mousecape-Info.plist */,
+				FA139FD516C57A1E00AF6D2E /* InfoPlist.strings */,
+				FA139FD816C57A1E00AF6D2E /* main.m */,
+				FA139FDA16C57A1E00AF6D2E /* Mousecape-Prefix.pch */,
+				FA139FDB16C57A1E00AF6D2E /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA139FC716C57A1E00AF6D2E /* Mousecape */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA139FE616C57A1E00AF6D2E /* Build configuration list for PBXNativeTarget "Mousecape" */;
+			buildPhases = (
+				FA139FC416C57A1E00AF6D2E /* Sources */,
+				FA139FC516C57A1E00AF6D2E /* Frameworks */,
+				FA139FC616C57A1E00AF6D2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mousecape;
+			productName = Mousecape;
+			productReference = FA139FC816C57A1E00AF6D2E /* Mousecape.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA139FBF16C57A1E00AF6D2E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MC;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Alex Zielenski";
+			};
+			buildConfigurationList = FA139FC216C57A1E00AF6D2E /* Build configuration list for PBXProject "Mousecape" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FA139FBD16C57A1E00AF6D2E;
+			productRefGroup = FA139FC916C57A1E00AF6D2E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA139FC716C57A1E00AF6D2E /* Mousecape */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA139FC616C57A1E00AF6D2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA139FD716C57A1E00AF6D2E /* InfoPlist.strings in Resources */,
+				FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */,
+				FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA139FC416C57A1E00AF6D2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA139FD916C57A1E00AF6D2E /* main.m in Sources */,
+				FA139FE016C57A1E00AF6D2E /* MCAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FA139FD516C57A1E00AF6D2E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA139FD616C57A1E00AF6D2E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FA139FDB16C57A1E00AF6D2E /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA139FDC16C57A1E00AF6D2E /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		FA139FE116C57A1E00AF6D2E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA139FE216C57A1E00AF6D2E /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA139FE416C57A1E00AF6D2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FA139FE516C57A1E00AF6D2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FA139FE716C57A1E00AF6D2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
+				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FA139FE816C57A1E00AF6D2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
+				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA139FC216C57A1E00AF6D2E /* Build configuration list for PBXProject "Mousecape" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA139FE416C57A1E00AF6D2E /* Debug */,
+				FA139FE516C57A1E00AF6D2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA139FE616C57A1E00AF6D2E /* Build configuration list for PBXNativeTarget "Mousecape" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA139FE716C57A1E00AF6D2E /* Debug */,
+				FA139FE816C57A1E00AF6D2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA139FBF16C57A1E00AF6D2E /* Project object */;
+}
