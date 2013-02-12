@@ -7,9 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCLibraryViewController.h"
+#import "MCDetailVewController.h"
 
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
 
+@property (assign) IBOutlet MCLibraryViewController *libraryController;
+@property (assign) IBOutlet MCDetailVewController *detailController;
 @property (assign) IBOutlet NSWindow *window;
 
 @end

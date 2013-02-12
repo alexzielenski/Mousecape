@@ -13,6 +13,19 @@
 		FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA139FDB16C57A1E00AF6D2E /* Credits.rtf */; };
 		FA139FE016C57A1E00AF6D2E /* MCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */; };
 		FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA139FE116C57A1E00AF6D2E /* MainMenu.xib */; };
+		FA139FEB16C58CF900AF6D2E /* MCLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */; };
+		FA139FEE16C58D1600AF6D2E /* MCCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FED16C58D1600AF6D2E /* MCCursor.m */; };
+		FA139FF116C58D2B00AF6D2E /* MCCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */; };
+		FA139FF416C58EF500AF6D2E /* MCCursorLine.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FF316C58EF500AF6D2E /* MCCursorLine.m */; };
+		FA13A00816C81E4D00AF6D2E /* MCTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */; };
+		FA13A03516C82D1800AF6D2E /* CapeDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03316C82D1800AF6D2E /* CapeDocument.icns */; };
+		FA13A03616C82D1800AF6D2E /* Mousecape.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03416C82D1800AF6D2E /* Mousecape.icns */; };
+		FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */; };
+		FA9221F216C91930004E382D /* MCDetailVewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9221F116C91930004E382D /* MCDetailVewController.m */; };
+		FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */; };
+		FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB5E8CB16C85F4600B41654 /* CursorMap.plist */; };
+		FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB5E8D116C872B200B41654 /* QuartzCore.framework */; };
+		FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +42,28 @@
 		FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCAppDelegate.h; sourceTree = "<group>"; };
 		FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCAppDelegate.m; sourceTree = "<group>"; };
 		FA139FE216C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLibraryViewController.h; sourceTree = "<group>"; };
+		FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLibraryViewController.m; sourceTree = "<group>"; };
+		FA139FEC16C58D1600AF6D2E /* MCCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursor.h; path = src/models/MCCursor.h; sourceTree = "<group>"; };
+		FA139FED16C58D1600AF6D2E /* MCCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursor.m; path = src/models/MCCursor.m; sourceTree = "<group>"; };
+		FA139FEF16C58D2B00AF6D2E /* MCCursorLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursorLibrary.h; path = src/controllers/MCCursorLibrary.h; sourceTree = "<group>"; };
+		FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorLibrary.m; path = src/controllers/MCCursorLibrary.m; sourceTree = "<group>"; };
+		FA139FF216C58EF400AF6D2E /* MCCursorLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursorLine.h; path = src/MCCursorLine.h; sourceTree = "<group>"; };
+		FA139FF316C58EF500AF6D2E /* MCCursorLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorLine.m; path = src/MCCursorLine.m; sourceTree = "<group>"; };
+		FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTableCellView.h; path = src/views/MCTableCellView.h; sourceTree = "<group>"; };
+		FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTableCellView.m; path = src/views/MCTableCellView.m; sourceTree = "<group>"; };
+		FA13A03316C82D1800AF6D2E /* CapeDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CapeDocument.icns; path = resources/CapeDocument.icns; sourceTree = "<group>"; };
+		FA13A03416C82D1800AF6D2E /* Mousecape.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Mousecape.icns; path = resources/Mousecape.icns; sourceTree = "<group>"; };
+		FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
+		FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		FA9221F016C91930004E382D /* MCDetailVewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailVewController.h; path = src/controllers/MCDetailVewController.h; sourceTree = "<group>"; };
+		FA9221F116C91930004E382D /* MCDetailVewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCDetailVewController.m; path = src/controllers/MCDetailVewController.m; sourceTree = "<group>"; };
+		FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/views/MMAnimatingImageView.h; sourceTree = "<group>"; };
+		FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/views/MMAnimatingImageView.m; sourceTree = "<group>"; };
+		FAB5E8CB16C85F4600B41654 /* CursorMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CursorMap.plist; path = resources/CursorMap.plist; sourceTree = "<group>"; };
+		FAB5E8D116C872B200B41654 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSpriteLayer.h; path = src/views/MCSpriteLayer.h; sourceTree = "<group>"; };
+		FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCSpriteLayer.m; path = src/views/MCSpriteLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */,
 				FA139FCD16C57A1E00AF6D2E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +99,7 @@
 		FA139FCB16C57A1E00AF6D2E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAB5E8D116C872B200B41654 /* QuartzCore.framework */,
 				FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */,
 				FA139FCE16C57A1E00AF6D2E /* Other Frameworks */,
 			);
@@ -82,8 +119,25 @@
 		FA139FD216C57A1E00AF6D2E /* Mousecape */ = {
 			isa = PBXGroup;
 			children = (
+				FA13A03716C82E5500AF6D2E /* categories */,
 				FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */,
 				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
+				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
+				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
+				FA9221F016C91930004E382D /* MCDetailVewController.h */,
+				FA9221F116C91930004E382D /* MCDetailVewController.m */,
+				FA139FEC16C58D1600AF6D2E /* MCCursor.h */,
+				FA139FED16C58D1600AF6D2E /* MCCursor.m */,
+				FA139FEF16C58D2B00AF6D2E /* MCCursorLibrary.h */,
+				FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */,
+				FA139FF216C58EF400AF6D2E /* MCCursorLine.h */,
+				FA139FF316C58EF500AF6D2E /* MCCursorLine.m */,
+				FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */,
+				FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */,
+				FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */,
+				FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */,
+				FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */,
+				FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
 			);
@@ -93,6 +147,9 @@
 		FA139FD316C57A1E00AF6D2E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FA13A03316C82D1800AF6D2E /* CapeDocument.icns */,
+				FAB5E8CB16C85F4600B41654 /* CursorMap.plist */,
+				FA13A03416C82D1800AF6D2E /* Mousecape.icns */,
 				FA139FD416C57A1E00AF6D2E /* Mousecape-Info.plist */,
 				FA139FD516C57A1E00AF6D2E /* InfoPlist.strings */,
 				FA139FD816C57A1E00AF6D2E /* main.m */,
@@ -100,6 +157,16 @@
 				FA139FDB16C57A1E00AF6D2E /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA13A03716C82E5500AF6D2E /* categories */ = {
+			isa = PBXGroup;
+			children = (
+				FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */,
+				FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */,
+			);
+			name = categories;
+			path = src/categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +224,9 @@
 				FA139FD716C57A1E00AF6D2E /* InfoPlist.strings in Resources */,
 				FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */,
 				FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */,
+				FA13A03516C82D1800AF6D2E /* CapeDocument.icns in Resources */,
+				FA13A03616C82D1800AF6D2E /* Mousecape.icns in Resources */,
+				FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +239,15 @@
 			files = (
 				FA139FD916C57A1E00AF6D2E /* main.m in Sources */,
 				FA139FE016C57A1E00AF6D2E /* MCAppDelegate.m in Sources */,
+				FA139FEB16C58CF900AF6D2E /* MCLibraryViewController.m in Sources */,
+				FA139FEE16C58D1600AF6D2E /* MCCursor.m in Sources */,
+				FA139FF116C58D2B00AF6D2E /* MCCursorLibrary.m in Sources */,
+				FA139FF416C58EF500AF6D2E /* MCCursorLine.m in Sources */,
+				FA13A00816C81E4D00AF6D2E /* MCTableCellView.m in Sources */,
+				FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */,
+				FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */,
+				FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */,
+				FA9221F216C91930004E382D /* MCDetailVewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +341,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -274,6 +354,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -298,6 +379,7 @@
 				FA139FE816C57A1E00AF6D2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
