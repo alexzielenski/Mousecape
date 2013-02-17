@@ -102,6 +102,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     self.hiDPI      = hiDPI.boolValue;
     self.inCloud    = cloud.boolValue;
     
+    if (!self.identifier)
+        return NO;
+    
     CGFloat doubleVersion = version.doubleValue;
     
     if (minimumVersion.doubleValue > MCCursorParserVersion)

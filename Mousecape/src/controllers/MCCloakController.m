@@ -69,7 +69,7 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     
     [[task.standardInput fileHandleForWriting] writeData:[@"Unknown" dataUsingEncoding:NSUTF8StringEncoding]];
     [[task.standardInput fileHandleForWriting] writeData:breakData];
-    [[task.standardInput fileHandleForWriting] writeData:[[NSString stringWithFormat:@"%@.%@", NSBundle.mainBundle.bundleIdentifier, mightyMouse.lastPathComponent.stringByDeletingPathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
+    [[task.standardInput fileHandleForWriting] writeData:[[NSString stringWithFormat:@"%@.mightymouse.%@", NSBundle.mainBundle.bundleIdentifier, mightyMouse.lastPathComponent.stringByDeletingPathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
     [[task.standardInput fileHandleForWriting] writeData:breakData];
     [[task.standardInput fileHandleForWriting] writeData:[mightyMouse.lastPathComponent.stringByDeletingPathExtension dataUsingEncoding:NSUTF8StringEncoding]];
     [[task.standardInput fileHandleForWriting] writeData:breakData];

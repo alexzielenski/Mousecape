@@ -26,6 +26,8 @@
 - (void)removeLibrary:(MCCursorLibrary *)library;
 - (void)removeLibraryAtIndex:(NSUInteger)index;
 
+- (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier;
+
 - (IBAction)createSidekick:(id)sender;
 - (IBAction)removeCape:(id)sender;
 - (IBAction)importMightyMouse:(id)sender;

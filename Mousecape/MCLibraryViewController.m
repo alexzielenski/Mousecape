@@ -123,9 +123,11 @@ static NSArray *librarySortDescriptors =  nil;
 
 #pragma mark - Library Management
 - (NSError *)addToLibrary:(NSString *)path {
+    MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfFile:path];
+    
     NSError *error = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[self.libraryPath stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]] stringByAppendingPathExtension:@"cape"];
+    NSString *destinationPath = [[self.libraryPath stringByAppendingPathComponent:library.identifier] stringByAppendingPathExtension:@"cape"];
     [manager copyItemAtPath:path toPath:destinationPath error:&error];
     
     if (error != nil) {
@@ -133,13 +135,14 @@ static NSArray *librarySortDescriptors =  nil;
     }
     
     // cursor has been copied. load it into our library now
-    MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfFile:destinationPath];
+    [library setValue:[NSURL fileURLWithPath:destinationPath] forKey:@"originalURL"];
+    
     if (library)
         [self addLibrary:library];
     
     else {
         [manager removeItemAtPath:destinationPath error:nil];
-        return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:1 userInfo:@{NSLocalizedDescriptionKey : @"Invalid cursor file"}];
+        return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:1 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid cursor file (%@)", path]}];
     }
     
     NSUInteger idx = [self.libraries indexOfObject:library];
@@ -170,6 +173,16 @@ static NSArray *librarySortDescriptors =  nil;
     return nil;
 }
 - (void)addLibrary:(MCCursorLibrary *)library {
+    if ([[self.libraries valueForKeyPath:@"identifier"] containsObject:library.identifier]) {
+        NSLog(@"A library with the identifier %@ already exists", library.identifier);
+        return;
+    }
+    
+    if (!library.identifier) {
+        NSLog(@"Library must contain an identifier");
+        return;
+    }
+    
     [self.libraries insertObject:library sortedUsingDescriptors:librarySortDescriptors];
 }
 - (void)removeLibrary:(MCCursorLibrary *)library {
@@ -188,6 +201,13 @@ static NSArray *librarySortDescriptors =  nil;
 - (void)removeObjectFromLibrariesAtIndex:(NSUInteger)index {
     if (index < self.libraries.count)
         [self.libraries removeObjectAtIndex:index];
+}
+- (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
+    NSArray *filtered = [self.libraries filteredArrayUsingPredicate:pred];
+    if (filtered.count > 0)
+        return filtered[0];
+    return nil;
 }
 
 #pragma mark - Interface Actions
@@ -240,10 +260,10 @@ static NSArray *librarySortDescriptors =  nil;
         MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithCursors:cursors];
         library.version    = @1.0;
         library.author     = NSUserName();
-        library.identifier = [NSString stringWithFormat:@"com.mousecape.%@.sidekick.%@", library.author, name];
+        library.identifier = [NSString stringWithFormat:@"%@.%@.sidekick.%@", NSBundle.mainBundle.bundleIdentifier, library.author, [NSProcessInfo.processInfo globallyUniqueString]];
         library.name       = name;
         
-        NSString *path = [[self.libraryPath stringByAppendingPathComponent:name] stringByAppendingPathExtension:@"cape"];
+        NSString *path = [[self.libraryPath stringByAppendingPathComponent:library.identifier] stringByAppendingPathExtension:@"cape"];
         if ([library writeToFile:path atomically:NO]) {
             [library setValue:[NSURL fileURLWithPath:path] forKey:@"originalURL"];
             [self addLibrary:library];
