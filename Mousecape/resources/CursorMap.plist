@@ -20,12 +20,20 @@
 	<string>Move</string>
 	<key>com.apple.coregraphics.Wait</key>
 	<string>Wait</string>
+	<key>com.apple.cursor.10</key>
+	<string>Camera</string>
 	<key>com.apple.cursor.11</key>
 	<string>Closed</string>
 	<key>com.apple.cursor.12</key>
 	<string>Open</string>
 	<key>com.apple.cursor.13</key>
 	<string>Pointing</string>
+	<key>com.apple.cursor.14</key>
+	<string>Counting Up</string>
+	<key>com.apple.cursor.15</key>
+	<string>Counting Down</string>
+	<key>com.apple.cursor.16</key>
+	<string>Counting Up/Down</string>
 	<key>com.apple.cursor.17</key>
 	<string>Resize West</string>
 	<key>com.apple.cursor.18</key>
@@ -35,7 +43,7 @@
 	<key>com.apple.cursor.2</key>
 	<string>Link</string>
 	<key>com.apple.cursor.20</key>
-	<string>Crosshair</string>
+	<string>Cell XOR</string>
 	<key>com.apple.cursor.21</key>
 	<string>Resize North</string>
 	<key>com.apple.cursor.22</key>
@@ -74,13 +82,25 @@
 	<string>Window SW</string>
 	<key>com.apple.cursor.38</key>
 	<string>Window W</string>
+	<key>com.apple.cursor.39</key>
+	<string>Resize Square</string>
 	<key>com.apple.cursor.4</key>
 	<string>Busy</string>
+	<key>com.apple.cursor.40</key>
+	<string>Help</string>
+	<key>com.apple.cursor.41</key>
+	<string>Cell</string>
 	<key>com.apple.cursor.42</key>
 	<string>Zoom In</string>
 	<key>com.apple.cursor.43</key>
 	<string>Zoom Out</string>
 	<key>com.apple.cursor.5</key>
 	<string>Copy Drag</string>
+	<key>com.apple.cursor.7</key>
+	<string>Crosshair</string>
+	<key>com.apple.cursor.8</key>
+	<string>Crosshair</string>
+	<key>com.apple.cursor.9</key>
+	<string>Camera</string>
 </dict>
 </plist>
