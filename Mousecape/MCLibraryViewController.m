@@ -296,6 +296,23 @@ static NSArray *librarySortDescriptors =  nil;
     }];
 }
 
+- (IBAction)importCape:(id)sender {
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    openPanel.allowedFileTypes = @[ @"cape" ];
+    openPanel.message = @"Select a Cape file to add";
+    openPanel.prompt = @"Import Cape";
+    openPanel.allowsOtherFileTypes = NO;
+    openPanel.allowsMultipleSelection = YES;
+    
+    [openPanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
+        if (result == NSOKButton) {
+            for (NSURL *url in openPanel.URLs) {
+                [self addToLibrary:url.path];
+            }
+        }
+    }];
+}
+
 #pragma mark - NSTableViewDelgate
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];

@@ -29,6 +29,7 @@
 - (IBAction)createSidekick:(id)sender;
 - (IBAction)removeCape:(id)sender;
 - (IBAction)importMightyMouse:(id)sender;
+- (IBAction)importCape:(id)sender;
 
 @end
 
