@@ -56,6 +56,10 @@
 															YES);
 	
 	NSString *appSupport = [[supports objectAtIndex:0] stringByAppendingPathComponent:@"MagicMouse"];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager createDirectoryAtPath:appSupport withIntermediateDirectories:YES attributes:nil error:nil];
+    
 	self.cursorLibrary = [MMCursorLibrary libraryWithPath:appSupport];
 	
 	_actionQueue = dispatch_queue_create("com.alexzielenski.magicmouse.action.queue", 0);
@@ -314,7 +318,7 @@ static char MMCurrentCursor;
 - (void)chooseCursor:(NSPopUpButton *)sender
 {
 	[sender sizeToFit];
-	sender.frameOrigin = NSMakePoint(round(sender.superview.bounds.size.width / 2 - sender.frame.size.width / 2), sender.frame.origin.y);
+	sender.frameOrigin = NSMakePoint(round(NSWidth(sender.superview.bounds) / 2 - NSWidth(sender.frame) / 2), sender.frame.origin.y);
 }
 
 - (IBAction)advancedEdit:(NSMenuItem *)sender {

@@ -356,7 +356,7 @@
 		FA6F2CF014F314FF0098AE57 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Alex Zielenski";
 			};
 			buildConfigurationList = FA6F2CF314F314FF0098AE57 /* Build configuration list for PBXProject "Magic Mouse" */;
@@ -529,6 +529,7 @@
 		FAD37B1214F9836E00B7F09C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -544,6 +545,7 @@
 		FAD37B1314F9836E00B7F09C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				GCC_ENABLE_OBJC_GC = supported;
