@@ -43,17 +43,13 @@
 }
 
 - (NSSize)sampleSize {
-    return NSMakeSize(self.contentsRect.size.width * self.image.size.width, self.contentsRect.size.height * self.image.size.height);
+    return NSMakeSize(self.contentsRect.size.width * self._size.width, self.contentsRect.size.height * self._size.height);
 }
 
 - (void)setSampleSize:(NSSize)size {
     [self willChangeValueForKey:@"sampleSize"];
     CGSize sampleSizeNormalized = CGSizeMake(size.width / self._size.width, size.height / self._size.height);
     
-//    if ((int)size.width % 2 != 0)
-//        size.width += 1;
-//    if ((int)size.height % 2 != 0)
-//        size.height += 1;
     self.bounds = CGRectIntegral(CGRectMake(0, 0, size.width, size.height));
     self.contentsRect = CGRectMake(0, 0, sampleSizeNormalized.width, sampleSizeNormalized.height);
     [self didChangeValueForKey:@"sampleSize"];

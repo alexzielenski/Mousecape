@@ -78,6 +78,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
             for (NSData *data in reps) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
+                rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
                 [bitmaps addObject:rep];
             }
             if (bitmaps.count == 0)
@@ -94,10 +95,11 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 }
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    NSArray *sorted = [self.representations sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"pixelsWide" ascending:YES]]];
-  
-    [image addRepresentations:sorted];
+    [image addRepresentations:self.representations];
     
+    image.matchesOnlyOnBestFittingAxis = YES;
+    image.matchesOnMultipleResolution  = YES;
+        
     return image;
 }
 - (NSDictionary *)dictionaryRepresentation {
