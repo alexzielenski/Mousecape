@@ -12,5 +12,6 @@
 @interface MCTableCellView : NSTableCellView <MCCursorLineDataSource>
 @property (strong) IBOutlet MCCursorLine *cursorLine;
 @property (strong) IBOutlet NSImageView *appliedView;
-@property (assign, getter = isApplied) BOOL applied;
+@property (strong) IBOutlet NSImageView *hdView;
+//@property (assign, getter = isApplied) BOOL applied;
 @end

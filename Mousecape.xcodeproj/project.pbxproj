@@ -43,6 +43,8 @@
 		FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB5E8CB16C85F4600B41654 /* CursorMap.plist */; };
 		FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB5E8D116C872B200B41654 /* QuartzCore.framework */; };
 		FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */; };
+		FAD5D28516D1781500DD4302 /* HD.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28316D1781500DD4302 /* HD.png */; };
+		FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28416D1781500DD4302 /* HD@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +158,8 @@
 		FAB5E8D116C872B200B41654 /* QuartzCore.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSpriteLayer.h; path = src/views/MCSpriteLayer.h; sourceTree = "<group>"; };
 		FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCSpriteLayer.m; path = src/views/MCSpriteLayer.m; sourceTree = "<group>"; };
+		FAD5D28316D1781500DD4302 /* HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HD.png; sourceTree = "<group>"; };
+		FAD5D28416D1781500DD4302 /* HD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +302,8 @@
 		FA2C88F716CDB5180036CCC2 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5D28316D1781500DD4302 /* HD.png */,
+				FAD5D28416D1781500DD4302 /* HD@2x.png */,
 				FA2C88F816CDB5180036CCC2 /* applied.png */,
 				FA2C88F916CDB5180036CCC2 /* applied@2x.png */,
 			);
@@ -431,6 +437,8 @@
 				FA2C88DF16CC87680036CCC2 /* GeneralPreferences.xib in Resources */,
 				FA2C88FC16CDB5180036CCC2 /* applied.png in Resources */,
 				FA2C88FD16CDB5180036CCC2 /* applied@2x.png in Resources */,
+				FAD5D28516D1781500DD4302 /* HD.png in Resources */,
+				FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

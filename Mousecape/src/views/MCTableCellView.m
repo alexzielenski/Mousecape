@@ -13,14 +13,10 @@
 @end
 
 @implementation MCTableCellView
-+ (void)initialize {
-    [self exposeBinding:@"applied"];
-}
-
 - (void)_initialize {
-    [self addObserver:self forKeyPath:@"objectValue" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"objectValue" options:NSKeyValueObservingOptionOld context:nil];
     [self addObserver:self forKeyPath:@"cursorLine" options:NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:@"appliedView" options:NSKeyValueObservingOptionOld context:nil];
+    [self addObserver:self forKeyPath:@"hdView" options:NSKeyValueObservingOptionOld context:nil];
 }
 
 - (id)init {
@@ -45,10 +41,18 @@
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"objectValue"]) {
-        [self unbind:@"applied"];
-        [self bind:@"applied" toObject:self.objectValue withKeyPath:@"applied" options:nil];
+        id oldValue = [change valueForKey:NSKeyValueChangeOldKey];
+        if (oldValue && ![oldValue isKindOfClass:[NSNull class]])
+            [oldValue removeObserver:self forKeyPath:@"applied"];
+        
+        [self.objectValue addObserver:self forKeyPath:@"applied" options:NSKeyValueObservingOptionNew context:nil];
+        self.appliedView.hidden = ![[self.objectValue valueForKeyPath:@"applied"] boolValue];
         
         self.textField.stringValue = [self.objectValue valueForKey:@"name"];
+        
+        [self.textField unbind:@"value"];
+        [self.textField bind:@"value" toObject:self withKeyPath:@"objectValue.name" options:nil];
+        
         [self.cursorLine reloadData];
         
     } else if ([keyPath isEqualToString:@"cursorLine"]) {
@@ -57,24 +61,38 @@
             line.dataSource = nil;
         self.cursorLine.dataSource = self;
         
-    } else if ([keyPath isEqualToString:@"appliedView"]) {
+    } else if ([keyPath isEqualToString:@"hdView"]) {
         NSImageView *oldView = [change valueForKey:NSKeyValueChangeOldKey];
         if (oldView && ![oldView isKindOfClass:[NSNull class]])
             [oldView unbind:@"hidden"];
         
-        [self.appliedView bind:@"hidden" toObject:self withKeyPath:@"applied" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+        [self.hdView bind:@"hidden" toObject:self withKeyPath:@"objectValue.hiDPI" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    } else if ([keyPath isEqualToString:@"applied"]) {
+        BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
+        [self setNeedsLayout:YES];
+        self.appliedView.hidden = !applied;
     }
 }
-- (void)viewDidMoveToWindow {
 
+- (void)layout {
+    [super layout];
+    
+    BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
+    BOOL HD      = [[self.objectValue valueForKeyPath:@"hiDPI"] boolValue];
+    
+    if (HD && !applied) {
+        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width), self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+    } else {
+        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width) - 8 - self.appliedView.frame.size.width, self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+    }
+    
+    
 }
 - (void)dealloc {
+    [self.objectValue removeObserver:self forKeyPath:@"applied"];
     [self removeObserver:self forKeyPath:@"objectValue"];
     [self removeObserver:self forKeyPath:@"cursorLine"];
-    [self removeObserver:self forKeyPath:@"appliedView"];
-}
-- (void)drawRect:(NSRect)dirtyRect {
-    
+    [self removeObserver:self forKeyPath:@"hdView"];
 }
 
 #pragma mark - MCCursorLineDataSource
