@@ -228,9 +228,7 @@ void restoreCursorForIdentifier(NSString *ident) {
     
     NSString *restoreIdent = restoreStringForIdentifier(ident);
     NSDictionary *cape = capeWithIdentifier(ident);
-    
-    [pngDataForImage([[cape objectForKey:@"Representations"] objectAtIndex:0]) writeToFile:[[@"/Users/Alex/Desktop/" stringByAppendingPathComponent:ident] stringByAppendingPathExtension:@"png"] atomically:NO];
-    
+        
     MMLog("Restoring cursor %s from %s\n", restoreIdent.UTF8String, ident.UTF8String);
     BOOL x = applyCapeForIdentifier(cape, restoreIdent);
     (void)x;
