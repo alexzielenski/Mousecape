@@ -84,22 +84,6 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 	return self;
 }
 
-// Assorted init methods
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	if ((self = [super initWithCoder:aDecoder])) {
-		[self _initialize];
-
-	}
-	return self;
-}
-
-- (id)initWithFrame:(NSRect)frameRect {
-	if ((self = [super initWithFrame:frameRect])) {
-		[self _initialize];
-	}
-	return self;
-}
-
 - (void)_initialize {
     [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"frameDuration" options:NSKeyValueObservingOptionNew context:nil];

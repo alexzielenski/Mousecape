@@ -64,8 +64,6 @@
     
     if (!self.textField) {
         NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
-        [self addSubview:tf];
-
         self.textField = tf;
         self.textField.stringValue     = @"Unknown";
         self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
@@ -79,7 +77,6 @@
     
     if (!self.imageView) {
         MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
-        [self addSubview:im];
         self.imageView = im;
     }
     
@@ -89,6 +86,8 @@
     MMAnimatingImageView *imageView = self.imageView;
     NSTextField *textField = self.textField;
     
+    [self addSubview:self.imageView];
+    [self addSubview:self.textField];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[imageView(==48)]-(8)-|"
                                                                  options:0
@@ -103,8 +102,6 @@
                                                                  metrics:nil
                                                                    views:NSDictionaryOfVariableBindings(imageView, textField)]];
 
-    [self addSubview:self.imageView];
-    [self addSubview:self.textField];
     
     [self observeValueForKeyPath:@"cursor.name" ofObject:self change:nil context:nil];
     [self observeValueForKeyPath:@"cursor.representations" ofObject:self change:nil context:nil];
@@ -186,6 +183,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"dataSource"])
         [self reloadData];
+    
     else if ([keyPath isEqualToString:@"shouldAllowSelection"]) {
         if (!self.shouldAllowSelection) {
             self.selectedCursorIndices = [NSMutableIndexSet indexSet];
@@ -203,6 +201,7 @@
     // re-use cursor views we want
     while (self.cursorViews.count != itemCount) {
         if (self.cursorViews.count > itemCount) {
+            [self.cursorViews.lastObject removeFromSuperview];
             [self.cursorViews removeLastObject];
         } else {
             [self.cursorViews addObject:[[MCCursorView alloc] init]];
@@ -213,6 +212,7 @@
         MCCursor *currentCursor = [self.dataSource cursorLine:self cursorAtIndex:idx];
         MCCursorView *cursorView = [self.cursorViews objectAtIndex:idx];
         cursorView.parentLine = self;
+        cursorView.selected   = NO;
         
         cursorView.frame = [self frameForCursorAtIndex:idx];
         [self addSubview:cursorView];
