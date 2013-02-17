@@ -1,0 +1,301 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00E82630E9C14190996D67BC /* GBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = B46FA1CC05E244BC948BE469 /* GBSettings.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		071F17AF35F340BF8858F9B9 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147C018B29BB4ABDAE0DD7D6 /* MASPreferencesWindowController.m */; };
+		1A05EAB24B3B435088C87214 /* GBCommandLineParser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E53F2E7C1296487AA419C38F /* GBCommandLineParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		31BE40DDBB1C417A8C62509F /* MASPreferencesWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2883B2E02C3C44E2B3198D9D /* MASPreferencesWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		41A1759F18DA4D5AAA42B8E9 /* GBCommandLineParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7CC38E2F194B348580398D /* GBCommandLineParser.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		48D27B808D9542CF8319A835 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD91ADE25FD405289B655A6 /* Cocoa.framework */; };
+		61F2B5A89EA246738A614745 /* GBOptionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C33D3E483AF8484F8C9DEF04 /* GBOptionsHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		7D45058C09C5485681FBEDF8 /* GBOptionsHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = F42725D103154009B9D3B31B /* GBOptionsHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81B9B30A0FB941198B1D7A2F /* MASPreferencesViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9781D2DC08604AF6BE77BE96 /* MASPreferencesViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CC24F2CAB91B4DE2BE149CE3 /* PodsDummy_Pods.m in Sources */ = {isa = PBXBuildFile; fileRef = 24070AD3B29546369C62F018 /* PodsDummy_Pods.m */; };
+		D15C407BD93642F3B1961011 /* GBSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 09F0C15F3BB84438BCB03088 /* GBSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D3AD348C8A3D492A9B5707AC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				1A05EAB24B3B435088C87214 /* GBCommandLineParser.h in CopyFiles */,
+				7D45058C09C5485681FBEDF8 /* GBOptionsHelper.h in CopyFiles */,
+				D15C407BD93642F3B1961011 /* GBSettings.h in CopyFiles */,
+				81B9B30A0FB941198B1D7A2F /* MASPreferencesViewController.h in CopyFiles */,
+				31BE40DDBB1C417A8C62509F /* MASPreferencesWindowController.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		09F0C15F3BB84438BCB03088 /* GBSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; name = GBSettings.h; path = GBCli/GBCli/src/GBSettings.h; sourceTree = SOURCE_ROOT; };
+		147C018B29BB4ABDAE0DD7D6 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; includeInIndex = 1; name = MASPreferencesWindowController.m; path = MASPreferences/MASPreferencesWindowController.m; sourceTree = SOURCE_ROOT; };
+		24070AD3B29546369C62F018 /* PodsDummy_Pods.m */ = {isa = PBXFileReference; includeInIndex = 1; name = PodsDummy_Pods.m; path = PodsDummy_Pods.m; sourceTree = SOURCE_ROOT; };
+		2883B2E02C3C44E2B3198D9D /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; includeInIndex = 1; name = MASPreferencesWindowController.h; path = MASPreferences/MASPreferencesWindowController.h; sourceTree = SOURCE_ROOT; };
+		2ACBF5B9B3CC40A283BA5A9A /* Pods-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-prefix.pch"; path = "Pods-prefix.pch"; sourceTree = SOURCE_ROOT; };
+		3FAD4D2458D84F02BE496686 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPods.a; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		594489BD20EC4B419C604C8A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		5A7CC38E2F194B348580398D /* GBCommandLineParser.m */ = {isa = PBXFileReference; includeInIndex = 1; name = GBCommandLineParser.m; path = GBCli/GBCli/src/GBCommandLineParser.m; sourceTree = SOURCE_ROOT; };
+		9781D2DC08604AF6BE77BE96 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; name = MASPreferencesViewController.h; path = MASPreferences/MASPreferencesViewController.h; sourceTree = SOURCE_ROOT; };
+		B46FA1CC05E244BC948BE469 /* GBSettings.m */ = {isa = PBXFileReference; includeInIndex = 1; name = GBSettings.m; path = GBCli/GBCli/src/GBSettings.m; sourceTree = SOURCE_ROOT; };
+		BFD91ADE25FD405289B655A6 /* Cocoa.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C33D3E483AF8484F8C9DEF04 /* GBOptionsHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; name = GBOptionsHelper.m; path = GBCli/GBCli/src/GBOptionsHelper.m; sourceTree = SOURCE_ROOT; };
+		E53F2E7C1296487AA419C38F /* GBCommandLineParser.h */ = {isa = PBXFileReference; includeInIndex = 1; name = GBCommandLineParser.h; path = GBCli/GBCli/src/GBCommandLineParser.h; sourceTree = SOURCE_ROOT; };
+		ECEBBBC07F84495C894FF256 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-resources.sh"; path = "Pods-resources.sh"; sourceTree = SOURCE_ROOT; };
+		F42725D103154009B9D3B31B /* GBOptionsHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; name = GBOptionsHelper.h; path = GBCli/GBCli/src/GBOptionsHelper.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		77E52A623BEA4A66ACD8E703 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48D27B808D9542CF8319A835 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		251389BA97604223884B9916 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EFB2642C18DD4161AAC62F4F /* GBCli */,
+				274D9CF660DB46209CF52634 /* MASPreferences */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		274D9CF660DB46209CF52634 /* MASPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				9781D2DC08604AF6BE77BE96 /* MASPreferencesViewController.h */,
+				2883B2E02C3C44E2B3198D9D /* MASPreferencesWindowController.h */,
+				147C018B29BB4ABDAE0DD7D6 /* MASPreferencesWindowController.m */,
+			);
+			name = MASPreferences;
+			sourceTree = "<group>";
+		};
+		34A04C27E5C44CB5A3E7B628 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FAD4D2458D84F02BE496686 /* libPods.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		541B2E92FCBC4DDCAF8FC238 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BFD91ADE25FD405289B655A6 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9BB02F4A051E4CC49DC54320 = {
+			isa = PBXGroup;
+			children = (
+				34A04C27E5C44CB5A3E7B628 /* Products */,
+				251389BA97604223884B9916 /* Pods */,
+				FA0EE49023664990B2BB38C8 /* Targets Support Files */,
+				541B2E92FCBC4DDCAF8FC238 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BC44E8F3A41D4672944A99B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ECEBBBC07F84495C894FF256 /* Pods-resources.sh */,
+				2ACBF5B9B3CC40A283BA5A9A /* Pods-prefix.pch */,
+				594489BD20EC4B419C604C8A /* Pods.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EFB2642C18DD4161AAC62F4F /* GBCli */ = {
+			isa = PBXGroup;
+			children = (
+				E53F2E7C1296487AA419C38F /* GBCommandLineParser.h */,
+				F42725D103154009B9D3B31B /* GBOptionsHelper.h */,
+				09F0C15F3BB84438BCB03088 /* GBSettings.h */,
+				5A7CC38E2F194B348580398D /* GBCommandLineParser.m */,
+				C33D3E483AF8484F8C9DEF04 /* GBOptionsHelper.m */,
+				B46FA1CC05E244BC948BE469 /* GBSettings.m */,
+			);
+			name = GBCli;
+			sourceTree = "<group>";
+		};
+		FA0EE49023664990B2BB38C8 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC44E8F3A41D4672944A99B8 /* Pods */,
+				24070AD3B29546369C62F018 /* PodsDummy_Pods.m */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5B7016FADD61433786656A23 /* Pods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C38BC6BED8184DCA9AFD58FF /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildPhases = (
+				69E52288AA3B490F87175A5A /* Sources */,
+				D3AD348C8A3D492A9B5707AC /* CopyFiles */,
+				77E52A623BEA4A66ACD8E703 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pods;
+			productName = Pods;
+			productReference = 3FAD4D2458D84F02BE496686 /* libPods.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F320EA729814DA39862811A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 79470345260C4EDAA0EEF0A1 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9BB02F4A051E4CC49DC54320;
+			productRefGroup = 34A04C27E5C44CB5A3E7B628 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5B7016FADD61433786656A23 /* Pods */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		69E52288AA3B490F87175A5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41A1759F18DA4D5AAA42B8E9 /* GBCommandLineParser.m in Sources */,
+				61F2B5A89EA246738A614745 /* GBOptionsHelper.m in Sources */,
+				00E82630E9C14190996D67BC /* GBSettings.m in Sources */,
+				071F17AF35F340BF8858F9B9 /* MASPreferencesWindowController.m in Sources */,
+				CC24F2CAB91B4DE2BE149CE3 /* PodsDummy_Pods.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A80FAE992114030BAAF5C04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		E8F22FE2DC9941F2B7BAC7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 594489BD20EC4B419C604C8A /* Pods.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				PODS_HEADERS_SEARCH_PATHS = "${PODS_BUILD_HEADERS_SEARCH_PATHS}";
+				PODS_ROOT = "${SRCROOT}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		F747E4A71E5E43369CBC617C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 594489BD20EC4B419C604C8A /* Pods.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "";
+				PODS_HEADERS_SEARCH_PATHS = "${PODS_BUILD_HEADERS_SEARCH_PATHS}";
+				PODS_ROOT = "${SRCROOT}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		FF87E888855946C1AB84AC1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79470345260C4EDAA0EEF0A1 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A80FAE992114030BAAF5C04 /* Debug */,
+				FF87E888855946C1AB84AC1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C38BC6BED8184DCA9AFD58FF /* Build configuration list for PBXNativeTarget "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8F22FE2DC9941F2B7BAC7A8 /* Debug */,
+				F747E4A71E5E43369CBC617C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9F320EA729814DA39862811A /* Project object */;
+}

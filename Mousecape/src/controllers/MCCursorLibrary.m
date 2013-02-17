@@ -21,7 +21,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 
 @interface MCCursorLibrary ()
 @property (readwrite, strong) NSMutableDictionary *cursors;
+@property (readwrite, copy) NSURL *originalURL;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
+- (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
 
 // KVO Backing
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key;
@@ -29,7 +31,15 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 @end
 
 @implementation MCCursorLibrary
-
++ (NSDictionary *)cursorMap {
+    static NSDictionary *map = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        map = [NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"CursorMap" ofType:@"plist"]];
+    });
+    
+    return map;
+}
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {
     return [[MCCursorLibrary alloc] initWithContentsOfFile:path];
 }
@@ -39,10 +49,15 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 + (MCCursorLibrary *)cursorLibraryWithDictionary:(NSDictionary *)dictionary {
     return [[MCCursorLibrary alloc] initWithDictionary:dictionary];
 }
++ (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)dictionary {
+    return [[MCCursorLibrary alloc] initWithCursors:dictionary];
+}
 - (id)initWithContentsOfFile:(NSString *)path {
     return [self initWithContentsOfURL:[NSURL fileURLWithPath:path]];
 }
 - (id)initWithContentsOfURL:(NSURL *)URL {
+    self.originalURL = URL;
+    
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfURL:URL];
     return [self initWithDictionary:dictionary];
 }
@@ -55,15 +70,17 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     }
     return self;
 }
-+ (NSDictionary *)cursorMap {
-    static NSDictionary *map = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        map = [NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"CursorMap" ofType:@"plist"]];
-    });
+- (id)initWithCursors:(NSDictionary *)cursors {
+    if ((self = [super init])) {
+        self.cursors = cursors.mutableCopy;
+    }
     
-    return map;
+    return self;
 }
+- (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically {
+    return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
+}
+
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary {
     if (!dictionary)
         return NO;
@@ -91,23 +108,46 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         return NO;
     
     [self.cursors removeAllObjects];
-    for (NSString *key in cursorDicts.allKeys) {
-        NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
-        MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
-
-        NSString *name = [MCCursorLibrary.cursorMap objectForKey:key];
-        if (name)
-            cursor.name = name;
-        
-        [self addCursor:cursor forIdentifier:key];
-    }
+    [self addCursorsFromDictionary:cursorDicts ofVersion:doubleVersion];
     
     if (self.cursors.count == 0)
         return NO;
     
     return YES;
 }
-
+- (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion {
+    for (NSString *key in cursorDicts.allKeys) {
+        NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
+        MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
+        
+        NSString *name = [MCCursorLibrary.cursorMap objectForKey:key];
+        if (name)
+            cursor.name = name;
+        
+        [self addCursor:cursor forIdentifier:key];
+    }
+}
+- (NSDictionary *)dictionaryRepresentation {
+    NSMutableDictionary *drep = [NSMutableDictionary dictionary];
+    
+    drep[MCCursorDictionaryMinimumVersionKey] = @(2.0);
+    drep[MCCursorDictionaryVersionKey]        = @(2.0);
+    drep[MCCursorDictionaryCapeNameKey]       = self.name;
+    drep[MCCursorDictionaryCapeVersionKey]    = self.version;
+    drep[MCCursorDictionaryCloudKey]          = @(self.inCloud);
+    drep[MCCursorDictionaryAuthorKey]         = self.author;
+    drep[MCCursorDictionaryHiDPIKey]          = @(self.isHiDPI);
+    drep[MCCursorDictionaryIdentifierKey]     = self.identifier;
+    
+    NSMutableDictionary *cursors = [NSMutableDictionary dictionary];
+    for (NSString *key in self.cursors) {
+        cursors[key] = [[self.cursors objectForKey:key] dictionaryRepresentation];
+    }
+    
+    drep[MCCursorDictionaryCursorsKey] = cursors;
+    
+    return drep;
+}
 - (void)addCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier {
     if (cursor) {
         [self setCursor:cursor forKey:identifier];
@@ -121,6 +161,12 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 - (void)removeCursorForIdentifier:(NSString *)identifier {
     if ([self.cursors objectForKey:identifier] != nil)
         [self setCursor:nil forKey:identifier];
+}
+- (NSString *)identifierForCursor:(MCCursor *)cursor {
+    NSArray *allKeys = [self.cursors allKeysForObject:cursor];
+    if (allKeys.count > 0)
+        return allKeys[0];
+    return nil;
 }
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
     [self willChangeValueForKey:@"cursors"];

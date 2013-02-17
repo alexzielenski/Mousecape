@@ -8,6 +8,10 @@
 
 #import "MCSpriteLayer.h"
 
+@interface MCSpriteLayer ()
+- (NSSize)_size;
+@end
+
 @implementation MCSpriteLayer
 @dynamic image, sampleSize;
 
@@ -19,7 +23,8 @@
         _sampleIndex = 1;
         self.contents    = image;
         self.image       = image;
-        self.sampleSize  = size;        
+        self.sampleSize  = size;
+        self.anchorPoint = CGPointZero;
     }
     
     return self;
@@ -43,10 +48,23 @@
 
 - (void)setSampleSize:(NSSize)size {
     [self willChangeValueForKey:@"sampleSize"];
-    CGSize sampleSizeNormalized = CGSizeMake(size.width / self.image.size.width, size.height / self.image.size.height);
-    self.bounds = CGRectMake( 0, 0, size.width, size.height );
-    self.contentsRect = CGRectMake( 0, 0, sampleSizeNormalized.width, sampleSizeNormalized.height );
+    CGSize sampleSizeNormalized = CGSizeMake(size.width / self._size.width, size.height / self._size.height);
+    
+//    if ((int)size.width % 2 != 0)
+//        size.width += 1;
+//    if ((int)size.height % 2 != 0)
+//        size.height += 1;
+    self.bounds = CGRectIntegral(CGRectMake(0, 0, size.width, size.height));
+    self.contentsRect = CGRectMake(0, 0, sampleSizeNormalized.width, sampleSizeNormalized.height);
     [self didChangeValueForKey:@"sampleSize"];
+}
+
+- (NSSize)_size {
+    if ([self.image isKindOfClass:[NSImage class]]) {
+        return self.image.size;
+    }
+    
+    return NSMakeSize(CGImageGetWidth((__bridge CGImageRef)(self.contents)), CGImageGetHeight((__bridge CGImageRef)(self.contents)));
 }
 
 #pragma mark -
@@ -81,7 +99,7 @@
     NSUInteger currentSampleIndex = [self currentSampleIndex];
     if (!currentSampleIndex)
         return;
-    
+
     CGSize sampleSize = self.contentsRect.size;
     self.contentsRect = CGRectMake(
                                    ((currentSampleIndex - 1) % (int)(1/sampleSize.width)) * sampleSize.width,

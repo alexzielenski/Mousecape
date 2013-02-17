@@ -7,6 +7,8 @@
 //
 
 #import "MCDetailVewController.h"
+#import "MCCloakController.h"
+#import "CGSCursor.h"
 
 @interface MCDetailVewController ()
 
@@ -47,10 +49,21 @@
         }
     }
 }
-- (IBAction)apply:(NSButton *)sender {
+- (IBAction)apply:(id)sender {
+    if (!self.currentLibrary)
+        return;
     
+    __block MCDetailVewController *blockSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[MCCloakController sharedCloakController] applyCape:blockSelf.currentLibrary];
+    });
 }
-- (IBAction)update:(NSButton *)sender {
+- (IBAction)restore:(id)sender {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[MCCloakController sharedCloakController] restoreDefaults];
+    });
+}
+- (IBAction)update:(id)sender {
     
 }
 

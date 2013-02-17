@@ -17,7 +17,8 @@
 @property (assign) IBOutlet NSButton *updateButton;
 @property (strong) MCCursorLibrary *currentLibrary;
 
-- (IBAction)apply:(NSButton *)sender;
-- (IBAction)update:(NSButton *)sender;
+- (IBAction)apply:(id)sender;
+- (IBAction)restore:(id)sender;
+- (IBAction)update:(id)sender;
 
 @end

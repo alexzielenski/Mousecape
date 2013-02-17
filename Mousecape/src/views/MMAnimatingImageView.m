@@ -9,6 +9,10 @@
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
 
+static NSRect centerSizeInRect(NSSize size, NSRect rect) {
+    return NSIntegralRect(NSMakeRect(NSMidX(rect) - size.width / 2, NSMidY(rect) - size.height / 2, size.width, size.height));
+}
+
 @interface MMAnimatingImageView ()
 @property (weak) MCSpriteLayer *spriteLayer;
 - (void)_initialize;
@@ -47,16 +51,14 @@
     
     self.layer = [CALayer layer];
     self.wantsLayer = YES;
-    self.layer.contentsGravity = kCAGravityResize;
+    self.layer.contentsGravity = kCAGravityCenter;
     self.layer.bounds = self.bounds;
     self.layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin;
     
     MCSpriteLayer *spriteLayer = [MCSpriteLayer layerWithImage:nil sampleSize:CGSizeZero];
-    spriteLayer.position = CGPointMake(0.0, 0.0);
-    spriteLayer.bounds = self.layer.bounds;
     spriteLayer.autoresizingMask = kCALayerNotSizable;
-    spriteLayer.position = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
-    spriteLayer.contentsGravity = kCAGravityResize;
+    spriteLayer.position = CGPointZero;//CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
+    spriteLayer.contentsGravity = kCAGravityCenter;
     
     [self.layer addSublayer:spriteLayer];
     self.spriteLayer = spriteLayer;
@@ -80,20 +82,24 @@
     while (self.image.representations.count < scaleFactor) {
         scaleFactor--;
     }
-    self.spriteLayer.contents = (id)[[self.image.representations objectAtIndex:scaleFactor- 1] CGImage];
+    
+    self.image = self.image;
     
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    self.spriteLayer.position = centerSizeInRect(self.spriteLayer.bounds.size, self.layer.bounds).origin;
+    
     if ([keyPath isEqualToString:@"image"]) {
         self.spriteLayer.image = self.image;
+        [self.spriteLayer setNeedsDisplay];
         self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
-        self.spriteLayer.position = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
+//        self.spriteLayer.position = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
         self.frameDuration = self.frameDuration;
-
+        
     } else if ([keyPath isEqualToString:@"frameCount"]) {
         self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
-        self.spriteLayer.position = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
+//        self.spriteLayer.position = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
         self.frameDuration = self.frameDuration;
         
     } else if ([keyPath isEqualToString:@"frameDuration"]) {

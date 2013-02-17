@@ -1,0 +1,7 @@
+PODS:
+  - GBCli (1.0)
+  - MASPreferences (1.0)
+
+DEPENDENCIES:
+  - GBCli (~> 1.0)
+  - MASPreferences (~> 1.0)

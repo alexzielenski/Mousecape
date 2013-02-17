@@ -19,7 +19,7 @@
 
 @interface MCCursorLine ()
 @property (strong) NSMutableArray *cursorViews;
-@property (strong) NSMutableIndexSet *selectedCursorIndices;
+@property (readwrite, strong) NSMutableIndexSet *selectedCursorIndices;
 
 - (void)_initialize;
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index;
@@ -138,7 +138,7 @@
     
 }
 - (void)mouseDown:(NSEvent *)event {
-    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask) {
+    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask || event.clickCount == 2) {
         self.selected = !self.isSelected;
     } else {
         [super mouseDown:event];

@@ -26,3 +26,7 @@
 @property (assign) NSUInteger selectionKeyMask;
 - (void)reloadData;
 @end
+
+@interface MCCursorLine (Properties)
+@property (readonly, strong) NSIndexSet *selectedCursorIndices;
+@end
