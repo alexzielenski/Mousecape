@@ -16,6 +16,8 @@
 #import <MASPreferencesWindowController.h>
 #import "MCGeneralPreferencesViewController.h"
 
+static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
+
 @interface MCAppDelegate ()
 @end
 
@@ -23,11 +25,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-//    CoreCursorUnregisterAll(CGSMainConnectionID());
-//    [[NSCursor contextualMenuCursor] _getImageAndHotSpotFromCoreCursor];
-//    [[[NSCursor alloc] initWithImage:[NSImage imageNamed:@"NSApplicationIcon"] hotSpot:NSZeroPoint] push];
-//    return;
-    
     [self.window.contentView setNeedsLayout:YES];
     [self composeAccessory];
     
@@ -40,6 +37,11 @@
                                                attributes:nil
                                                     error:nil];
     [self.libraryController loadLibraryAtPath:capesPath];
+    
+    NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
+    MCCursorLibrary *applied    = [self.libraryController libraryWithIdentifier:appliedIdentifier];
+    self.libraryController.appliedLibrary = applied;
+    
     [self.detailController bind:@"currentLibrary" toObject:self.libraryController withKeyPath:@"selectedLibrary" options:nil];
     
     __block MCAppDelegate *blockSelf = self;
@@ -48,8 +50,12 @@
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      id obj = note.userInfo[MCCloakControllerAppliedCursorKey];
-                                                      blockSelf.libraryController.appliedLibrary = [obj isKindOfClass:[NSNull class]] ? nil : obj;
+                                                      MCCursorLibrary *obj = note.userInfo[MCCloakControllerAppliedCursorKey];
+                                                      if (![obj isKindOfClass:[NSNull class]]) {
+                                                          blockSelf.libraryController.appliedLibrary = obj;
+                                                          [NSUserDefaults.standardUserDefaults setObject:obj.identifier forKey:MCPreferencesAppliedCursorKey];
+                                                      } else
+                                                          blockSelf.libraryController.appliedLibrary = nil;
                                                   }];
     [[NSNotificationCenter defaultCenter] addObserverForName:MCCloakControllerDidRestoreCursorNotification
                                                       object:nil
