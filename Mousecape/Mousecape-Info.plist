@@ -57,6 +57,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.xml</string>
+				<string>com.apple.property-list</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Mouse Cape</string>
