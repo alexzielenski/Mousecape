@@ -51,7 +51,7 @@
         self.imageView.frameDuration = self.cursor.frameDuration;
         self.imageView.frameCount    = self.cursor.frameCount;
         self.imageView.image         = self.cursor.imageWithAllReps;
-
+        
     } else if ([keyPath isEqualToString:@"cursor.name"]) {
         self.textField.stringValue = self.cursor.name;
         
@@ -66,7 +66,7 @@
         NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
         self.textField = tf;
         self.textField.stringValue     = @"Unknown";
-        self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+        self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
         self.textField.bezeled         = NO;
         self.textField.drawsBackground = NO;
         self.textField.editable        = NO;
