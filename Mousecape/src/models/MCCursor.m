@@ -97,7 +97,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
     [image addRepresentations:self.representations];
     
-    image.matchesOnlyOnBestFittingAxis = YES;
+//    image.matchesOnlyOnBestFittingAxis = YES;
     image.matchesOnMultipleResolution  = YES;
         
     return image;
