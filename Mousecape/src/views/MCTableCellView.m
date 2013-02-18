@@ -45,7 +45,7 @@
         if (oldValue && ![oldValue isKindOfClass:[NSNull class]])
             [oldValue removeObserver:self forKeyPath:@"applied"];
         
-        [self.objectValue addObserver:self forKeyPath:@"applied" options:NSKeyValueObservingOptionNew context:nil];
+        [self.objectValue addObserver:self forKeyPath:@"applied" options:NSKeyValueObservingOptionOld context:nil];
         self.appliedView.hidden = ![[self.objectValue valueForKeyPath:@"applied"] boolValue];
         
         self.textField.stringValue = [self.objectValue valueForKey:@"name"];
@@ -69,8 +69,16 @@
         [self.hdView bind:@"hidden" toObject:self withKeyPath:@"objectValue.hiDPI" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
     } else if ([keyPath isEqualToString:@"applied"]) {
         BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
-        [self setNeedsLayout:YES];
+        NSNumber *oldValue = [change valueForKey:NSKeyValueChangeOldKey];
+        
+        // dont dirty the layout if nothing happened
+        if (oldValue && ![oldValue isKindOfClass:[NSNull class]]) {
+            if (oldValue.boolValue == applied) {
+                return;
+            }
+        }
         self.appliedView.hidden = !applied;
+        [self layout];
     }
 }
 
@@ -78,9 +86,8 @@
     [super layout];
     
     BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
-    BOOL HD      = [[self.objectValue valueForKeyPath:@"hiDPI"] boolValue];
     
-    if (HD && !applied) {
+    if (!applied) {
         self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width), self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
     } else {
         self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width) - 8 - self.appliedView.frame.size.width, self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
