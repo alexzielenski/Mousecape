@@ -50,7 +50,11 @@
     [self willChangeValueForKey:@"sampleSize"];
     CGSize sampleSizeNormalized = CGSizeMake(size.width / self._size.width, size.height / self._size.height);
     
-    self.bounds = CGRectIntegral(CGRectMake(0, 0, size.width, size.height));
+    NSSize maxSize = self.maximumSize;
+    if (NSEqualSizes(maxSize, NSZeroSize))
+        maxSize = size;
+    
+    self.bounds = CGRectIntegral(CGRectMake(0, 0, MIN(size.width, maxSize.width), MIN(size.height, maxSize.height)));
     self.contentsRect = CGRectMake(0, 0, sampleSizeNormalized.width, sampleSizeNormalized.height);
     [self didChangeValueForKey:@"sampleSize"];
 }

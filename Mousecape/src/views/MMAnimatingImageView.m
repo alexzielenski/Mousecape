@@ -104,7 +104,8 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     
     [self.layer addSublayer:spriteLayer];
     self.spriteLayer = spriteLayer;
-
+    self.spriteLayer.maximumSize = self.frame.size;
+    
     self.frameCount    = 1;
     self.frameDuration = 1;
 }
@@ -131,7 +132,7 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
+    self.spriteLayer.maximumSize = self.frame.size;
     if ([keyPath isEqualToString:@"image"]) {
         self.spriteLayer.image = self.image;
 //        self.spriteLayer.contents = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];

@@ -13,6 +13,7 @@
 @property (assign) NSUInteger sampleIndex;
 @property (strong) NSImage *image;
 @property (assign) NSSize sampleSize;
+@property (assign) NSSize maximumSize;
 
 + (MCSpriteLayer *)layerWithImage:(NSImage *)image sampleSize:(CGSize)size;
 - (id)initWithImage:(NSImage *)image sampleSize:(CGSize)size;
