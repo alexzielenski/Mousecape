@@ -244,7 +244,6 @@
 				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
 				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
 				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
-				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
 				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
 				FA9221F016C91930004E382D /* MCDetailVewController.h */,
@@ -263,6 +262,7 @@
 				FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */,
 				FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */,
 				FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */,
+				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
 			);
