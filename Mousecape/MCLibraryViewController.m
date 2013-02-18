@@ -253,15 +253,23 @@ static NSArray *librarySortDescriptors =  nil;
         NSString *name = [(NSTextField *)alert.accessoryView stringValue];
         
         if (name.length == 0) {
+            [alert.window orderOut:alert];
             NSBeginAlertSheet(@"Oops!", @"Sorry, boss", nil, nil, self.view.window, nil, NULL, NULL, nil, @"You did not specify a name for your sidekick");
             return;
         }
+        
         
         MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithCursors:cursors];
         library.version    = @1.0;
         library.author     = NSUserName();
         library.identifier = [NSString stringWithFormat:@"%@.%@.sidekick.%@", NSBundle.mainBundle.bundleIdentifier, library.author, [NSProcessInfo.processInfo globallyUniqueString]];
         library.name       = name;
+
+        NSArray *filteredCounts = [[library.cursors.allValues valueForKeyPath:@"representations"] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray *evaluatedObject, NSDictionary *bindings) {
+            return evaluatedObject.count > 1;
+        }]];
+        
+        library.hiDPI      = filteredCounts.count == library.cursors.count;
         
         NSString *path = [[self.libraryPath stringByAppendingPathComponent:library.identifier] stringByAppendingPathExtension:@"cape"];
         if ([library writeToFile:path atomically:NO]) {
