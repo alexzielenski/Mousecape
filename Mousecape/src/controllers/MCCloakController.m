@@ -7,6 +7,8 @@
 //
 
 #import "MCCloakController.h"
+#import "CGSAccessibility.h"
+#import "CGSCursor.h"
 
 NSString *MCCloakControllerDidApplyCursorNotification    = @"MCCloakControllerDidApplyCursorNotification";
 NSString *MCCloakControllerDidRestoreCursorNotification = @"MCCloakControllerDidRestoreCursorNotification";
@@ -16,6 +18,8 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
 @end
 
 @implementation MCCloakController
+@dynamic cursorScale;
+
 + (MCCloakController *)sharedCloakController {
     DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
         return [[self alloc] init];
@@ -37,7 +41,20 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
         }
     }
 
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:self.class.mousecloakPath arguments:@[ @"--apply",  cursorPath, @"--suppressCopyright"]];
+    NSPipe *pipe = [NSPipe pipe];
+    
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = self.class.mousecloakPath;
+    task.arguments = @[ @"--apply",  cursorPath, @"--suppressCopyright"];
+    [task setStandardOutput:pipe];
+    
+    pipe.fileHandleForReading.readabilityHandler = ^(NSFileHandle *handle) {
+        NSData *data = handle.availableData;
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", str);
+    };
+    
+    [task launch];
     [task waitUntilExit];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -96,4 +113,15 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
                                                         object:self
                                                       userInfo:nil];
 }
+- (float)cursorScale {
+    float scale;
+    CGSGetCursorScale(CGSMainConnectionID(), &scale);
+    return scale;
+}
+- (void)setCursorScale:(float)cursorScale {
+    [self willChangeValueForKey:@"cursorScale"];
+    CGSSetCursorScale(CGSMainConnectionID(), cursorScale);
+    [self didChangeValueForKey:@"cursorScale"];
+}
+
 @end

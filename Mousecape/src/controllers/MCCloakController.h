@@ -15,6 +15,8 @@ extern NSString *MCCloakControllerDidRestoreCursorNotification;
 extern NSString *MCCloakControllerAppliedCursorKey;
 
 @interface MCCloakController : NSObject
+@property (assign) float cursorScale;
+@property (copy)   void(^outputBlock)(NSString *output);
 
 + (MCCloakController *)sharedCloakController;
 - (void)applyCape:(MCCursorLibrary *)cursor;
