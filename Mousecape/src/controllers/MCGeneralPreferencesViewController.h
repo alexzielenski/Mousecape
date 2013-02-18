@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MASPreferencesViewController.h>
+#import "MCCloakController.h"
 
 @interface MCGeneralPreferencesViewController : NSViewController <MASPreferencesViewController>
-
+- (MCCloakController *)cloakController;
 @end
