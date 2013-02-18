@@ -35,9 +35,9 @@
 	<key>com.apple.cursor.16</key>
 	<string>Counting Up/Down</string>
 	<key>com.apple.cursor.17</key>
-	<string>Resize West</string>
+	<string>Resize W</string>
 	<key>com.apple.cursor.18</key>
-	<string>Resize East</string>
+	<string>Resize E</string>
 	<key>com.apple.cursor.19</key>
 	<string>Resize W-E</string>
 	<key>com.apple.cursor.2</key>
@@ -45,9 +45,9 @@
 	<key>com.apple.cursor.20</key>
 	<string>Cell XOR</string>
 	<key>com.apple.cursor.21</key>
-	<string>Resize North</string>
+	<string>Resize N</string>
 	<key>com.apple.cursor.22</key>
-	<string>Resize South</string>
+	<string>Resize S</string>
 	<key>com.apple.cursor.23</key>
 	<string>Resize N-S</string>
 	<key>com.apple.cursor.24</key>
