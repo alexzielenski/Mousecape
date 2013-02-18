@@ -24,16 +24,7 @@
 #define MAGENTA "\033[35m"      /* Magenta */
 #define CYAN    "\033[36m"      /* Cyan */
 #define WHITE   "\033[37m"      /* White */
-#define BOLD    "\33[1m"
-
-#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
-#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
-#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
-#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
-#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
-#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
-#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
-#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+#define BOLD    "\033[1m"
 
 const CGFloat   MCCursorCreatorVersion               = 2.0;
 const CGFloat   MCCursorParserVersion                = 2.0;
@@ -120,7 +111,7 @@ NSString *restoreStringForIdentifier(NSString *identifier) {
 
 NSDictionary *capeWithIdentifier(NSString *identifier) {
     
-    CFIndex frameCount;
+    NSUInteger frameCount;
     CGFloat frameDuration;
     CGPoint hotSpot;
     CGSize size;
@@ -160,7 +151,13 @@ NSDictionary *processedCapeWithIdentifier(NSString *identifier) {
     return dict;
 }
 
-BOOL applyCursorForIdentifier(int frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
+BOOL applyCursorForIdentifier(CFIndex frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
+    if (frameCount > 24 || frameCount < 1) {
+        MMLog(BOLD RED "Frame count of %s out of range [1...24]\n", ident.UTF8String);
+        return YES;
+    }
+    
+    
     char *idenfifier = (char *)ident.UTF8String;
     
     int seed;
@@ -177,7 +174,7 @@ BOOL applyCursorForIdentifier(int frameCount, CGFloat frameDuration, CGPoint hot
                                               CGRectMake(hotSpot.x, hotSpot.y, size.width, size.height),
                                               frameDuration,
                                               0);
-    
+
     return (err == kCGErrorSuccess);
 }
 
@@ -215,7 +212,7 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
         
     }
     
-    return applyCursorForIdentifier(frameCount.intValue, frameDuration.doubleValue, hotSpot, size, images, identifier, 0);
+    return applyCursorForIdentifier(frameCount.unsignedIntegerValue, frameDuration.doubleValue, hotSpot, size, images, identifier, 0);
 }
 
 void restoreCursorForIdentifier(NSString *ident) {
@@ -245,9 +242,9 @@ void resetAllCursors() {
     // Backup auxiliary cursors
     MMLog("Restoring core cursors...\n");
     if (CoreCursorUnregisterAll(CGSMainConnectionID()) == 0) {
-        MMLog(BOLDGREEN "Successfully restored all cursors.\n" RESET);
+        MMLog(BOLD GREEN "Successfully restored all cursors.\n" RESET);
     } else
-        MMLog(BOLDRED "Received an error while restoring core cursors.\n" RESET);
+        MMLog(BOLD RED "Received an error while restoring core cursors.\n" RESET);
 }
 
 void backupCursorForIdentifier(NSString *ident) {
@@ -275,7 +272,6 @@ void backupAllCursors() {
     CGSIsCursorRegistered(CGSMainConnectionID(), (char *)backupStringForIdentifier(@"com.apple.coregraphics.Arrow").UTF8String, &arrowRegistered);
     
     if (arrowRegistered) {
-        MMLog("No need to back up");
         // we are already backed up
         return;
     }
@@ -305,12 +301,12 @@ BOOL applyCape(NSDictionary *dictionary) {
         
         BOOL success = applyCapeForIdentifier(cape, key);
         if (!success) {
-            MMLog(BOLDRED "Failed to hook identifier %s for some unknown reason. Bailing out...\n" RESET, key.UTF8String);
+            MMLog(BOLD RED "Failed to hook identifier %s for some unknown reason. Bailing out...\n" RESET, key.UTF8String);
             return NO;
         }
     }
     
-    MMLog(BOLDGREEN "Applied %s successfully!\n" RESET, name.UTF8String);
+    MMLog(BOLD GREEN "Applied %s successfully!\n" RESET, name.UTF8String);
     
     return YES;
 }
@@ -428,7 +424,7 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse) {
     NSDictionary *identifiers = global[@"Identifiers"];
     
     if (!cursors || !global || !identifiers || !cursorData) {
-        MMLog(BOLDRED "Mighty Mouse format either invalid or unrecognized.\n" RESET);
+        MMLog(BOLD RED "Mighty Mouse format either invalid or unrecognized.\n" RESET);
         return nil;
     }
     
@@ -483,7 +479,7 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse) {
     }
     
     if (convertedCursors.count == 0) {
-        MMLog(BOLDRED "No cursors to convert in file.\n" RESET);
+        MMLog(BOLD RED "No cursors to convert in file.\n" RESET);
         return nil;
     }
     
@@ -648,22 +644,23 @@ int main(int argc, char * argv[])
         [options registerOption:'?' long:@"help" description:@"Display this help and exit" flags:GBValueNone];
         [options registerOption:'o' long:@"output" description:@"Use this option to tell where an output file goes. (For convert and create)" flags:GBValueRequired];
         [options registerOption:0 long:@"suppressCopyright" description:@"Suppress Copyright info" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
+        [options registerOption:'s' long:@"scale" description:@"Scale the cursor to obscene multipliers or get the current scale" flags:GBValueOptional];
         
         options.applicationName = ^{ return @"mousecloak"; };
         options.applicationVersion = ^{ return @"2.0"; };
         options.applicationBuild = ^{ return @""; };
-        options.printHelpHeader = ^{ return [NSString stringWithUTF8String:BOLDWHITE "\n%APPNAME v%APPVERSION" RESET]; };
-        options.printHelpFooter = ^{ return [NSString stringWithUTF8String:BOLDWHITE "\nCopyright © 2013 Alex Zielenski\n" RESET]; };
-        
+        options.printHelpHeader = ^{ return [NSString stringWithUTF8String:BOLD WHITE "\n%APPNAME v%APPVERSION" RESET]; };
+        options.printHelpFooter = ^{ return [NSString stringWithUTF8String:BOLD WHITE "\nCopyright © 2013 Alex Zielenski\n" RESET]; };
+                
         GBCommandLineParser *parser = [[GBCommandLineParser alloc] init];
         [options registerOptionsToCommandLineParser:parser];
         [parser parseOptionsWithArguments:argv count:argc block:^(GBParseFlags flags, NSString *option, id value, BOOL *stop) {
             switch (flags) {
                 case GBParseFlagUnknownOption:
-                    printf(BOLDRED "Unknown command line option %s, try --help!\n" RESET, option.UTF8String);
+                    printf(BOLD RED "Unknown command line option %s, try --help!\n" RESET, option.UTF8String);
                     break;
                 case GBParseFlagMissingValue:
-                    printf(BOLDRED "Missing value for command line option %s, try --help!\n" RESET, option.UTF8String);
+                    printf(BOLD RED "Missing value for command line option %s, try --help!\n" RESET, option.UTF8String);
                     break;
                 case GBParseFlagArgument:
                     [settings addArgument:value];
@@ -693,21 +690,21 @@ int main(int argc, char * argv[])
             return 0;
         }
         
-        
         BOOL convert = [settings isKeyPresentAtThisLevel:@"convert"];
         BOOL apply   = [settings isKeyPresentAtThisLevel:@"apply"];
         BOOL create  = [settings isKeyPresentAtThisLevel:@"create"];
         BOOL dump    = [settings isKeyPresentAtThisLevel:@"dump"];
-        
+        BOOL scale   = [settings isKeyPresentAtThisLevel:@"scale"];
         int amt = 0;
         
         if (convert) amt++;
         if (apply) amt++;
         if (create) amt++;
         if (dump) amt++;
+        if (scale) amt++;
         
         if (amt > 1) {
-            printf(BOLDRED "One command at a time, son!\n" RESET);
+            printf(BOLD RED "One command at a time, son!\n" RESET);
             
             if (!suppressCopyright)
                 [options replacePlaceholdersAndPrintStringFromBlock:options.printHelpFooter];
@@ -725,7 +722,7 @@ int main(int argc, char * argv[])
             BOOL fileExists = [manager fileExistsAtPath:path];
             
             if (!fileExists || isDir) {
-                MMLog(BOLDRED "Invalid cursor file or bad path given: %s\n" RESET, path.UTF8String);
+                MMLog(BOLD RED "Invalid cursor file or bad path given: %s\n" RESET, path.UTF8String);
                 goto fin;
             }
             
@@ -737,7 +734,7 @@ int main(int argc, char * argv[])
             NSDictionary *cape = createCapeFromDirectory(path);
             
             if (!cape) {
-                MMLog(BOLDRED "Unable to create a cape from the directory specified\n" RESET);
+                MMLog(BOLD RED "Unable to create a cape from the directory specified\n" RESET);
                 goto fin;
             }
             
@@ -753,9 +750,9 @@ int main(int argc, char * argv[])
             }
             
             if (![cape writeToFile:output atomically:NO])
-                MMLog(BOLDRED "Failed to write to %s\n" RESET, output.UTF8String);
+                MMLog(BOLD RED "Failed to write to %s\n" RESET, output.UTF8String);
             else
-                MMLog(BOLDGREEN "Cape successfully written to %s\n" RESET, output.UTF8String);
+                MMLog(BOLD GREEN "Cape successfully written to %s\n" RESET, output.UTF8String);
             
         } else if (convert) {
             NSString *path = [settings objectForKey:@"convert"];
@@ -764,7 +761,7 @@ int main(int argc, char * argv[])
             NSDictionary *cape = createCapeFromMightyMouse(MM);
             
             if (!cape) {
-                MMLog(BOLDRED "Unable to create a cape from the file specified\n" RESET);
+                MMLog(BOLD RED "Unable to create a cape from the file specified\n" RESET);
                 goto fin;
             }
             
@@ -776,18 +773,42 @@ int main(int argc, char * argv[])
                 output = [[output stringByAppendingPathComponent:path.lastPathComponent.stringByDeletingPathExtension] stringByAppendingPathExtension:@"cape"];
             
             if (!isDir && exists) {
-                MMLog(BOLDRED "File exists at specified output: %s\n" RESET, output.UTF8String);
+                MMLog(BOLD RED "File exists at specified output: %s\n" RESET, output.UTF8String);
                 goto fin;
             }
             
             if (![cape writeToFile:output atomically:NO])
-                MMLog(BOLDRED "Unable to write to %s\n" RESET, output.UTF8String);
+                MMLog(BOLD RED "Unable to write to %s\n" RESET, output.UTF8String);
             else
-                MMLog(BOLDGREEN "Cape successfully written to %s\n" RESET, output.UTF8String);
+                MMLog(BOLD GREEN "Cape successfully written to %s\n" RESET, output.UTF8String);
             
         } else if (dump) {
             NSString *path = [settings objectForKey:@"dump"];
             dumpCursorsToFile(path);
+            
+        } else if (scale) {
+            NSNumber *number = [settings objectForKey:@"scale"];
+            
+            if (argc == 2) {
+                
+                float value;
+                CGSGetCursorScale(CGSMainConnectionID(), &value);
+                
+                MMLog("\n%f\n", value);
+                
+            } else {
+                    
+                float dbl = number.floatValue;
+                
+                if (dbl > 32) {
+                    MMLog("Not a good idea...\n");
+                } else if (CGSSetCursorScale(CGSMainConnectionID(), dbl) == noErr) {
+                    MMLog("Successfully set cursor scale!\n");
+                } else {
+                    MMLog("Somehow failed to set cursor scale!\n");
+                }
+            }            
+            goto fin;
         }
         
     fin:
