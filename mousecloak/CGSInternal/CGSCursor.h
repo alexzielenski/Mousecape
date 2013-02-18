@@ -32,7 +32,7 @@ typedef int CGSCursorID;
 
 CG_EXTERN CGError CoreCursorUnregisterAll(CGSConnectionID cid);
 CG_EXTERN CGError CoreCursorSetAndReturnSeed(CGSConnectionID cid, char *cursorName, int *seed);
-CG_EXTERN CGError CoreCursorCopyImages(CGSConnectionID cid, CGSCursorID cursorID, CFArrayRef *images, CGSize *imageSize, CGPoint *hotSpot, CFIndex *frameCount, CGFloat *frameDuration);
+CG_EXTERN CGError CoreCursorCopyImages(CGSConnectionID cid, CGSCursorID cursorID, CFArrayRef *images, CGSize *imageSize, CGPoint *hotSpot, NSUInteger *frameCount, CGFloat *frameDuration);
 
 #pragma mark - Cursor APIs reversed by Alex Zielenski on Lion 10.7.3
 #pragma mark -
@@ -40,18 +40,15 @@ CG_EXTERN CGError CoreCursorCopyImages(CGSConnectionID cid, CGSCursorID cursorID
 CG_EXTERN CGError CGSIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered);
 
 #if defined(MAC_OS_X_VERSION_10_8)
-
-CG_EXTERN CGError CGSCopyRegisteredCursorImages(CGSConnectionID cid, char *cursorName, CGSize *imageSize, CGPoint *hotSpot, CFIndex *frameCount, CGFloat *frameDuration, CFArrayRef *imageArray);
-
-#else
-
-CG_EXTERN CGError CGSGetRegisteredCursorImages(CGSConnectionID cid, char *cursorName, CGSize *imageSize, CGPoint *hotSpot, CFIndex *frameCount, CGFloat *frameDuration, CFArrayRef *imageArray);
-
+CG_EXTERN CGError CGSCopyRegisteredCursorImages(CGSConnectionID cid, char *cursorName, CGSize *imageSize, CGPoint *hotSpot, NSUInteger *frameCount, CGFloat *frameDuration, CFArrayRef *imageArray);
 #endif
+
+CG_EXTERN CGError CGSGetRegisteredCursorImages(CGSConnectionID cid, char *cursorName, CGSize *imageSize, CGPoint *hotSpot, NSUInteger *frameCount, CGFloat *frameDuration, CFArrayRef *imageArray);
+
 
 // Verified, stable
 /*! Registers a cursor in the current CGSConnection or globally */
-CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, CFIndex frameCount, CFArrayRef imageArray, CGSize cursorSize, CGPoint hotspot, int *seed, CGRect bounds, CGFloat frameDuration, NSInteger repeatCount);
+CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, NSUInteger frameCount, CFArrayRef imageArray, CGSize cursorSize, CGPoint hotspot, int *seed, CGRect bounds, CGFloat frameDuration, NSInteger repeatCount);
 
 CG_EXTERN CGError CGSSetSystemDefinedCursor(CGSConnectionID cid, CGSCursorID cursor);
 
