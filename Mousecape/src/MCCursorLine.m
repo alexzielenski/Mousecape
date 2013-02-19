@@ -35,11 +35,32 @@
         [self addObserver:self forKeyPath:@"cursor.name" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"parentLine" options:NSKeyValueObservingOptionOld context:nil];
+        
+        if (!self.textField) {
+            NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
+            self.textField = tf;
+            self.textField.stringValue     = @"Unknown";
+            self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
+            self.textField.bezeled         = NO;
+            self.textField.drawsBackground = NO;
+            self.textField.editable        = NO;
+            self.textField.selectable      = NO;
+            self.textField.alignment       = NSCenterTextAlignment;
+            ((NSTextFieldCell *)self.textField.cell).lineBreakMode = NSLineBreakByTruncatingTail;
+        }
+        
+        if (!self.imageView) {
+            MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
+            self.imageView = im;
+        }
+        
     }
     return self;
 }
 
 - (void)dealloc {
+    [self removeObserver:self forKeyPath:@"parentLine"];
     [self removeObserver:self forKeyPath:@"cursor.representations"];
     [self removeObserver:self forKeyPath:@"cursor.name"];
     [self removeObserver:self forKeyPath:@"cursor"];
@@ -57,28 +78,14 @@
         
     } else if ([keyPath isEqualToString:@"selected"]) {
         [self.parentLine cursorView:self selected:self.isSelected];
+    } else if ([keyPath isEqualToString:@"parentLine"]) {
+        [self.imageView unbind:@"shouldAnimate"];
+        [self.imageView bind:@"shouldAnimate" toObject:self.parentLine withKeyPath:@"animationsEnabled" options:nil];
+//        self.imageView.shouldAnimate = self.parentLine.animationsEnabled;
     }
 }
 
 - (void)viewDidMoveToWindow {
-    
-    if (!self.textField) {
-        NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
-        self.textField = tf;
-        self.textField.stringValue     = @"Unknown";
-        self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
-        self.textField.bezeled         = NO;
-        self.textField.drawsBackground = NO;
-        self.textField.editable        = NO;
-        self.textField.selectable      = NO;
-        self.textField.alignment       = NSCenterTextAlignment;
-        ((NSTextFieldCell *)self.textField.cell).lineBreakMode = NSLineBreakByTruncatingTail;
-    }
-    
-    if (!self.imageView) {
-        MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
-        self.imageView = im;
-    }
     
     self.imageView.frame = NSMakeRect(8.0f, 16.0f, 48.0f, 48.0f);
     self.textField.frame = NSMakeRect(0, 2.0f, 64.0f, 14.0f);
@@ -146,6 +153,7 @@
 
 @implementation MCCursorLine
 - (void)_initialize {
+    self.animationsEnabled = YES;
     self.wellWidth = 64.0f;
     self.cursorViews = [NSMutableArray array];
     self.shouldAllowSelection = YES;

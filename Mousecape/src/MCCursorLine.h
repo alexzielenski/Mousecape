@@ -24,6 +24,7 @@
 @property (copy)   NSColor *highlightColor;
 @property (assign) id <MCCursorLineDataSource> dataSource;
 @property (assign) NSUInteger selectionKeyMask;
+@property (assign) BOOL animationsEnabled;
 - (void)reloadData;
 @end
 

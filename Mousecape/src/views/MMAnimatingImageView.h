@@ -30,6 +30,7 @@
 @property (assign) CGFloat                                    frameDuration;
 @property (assign) NSInteger                                  frameCount;
 @property (weak) IBOutlet id <MMAnimatingImageViewDelegate> delegate;
+@property (assign) BOOL shouldAnimate;
 
 // Don't call this. Registers the valid drag types. Probably should be a private category–but we're all developers here...
 - (void)registerTypes;

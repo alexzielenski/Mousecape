@@ -85,9 +85,12 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 }
 
 - (void)_initialize {
+    self.shouldAnimate = YES;
+    
     [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"frameDuration" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"frameCount" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"shouldAnimate" options:NSKeyValueObservingOptionNew context:nil];
     
     [self registerTypes];
     
@@ -111,6 +114,7 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 }
 
 - (void)dealloc {
+    [self removeObserver:self forKeyPath:@"shouldAnimate"];
     [self removeObserver:self forKeyPath:@"image"];
     [self removeObserver:self forKeyPath:@"frameDuration"];
     [self removeObserver:self forKeyPath:@"frameCount"];
@@ -146,8 +150,8 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
         self.frameDuration = self.frameDuration;
         
     } else if ([keyPath isEqualToString:@"frameDuration"]) {
-        if (self.frameCount == 1) {
-            self.spriteLayer.sampleIndex = 1;
+        if (self.frameCount == 1 || !self.shouldAnimate) {
+            self.spriteLayer.sampleIndex = self.frameCount + 1;
             [self.spriteLayer removeAllAnimations];
             return;
         }
@@ -164,6 +168,16 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
         anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
         
         [self.spriteLayer addAnimation:anim forKey:@"sampleIndex"]; // start
+    } else if ([keyPath isEqualToString:@"shouldAnimate"]) {
+        
+        if (!self.shouldAnimate) {
+            self.spriteLayer.sampleIndex = self.frameCount + 1;
+            [self.spriteLayer removeAllAnimations];
+            [self.spriteLayer setNeedsDisplay];
+        } else {
+            // Trigger the above case
+            self.frameDuration = self.frameDuration;
+        }
     }
 }
 
