@@ -39,6 +39,9 @@
 		FA92221316C9CB20004E382D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA92221216C9CB20004E382D /* Foundation.framework */; };
 		FA92221616C9CB20004E382D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA92221516C9CB20004E382D /* main.m */; };
 		FA92221A16C9CB20004E382D /* mousecloak.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA92221916C9CB20004E382D /* mousecloak.1 */; };
+		FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05A816D4138A000732AA /* MCEditWindowController.m */; };
+		FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05A916D4138A000732AA /* EditWindow.xib */; };
+		FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B016D42404000732AA /* MCEditListViewController.m */; };
 		FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */; };
 		FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB5E8CB16C85F4600B41654 /* CursorMap.plist */; };
 		FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB5E8D116C872B200B41654 /* QuartzCore.framework */; };
@@ -152,6 +155,11 @@
 		FA92222E16C9CD0D004E382D /* CGSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSTransitions.h; sourceTree = "<group>"; };
 		FA92222F16C9CD0D004E382D /* CGSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWindow.h; sourceTree = "<group>"; };
 		FA92223016C9CD0D004E382D /* CGSWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
+		FA9D05A716D4138A000732AA /* MCEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditWindowController.h; path = src/controllers/MCEditWindowController.h; sourceTree = "<group>"; };
+		FA9D05A816D4138A000732AA /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = src/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
+		FA9D05A916D4138A000732AA /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/controllers/EditWindow.xib; sourceTree = "<group>"; };
+		FA9D05AF16D42404000732AA /* MCEditListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditListViewController.h; path = src/controllers/MCEditListViewController.h; sourceTree = "<group>"; };
+		FA9D05B016D42404000732AA /* MCEditListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditListViewController.m; path = src/controllers/MCEditListViewController.m; sourceTree = "<group>"; };
 		FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FAB5E8CB16C85F4600B41654 /* CursorMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CursorMap.plist; path = resources/CursorMap.plist; sourceTree = "<group>"; };
@@ -242,26 +250,10 @@
 				FA13A03716C82E5500AF6D2E /* categories */,
 				FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */,
 				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
-				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
-				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
-				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
-				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
-				FA9221F016C91930004E382D /* MCDetailVewController.h */,
-				FA9221F116C91930004E382D /* MCDetailVewController.m */,
-				FA2C88EF16CC92C20036CCC2 /* MCCloakController.h */,
-				FA2C88F016CC92C20036CCC2 /* MCCloakController.m */,
-				FA139FEC16C58D1600AF6D2E /* MCCursor.h */,
-				FA139FED16C58D1600AF6D2E /* MCCursor.m */,
-				FA139FEF16C58D2B00AF6D2E /* MCCursorLibrary.h */,
-				FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */,
-				FA139FF216C58EF400AF6D2E /* MCCursorLine.h */,
-				FA139FF316C58EF500AF6D2E /* MCCursorLine.m */,
-				FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */,
-				FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */,
-				FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */,
-				FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */,
-				FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */,
-				FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */,
+				FA9D05AE16D423E8000732AA /* Controllers */,
+				FA9D05AD16D423D7000732AA /* Models */,
+				FA9D05AC16D423CD000732AA /* Views */,
+				FA9D05A916D4138A000732AA /* EditWindow.xib */,
 				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
@@ -355,6 +347,51 @@
 			path = CGSInternal;
 			sourceTree = "<group>";
 		};
+		FA9D05AC16D423CD000732AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FF216C58EF400AF6D2E /* MCCursorLine.h */,
+				FA139FF316C58EF500AF6D2E /* MCCursorLine.m */,
+				FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */,
+				FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */,
+				FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */,
+				FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */,
+				FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */,
+				FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FA9D05AD16D423D7000732AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA139FEC16C58D1600AF6D2E /* MCCursor.h */,
+				FA139FED16C58D1600AF6D2E /* MCCursor.m */,
+				FA139FEF16C58D2B00AF6D2E /* MCCursorLibrary.h */,
+				FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FA9D05AE16D423E8000732AA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA9D05A716D4138A000732AA /* MCEditWindowController.h */,
+				FA9D05A816D4138A000732AA /* MCEditWindowController.m */,
+				FA9D05AF16D42404000732AA /* MCEditListViewController.h */,
+				FA9D05B016D42404000732AA /* MCEditListViewController.m */,
+				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
+				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
+				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
+				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
+				FA9221F016C91930004E382D /* MCDetailVewController.h */,
+				FA9221F116C91930004E382D /* MCDetailVewController.m */,
+				FA2C88EF16CC92C20036CCC2 /* MCCloakController.h */,
+				FA2C88F016CC92C20036CCC2 /* MCCloakController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -439,6 +476,7 @@
 				FA2C88FD16CDB5180036CCC2 /* applied@2x.png in Resources */,
 				FAD5D28516D1781500DD4302 /* HD.png in Resources */,
 				FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */,
+				FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +519,8 @@
 				FA2C88F116CC92C30036CCC2 /* MCCloakController.m in Sources */,
 				FA0CB45616D05CE7006C239D /* NSArray+CWSortedInsert.m in Sources */,
 				FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */,
+				FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */,
+				FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

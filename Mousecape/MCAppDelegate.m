@@ -19,6 +19,7 @@
 static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
 
 @interface MCAppDelegate ()
+- (void)_createEditWindowController;
 @end
 
 @implementation MCAppDelegate
@@ -63,6 +64,8 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
                                                   usingBlock:^(NSNotification *note) {
                                                       blockSelf.libraryController.appliedLibrary = nil;
                                                   }];
+    
+    
     
 }
 - (void)applicationWillTerminate:(NSNotification *)notification {
@@ -119,5 +122,14 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
                                 metrics:nil
                                 views:NSDictionaryOfVariableBindings(accessory)]];    
 }
-
+- (void)_createEditWindowController {
+    if (!self.editWindowController)
+        self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
+}
+- (IBAction)editCursor:(id)sender {
+    [self _createEditWindowController];
+    
+    [self.editWindowController showWindow:sender];
+    
+}
 @end
