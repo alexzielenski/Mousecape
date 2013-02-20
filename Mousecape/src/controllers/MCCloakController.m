@@ -51,7 +51,8 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     pipe.fileHandleForReading.readabilityHandler = ^(NSFileHandle *handle) {
         NSData *data = handle.availableData;
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
+//        NSLog(@"%@", str);
+        (void)str;
     };
     
     [task launch];
