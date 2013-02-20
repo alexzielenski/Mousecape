@@ -130,6 +130,7 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
     [self _createEditWindowController];
     
     [self.editWindowController showWindow:sender];
+    self.editWindowController.currentLibrary = self.libraryController.selectedLibrary;
     
 }
 @end

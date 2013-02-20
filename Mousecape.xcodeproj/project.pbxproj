@@ -42,6 +42,12 @@
 		FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05A816D4138A000732AA /* MCEditWindowController.m */; };
 		FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05A916D4138A000732AA /* EditWindow.xib */; };
 		FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B016D42404000732AA /* MCEditListViewController.m */; };
+		FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B316D42801000732AA /* MCEditCursorViewController.m */; };
+		FA9D05B616D42801000732AA /* EditCursor.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05B416D42801000732AA /* EditCursor.xib */; };
+		FA9D05B916D42B7C000732AA /* MCScaledImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B816D42B7C000732AA /* MCScaledImageView.m */; };
+		FA9D05BC16D44019000732AA /* NSImage+BestRep.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05BB16D44019000732AA /* NSImage+BestRep.m */; };
+		FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */; };
+		FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05C116D45182000732AA /* MCEditCapeViewController.m */; };
 		FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */; };
 		FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB5E8CB16C85F4600B41654 /* CursorMap.plist */; };
 		FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB5E8D116C872B200B41654 /* QuartzCore.framework */; };
@@ -160,6 +166,17 @@
 		FA9D05A916D4138A000732AA /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/controllers/EditWindow.xib; sourceTree = "<group>"; };
 		FA9D05AF16D42404000732AA /* MCEditListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditListViewController.h; path = src/controllers/MCEditListViewController.h; sourceTree = "<group>"; };
 		FA9D05B016D42404000732AA /* MCEditListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditListViewController.m; path = src/controllers/MCEditListViewController.m; sourceTree = "<group>"; };
+		FA9D05B216D42801000732AA /* MCEditCursorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditCursorViewController.h; path = src/controllers/MCEditCursorViewController.h; sourceTree = "<group>"; };
+		FA9D05B316D42801000732AA /* MCEditCursorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditCursorViewController.m; path = src/controllers/MCEditCursorViewController.m; sourceTree = "<group>"; };
+		FA9D05B416D42801000732AA /* EditCursor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditCursor.xib; path = src/controllers/EditCursor.xib; sourceTree = "<group>"; };
+		FA9D05B716D42B7C000732AA /* MCScaledImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCScaledImageView.h; path = src/views/MCScaledImageView.h; sourceTree = "<group>"; };
+		FA9D05B816D42B7C000732AA /* MCScaledImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCScaledImageView.m; path = src/views/MCScaledImageView.m; sourceTree = "<group>"; };
+		FA9D05BA16D44019000732AA /* NSImage+BestRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+BestRep.h"; sourceTree = "<group>"; };
+		FA9D05BB16D44019000732AA /* NSImage+BestRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+BestRep.m"; sourceTree = "<group>"; };
+		FA9D05BD16D4423E000732AA /* MCLibraryRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLibraryRowView.h; path = src/views/MCLibraryRowView.h; sourceTree = "<group>"; };
+		FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryRowView.m; path = src/views/MCLibraryRowView.m; sourceTree = "<group>"; };
+		FA9D05C016D45182000732AA /* MCEditCapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditCapeViewController.h; path = src/controllers/MCEditCapeViewController.h; sourceTree = "<group>"; };
+		FA9D05C116D45182000732AA /* MCEditCapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditCapeViewController.m; path = src/controllers/MCEditCapeViewController.m; sourceTree = "<group>"; };
 		FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FAB5E8CB16C85F4600B41654 /* CursorMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CursorMap.plist; path = resources/CursorMap.plist; sourceTree = "<group>"; };
@@ -254,6 +271,7 @@
 				FA9D05AD16D423D7000732AA /* Models */,
 				FA9D05AC16D423CD000732AA /* Views */,
 				FA9D05A916D4138A000732AA /* EditWindow.xib */,
+				FA9D05B416D42801000732AA /* EditCursor.xib */,
 				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
@@ -286,6 +304,8 @@
 				FA0CB45516D05CE7006C239D /* NSArray+CWSortedInsert.m */,
 				FA0CB45716D06109006C239D /* DTScrollView.h */,
 				FA0CB45816D0610A006C239D /* DTScrollView.m */,
+				FA9D05BA16D44019000732AA /* NSImage+BestRep.h */,
+				FA9D05BB16D44019000732AA /* NSImage+BestRep.m */,
 			);
 			name = categories;
 			path = src/categories;
@@ -358,6 +378,10 @@
 				FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */,
 				FA13A00616C81E4D00AF6D2E /* MCTableCellView.h */,
 				FA13A00716C81E4D00AF6D2E /* MCTableCellView.m */,
+				FA9D05B716D42B7C000732AA /* MCScaledImageView.h */,
+				FA9D05B816D42B7C000732AA /* MCScaledImageView.m */,
+				FA9D05BD16D4423E000732AA /* MCLibraryRowView.h */,
+				FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -380,6 +404,10 @@
 				FA9D05A816D4138A000732AA /* MCEditWindowController.m */,
 				FA9D05AF16D42404000732AA /* MCEditListViewController.h */,
 				FA9D05B016D42404000732AA /* MCEditListViewController.m */,
+				FA9D05B216D42801000732AA /* MCEditCursorViewController.h */,
+				FA9D05B316D42801000732AA /* MCEditCursorViewController.m */,
+				FA9D05C016D45182000732AA /* MCEditCapeViewController.h */,
+				FA9D05C116D45182000732AA /* MCEditCapeViewController.m */,
 				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
 				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
 				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
@@ -477,6 +505,7 @@
 				FAD5D28516D1781500DD4302 /* HD.png in Resources */,
 				FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */,
 				FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */,
+				FA9D05B616D42801000732AA /* EditCursor.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +550,11 @@
 				FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */,
 				FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */,
 				FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */,
+				FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */,
+				FA9D05B916D42B7C000732AA /* MCScaledImageView.m in Sources */,
+				FA9D05BC16D44019000732AA /* NSImage+BestRep.m in Sources */,
+				FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */,
+				FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

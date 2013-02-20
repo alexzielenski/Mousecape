@@ -7,7 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCCursorLibrary.h"
 
-@interface MCEditListViewController : NSViewController
+@interface MCEditListViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
+@property (strong) IBOutlet NSTableView *tableView;
+@property (strong) MCCursorLibrary *cursorLibrary;
+@property (weak) id selectedObject;
+
+- (IBAction)addCursor:(id)sender;
+- (IBAction)removeCursor:(id)sender;
+
+- (NSUndoManager *)undoManager;
 
 @end

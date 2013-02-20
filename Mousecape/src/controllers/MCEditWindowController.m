@@ -9,13 +9,15 @@
 #import "MCEditWindowController.h"
 
 @interface MCEditWindowController ()
-
+@property (weak) NSViewController *currentEditViewController;
+- (void)_changeEditViewsForSelection;
+- (void)_replaceViewController:(NSViewController *)original withViewController:(NSViewController *)replacement;
 @end
 
 @implementation MCEditWindowController
+@dynamic currentLibrary;
 
-- (id)initWithWindow:(NSWindow *)window
-{
+- (id)initWithWindow:(NSWindow *)window {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
@@ -27,28 +29,82 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
 
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    self.currentEditViewController = self.capeViewController;
+    [self addObserver:self forKeyPath:@"listViewController.selectedObject" options:NSKeyValueObservingOptionNew context:nil];
 }
 
-- (void)showWindow:(id)sender {
-    [super showWindow:sender];
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"listViewController.selectedObject"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath  isEqualToString:@"listViewController.selectedObject"]) {
+        [self _changeEditViewsForSelection];
+    }
+}
+
+- (void)_changeEditViewsForSelection {
+    BOOL capeEditor = [self.listViewController.selectedObject isKindOfClass:[MCCursorLibrary class]];
+    if (capeEditor) {
+        
+        if (self.currentEditViewController != self.capeViewController) {
+            // put on the cape view controllers
+            [self _replaceViewController:self.cursorViewController withViewController:self.capeViewController];
+        }
+        
+        self.capeViewController.cursorLibrary = self.listViewController.selectedObject;
+        
+    } else {
+        
+        if (self.currentEditViewController != self.cursorViewController) {
+            [self _replaceViewController:self.capeViewController withViewController:self.cursorViewController];
+        }
+        
+        self.cursorViewController.cursor = self.listViewController.selectedObject;
+        
+    }
+}
+
+- (void)_replaceViewController:(NSViewController *)original withViewController:(NSViewController *)replacement {
+    if (!original.view.superview)
+        return;
     
-    [self.window makeKeyAndOrderFront:self];
+    NSRect frame = original.view.frame;
+    replacement.view.frame = frame;
+    
+    NSView *soup = original.view.superview;
+    [original.view removeFromSuperview];
+    [soup addSubview:replacement.view];
+    
+    self.currentEditViewController = replacement;
+}
+
+#pragma mark - Accessors
+- (MCCursorLibrary *)currentLibrary {
+    return self.listViewController.cursorLibrary;
+}
+
+- (void)setCurrentLibrary:(MCCursorLibrary *)currentLibrary {
+    [self willChangeValueForKey:@"currentLibrary"];
+    self.listViewController.cursorLibrary = currentLibrary;
+    [self didChangeValueForKey:@"currentLibrary"];
 }
 
 #pragma mark - NSSplitViewDelegate
 - (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
-        return proposedMin + 60.0;
+        return proposedMin + 180.0;
     return proposedMin + 420.0;
 }
 
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
-        return proposedMax - 480.0;
-    return proposedMax;
+        return 360;
+    return proposedMax - 360;
 }
+
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview {
-    return YES;
+    return subview == self.listViewController.view;
 }
+
 @end
