@@ -7,8 +7,18 @@
 //
 
 #import "MCScaledImageView.h"
+#import "NSImage+BestRep.h"
+
+#define gColorNormal [NSColor colorWithCalibratedWhite:0.961 alpha:1.000]
+#define gColorDragging [NSColor colorWithCalibratedWhite:0.359 alpha:0.2500]
+
+#define gOuterStrokeDragging [NSColor colorWithCalibratedWhite:0.631 alpha:1.000]
+#define gInnerStrokeDragging [NSColor colorWithCalibratedWhite:0.898 alpha:1.000]
+#define gOuterStroke [NSColor colorWithCalibratedWhite:0.667 alpha:1.000]
+#define gInnerStroke [NSColor colorWithCalibratedWhite:1.0 alpha:1.000]
 
 @interface MCScaledImageView ()
+@property (readwrite, weak) NSBitmapImageRep *lastRepresentation;
 - (void)_commonInit;
 @end
 
@@ -56,16 +66,36 @@
 - (void)drawRect:(NSRect)dirtyRect {
     
     if (self.shouldDrawBezel) {
+        [gColorNormal set];
+        NSRectFillUsingOperation(self.bounds, NSCompositeSourceOver);
         
+        NSBezierPath *path = [NSBezierPath bezierPathWithRect:self.bounds];
+        
+        
+        
+        [gInnerStroke set];
+        [path setLineWidth:4.0f];
+        [path stroke];
+        
+        [gOuterStroke set];
+        [path setLineWidth:2.0f];
+        [path stroke];
+        
+        [path setClip];
     }
     
     if (!self.image) return;
     
-    NSSize sizeToDraw = NSMakeSize(self.image.size.width * self.scale, self.image.size.height * self.scale);
+    NSSize sampleSize = self.sampleSize;
+    if (NSEqualSizes(self.sampleSize, NSZeroSize))
+        sampleSize = self.image.size;
+    
+    NSSize sizeToDraw = NSMakeSize(sampleSize.width * self.scale, sampleSize.height * self.scale);
     NSPoint anchorPoint = NSZeroPoint;
     
     // Proportionally scale down
     if (sizeToDraw.width > self.bounds.size.width || sizeToDraw.height > self.bounds.size.height) {
+
         CGFloat scaleFactor  = 1.0;
         CGFloat widthFactor  = self.bounds.size.width / sizeToDraw.width;
         CGFloat heightFactor = self.bounds.size.height / sizeToDraw.height;
@@ -89,12 +119,16 @@
     }
     
     NSRect rect;
-    rect.origin = NSMakePoint(NSMidX(self.bounds) + anchorPoint.x, NSMidY(self.bounds) + anchorPoint.y);
+    rect.origin = NSMakePoint(NSMidX(self.bounds) + anchorPoint.x - sizeToDraw.width / 2, NSMidY(self.bounds) + anchorPoint.y - sizeToDraw.height / 2);
     rect.size   = sizeToDraw;
-    [self.image drawInRect:rect
-                  fromRect:NSZeroRect
-                 operation:NSCompositeSourceOver
-                  fraction:1.0];
+    
+    self.lastRepresentation = (NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.scale];
+    [self.lastRepresentation drawInRect:NSIntegralRect(rect)
+                               fromRect:NSMakeRect(0, 0, sampleSize.width, sampleSize.height)
+                              operation:NSCompositeSourceOver
+                               fraction:1.0
+                         respectFlipped:NO
+                                  hints:nil];
     
 }
 

@@ -12,4 +12,10 @@
 @property (strong) NSImage *image;
 @property (assign) CGFloat scale;
 @property (assign) BOOL shouldDrawBezel;
+@property (assign) NSSize sampleSize;
+
+@end
+
+@interface MCScaledImageView (Properties)
+@property (readonly, weak) NSBitmapImageRep *lastRepresentation;
 @end
