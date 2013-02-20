@@ -8,64 +8,7 @@
 
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
-
-@interface NSImage (BestRep)
-- (NSImageRep *)bestRepresentationForContentsScale:(CGFloat)scale;
-@end
-
-@implementation NSImage (BestRep)
-
-- (NSImageRep *)bestRepresentationForContentsScale:(CGFloat)scale {
-    NSSize scaledSize = NSMakeSize(self.size.width * scale, self.size.height * scale);
-    
-    NSImageRep *closestMatch = nil;
-    CGFloat closestDeltaW = 0;
-    CGFloat closestDeltaH = 0;
-    
-    for (NSImageRep *rep in self.representations) {
-        if ([rep isKindOfClass:[NSPDFImageRep class]])
-            return rep;
-        
-        CGFloat deltaW = rep.pixelsWide - scaledSize.width;
-        CGFloat deltaH = rep.pixelsHigh - scaledSize.height;
-        
-        
-        // exact match
-        if (deltaW == 0 && deltaH == 0) {
-            return rep;
-        }
-        
-        // start up
-        if (!closestMatch) {
-            closestMatch = rep;
-            closestDeltaW = deltaW;
-            closestDeltaH = deltaH;
-            
-            continue;
-        }
-
-        // Always prefer the larger image
-        if ((closestDeltaW < 0 && deltaW >= 0) || (closestDeltaH < 0 && deltaH >= 0)) {
-            closestMatch = rep;
-            closestDeltaW = closestDeltaW;
-            closestDeltaH = closestDeltaH;
-            continue;
-        }
-        
-        if (abs(deltaW) < abs(closestDeltaW) || abs(deltaH) < closestDeltaH) {
-            closestMatch = rep;
-            closestDeltaW = closestDeltaW;
-            closestDeltaH = closestDeltaH;
-            continue;
-        }
-        
-        
-    }
-
-    return closestMatch;
-}
-
-@end
+#import "NSImage+BestRep.h"
 
 static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     return NSIntegralRect(NSMakeRect(NSMidX(rect) - size.width / 2, NSMidY(rect) - size.height / 2, size.width, size.height));
@@ -125,14 +68,8 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     self.layer.contentsScale       = self.window.backingScaleFactor;
     self.spriteLayer.contentsScale = self.window.backingScaleFactor;
     
-//    NSUInteger scaleFactor = (NSUInteger)self.window.backingScaleFactor;
-//    while (self.image.representations.count - 1 < scaleFactor) {
-//        scaleFactor--;
-//    }
-//    
     // When you set this, the next time the layer displayes it will choose the best representation for the job
     self.spriteLayer.contents = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
-//    self.spriteLayer.contents = (__bridge id)[[self.image.representations objectAtIndex:MIN(self.image.representations.count - 1, scaleFactor)] CGImage];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
