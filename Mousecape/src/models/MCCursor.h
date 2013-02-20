@@ -10,7 +10,6 @@
 
 @interface MCCursor : NSObject <NSCopying>
 
-@property (strong) NSArray           *representations;
 @property (assign) CGFloat           frameDuration;
 @property (assign) NSUInteger        frameCount;
 @property (assign) NSSize            size;
@@ -22,8 +21,14 @@
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version;
 - (id)initWithCursorDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version;
 
-- (NSImage *)imageWithAllReps;
+- (void)addRepresentation:(NSBitmapImageRep *)imageRep;
+- (void)removeRepresentation:(NSBitmapImageRep *)imageRep;
 
+- (NSImage *)imageWithAllReps;
 - (NSDictionary *)dictionaryRepresentation;
 
+@end
+
+@interface MCCursor (Properties)
+@property (readonly, strong) NSArray *representations;
 @end

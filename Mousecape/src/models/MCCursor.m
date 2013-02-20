@@ -19,19 +19,23 @@ static const NSString *MCCursorDictionaryPointsHighKey      = @"PointsHigh";
 static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations";
 
 @interface MCCursor ()
+@property (readwrite, strong) NSMutableArray *representations;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
 @implementation MCCursor
+
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version {
     return [[self alloc] initWithCursorDictionary:dict ofVersion:version];
 }
+
 - (id)init {
     if ((self = [super init])) {
         self.name = @"Unknown";
     }
     return self;
 }
+
 - (id)initWithCursorDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version {
     if ((self = [self init])) {
         
@@ -42,6 +46,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     
     return self;
 }
+
 - (id)copyWithZone:(NSZone *)zone {
     MCCursor *cursor = [[MCCursor allocWithZone:zone] init];
     
@@ -53,6 +58,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     
     return cursor;
 }
+
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version {
     NSNumber *frameCount    = [dictionary objectForKey:MCCursorDictionaryFrameCountKey];
     NSNumber *frameDuration = [dictionary objectForKey:MCCursorDictionaryFrameDuratiomKey];
@@ -93,15 +99,16 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     
     return NO;
 }
+
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
     [image addRepresentations:self.representations];
     
-//    image.matchesOnlyOnBestFittingAxis = YES;
     image.matchesOnMultipleResolution  = YES;
         
     return image;
 }
+
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *drep = [NSMutableDictionary dictionary];
     drep[MCCursorDictionaryFrameCountKey]    = @(self.frameCount);
@@ -120,4 +127,33 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     
     return drep;
 }
+
+- (void)addRepresentation:(NSBitmapImageRep *)imageRep {
+    if (![self.representations containsObject:imageRep]) {
+        NSIndexSet *iset = [NSIndexSet indexSetWithIndex:self.representations.count];
+
+        [self willChangeValueForKey:@"imageWithAllReps"];
+        [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
+        
+        [self.representations addObject:imageRep];
+        
+        [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
+        [self didChangeValueForKey:@"imageWithAllReps"];
+    }
+}
+
+- (void)removeRepresentation:(NSBitmapImageRep *)imageRep {
+    if ([self.representations containsObject:imageRep]) {
+        NSIndexSet *iset = [NSIndexSet indexSetWithIndex:[self.representations indexOfObject:imageRep]];
+        
+        [self willChangeValueForKey:@"imageWithAllReps"];
+        [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
+        
+        [self.representations removeObject:imageRep];
+        
+        [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
+        [self didChangeValueForKey:@"imageWithAllReps"];
+    }
+}
+
 @end
