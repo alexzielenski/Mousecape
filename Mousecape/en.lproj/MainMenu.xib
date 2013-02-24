@@ -1169,6 +1169,15 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
+								<object class="NSMenuItem" id="295110122">
+									<reference key="NSMenu" ref="756408405"/>
+									<string key="NSTitle">Duplicate Cape</string>
+									<string key="NSKeyEquiv">e</string>
+									<int key="NSKeyEquivModMask">524288</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
 								<object class="NSMenuItem" id="376322485">
 									<reference key="NSMenu" ref="756408405"/>
 									<string key="NSTitle">Remove Cape</string>
@@ -1340,7 +1349,7 @@
 													<string key="NSFrameSize">{563, 480}</string>
 													<reference key="NSSuperview" ref="898630647"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="381142097"/>
+													<reference key="NSNextKeyView" ref="492060797"/>
 													<string key="NSReuseIdentifierKey">_NS:13</string>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -1480,7 +1489,7 @@
 									<string key="NSFrameSize">{563, 480}</string>
 									<reference key="NSSuperview" ref="673390197"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="898630647"/>
+									<reference key="NSNextKeyView" ref="381142097"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">215568</int>
 									<reference key="NSVScroller" ref="695155060"/>
@@ -1548,6 +1557,7 @@
 											<string key="NSFrame">{{14, 357}, {152, 32}}</string>
 											<reference key="NSSuperview" ref="374248567"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="187376610">
@@ -1697,7 +1707,8 @@
 					<object class="NSMenuItem" id="521985599">
 						<reference key="NSMenu" ref="481666744"/>
 						<string key="NSTitle">Apply</string>
-						<string key="NSKeyEquiv"/>
+						<string type="base64-UTF8" key="NSKeyEquiv">DQ</string>
+						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
@@ -1705,7 +1716,17 @@
 					<object class="NSMenuItem" id="518816560">
 						<reference key="NSMenu" ref="481666744"/>
 						<string key="NSTitle">Edit</string>
-						<string key="NSKeyEquiv"/>
+						<string key="NSKeyEquiv">e</string>
+						<int key="NSKeyEquivModMask">1048576</int>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="1005877785">
+						<reference key="NSMenu" ref="481666744"/>
+						<string key="NSTitle">Duplicate</string>
+						<string key="NSKeyEquiv">e</string>
+						<int key="NSKeyEquivModMask">524288</int>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
@@ -1713,7 +1734,8 @@
 					<object class="NSMenuItem" id="840250180">
 						<reference key="NSMenu" ref="481666744"/>
 						<string key="NSTitle">Remove</string>
-						<string key="NSKeyEquiv"/>
+						<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
+						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
@@ -1730,6 +1752,7 @@
 						<string key="NSFrame">{{-3, 3}, {246, 14}}</string>
 						<reference key="NSSuperview" ref="896668540"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="185100133">
@@ -2496,7 +2519,7 @@
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{531, 64}</string>
 													<reference key="NSSuperview" ref="851999517"/>
-													<reference key="NSNextKeyView" ref="51249325"/>
+													<reference key="NSNextKeyView" ref="594049853"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<string key="NSClassName">MCCursorLine</string>
 												</object>
@@ -2539,7 +2562,7 @@
 									</array>
 									<string key="NSFrame">{{14, 14}, {532, 66}}</string>
 									<reference key="NSSuperview" ref="492060797"/>
-									<reference key="NSNextKeyView" ref="851999517"/>
+									<reference key="NSNextKeyView" ref="51249325"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">202914</int>
 									<reference key="NSVScroller" ref="51249325"/>
@@ -4345,8 +4368,9 @@
 						<reference key="object" ref="481666744"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="840250180"/>
-							<reference ref="521985599"/>
 							<reference ref="518816560"/>
+							<reference ref="521985599"/>
+							<reference ref="1005877785"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4753,6 +4777,7 @@
 							<reference ref="424722587"/>
 							<reference ref="342643382"/>
 							<reference ref="907493387"/>
+							<reference ref="295110122"/>
 						</array>
 						<reference key="parent" ref="987498774"/>
 					</object>
@@ -5009,6 +5034,16 @@
 						<reference key="object" ref="329278844"/>
 						<reference key="parent" ref="111643962"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1262</int>
+						<reference key="object" ref="1005877785"/>
+						<reference key="parent" ref="481666744"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1263</int>
+						<reference key="object" ref="295110122"/>
+						<reference key="parent" ref="756408405"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -5111,6 +5146,8 @@
 				<string key="1247.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1255.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1256.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1262.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1263.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5365,7 +5402,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1260</int>
+			<int key="maxID">1263</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5381,10 +5418,15 @@
 					<string key="className">MCAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="doubleClick:">id</string>
 						<string key="editCursor:">id</string>
 						<string key="showPreferences:">NSMenuItem</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="doubleClick:">
+							<string key="name">doubleClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="editCursor:">
 							<string key="name">editCursor:</string>
 							<string key="candidateClassName">id</string>

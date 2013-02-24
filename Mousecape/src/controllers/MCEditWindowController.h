@@ -12,6 +12,7 @@
 #import "MCEditCursorViewController.h"
 
 @interface MCEditWindowController : NSWindowController <NSSplitViewDelegate>
+@property (assign) NSWindow *parentWindow;
 @property (assign) IBOutlet NSSplitView *splitView;
 @property (strong) IBOutlet MCEditListViewController *listViewController;
 @property (strong) IBOutlet MCEditCapeViewController *capeViewController;

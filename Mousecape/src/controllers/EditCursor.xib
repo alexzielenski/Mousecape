@@ -235,7 +235,7 @@
 							<int key="NSCellFlags2">-1874852864</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="517344593"/>
-							<object class="NSNumberFormatter" key="NSFormatter" id="611564483">
+							<object class="NSNumberFormatter" key="NSFormatter" id="577456431">
 								<dictionary class="NSMutableDictionary" key="NS.attributes">
 									<boolean value="YES" key="allowsFloats"/>
 									<boolean value="YES" key="alwaysShowsDecimalSeparator"/>
@@ -265,7 +265,7 @@
 								</object>
 								<object class="NSAttributedString" key="NS.nan">
 									<string key="NSString">NaN</string>
-									<dictionary key="NSAttributes" id="339194420"/>
+									<dictionary key="NSAttributes" id="99595002"/>
 								</object>
 								<real value="0.0" key="NS.min"/>
 								<integer value="5" key="NS.max"/>
@@ -304,7 +304,7 @@
 							<int key="NSCellFlags2">-1874852864</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="517344593"/>
-							<object class="NSNumberFormatter" key="NSFormatter" id="949994252">
+							<object class="NSNumberFormatter" key="NSFormatter" id="401123414">
 								<dictionary class="NSMutableDictionary" key="NS.attributes">
 									<boolean value="YES" key="allowsFloats"/>
 									<integer value="1040" key="formatterBehavior"/>
@@ -326,7 +326,7 @@
 								</object>
 								<object class="NSAttributedString" key="NS.nan">
 									<string key="NSString">NaN</string>
-									<reference key="NSAttributes" ref="339194420"/>
+									<reference key="NSAttributes" ref="99595002"/>
 								</object>
 								<integer value="1" key="NS.min"/>
 								<integer value="24" key="NS.max"/>
@@ -467,7 +467,6 @@
 						<string key="NSFrame">{{404, 21}, {16, 16}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="301024579">
@@ -1825,7 +1824,7 @@
 						<int key="objectID">169</int>
 						<reference key="object" ref="14142859"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="949994252"/>
+							<reference ref="401123414"/>
 						</array>
 						<reference key="parent" ref="512946431"/>
 					</object>
@@ -1841,7 +1840,7 @@
 						<int key="objectID">183</int>
 						<reference key="object" ref="716410996"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="611564483"/>
+							<reference ref="577456431"/>
 						</array>
 						<reference key="parent" ref="727578632"/>
 					</object>
@@ -2152,12 +2151,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">415</int>
-						<reference key="object" ref="949994252"/>
+						<reference key="object" ref="401123414"/>
 						<reference key="parent" ref="14142859"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">416</int>
-						<reference key="object" ref="611564483"/>
+						<reference key="object" ref="577456431"/>
 						<reference key="parent" ref="716410996"/>
 					</object>
 				</array>

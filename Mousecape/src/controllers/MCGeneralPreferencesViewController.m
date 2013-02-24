@@ -21,9 +21,11 @@
     
     return self;
 }
+
 -(NSString *)identifier {
     return @"General";
 }
+
 -(NSImage *)toolbarItemImage {
     return [NSImage imageNamed:NSImageNamePreferencesGeneral];
 }
@@ -31,6 +33,7 @@
 -(NSString *)toolbarItemLabel {
     return @"General";
 }
+
 - (MCCloakController *)cloakController {
     return [MCCloakController sharedCloakController];
 }

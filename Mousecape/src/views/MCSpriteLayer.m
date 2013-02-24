@@ -37,9 +37,12 @@
 }
 
 - (void)setImage:(NSImage *)image {
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     [self willChangeValueForKey:@"image"];
     self.contents = image;
     [self didChangeValueForKey:@"image"];
+    [CATransaction commit];
 }
 
 - (NSSize)sampleSize {
@@ -76,7 +79,7 @@
 
 // contentsRect or bounds changes are not animated
 + (id < CAAction >)defaultActionForKey:(NSString *)aKey {
-    if ([aKey isEqualToString:@"contentsRect"] || [aKey isEqualToString:@"bounds"])
+    if ([aKey isEqualToString:@"contentsRect"] || [aKey isEqualToString:@"bounds"] || [aKey isEqualToString:@"contents"])
         return (id < CAAction >)[NSNull null];
     
     return [super defaultActionForKey:aKey];

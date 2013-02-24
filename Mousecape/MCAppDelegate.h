@@ -23,5 +23,6 @@
 - (void)composeAccessory;
 - (IBAction)showPreferences:(NSMenuItem *)sender;
 - (IBAction)editCursor:(id)sender;
+- (IBAction)doubleClick:(id)sender;
 
 @end

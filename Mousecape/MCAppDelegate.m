@@ -15,8 +15,11 @@
 
 #import <MASPreferencesWindowController.h>
 #import "MCGeneralPreferencesViewController.h"
+#import "MCLovePreferencesViewController.h"
+#import "MCUpdatePreferencesViewController.h"
 
-static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
+static NSString *MCPreferencesAppliedCursorKey      = @"MCAppliedCursor";
+static NSString *MCPreferencesAppliedClickActionKey = @"MCLibraryClickAction";
 
 @interface MCAppDelegate ()
 - (void)_createEditWindowController;
@@ -25,6 +28,12 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
 @implementation MCAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    [NSUserDefaults.standardUserDefaults registerDefaults:
+     @{
+                       MCPreferencesAppliedClickActionKey: @(0)
+     }
+     ];
+    
     [self.window.contentView setNeedsLayout:YES];
     [self composeAccessory];
     
@@ -42,6 +51,9 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
                                                attributes:nil
                                                     error:nil];
     [self.libraryController loadLibraryAtPath:capesPath];
+    self.libraryController.tableView.target = self;
+    self.libraryController.tableView.doubleAction = @selector(doubleClick:);
+    
     
     NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
     MCCursorLibrary *applied    = [self.libraryController libraryWithIdentifier:appliedIdentifier];
@@ -50,7 +62,6 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
     [self.detailController bind:@"currentLibrary" toObject:self.libraryController withKeyPath:@"selectedLibrary" options:nil];
     
     __block MCAppDelegate *blockSelf = self;
-    
     [[NSNotificationCenter defaultCenter] addObserverForName:MCCloakControllerDidApplyCursorNotification
                                                       object:nil
                                                        queue:nil
@@ -59,9 +70,10 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
                                                       if (![obj isKindOfClass:[NSNull class]]) {
                                                           blockSelf.libraryController.appliedLibrary = obj;
                                                           [NSUserDefaults.standardUserDefaults setObject:obj.identifier forKey:MCPreferencesAppliedCursorKey];
-                                                      } else
+                                                      } else 
                                                           blockSelf.libraryController.appliedLibrary = nil;
                                                   }];
+    
     [[NSNotificationCenter defaultCenter] addObserverForName:MCCloakControllerDidRestoreCursorNotification
                                                       object:nil
                                                        queue:nil
@@ -93,12 +105,17 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
 - (IBAction)showPreferences:(NSMenuItem *)sender {
     if (!self.preferencesWindowController) {
         NSViewController *general = [[MCGeneralPreferencesViewController alloc] initWithNibName:@"GeneralPreferences" bundle:nil];
+        NSViewController *love    = [[MCLovePreferencesViewController alloc] initWithNibName:@"LovePreferences" bundle:nil];
+        NSViewController *updates = [[MCUpdatePreferencesViewController alloc] initWithNibName:@"UpdatePreferences" bundle:nil];
+        
         NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
-        self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[general] title:title];
+        
+        self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[general, love, updates] title:title];
     }
     
     [self.preferencesWindowController showWindow:self];
 }
+
 - (void)composeAccessory {
     NSView *themeFrame = [self.window.contentView superview];
     NSView *accessory = self.accessory.superview;
@@ -126,16 +143,36 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
                                 metrics:nil
                                 views:NSDictionaryOfVariableBindings(accessory)]];    
 }
+
 - (void)_createEditWindowController {
     if (!self.editWindowController)
         self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
 }
+
 - (IBAction)editCursor:(id)sender {
     [self _createEditWindowController];
     
     [self.editWindowController showWindow:sender];
-    self.editWindowController.currentLibrary = self.libraryController.selectedLibrary;
-    NSLog(@"%@, %@", self.editWindowController.currentLibrary, self.libraryController.selectedLibrary);
+    self.editWindowController.currentLibrary = self.libraryController.selectedLibrary;    
+}
+
+- (IBAction)doubleClick:(id)sender {
+    [self _createEditWindowController];
+
+    NSUInteger clickedRow = self.libraryController.tableView.clickedRow;
+    BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
+    MCCursorLibrary *cape = self.libraryController.libraries[clickedRow];
+    
+    if (!cape)
+        return;
+    
+    if (shouldApply) {
+        self.detailController.currentLibrary = cape;
+        [self.detailController apply:self];
+    } else {
+        [self.editWindowController showWindow:self];
+        self.editWindowController.currentLibrary = cape;
+    }
     
 }
 @end

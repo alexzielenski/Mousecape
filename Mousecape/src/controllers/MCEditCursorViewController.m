@@ -87,12 +87,36 @@
 }
 
 - (void)_commonInit {
-    [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionOld context:nil];
+    [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior context:nil];
+    [self addObserver:self forKeyPath:@"cursor.identifier" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    self.imageView.image = self.cursor.imageWithAllReps;
-    self.imageView.sampleSize = self.cursor.size;
+    if ([keyPath isEqualToString:@"cursor"]) {
+        BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
+        if (isPrior) {
+            [self.undoManager disableUndoRegistration];
+        } else {
+            self.imageView.image = self.cursor.imageWithAllReps;
+            self.imageView.sampleSize = self.cursor.size;
+            [self.undoManager enableUndoRegistration];
+        }
+    } else {
+        if ([change objectForKey:NSKeyValueChangeOldKey] == [change objectForKey:NSKeyValueChangeNewKey])
+            return;
+        if (![[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue])
+            return;
+        
+        [self.undoManager registerUndoWithTarget:self.cursor selector:@selector(setIdentifier:) object:[change objectForKey:NSKeyValueChangeOldKey]];
+        
+        NSString *comment = [NSString stringWithFormat:@"%@ undo", keyPath];
+        NSString *title   = [NSString stringWithFormat:@"Change %@", [keyPath.pathExtension capitalizedString]];
+        [self.undoManager setActionName:NSLocalizedString(title, comment)];
+    }
+}
+
+- (NSUndoManager *)undoManager {
+    return self.view.window.undoManager;
 }
 
 #pragma mark - NSComboBoxDataSource

@@ -24,6 +24,16 @@
 		FA13A03516C82D1800AF6D2E /* CapeDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03316C82D1800AF6D2E /* CapeDocument.icns */; };
 		FA13A03616C82D1800AF6D2E /* Mousecape.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03416C82D1800AF6D2E /* Mousecape.icns */; };
 		FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */; };
+		FA2022F116DAD36C00B74958 /* MCLovePreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */; };
+		FA2022F216DAD36C00B74958 /* LovePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F016DAD36C00B74958 /* LovePreferences.xib */; };
+		FA2022F416DAD40C00B74958 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F316DAD40C00B74958 /* heart.png */; };
+		FA2022F616DAD4FD00B74958 /* heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F516DAD4FD00B74958 /* heart@2x.png */; };
+		FA2022FA16DAD8AD00B74958 /* MCUpdatePreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */; };
+		FA2022FB16DAD8AD00B74958 /* UpdatePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */; };
+		FA2022FD16DAD91E00B74958 /* software-update.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA2022FC16DAD91E00B74958 /* software-update.icns */; };
+		FA20230216DADB6200B74958 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022FF16DADB6200B74958 /* RBLClipView.m */; };
+		FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA20230116DADB6200B74958 /* RBLScrollView.m */; };
+		FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA2C88DE16CC87680036CCC2 /* MCGeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */; };
 		FA2C88DF16CC87680036CCC2 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */; };
 		FA2C88EE16CC921D0036CCC2 /* mousecloak in Copy Executables */ = {isa = PBXBuildFile; fileRef = FA92221016C9CB20004E382D /* mousecloak */; };
@@ -126,6 +136,21 @@
 		FA13A03416C82D1800AF6D2E /* Mousecape.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Mousecape.icns; path = resources/Mousecape.icns; sourceTree = "<group>"; };
 		FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		FA2022EE16DAD36C00B74958 /* MCLovePreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLovePreferencesViewController.h; path = src/controllers/MCLovePreferencesViewController.h; sourceTree = "<group>"; };
+		FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLovePreferencesViewController.m; path = src/controllers/MCLovePreferencesViewController.m; sourceTree = "<group>"; };
+		FA2022F016DAD36C00B74958 /* LovePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LovePreferences.xib; path = src/controllers/LovePreferences.xib; sourceTree = "<group>"; };
+		FA2022F316DAD40C00B74958 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		FA2022F516DAD4FD00B74958 /* heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@2x.png"; sourceTree = "<group>"; };
+		FA2022F716DAD8AC00B74958 /* MCUpdatePreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCUpdatePreferencesViewController.h; path = src/controllers/MCUpdatePreferencesViewController.h; sourceTree = "<group>"; };
+		FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCUpdatePreferencesViewController.m; path = src/controllers/MCUpdatePreferencesViewController.m; sourceTree = "<group>"; };
+		FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdatePreferences.xib; path = src/controllers/UpdatePreferences.xib; sourceTree = "<group>"; };
+		FA2022FC16DAD91E00B74958 /* software-update.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "software-update.icns"; sourceTree = "<group>"; };
+		FA2022FE16DADB6200B74958 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBLClipView.h; path = Mousecape/src/views/RBLClipView.h; sourceTree = SOURCE_ROOT; };
+		FA2022FF16DADB6200B74958 /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBLClipView.m; path = Mousecape/src/views/RBLClipView.m; sourceTree = SOURCE_ROOT; };
+		FA20230016DADB6200B74958 /* RBLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBLScrollView.h; path = Mousecape/src/views/RBLScrollView.h; sourceTree = SOURCE_ROOT; };
+		FA20230116DADB6200B74958 /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBLScrollView.m; path = Mousecape/src/views/RBLScrollView.m; sourceTree = SOURCE_ROOT; };
+		FA20230416DADBAB00B74958 /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
+		FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RBLCGColorAdditions.m"; sourceTree = "<group>"; };
 		FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeneralPreferencesViewController.h; path = src/controllers/MCGeneralPreferencesViewController.h; sourceTree = "<group>"; };
 		FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGeneralPreferencesViewController.m; path = src/controllers/MCGeneralPreferencesViewController.m; sourceTree = "<group>"; };
 		FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralPreferences.xib; path = src/controllers/GeneralPreferences.xib; sourceTree = "<group>"; };
@@ -272,6 +297,8 @@
 				FA9D05AC16D423CD000732AA /* Views */,
 				FA9D05A916D4138A000732AA /* EditWindow.xib */,
 				FA9D05B416D42801000732AA /* EditCursor.xib */,
+				FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */,
+				FA2022F016DAD36C00B74958 /* LovePreferences.xib */,
 				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
@@ -298,6 +325,12 @@
 		FA13A03716C82E5500AF6D2E /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				FA20230416DADBAB00B74958 /* NSColor+RBLCGColorAdditions.h */,
+				FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */,
+				FA2022FE16DADB6200B74958 /* RBLClipView.h */,
+				FA2022FF16DADB6200B74958 /* RBLClipView.m */,
+				FA20230016DADB6200B74958 /* RBLScrollView.h */,
+				FA20230116DADB6200B74958 /* RBLScrollView.m */,
 				FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */,
 				FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */,
 				FA0CB45416D05CE7006C239D /* NSArray+CWSortedInsert.h */,
@@ -314,10 +347,13 @@
 		FA2C88F716CDB5180036CCC2 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FA2022F316DAD40C00B74958 /* heart.png */,
+				FA2022F516DAD4FD00B74958 /* heart@2x.png */,
 				FAD5D28316D1781500DD4302 /* HD.png */,
 				FAD5D28416D1781500DD4302 /* HD@2x.png */,
 				FA2C88F816CDB5180036CCC2 /* applied.png */,
 				FA2C88F916CDB5180036CCC2 /* applied@2x.png */,
+				FA2022FC16DAD91E00B74958 /* software-update.icns */,
 			);
 			name = images;
 			path = resources/images;
@@ -410,6 +446,10 @@
 				FA9D05C116D45182000732AA /* MCEditCapeViewController.m */,
 				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
 				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
+				FA2022EE16DAD36C00B74958 /* MCLovePreferencesViewController.h */,
+				FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */,
+				FA2022F716DAD8AC00B74958 /* MCUpdatePreferencesViewController.h */,
+				FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */,
 				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
 				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
 				FA9221F016C91930004E382D /* MCDetailVewController.h */,
@@ -506,6 +546,11 @@
 				FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */,
 				FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */,
 				FA9D05B616D42801000732AA /* EditCursor.xib in Resources */,
+				FA2022F216DAD36C00B74958 /* LovePreferences.xib in Resources */,
+				FA2022F416DAD40C00B74958 /* heart.png in Resources */,
+				FA2022F616DAD4FD00B74958 /* heart@2x.png in Resources */,
+				FA2022FB16DAD8AD00B74958 /* UpdatePreferences.xib in Resources */,
+				FA2022FD16DAD91E00B74958 /* software-update.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +600,11 @@
 				FA9D05BC16D44019000732AA /* NSImage+BestRep.m in Sources */,
 				FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */,
 				FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */,
+				FA2022F116DAD36C00B74958 /* MCLovePreferencesViewController.m in Sources */,
+				FA2022FA16DAD8AD00B74958 /* MCUpdatePreferencesViewController.m in Sources */,
+				FA20230216DADB6200B74958 /* RBLClipView.m in Sources */,
+				FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */,
+				FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,16 +19,20 @@ static NSArray *librarySortDescriptors =  nil;
 @end
 
 @implementation MCAppliedCursorValueTransformer
+
 + (BOOL)allowsReverseTransformation {
     return NO;
 }
+
 + (Class)transformedValueClass {
     return [NSString class];
 }
+
 - (NSString *)transformedValue:(NSString *)value {
     NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
     return [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
 }
+
 @end
 
 @interface MCLibraryViewController ()
@@ -53,6 +57,7 @@ static NSArray *librarySortDescriptors =  nil;
     [NSValueTransformer setValueTransformer:trns forName: (NSString *)MCAppliedCursorValueTransformerName];
     
 }
+
 - (void)_init {
     self.libraries = [NSMutableArray array];
     [self addObserver:self forKeyPath:@"appliedLibrary" options:NSKeyValueObservingOptionOld context:nil];
@@ -65,6 +70,7 @@ static NSArray *librarySortDescriptors =  nil;
     }
     return self;
 }
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -76,9 +82,11 @@ static NSArray *librarySortDescriptors =  nil;
 - (void)loadView {
     [super loadView];
 }
+
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"appliedLibrary"];
 }
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"appliedLibrary"]) {
         MCCursorLibrary *oldLib = change[NSKeyValueChangeOldKey];
@@ -93,6 +101,7 @@ static NSArray *librarySortDescriptors =  nil;
         [self.appliedCursorField bind:@"value" toObject:self withKeyPath:@"appliedLibrary.name" options:@{ NSValueTransformerNameBindingOption: MCAppliedCursorValueTransformerName }];
     }
 }
+
 - (void)loadLibraryAtPath:(NSString *)path {
     self.libraryPath = path;    
     
@@ -118,7 +127,6 @@ static NSArray *librarySortDescriptors =  nil;
     }
   
     [self.tableView reloadData];
-
 }
 
 #pragma mark - Library Management
@@ -156,6 +164,7 @@ static NSArray *librarySortDescriptors =  nil;
     return nil;
     
 }
+
 - (NSError *)removeFromLibrary:(MCCursorLibrary *)library {
     if (![self.libraries containsObject:library])
         return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:2 userInfo:@{NSLocalizedDescriptionKey : @"Library is not a member of this controller"}];
@@ -172,6 +181,7 @@ static NSArray *librarySortDescriptors =  nil;
     
     return nil;
 }
+
 - (void)addLibrary:(MCCursorLibrary *)library {
     if ([[self.libraries valueForKeyPath:@"identifier"] containsObject:library.identifier]) {
         NSLog(@"A library with the identifier %@ already exists", library.identifier);
@@ -185,23 +195,28 @@ static NSArray *librarySortDescriptors =  nil;
     
     [self.libraries insertObject:library sortedUsingDescriptors:librarySortDescriptors];
 }
+
 - (void)removeLibrary:(MCCursorLibrary *)library {
     NSUInteger libraryIndex = [self.libraries indexOfObject:library];
     if (libraryIndex != NSNotFound) {
         [self removeObjectFromLibrariesAtIndex:libraryIndex];
     }
 }
+
 - (void)removeLibraryAtIndex:(NSUInteger)index {
     [self removeObjectFromLibrariesAtIndex:index];
 }
+
 - (void)insertObject:(MCCursorLibrary *)library inLibrariesAtIndex:(NSUInteger)index {
     if (index <= self.libraries.count)
         [self.libraries insertObject:library atIndex:index];
 }
+
 - (void)removeObjectFromLibrariesAtIndex:(NSUInteger)index {
     if (index < self.libraries.count)
         [self.libraries removeObjectAtIndex:index];
 }
+
 - (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
     NSArray *filtered = [self.libraries filteredArrayUsingPredicate:pred];
@@ -245,8 +260,9 @@ static NSArray *librarySortDescriptors =  nil;
                       modalDelegate:self
                      didEndSelector:@selector(sidekickAlertDidEnd:returnCode:contextInfo:)
                         contextInfo:(__bridge_retained void *)selectedCursors];
-        
+    
 }
+
 - (void)sidekickAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == NSAlertDefaultReturn) {
         NSDictionary *cursors = (__bridge_transfer NSDictionary *)(contextInfo);
@@ -283,12 +299,14 @@ static NSArray *librarySortDescriptors =  nil;
         
     }
 }
+
 - (IBAction)removeCape:(id)sender {
     if (self.tableView.selectedRow == -1)
         return;
     
     NSBeginAlertSheet(@"Are you sure?", @"Positive", @"Nevermind", nil, self.view.window, self, NULL, @selector(confirmationAlertDidEnd:returnCode:contextInfo:), NULL, @"This operation cannot be undone.");
 }
+
 - (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == NSAlertDefaultReturn) {
         NSUInteger row = (self.tableView.clickedRow != -1) ? self.tableView.clickedRow : self.tableView.selectedRow;
