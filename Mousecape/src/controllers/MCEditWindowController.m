@@ -30,16 +30,20 @@
     [super windowDidLoad];
 
     self.currentEditViewController = self.capeViewController;
+    [self addObserver:self forKeyPath:@"cursorViewController.identifier" options:NSKeyValueObservingOptionOld context:nil];
     [self addObserver:self forKeyPath:@"listViewController.selectedObject" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"listViewController.selectedObject"];
+    [self removeObserver:self forKeyPath:@"cursorViewController.identifier"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath  isEqualToString:@"listViewController.selectedObject"]) {
         [self _changeEditViewsForSelection];
+    } else if ([keyPath isEqualToString:@"cursorViewController.identifier"]) {
+        [self.currentLibrary moveCursor:self.cursorViewController.cursor toIdentifier:self.cursorViewController.identifier];
     }
 }
 
@@ -61,6 +65,7 @@
         }
         
         self.cursorViewController.cursor = self.listViewController.selectedObject;
+        self.cursorViewController.identifier = [self.currentLibrary identifierForCursor:self.cursorViewController.cursor];
         
     }
 }
@@ -94,13 +99,13 @@
 - (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
         return proposedMin + 180.0;
-    return proposedMin + 420.0;
+    return proposedMin + 440.0;
 }
 
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
-        return 360;
-    return proposedMax - 360;
+        return 180;
+    return proposedMax - 180;
 }
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview {

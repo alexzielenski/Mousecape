@@ -35,6 +35,8 @@
 - (void)removeCursor:(MCCursor *)cursor;
 - (void)removeCursorForIdentifier:(NSString *)identifier;
 
+- (void)moveCursor:(MCCursor *)cursor toIdentifier:(NSString *)identifier;
+
 - (NSString *)identifierForCursor:(MCCursor *)cursor;
 
 + (NSDictionary *)cursorMap;

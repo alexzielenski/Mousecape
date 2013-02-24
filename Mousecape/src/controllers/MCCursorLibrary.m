@@ -165,6 +165,17 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     if ([self.cursors objectForKey:identifier] != nil)
         [self setCursor:nil forKey:identifier];
 }
+
+- (void)moveCursor:(MCCursor *)cursor toIdentifier:(NSString *)identifier {
+    if (!identifier)
+        return;
+    
+    NSString *ident = [self identifierForCursor:cursor];
+    if (ident)
+        [self setCursor:nil forKey:ident];
+    [self setCursor:cursor forKey:identifier];
+}
+
 - (NSString *)identifierForCursor:(MCCursor *)cursor {
     NSArray *allKeys = [self.cursors allKeysForObject:cursor];
     if (allKeys.count > 0)
