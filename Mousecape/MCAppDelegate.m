@@ -28,7 +28,12 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
     [self.window.contentView setNeedsLayout:YES];
     [self composeAccessory];
     
+#ifdef DEBUG
+    
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+    
+#endif
+    
     NSString *appSupport = [[NSFileManager defaultManager] applicationSupportDirectory];
     NSString *capesPath  = [appSupport stringByAppendingPathComponent:@"capes"];
     
@@ -130,6 +135,7 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
     
     [self.editWindowController showWindow:sender];
     self.editWindowController.currentLibrary = self.libraryController.selectedLibrary;
+    NSLog(@"%@, %@", self.editWindowController.currentLibrary, self.libraryController.selectedLibrary);
     
 }
 @end
