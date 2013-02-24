@@ -24,8 +24,7 @@ static NSString *MCPreferencesAppliedCursorKey = @"MCAppliedCursor";
 
 @implementation MCAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self.window.contentView setNeedsLayout:YES];
     [self composeAccessory];
     
