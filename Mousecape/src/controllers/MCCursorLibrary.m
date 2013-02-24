@@ -77,6 +77,21 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     return self;
 }
+- (id)copyWithZone:(NSZone *)zone {
+    MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
+    lib.cursors          = self.cursors.copy;
+    [lib.cursors.allValues makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:self];
+    
+    lib.originalURL      = self.originalURL;
+    lib.name             = self.name;
+    lib.author           = self.author;
+    lib.hiDPI            = self.hiDPI;
+    lib.inCloud          = self.inCloud;
+    lib.version          = self.version;
+    lib.identifier       = self.identifier;
+    lib.applied          = self.isApplied;
+    return lib;
+}
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically {
     return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
 }
@@ -162,8 +177,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         [self setCursor:nil forKey:key];
 }
 - (void)removeCursorForIdentifier:(NSString *)identifier {
-    if ([self.cursors objectForKey:identifier] != nil)
+    if ([self.cursors objectForKey:identifier] != nil) {
         [self setCursor:nil forKey:identifier];
+    }
 }
 
 - (void)moveCursor:(MCCursor *)cursor toIdentifier:(NSString *)identifier {
@@ -184,10 +200,25 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 }
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
     [self willChangeValueForKey:@"cursors"];
-    if (!cursor)
+    if (!cursor) {
+        MCCursor *c = self.cursors[key];
+        [c willChangeValueForKey:@"identifier"];
+        [c setParentLibrary:nil];
         [self.cursors removeObjectForKey:key];
-    else
+        [c didChangeValueForKey:@"identifier"];
+    } else {
+        MCCursor *c = self.cursors[key];
+        if (c) {
+            [c willChangeValueForKey:@"identifier"];
+            //! TODO: Provide nice way of handling naming conflicts
+            [c didChangeValueForKey:@"identifier"];
+        }
+        
+        [cursor willChangeValueForKey:@"identifier"];
+        cursor.parentLibrary = self;
         [self.cursors setObject:cursor forKey:key];
+        [cursor didChangeValueForKey:@"identifier"];
+    }
     [self didChangeValueForKey:@"cursors"];
 }
 @end

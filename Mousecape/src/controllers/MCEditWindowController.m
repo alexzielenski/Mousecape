@@ -30,20 +30,16 @@
     [super windowDidLoad];
 
     self.currentEditViewController = self.capeViewController;
-    [self addObserver:self forKeyPath:@"cursorViewController.identifier" options:NSKeyValueObservingOptionOld context:nil];
     [self addObserver:self forKeyPath:@"listViewController.selectedObject" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"listViewController.selectedObject"];
-    [self removeObserver:self forKeyPath:@"cursorViewController.identifier"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath  isEqualToString:@"listViewController.selectedObject"]) {
         [self _changeEditViewsForSelection];
-    } else if ([keyPath isEqualToString:@"cursorViewController.identifier"]) {
-        [self.currentLibrary moveCursor:self.cursorViewController.cursor toIdentifier:self.cursorViewController.identifier];
     }
 }
 
@@ -64,9 +60,8 @@
             [self _replaceViewController:self.capeViewController withViewController:self.cursorViewController];
         }
         
-        self.cursorViewController.cursor = self.listViewController.selectedObject;
-        self.cursorViewController.identifier = [self.currentLibrary identifierForCursor:self.cursorViewController.cursor];
         
+        self.cursorViewController.cursor = self.listViewController.selectedObject;        
     }
 }
 

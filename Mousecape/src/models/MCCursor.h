@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class MCCursorLibrary;
 @interface MCCursor : NSObject <NSCopying>
 
 @property (assign) CGFloat           frameDuration;
@@ -15,6 +16,8 @@
 @property (assign) NSSize            size;
 @property (assign) NSPoint           hotSpot; 
 @property (copy)   NSString          *name;
+@property (weak)   NSString          *identifier;
+@property (weak)   MCCursorLibrary   *parentLibrary;
 //@property (assign) NSUInteger        repeatCount; // v2.01
 
 // creating a cursor from a dictionary
@@ -26,6 +29,8 @@
 
 - (NSImage *)imageWithAllReps;
 - (NSDictionary *)dictionaryRepresentation;
+
+- (NSString *)prettyName;
 
 @end
 

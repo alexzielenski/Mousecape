@@ -11,7 +11,6 @@
 #import "MCScaledImageView.h"
 
 @interface MCEditCursorViewController : NSViewController
-@property (copy) NSString *identifier;
 @property (strong) MCCursor *cursor;
 @property (strong) IBOutlet MCScaledImageView *imageView;
 @property (weak) IBOutlet NSTextField *identifierField;

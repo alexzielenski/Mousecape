@@ -10,7 +10,7 @@
 #import "MCLibraryRowView.h"
 
 @interface MCEditListViewController ()
-@property (strong) NSArray *sortedKeys;
+@property (strong) NSArray *sortedValues;
 - (void)_commonInit;
 @end
 
@@ -54,12 +54,27 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"cursorLibrary"]) {
+        static NSArray *sortDescriptors = nil;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sortDescriptors = @[
+                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {return [obj1 compare:obj2 options:NSNumericSearch];}],
+                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES selector:@selector(caseInsensitiveCompare:)]
+                                ];
+        });
         // get new keys & sort em
-        self.sortedKeys = [self.cursorLibrary.cursors.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:sortDescriptors];
     }
     [self.tableView reloadData];
     self.selectedObject = self.cursorLibrary;
     [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+}
+
+- (void)reloadCursor:(MCCursor *)cursor {
+    NSUInteger sortedIndex = [self.sortedValues indexOfObject:cursor];
+    if (sortedIndex != NSNotFound) {
+        [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:sortedIndex] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    }
 }
 
 #pragma mark - UI
@@ -84,7 +99,7 @@
     if (self.tableView.selectedRow == 0) {
         self.selectedObject = self.cursorLibrary;
     } else {
-        self.selectedObject = self.cursorLibrary.cursors[self.sortedKeys[self.tableView.selectedRow - 1]];
+        self.selectedObject = self.sortedValues[self.tableView.selectedRow - 1];
     }
 }
 
@@ -100,7 +115,9 @@
     row--;
     
     NSTableCellView *cv = [tableView makeViewWithIdentifier:@"CursorCell" owner:self];
-    cv.textField.stringValue = [self.sortedKeys objectAtIndex:row];
+    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] identifier];
+    [cv.textField unbind:@"value"];
+    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"identifier" options:nil];
     
     return cv;
 }

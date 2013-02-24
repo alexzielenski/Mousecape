@@ -16,5 +16,5 @@
 @property (strong) IBOutlet MCEditListViewController *listViewController;
 @property (strong) IBOutlet MCEditCapeViewController *capeViewController;
 @property (strong) IBOutlet MCEditCursorViewController *cursorViewController;
-@property (strong) MCCursorLibrary *currentLibrary;
+@property (copy) MCCursorLibrary *currentLibrary;
 @end

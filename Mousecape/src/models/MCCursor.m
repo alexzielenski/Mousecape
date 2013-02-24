@@ -7,6 +7,7 @@
 //
 
 #import "MCCursor.h"
+#import "MCCursorLibrary.h"
 
 // Required cursors for cape format 2.0
 static const NSString *MCCursorDictionaryFrameCountKey      = @"FrameCount";
@@ -24,6 +25,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 @end
 
 @implementation MCCursor
+@dynamic identifier;
 
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version {
     return [[self alloc] initWithCursorDictionary:dict ofVersion:version];
@@ -126,6 +128,19 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
     
     return drep;
+}
+
+- (NSString *)identifier {
+    return [self.parentLibrary identifierForCursor:self];
+}
+
+- (void)setIdentifier:(NSString *)identifier {
+    [self.parentLibrary moveCursor:self toIdentifier:identifier];
+}
+
+- (NSString *)prettyName {
+    NSString *name = [MCCursorLibrary.cursorMap objectForKey:self.identifier];
+    return name ? name : self.identifier;
 }
 
 - (void)addRepresentation:(NSBitmapImageRep *)imageRep {
