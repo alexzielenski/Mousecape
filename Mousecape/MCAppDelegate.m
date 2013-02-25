@@ -18,8 +18,10 @@
 #import "MCLovePreferencesViewController.h"
 #import "MCUpdatePreferencesViewController.h"
 
-static NSString *MCPreferencesAppliedCursorKey      = @"MCAppliedCursor";
-static NSString *MCPreferencesAppliedClickActionKey = @"MCLibraryClickAction";
+NSString *MCPreferencesAppliedCursorKey          = @"MCAppliedCursor";
+NSString *MCPreferencesAppliedClickActionKey     = @"MCLibraryClickAction";
+NSString *MCSuppressDeleteLibraryConfirmationKey = @"MCSuppressDeleteLibraryConfirmationKey";
+NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfirmationKey";
 
 @interface MCAppDelegate ()
 - (void)_createEditWindowController;
@@ -110,7 +112,7 @@ static NSString *MCPreferencesAppliedClickActionKey = @"MCLibraryClickAction";
         
         NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
         
-        self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[general, love, updates] title:title];
+        self.preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[general, [NSNull null], love, updates] title:title];
     }
     
     [self.preferencesWindowController showWindow:self];

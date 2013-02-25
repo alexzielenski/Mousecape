@@ -84,7 +84,26 @@
 }
 
 - (IBAction)removeCursor:(id)sender {
-    NSLog(@"remove");
+    NSAlert *sureAlert = [NSAlert alertWithMessageText:@"Are you sure?"
+                                         defaultButton:@"Positive"
+                                       alternateButton:@"Nevermind"
+                                           otherButton:nil
+                             informativeTextWithFormat:@"This operation cannot be undone"];
+    
+    sureAlert.showsSuppressionButton = !MCFlag(MCSuppressDeleteCursorConfirmationKey);
+    [sureAlert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(confirmationAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == NSAlertDefaultReturn) {
+        NSUInteger row = self.tableView.selectedRow;
+        MCCursor *selectedCursor = self.sortedValues[row - 1];
+        [self.cursorLibrary removeCursor:selectedCursor];
+        
+        MCSetFlag(alert.suppressionButton.state == NSOnState, MCSuppressDeleteCursorConfirmationKey);
+        [self.tableView reloadData];
+        [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+    }
 }
 
 #pragma mark - NSTableViewDataSource

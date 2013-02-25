@@ -301,10 +301,18 @@ static NSArray *librarySortDescriptors =  nil;
 }
 
 - (IBAction)removeCape:(id)sender {
+    //!TODO: Disable this menu item and call this for the MCEditListViewController if that window is active
+    
     if (self.tableView.selectedRow == -1)
         return;
     
-    NSBeginAlertSheet(@"Are you sure?", @"Positive", @"Nevermind", nil, self.view.window, self, NULL, @selector(confirmationAlertDidEnd:returnCode:contextInfo:), NULL, @"This operation cannot be undone.");
+    NSAlert *sureAlert = [NSAlert alertWithMessageText:@"Are you sure?"
+                                         defaultButton:@"Positive"
+                                       alternateButton:@"Nevermind"
+                                           otherButton:nil
+                             informativeTextWithFormat:@"This operation cannot be undone"];
+    sureAlert.showsSuppressionButton = !MCFlag(MCSuppressDeleteLibraryConfirmationKey);
+    [sureAlert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(confirmationAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
@@ -314,6 +322,8 @@ static NSArray *librarySortDescriptors =  nil;
         MCCursorLibrary *selectedLibrary = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
         [self removeFromLibrary:selectedLibrary];
         
+        MCSetFlag(alert.suppressionButton.state == NSOnState, MCSuppressDeleteLibraryConfirmationKey);
+        
         [self.tableView beginUpdates];
         [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:NSTableViewAnimationEffectFade];
         [self.tableView endUpdates];
@@ -322,6 +332,7 @@ static NSArray *librarySortDescriptors =  nil;
 
     }
 }
+
 - (IBAction)importMightyMouse:(id)sender {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     openPanel.allowedFileTypes = @[ @"MightyMouse" ];

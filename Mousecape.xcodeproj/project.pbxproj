@@ -213,6 +213,7 @@
 		FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCSpriteLayer.m; path = src/views/MCSpriteLayer.m; sourceTree = "<group>"; };
 		FAD5D28316D1781500DD4302 /* HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HD.png; sourceTree = "<group>"; };
 		FAD5D28416D1781500DD4302 /* HD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD@2x.png"; sourceTree = "<group>"; };
+		FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPreferences.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +297,7 @@
 				FA967A4916DAEBA300A8A621 /* Subclasses */,
 				FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */,
 				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
+				FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */,
 				FA9D05AE16D423E8000732AA /* Controllers */,
 				FA9D05AD16D423D7000732AA /* Models */,
 				FA9D05AC16D423CD000732AA /* Views */,
