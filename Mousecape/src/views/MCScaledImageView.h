@@ -12,8 +12,10 @@
 @property (strong) NSImage *image;
 @property (assign) CGFloat scale;
 @property (assign) BOOL shouldDrawBezel;
+@property (assign) BOOL shouldChooseHotSpot;
+@property (assign) BOOL shouldDragToRemove;
 @property (assign) NSSize sampleSize;
-
+@property (assign) NSPoint hotSpot;
 @end
 
 @interface MCScaledImageView (Properties)
