@@ -18,4 +18,8 @@
 @property (weak) IBOutlet NSTextField *hotSpotField;
 @property (weak) IBOutlet NSTextField *frameCountField;
 @property (weak) IBOutlet NSTextField *frameDurationField;
+
+@property (weak) NSValue *hotSpotValue;
+@property (weak) NSValue *sizeValue;
+
 @end

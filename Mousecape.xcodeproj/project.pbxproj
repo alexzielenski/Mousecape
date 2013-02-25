@@ -49,6 +49,7 @@
 		FA92221316C9CB20004E382D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA92221216C9CB20004E382D /* Foundation.framework */; };
 		FA92221616C9CB20004E382D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA92221516C9CB20004E382D /* main.m */; };
 		FA92221A16C9CB20004E382D /* mousecloak.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA92221916C9CB20004E382D /* mousecloak.1 */; };
+		FA967A4C16DAEBC500A8A621 /* MCFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = FA967A4B16DAEBC500A8A621 /* MCFormatters.m */; };
 		FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05A816D4138A000732AA /* MCEditWindowController.m */; };
 		FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05A916D4138A000732AA /* EditWindow.xib */; };
 		FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B016D42404000732AA /* MCEditListViewController.m */; };
@@ -186,6 +187,8 @@
 		FA92222E16C9CD0D004E382D /* CGSTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSTransitions.h; sourceTree = "<group>"; };
 		FA92222F16C9CD0D004E382D /* CGSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWindow.h; sourceTree = "<group>"; };
 		FA92223016C9CD0D004E382D /* CGSWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
+		FA967A4A16DAEBC500A8A621 /* MCFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCFormatters.h; sourceTree = "<group>"; };
+		FA967A4B16DAEBC500A8A621 /* MCFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCFormatters.m; sourceTree = "<group>"; };
 		FA9D05A716D4138A000732AA /* MCEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditWindowController.h; path = src/controllers/MCEditWindowController.h; sourceTree = "<group>"; };
 		FA9D05A816D4138A000732AA /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = src/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
 		FA9D05A916D4138A000732AA /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/controllers/EditWindow.xib; sourceTree = "<group>"; };
@@ -290,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				FA13A03716C82E5500AF6D2E /* categories */,
+				FA967A4916DAEBA300A8A621 /* Subclasses */,
 				FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */,
 				FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */,
 				FA9D05AE16D423E8000732AA /* Controllers */,
@@ -327,16 +331,10 @@
 			children = (
 				FA20230416DADBAB00B74958 /* NSColor+RBLCGColorAdditions.h */,
 				FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */,
-				FA2022FE16DADB6200B74958 /* RBLClipView.h */,
-				FA2022FF16DADB6200B74958 /* RBLClipView.m */,
-				FA20230016DADB6200B74958 /* RBLScrollView.h */,
-				FA20230116DADB6200B74958 /* RBLScrollView.m */,
 				FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */,
 				FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */,
 				FA0CB45416D05CE7006C239D /* NSArray+CWSortedInsert.h */,
 				FA0CB45516D05CE7006C239D /* NSArray+CWSortedInsert.m */,
-				FA0CB45716D06109006C239D /* DTScrollView.h */,
-				FA0CB45816D0610A006C239D /* DTScrollView.m */,
 				FA9D05BA16D44019000732AA /* NSImage+BestRep.h */,
 				FA9D05BB16D44019000732AA /* NSImage+BestRep.m */,
 			);
@@ -401,6 +399,22 @@
 				FA92223016C9CD0D004E382D /* CGSWorkspace.h */,
 			);
 			path = CGSInternal;
+			sourceTree = "<group>";
+		};
+		FA967A4916DAEBA300A8A621 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				FA0CB45716D06109006C239D /* DTScrollView.h */,
+				FA0CB45816D0610A006C239D /* DTScrollView.m */,
+				FA2022FE16DADB6200B74958 /* RBLClipView.h */,
+				FA2022FF16DADB6200B74958 /* RBLClipView.m */,
+				FA20230016DADB6200B74958 /* RBLScrollView.h */,
+				FA20230116DADB6200B74958 /* RBLScrollView.m */,
+				FA967A4A16DAEBC500A8A621 /* MCFormatters.h */,
+				FA967A4B16DAEBC500A8A621 /* MCFormatters.m */,
+			);
+			name = Subclasses;
+			path = src/categories;
 			sourceTree = "<group>";
 		};
 		FA9D05AC16D423CD000732AA /* Views */ = {
@@ -605,6 +619,7 @@
 				FA20230216DADB6200B74958 /* RBLClipView.m in Sources */,
 				FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */,
 				FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */,
+				FA967A4C16DAEBC500A8A621 /* MCFormatters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

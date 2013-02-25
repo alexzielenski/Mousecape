@@ -9,56 +9,13 @@
 #import "MCEditCursorViewController.h"
 #import "MCCursorLibrary.h"
 
-@interface MCPointTransformer : NSValueTransformer
-@end
-
-@implementation MCPointTransformer
-
-+ (Class)transformedValueClass {
-    return [NSString class];
-}
-
-+ (BOOL)allowsReverseTransformation {
-    return YES;
-}
-
-- (NSString *)transformedValue:(NSValue *)value {
-    return NSStringFromPoint(value.pointValue);
-}
-
-- (NSValue *)reverseTransformedValue:(NSString *)value {
-    return [NSValue valueWithPoint: NSPointFromString(value)];
-}
-
-@end
-
-@interface MCSizeTransformer : NSValueTransformer
-
-@end
-
-@implementation MCSizeTransformer
-+ (Class)transformedValueClass {
-    return [NSString class];
-}
-
-+ (BOOL)allowsReverseTransformation {
-    return YES;
-}
-
-- (NSString *)transformedValue:(NSValue *)value {
-    return NSStringFromSize(value.sizeValue);
-}
-
-- (NSValue *)reverseTransformedValue:(NSString *)value {
-    return [NSValue valueWithSize: NSSizeFromString(value)];
-}
-@end
-
 @interface MCEditCursorViewController ()
 - (void)_commonInit;
 @end
 
 @implementation MCEditCursorViewController
+@dynamic hotSpotValue, sizeValue;
+
 - (id)init {
     if ((self = [super init])) {
         [self _commonInit];
@@ -89,6 +46,10 @@
 - (void)_commonInit {
     [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior context:nil];
     [self addObserver:self forKeyPath:@"cursor.identifier" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"cursor.frameDuration" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"cursor.frameCount" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"cursor.size" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"cursor.hotSpot" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -96,27 +57,71 @@
         BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
         if (isPrior) {
             [self.undoManager disableUndoRegistration];
+            
         } else {
-            self.imageView.image = self.cursor.imageWithAllReps;
+            self.imageView.image      = self.cursor.imageWithAllReps;
             self.imageView.sampleSize = self.cursor.size;
+            self.imageView.hotSpot    = self.cursor.hotSpot;
+            
+            [self willChangeValueForKey:@"hotSpotValue"];
+            [self willChangeValueForKey:@"sizeValue"];
+            [self didChangeValueForKey:@"hotSpotValue"];
+            [self didChangeValueForKey:@"sizeValue"];
+            
             [self.undoManager enableUndoRegistration];
         }
     } else {
         if ([change objectForKey:NSKeyValueChangeOldKey] == [change objectForKey:NSKeyValueChangeNewKey])
             return;
-        if (![[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue])
+        
+        if (![[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue]) {
+            if ([keyPath isEqualToString:@"cursor.hotSpot"] || [keyPath isEqualToString:@"cursor.size"]) {
+                
+                self.imageView.sampleSize = self.cursor.size;
+                self.imageView.hotSpot    = self.cursor.hotSpot;
+                
+                [self didChangeValueForKey:@"hotSpotValue"];
+                [self didChangeValueForKey:@"sizeValue"];
+            }    
+            return;
+        }
+        
+        if (!self.cursor)
             return;
         
-        [self.undoManager registerUndoWithTarget:self.cursor selector:@selector(setIdentifier:) object:[change objectForKey:NSKeyValueChangeOldKey]];
+        if ([keyPath isEqualToString:@"cursor.hotSpot"] || [keyPath isEqualToString:@"cursor.size"]) {
+            [self willChangeValueForKey:@"hotSpotValue"];
+            [self willChangeValueForKey:@"sizeValue"];
+        }
         
-        NSString *comment = [NSString stringWithFormat:@"%@ undo", keyPath];
+        [[self.undoManager prepareWithInvocationTarget:self.cursor] setValue:[change objectForKey:NSKeyValueChangeOldKey] forKey:keyPath.pathExtension];
         NSString *title   = [NSString stringWithFormat:@"Change %@", [keyPath.pathExtension capitalizedString]];
-        [self.undoManager setActionName:NSLocalizedString(title, comment)];
+        [self.undoManager setActionName:NSLocalizedString(title, @"Undo")];
     }
 }
 
 - (NSUndoManager *)undoManager {
     return self.view.window.undoManager;
+}
+
+- (NSValue *)hotSpotValue {
+    if (self.cursor)
+        return [NSValue valueWithPoint:self.cursor.hotSpot];
+    return [NSValue valueWithPoint:NSZeroPoint];
+}
+
+- (void)setHotSpotValue:(NSValue *)hotSpotValue {
+    self.cursor.hotSpot = hotSpotValue.pointValue;
+}
+
+- (NSValue *)sizeValue {
+    if (self.cursor)
+        return [NSValue valueWithSize:self.cursor.size];
+    return [NSValue valueWithSize:NSZeroSize];
+}
+
+- (void)setSizeValue:(NSValue *)sizeValue {
+    self.cursor.size = sizeValue.sizeValue;
 }
 
 #pragma mark - NSComboBoxDataSource

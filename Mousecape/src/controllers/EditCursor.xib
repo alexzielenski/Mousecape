@@ -11,6 +11,7 @@
 			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>IBCustomFormatter</string>
 			<string>IBNSLayoutConstraint</string>
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
@@ -184,6 +185,7 @@
 							<int key="NSCellFlags2">272630784</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="517344593"/>
+							<object class="IBCustomFormatter" key="NSFormatter" id="842646183"/>
 							<string key="NSPlaceholderString">(W,H)</string>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="800918012"/>
@@ -212,6 +214,7 @@
 							<int key="NSCellFlags2">272630784</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="517344593"/>
+							<object class="IBCustomFormatter" key="NSFormatter" id="11257927"/>
 							<string key="NSPlaceholderString">(X,Y)</string>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="1070557382"/>
@@ -247,16 +250,16 @@
 									<integer value="20" key="maximumFractionDigits"/>
 									<integer value="20" key="maximumIntegerDigits"/>
 									<real value="0.0" key="minimum"/>
-									<string key="negativeFormat">#,##0.00###s</string>
+									<string key="negativeFormat">#,##0.00###</string>
 									<string key="negativeInfinitySymbol">-∞</string>
 									<string key="nilSymbol"/>
 									<integer value="1" key="numberStyle"/>
-									<string key="positiveFormat">#,##0.00###s</string>
+									<string key="positiveFormat">#,##0.00###</string>
 									<string key="positiveInfinitySymbol">+∞</string>
 									<boolean value="NO" key="usesGroupingSeparator"/>
 								</dictionary>
-								<string key="NS.positiveformat">#,##0.00###s</string>
-								<string key="NS.negativeformat">#,##0.00###s</string>
+								<string key="NS.positiveformat">#,##0.00###</string>
+								<string key="NS.negativeformat">#,##0.00###</string>
 								<nil key="NS.positiveattrs"/>
 								<nil key="NS.negativeattrs"/>
 								<nil key="NS.zero"/>
@@ -467,6 +470,7 @@
 						<string key="NSFrame">{{404, 21}, {16, 16}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="301024579">
@@ -576,12 +580,44 @@
 					<int key="connectionID">407</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: cursor.frameCount</string>
+						<reference key="source" ref="512946431"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="512946431"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: cursor.frameCount</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">cursor.frameCount</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">420</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="727578632"/>
 						<reference key="destination" ref="1070557382"/>
 					</object>
 					<int key="connectionID">408</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: cursor.frameDuration</string>
+						<reference key="source" ref="727578632"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="727578632"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: cursor.frameDuration</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">cursor.frameDuration</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">422</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -592,12 +628,44 @@
 					<int key="connectionID">409</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: hotSpotValue</string>
+						<reference key="source" ref="1070557382"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1070557382"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: hotSpotValue</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">hotSpotValue</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">430</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="800918012"/>
 						<reference key="destination" ref="665022162"/>
 					</object>
 					<int key="connectionID">410</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: sizeValue</string>
+						<reference key="source" ref="800918012"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="800918012"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: sizeValue</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">sizeValue</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">433</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1855,6 +1923,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">196</int>
 						<reference key="object" ref="480009436"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="11257927"/>
+						</array>
 						<reference key="parent" ref="1070557382"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1868,6 +1939,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">215</int>
 						<reference key="object" ref="684109434"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="842646183"/>
+						</array>
 						<reference key="parent" ref="800918012"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2159,6 +2233,16 @@
 						<reference key="object" ref="577456431"/>
 						<reference key="parent" ref="716410996"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">431</int>
+						<reference key="object" ref="11257927"/>
+						<reference key="parent" ref="480009436"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">432</int>
+						<reference key="object" ref="842646183"/>
+						<reference key="parent" ref="684109434"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2322,6 +2406,10 @@
 				<integer value="1040" key="416.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="YES" key="416.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="416.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="431.CustomClassName">MCPointFormatter</string>
+				<string key="431.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="432.CustomClassName">MCPointFormatter</string>
+				<string key="432.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="60.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="61.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2347,7 +2435,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">418</int>
+			<int key="maxID">433</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2394,6 +2482,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">MCPointFormatter</string>
+					<string key="superclassName">NSFormatter</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MCPointFormatter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">MCScaledImageView</string>
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -2425,4 +2521,11 @@
 		</object>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 	</data>
+	<classes>
+		<class name="IBCustomFormatter">
+			<fallbacks>
+				<name>NSFormatter</name>
+			</fallbacks>
+		</class>
+	</classes>
 </archive>
