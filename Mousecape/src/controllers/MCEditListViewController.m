@@ -115,9 +115,10 @@
     row--;
     
     NSTableCellView *cv = [tableView makeViewWithIdentifier:@"CursorCell" owner:self];
-    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] identifier];
+    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] prettyName];
+    
     [cv.textField unbind:@"value"];
-    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"identifier" options:nil];
+    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"prettyName" options:nil];
     
     return cv;
 }
