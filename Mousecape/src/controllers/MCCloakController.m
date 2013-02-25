@@ -11,8 +11,9 @@
 #import "CGSCursor.h"
 
 NSString *MCCloakControllerDidApplyCursorNotification    = @"MCCloakControllerDidApplyCursorNotification";
-NSString *MCCloakControllerDidRestoreCursorNotification = @"MCCloakControllerDidRestoreCursorNotification";
+NSString *MCCloakControllerDidRestoreCursorNotification  = @"MCCloakControllerDidRestoreCursorNotification";
 NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAppliedCursor";
+
 @interface MCCloakController ()
 + (NSString *)mousecloakPath;
 @end

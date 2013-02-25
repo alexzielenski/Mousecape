@@ -37,12 +37,9 @@
 }
 
 - (void)setImage:(NSImage *)image {
-    [CATransaction begin];
-    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     [self willChangeValueForKey:@"image"];
     self.contents = image;
     [self didChangeValueForKey:@"image"];
-    [CATransaction commit];
 }
 
 - (NSSize)sampleSize {

@@ -1169,7 +1169,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="295110122">
+								<object class="NSMenuItem" id="745510418">
 									<reference key="NSMenu" ref="756408405"/>
 									<string key="NSTitle">Duplicate Cape</string>
 									<string key="NSKeyEquiv">e</string>
@@ -1722,7 +1722,7 @@
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
 					</object>
-					<object class="NSMenuItem" id="1005877785">
+					<object class="NSMenuItem" id="689285499">
 						<reference key="NSMenu" ref="481666744"/>
 						<string key="NSTitle">Duplicate</string>
 						<string key="NSKeyEquiv">e</string>
@@ -2520,6 +2520,7 @@
 													<string key="NSFrameSize">{531, 64}</string>
 													<reference key="NSSuperview" ref="851999517"/>
 													<reference key="NSNextKeyView" ref="594049853"/>
+													<bool key="NSViewCanDrawConcurrently">YES</bool>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<string key="NSClassName">MCCursorLine</string>
 												</object>
@@ -2563,6 +2564,7 @@
 									<string key="NSFrame">{{14, 14}, {532, 66}}</string>
 									<reference key="NSSuperview" ref="492060797"/>
 									<reference key="NSNextKeyView" ref="51249325"/>
+									<bool key="NSViewCanDrawConcurrently">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">202914</int>
 									<reference key="NSVScroller" ref="51249325"/>
@@ -2586,6 +2588,7 @@
 									<string key="NSFrame">{{530, 88}, {16, 16}}</string>
 									<reference key="NSSuperview" ref="492060797"/>
 									<reference key="NSNextKeyView" ref="155224728"/>
+									<bool key="NSViewCanDrawConcurrently">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="324638007">
@@ -2618,6 +2621,7 @@
 									<string key="NSFrame">{{492, 86}, {30, 18}}</string>
 									<reference key="NSSuperview" ref="492060797"/>
 									<reference key="NSNextKeyView" ref="317260581"/>
+									<bool key="NSViewCanDrawConcurrently">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="1049896213">
@@ -2739,6 +2743,22 @@
 						<reference key="destination" ref="722745758"/>
 					</object>
 					<int key="connectionID">1214</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: objectValue.name</string>
+						<reference key="source" ref="324320915"/>
+						<reference key="destination" ref="492060797"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="324320915"/>
+							<reference key="NSDestination" ref="492060797"/>
+							<string key="NSLabel">value: objectValue.name</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">objectValue.name</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1273</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2871,6 +2891,46 @@
 						</object>
 					</object>
 					<int key="connectionID">1209</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: objectValue.applied</string>
+						<reference key="source" ref="317260581"/>
+						<reference key="destination" ref="492060797"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="317260581"/>
+							<reference key="NSDestination" ref="492060797"/>
+							<string key="NSLabel">hidden: objectValue.applied</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">objectValue.applied</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1268</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: objectValue.hiDPI</string>
+						<reference key="source" ref="111643962"/>
+						<reference key="destination" ref="492060797"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="111643962"/>
+							<reference key="NSDestination" ref="492060797"/>
+							<string key="NSLabel">hidden: objectValue.hiDPI</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">objectValue.hiDPI</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1271</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4370,7 +4430,7 @@
 							<reference ref="840250180"/>
 							<reference ref="518816560"/>
 							<reference ref="521985599"/>
-							<reference ref="1005877785"/>
+							<reference ref="689285499"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4777,7 +4837,7 @@
 							<reference ref="424722587"/>
 							<reference ref="342643382"/>
 							<reference ref="907493387"/>
-							<reference ref="295110122"/>
+							<reference ref="745510418"/>
 						</array>
 						<reference key="parent" ref="987498774"/>
 					</object>
@@ -5036,12 +5096,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1262</int>
-						<reference key="object" ref="1005877785"/>
+						<reference key="object" ref="689285499"/>
 						<reference key="parent" ref="481666744"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1263</int>
-						<reference key="object" ref="295110122"/>
+						<reference key="object" ref="745510418"/>
 						<reference key="parent" ref="756408405"/>
 					</object>
 				</array>
@@ -5402,13 +5462,13 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1263</int>
+			<int key="maxID">1273</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">DTScrollView</string>
-					<string key="superclassName">NSScrollView</string>
+					<string key="superclassName">RBLScrollView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/DTScrollView.h</string>
@@ -5608,6 +5668,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RBLScrollView</string>
+					<string key="superclassName">NSScrollView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/RBLScrollView.h</string>
 					</object>
 				</object>
 			</array>
