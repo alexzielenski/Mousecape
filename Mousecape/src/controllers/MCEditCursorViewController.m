@@ -50,6 +50,7 @@
     [self addObserver:self forKeyPath:@"cursor.frameCount" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"cursor.size" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"cursor.hotSpot" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -63,8 +64,9 @@
             self.imageView.sampleSize = self.cursor.size;
             self.imageView.hotSpot    = self.cursor.hotSpot;
             
-            [self willChangeValueForKey:@"hotSpotValue"];
             [self willChangeValueForKey:@"sizeValue"];
+            [self willChangeValueForKey:@"hotSpotValue"];
+            
             [self didChangeValueForKey:@"hotSpotValue"];
             [self didChangeValueForKey:@"sizeValue"];
             
@@ -90,8 +92,8 @@
             return;
         
         if ([keyPath isEqualToString:@"cursor.hotSpot"] || [keyPath isEqualToString:@"cursor.size"]) {
-            [self willChangeValueForKey:@"hotSpotValue"];
             [self willChangeValueForKey:@"sizeValue"];
+            [self willChangeValueForKey:@"hotSpotValue"];
         }
         
         [[self.undoManager prepareWithInvocationTarget:self.cursor] setValue:[change objectForKey:NSKeyValueChangeOldKey] forKey:keyPath.pathExtension];
