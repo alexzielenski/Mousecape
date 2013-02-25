@@ -32,7 +32,7 @@
 - (id)init {
     if ((self = [super init])) {
         [self addObserver:self forKeyPath:@"cursor.representations" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"cursor.name" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"cursor.prettyName" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"parentLine" options:NSKeyValueObservingOptionOld context:nil];
@@ -62,7 +62,7 @@
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"parentLine"];
     [self removeObserver:self forKeyPath:@"cursor.representations"];
-    [self removeObserver:self forKeyPath:@"cursor.name"];
+    [self removeObserver:self forKeyPath:@"cursor.prettyName"];
     [self removeObserver:self forKeyPath:@"cursor"];
     [self removeObserver:self forKeyPath:@"selected"];
 }
@@ -73,8 +73,8 @@
         self.imageView.frameCount    = self.cursor.frameCount;
         self.imageView.image         = self.cursor.imageWithAllReps;
         
-    } else if ([keyPath isEqualToString:@"cursor.name"]) {
-        self.textField.stringValue = self.cursor.name;
+    } else if ([keyPath isEqualToString:@"cursor.prettyName"]) {
+        self.textField.stringValue = self.cursor.prettyName;
         
     } else if ([keyPath isEqualToString:@"selected"]) {
         [self.parentLine cursorView:self selected:self.isSelected];

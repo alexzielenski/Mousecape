@@ -15,7 +15,6 @@
 @property (assign) NSUInteger        frameCount;
 @property (assign) NSSize            size;
 @property (assign) NSPoint           hotSpot; 
-@property (copy)   NSString          *name;
 @property (weak)   NSString          *identifier;
 @property (weak)   MCCursorLibrary   *parentLibrary;
 //@property (assign) NSUInteger        repeatCount; // v2.01

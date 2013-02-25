@@ -33,7 +33,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (id)init {
     if ((self = [super init])) {
-        self.name = @"Unknown";
     }
     return self;
 }
@@ -56,7 +55,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     cursor.frameCount      = self.frameDuration;
     cursor.size            = self.size;
     cursor.representations = self.representations.copy;
-    cursor.name            = self.name;
     
     return cursor;
 }
@@ -140,7 +138,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (NSString *)prettyName {
     NSString *name = [MCCursorLibrary.cursorMap objectForKey:self.identifier];
-    return name ? name : self.identifier;
+    return name ? name : @"Unknown";
 }
 
 - (void)addRepresentation:(NSBitmapImageRep *)imageRep {
