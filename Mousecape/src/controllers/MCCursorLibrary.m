@@ -138,10 +138,6 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
         MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
         
-        NSString *name = [MCCursorLibrary.cursorMap objectForKey:key];
-        if (name)
-            cursor.name = name;
-        
         [self addCursor:cursor forIdentifier:key];
     }
 }
@@ -200,24 +196,33 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 }
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
     [self willChangeValueForKey:@"cursors"];
+    //!TODO: Provide KVO changes elsewhere
+    
     if (!cursor) {
         MCCursor *c = self.cursors[key];
+        [c willChangeValueForKey:@"prettyName"];
         [c willChangeValueForKey:@"identifier"];
         [c setParentLibrary:nil];
         [self.cursors removeObjectForKey:key];
         [c didChangeValueForKey:@"identifier"];
+        [c didChangeValueForKey:@"prettyName"];
+        
     } else {
         MCCursor *c = self.cursors[key];
         if (c) {
+            [c willChangeValueForKey:@"prettyName"];
             [c willChangeValueForKey:@"identifier"];
             //! TODO: Provide nice way of handling naming conflicts
             [c didChangeValueForKey:@"identifier"];
+            [c didChangeValueForKey:@"prettyName"];
         }
         
+        [cursor willChangeValueForKey:@"prettyName"];
         [cursor willChangeValueForKey:@"identifier"];
         cursor.parentLibrary = self;
         [self.cursors setObject:cursor forKey:key];
         [cursor didChangeValueForKey:@"identifier"];
+        [c didChangeValueForKey:@"prettyName"];
     }
     [self didChangeValueForKey:@"cursors"];
 }
