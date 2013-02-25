@@ -40,27 +40,34 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     return map;
 }
+
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {
     return [[MCCursorLibrary alloc] initWithContentsOfFile:path];
 }
+
 + (MCCursorLibrary *)cursorLibraryWithContentsOfURL:(NSURL *)URL {
     return [[MCCursorLibrary alloc] initWithContentsOfURL:URL];
 }
+
 + (MCCursorLibrary *)cursorLibraryWithDictionary:(NSDictionary *)dictionary {
     return [[MCCursorLibrary alloc] initWithDictionary:dictionary];
 }
+
 + (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)dictionary {
     return [[MCCursorLibrary alloc] initWithCursors:dictionary];
 }
+
 - (id)initWithContentsOfFile:(NSString *)path {
     return [self initWithContentsOfURL:[NSURL fileURLWithPath:path]];
 }
+
 - (id)initWithContentsOfURL:(NSURL *)URL {
     self.originalURL = URL;
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfURL:URL];
     return [self initWithDictionary:dictionary];
 }
+
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     if ((self = [super init])) {
         self.cursors = [NSMutableDictionary dictionary];
@@ -70,6 +77,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     }
     return self;
 }
+
 - (id)initWithCursors:(NSDictionary *)cursors {
     if ((self = [super init])) {
         self.cursors = cursors.mutableCopy;
@@ -77,6 +85,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     return self;
 }
+
 - (id)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
     lib.cursors          = self.cursors.mutableCopy;
@@ -92,6 +101,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     lib.applied          = self.isApplied;
     return lib;
 }
+
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically {
     return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
 }
@@ -133,6 +143,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     return YES;
 }
+
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion {
     for (NSString *key in cursorDicts.allKeys) {
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
@@ -141,6 +152,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         [self addCursor:cursor forIdentifier:key];
     }
 }
+
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *drep = [NSMutableDictionary dictionary];
     
@@ -162,16 +174,19 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     return drep;
 }
+
 - (void)addCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier {
     if (cursor) {
         [self setCursor:cursor forKey:identifier];
     }
 }
+
 - (void)removeCursor:(MCCursor *)cursor {
     NSArray *keys = [self.cursors allKeysForObject:cursor];
     for (NSString *key in keys)
         [self setCursor:nil forKey:key];
 }
+
 - (void)removeCursorForIdentifier:(NSString *)identifier {
     if ([self.cursors objectForKey:identifier] != nil) {
         [self setCursor:nil forKey:identifier];
@@ -194,6 +209,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         return allKeys[0];
     return nil;
 }
+
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
     [self willChangeValueForKey:@"cursors"];
     //!TODO: Provide KVO changes elsewhere
@@ -222,7 +238,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         cursor.parentLibrary = self;
         [self.cursors setObject:cursor forKey:key];
         [cursor didChangeValueForKey:@"identifier"];
-        [c didChangeValueForKey:@"prettyName"];
+        [cursor didChangeValueForKey:@"prettyName"];
     }
     [self didChangeValueForKey:@"cursors"];
 }

@@ -12,4 +12,6 @@ _sharedObject = block(); \
 return _sharedObject; \
 
     #import <Cocoa/Cocoa.h>
+    #import "MCPreferences.h"
+
 #endif

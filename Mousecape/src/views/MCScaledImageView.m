@@ -102,7 +102,7 @@
     NSSize sizeToDraw = NSMakeSize(sampleSize.width * self.scale, sampleSize.height * self.scale);
     NSPoint anchorPoint = NSZeroPoint;
     
-    //!TODO If the cursor stops scaling up, halt the crosshair moving
+    //!TODO If the cursor stops scaling up, halt the crosshair moving. Maybe the issue is with the anchor point?
     self.lastScaleFactor = self.scale;
     
     // Proportionally scale down

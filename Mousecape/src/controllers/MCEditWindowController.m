@@ -97,6 +97,7 @@
     return proposedMin + 440.0;
 }
 
+//!TODO: Fix the constraint breakage here
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
         return 180;

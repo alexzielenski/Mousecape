@@ -52,7 +52,6 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     pipe.fileHandleForReading.readabilityHandler = ^(NSFileHandle *handle) {
         NSData *data = handle.availableData;
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@", str);
         (void)str;
     };
     
@@ -101,7 +100,7 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     
 }
 - (void)restoreDefaults {
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:self.class.mousecloakPath arguments:@[ @"--reset", @"--suppressCopyright"]];
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:self.class.mousecloakPath arguments:@[ @"--reset", @"--suppressCopyright" ]];
     [task waitUntilExit];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
