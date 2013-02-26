@@ -15,6 +15,7 @@
 @property (strong) MMAnimatingImageView *imageView;
 @property (weak)   MCCursorLine *parentLine;
 @property (assign, getter = isSelected) BOOL selected;
+@property (assign) BOOL layedOut;
 @end
 
 @interface MCCursorLine ()
@@ -24,13 +25,15 @@
 - (void)_initialize;
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index;
 - (void)cursorView:(MCCursorView *)cv selected:(BOOL)selected;
+- (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index;
+- (void)_unqueueCursorViewsAfterIndex:(NSUInteger)index;
 
 @end
 
 @implementation MCCursorView
 
 - (id)init {
-    if ((self = [super init])) {        
+    if ((self = [super init])) {
         if (!self.textField) {
             NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
             self.textField = tf;
@@ -56,16 +59,24 @@
         RAC(self.imageView.frameDuration) = [RACAble(self.cursor.frameDuration) deliverOn:backgroundScheduler];
         RAC(self.imageView.frameCount)    = [RACAble(self.cursor.frameCount) deliverOn:backgroundScheduler];
         RAC(self.imageView.image)         = [RACAble(self.cursor.imageWithAllReps) deliverOn:backgroundScheduler];
-        [RACAble(self.selected) subscribeNext:^(id x) {
-            [self.parentLine cursorView:self selected:self.isSelected];
-        }];
-        
+//        
+//        __weak MCCursorView *weakSelf = self;
+//
+//        //!TODO: This makes shit lag?
+//        [RACAble(self.selected) subscribeNext:^(id x) {
+//            [weakSelf.parentLine cursorView:self selected:self.isSelected];
+//        }];
+//        
     }
     return self;
 }
 
 - (void)viewDidMoveToWindow {
+    if (self.layedOut)
+        return;
     
+    //!TODO: Do this a better way
+    self.layedOut = YES;
     self.imageView.frame = NSMakeRect(8.0f, 16.0f, 48.0f, 48.0f);
     self.textField.frame = NSMakeRect(0, 2.0f, 64.0f, 14.0f);
     
@@ -174,22 +185,12 @@
     return self;
 }
 
-- (void)reloadData {
+- (void)reloadData {    
     NSUInteger itemCount = [self.dataSource numberOfCursorsInLine:self];
-
-    // re-use cursor views we want
-    while (self.cursorViews.count != itemCount) {
-        if (self.cursorViews.count > itemCount) {
-            [self.cursorViews.lastObject removeFromSuperview];
-            [self.cursorViews removeLastObject];
-        } else {
-            [self.cursorViews addObject:[[MCCursorView alloc] init]];
-        }
-    }
-        
+    
     for (NSUInteger idx = 0; idx < itemCount; idx++) {
         MCCursor *currentCursor = [self.dataSource cursorLine:self cursorAtIndex:idx];
-        MCCursorView *cursorView = [self.cursorViews objectAtIndex:idx];
+        MCCursorView *cursorView = [self _dequeueCursorViewForIndex:idx];
         cursorView.parentLine = self;
         cursorView.selected   = NO;
         
@@ -197,10 +198,37 @@
         [self addSubview:cursorView];
         
         cursorView.cursor = currentCursor;
+        
+        if (idx == itemCount - 1) {
+            [self _unqueueCursorViewsAfterIndex:idx];
+        }
     }
     
     // resize us to fit
     self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.cursorViews.count * self.wellWidth, self.frame.size.height);
+    
+}
+
+- (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index {
+    if (self.cursorViews.count > index) {
+        return self.cursorViews[index];
+    }
+    
+    if (index != self.cursorViews.count)
+        return nil;
+    
+    self.cursorViews[index] = [[MCCursorView alloc] init];
+    return [self _dequeueCursorViewForIndex:index];
+}
+
+- (void)_unqueueCursorViewsAfterIndex:(NSUInteger)index {
+    index++;
+    
+    for (int x = 0; x < self.cursorViews.count - index; x++) {
+        NSView *v = self.cursorViews.lastObject;
+        [v removeFromSuperview];
+        [self.cursorViews removeObject:v];
+    }
     
 }
 
