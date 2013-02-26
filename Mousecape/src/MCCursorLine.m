@@ -49,11 +49,13 @@
             self.imageView = im;
         }
         
-        RAC(self.imageView.shouldAnimate) = RACAble(self.parentLine.animationsEnabled);
-        RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
-        RAC(self.imageView.frameDuration) = RACAble(self.cursor.frameDuration);
-        RAC(self.imageView.frameCount)    = RACAble(self.cursor.frameCount);
-        RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
+        RACScheduler *backgroundScheduler = [RACScheduler scheduler];
+        
+        RAC(self.imageView.shouldAnimate) = [RACAble(self.parentLine.animationsEnabled) deliverOn:backgroundScheduler];
+        RAC(self.textField.stringValue)   = [RACAble(self.cursor.prettyName) deliverOn:backgroundScheduler];
+        RAC(self.imageView.frameDuration) = [RACAble(self.cursor.frameDuration) deliverOn:backgroundScheduler];
+        RAC(self.imageView.frameCount)    = [RACAble(self.cursor.frameCount) deliverOn:backgroundScheduler];
+        RAC(self.imageView.image)         = [RACAble(self.cursor.imageWithAllReps) deliverOn:backgroundScheduler];
         [RACAble(self.selected) subscribeNext:^(id x) {
             [self.parentLine cursorView:self selected:self.isSelected];
         }];

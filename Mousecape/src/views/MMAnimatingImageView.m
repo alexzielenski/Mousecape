@@ -52,28 +52,31 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     self.frameCount    = 1;
     self.frameDuration = 1;
     
-    
     __weak MMAnimatingImageView *weakSelf = self;
-    [RACAble(self.image) subscribeNext:^(id x) {
-        weakSelf.spriteLayer.image = x;
-        [weakSelf _invalidateFrame];
-        [weakSelf _invalidateAnimation];
-    }];
     
-    [[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] subscribeNext:^(id x) {
-        [weakSelf _invalidateFrame];
-        [weakSelf _invalidateAnimation];
-    }];
+    [[RACAble(self.image) deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(id x) {
+         weakSelf.spriteLayer.image = x;
+         [weakSelf _invalidateFrame];
+         [weakSelf _invalidateAnimation];
+     }];
     
-    [RACAble(self.shouldAnimate) subscribeNext:^(NSNumber *x) {
-        if (!x.boolValue) {
-            weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
-            [weakSelf.spriteLayer removeAllAnimations];
-            [weakSelf.spriteLayer setNeedsDisplay];
-        } else {
-            [weakSelf _invalidateAnimation];
-        }
-    }];
+    [[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(id x) {
+         [weakSelf _invalidateFrame];
+         [weakSelf _invalidateAnimation];
+     }];
+    
+    [[RACAble(self.shouldAnimate) deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(NSNumber *x) {
+         if (!x.boolValue) {
+             weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
+             [weakSelf.spriteLayer removeAllAnimations];
+             [weakSelf.spriteLayer setNeedsDisplay];
+         } else {
+             [weakSelf _invalidateAnimation];
+         }
+     }];
 
 }
 

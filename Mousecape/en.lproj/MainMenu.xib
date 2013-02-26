@@ -1751,7 +1751,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{-3, 3}, {246, 14}}</string>
 						<reference key="NSSuperview" ref="896668540"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
@@ -1771,7 +1770,6 @@
 				</array>
 				<string key="NSFrameSize">{251, 21}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="735918676"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSHuggingPriority">{250, 250}</string>
