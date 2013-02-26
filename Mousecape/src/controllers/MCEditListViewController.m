@@ -46,7 +46,7 @@
 - (void)_commonInit {
     [self.tableView reloadData];
     
-    __weak MCEditListViewController *weakSelf;
+    __weak MCEditListViewController *weakSelf = self;
     
     static NSArray *sortDescriptors = nil;
     static dispatch_once_t onceToken;
@@ -57,7 +57,7 @@
                             ];
     });
     
-    [RACAble(self.cursorLibrary) subscribeNext:^(id x) {    
+    [RACAble(self.cursorLibrary) subscribeNext:^(id x) {
         // get new keys & sort em
         weakSelf.sortedValues = [weakSelf.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:sortDescriptors];
         [weakSelf.tableView reloadData];
