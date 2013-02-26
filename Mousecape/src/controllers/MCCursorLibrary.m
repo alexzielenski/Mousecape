@@ -88,7 +88,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 
 - (id)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
-    lib.cursors          = self.cursors.mutableCopy;
+    
+    lib.cursors = [[NSMutableDictionary alloc] initWithDictionary:self.cursors copyItems:YES];
     [lib.cursors.allValues makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:lib];
     
     lib.originalURL      = self.originalURL;
@@ -98,7 +99,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     lib.inCloud          = self.inCloud;
     lib.version          = self.version;
     lib.identifier       = self.identifier;
-    lib.applied          = self.isApplied;
+
     return lib;
 }
 

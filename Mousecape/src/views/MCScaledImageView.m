@@ -52,24 +52,18 @@
     self.shouldChooseHotSpot = YES;
     self.shouldDrawBezel = YES;
     self.shouldDragToRemove = YES;
+
+    __weak MCScaledImageView *weakSelf = self;
+    [[RACSignal merge:@[
+      RACAble(self.scale),
+      RACAble(self.sampleSize),
+      RACAble(self.hotSpot),
+      RACAble(self.image),
+      RACAble(self.shouldDrawBezel)
+      ]] subscribeNext:^(id x) {
+        [weakSelf setNeedsDisplay:YES];
+    }];
     
-    [self addObserver:self forKeyPath:@"scale" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"sampleSize" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"hotSpot" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"shouldDrawBezel" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"sampleSize"];
-    [self removeObserver:self forKeyPath:@"hotSpot"];
-    [self removeObserver:self forKeyPath:@"scale"];
-    [self removeObserver:self forKeyPath:@"image"];
-    [self removeObserver:self forKeyPath:@"shouldDrawBezel"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

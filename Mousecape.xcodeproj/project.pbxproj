@@ -41,7 +41,6 @@
 		FA2C88F216CD7BAD0036CCC2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */; };
 		FA2C88FC16CDB5180036CCC2 /* applied.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2C88F816CDB5180036CCC2 /* applied.png */; };
 		FA2C88FD16CDB5180036CCC2 /* applied@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2C88F916CDB5180036CCC2 /* applied@2x.png */; };
-		FA3EC57E16C9D31A00F66CD5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC57D16C9D31A00F66CD5 /* libPods.a */; };
 		FA3EC58016C9D42700F66CD5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */; };
 		FA3EC58216C9EFAE00F66CD5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */; };
 		FA3EC58716C9FA1900F66CD5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */; };
@@ -65,6 +64,7 @@
 		FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */; };
 		FAD5D28516D1781500DD4302 /* HD.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28316D1781500DD4302 /* HD.png */; };
 		FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28416D1781500DD4302 /* HD@2x.png */; };
+		FAFC2D0A16DC0B2500EBB128 /* libToolPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC2D0916DC0B2500EBB128 /* libToolPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +214,7 @@
 		FAD5D28316D1781500DD4302 /* HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HD.png; sourceTree = "<group>"; };
 		FAD5D28416D1781500DD4302 /* HD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD@2x.png"; sourceTree = "<group>"; };
 		FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPreferences.h; sourceTree = "<group>"; };
+		FAFC2D0916DC0B2500EBB128 /* libToolPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libToolPods.a; path = Pods/build/Release/libToolPods.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,8 +236,8 @@
 				FA3EC58716C9FA1900F66CD5 /* Cocoa.framework in Frameworks */,
 				FA3EC58216C9EFAE00F66CD5 /* ApplicationServices.framework in Frameworks */,
 				FA3EC58016C9D42700F66CD5 /* Accelerate.framework in Frameworks */,
-				FA3EC57E16C9D31A00F66CD5 /* libPods.a in Frameworks */,
 				FA92221316C9CB20004E382D /* Foundation.framework in Frameworks */,
+				FAFC2D0A16DC0B2500EBB128 /* libToolPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +270,7 @@
 			children = (
 				FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */,
 				FA3EC57D16C9D31A00F66CD5 /* libPods.a */,
+				FAFC2D0916DC0B2500EBB128 /* libToolPods.a */,
 				FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */,
 				FAB5E8D116C872B200B41654 /* QuartzCore.framework */,
 				FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */,

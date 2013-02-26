@@ -61,7 +61,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     MCCursorLibrary *applied    = [self.libraryController libraryWithIdentifier:appliedIdentifier];
     self.libraryController.appliedLibrary = applied;
     
-    [self.detailController bind:@"currentLibrary" toObject:self.libraryController withKeyPath:@"selectedLibrary" options:nil];
+    RAC(self.detailController.currentLibrary) = RACAble(self.libraryController.selectedLibrary);
+    
     
     __block MCAppDelegate *blockSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:MCCloakControllerDidApplyCursorNotification
@@ -86,12 +87,11 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     
     
 }
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    [self.detailController unbind:@"currentLibrary"];
-}
+
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return YES;
 }
+
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
     if (![filename.pathExtension.lowercaseString isEqualToString:@"cape"])
         return NO;
@@ -104,6 +104,7 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     
     return YES;
 }
+
 - (IBAction)showPreferences:(NSMenuItem *)sender {
     if (!self.preferencesWindowController) {
         NSViewController *general = [[MCGeneralPreferencesViewController alloc] initWithNibName:@"GeneralPreferences" bundle:nil];

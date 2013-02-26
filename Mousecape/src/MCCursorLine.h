@@ -26,6 +26,7 @@
 @property (assign) NSUInteger selectionKeyMask;
 @property (assign) BOOL animationsEnabled;
 - (void)reloadData;
+- (void)deselectAll;
 @end
 
 @interface MCCursorLine (Properties)

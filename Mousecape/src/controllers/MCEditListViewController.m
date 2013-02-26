@@ -39,35 +39,31 @@
     return self;
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"cursorLibrary"];
-}
-
 - (NSUndoManager *)undoManager {
     return self.view.window.undoManager;
 }
 
 - (void)_commonInit {
-    [self addObserver:self forKeyPath:@"cursorLibrary" options:NSKeyValueObservingOptionNew context:nil];
     [self.tableView reloadData];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"cursorLibrary"]) {
-        static NSArray *sortDescriptors = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            sortDescriptors = @[
-                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {return [obj1 compare:obj2 options:NSNumericSearch];}],
-                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES selector:@selector(caseInsensitiveCompare:)]
-                                ];
-        });
+    
+    __weak MCEditListViewController *weakSelf;
+    
+    static NSArray *sortDescriptors = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sortDescriptors = @[
+                            [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {return [obj1 compare:obj2 options:NSNumericSearch];}],
+                            [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES selector:@selector(caseInsensitiveCompare:)]
+                            ];
+    });
+    
+    [RACAble(self.cursorLibrary) subscribeNext:^(id x) {    
         // get new keys & sort em
-        self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:sortDescriptors];
-    }
-    [self.tableView reloadData];
-    self.selectedObject = self.cursorLibrary;
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        weakSelf.sortedValues = [weakSelf.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:sortDescriptors];
+        [weakSelf.tableView reloadData];
+        weakSelf.selectedObject = weakSelf.cursorLibrary;
+        [weakSelf.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+    }];
 }
 
 - (void)reloadCursor:(MCCursor *)cursor {

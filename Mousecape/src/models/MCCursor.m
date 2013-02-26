@@ -52,9 +52,11 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     MCCursor *cursor = [[MCCursor allocWithZone:zone] init];
     
     cursor.frameCount      = self.frameCount;
-    cursor.frameCount      = self.frameDuration;
+    cursor.frameDuration   = self.frameDuration;
     cursor.size            = self.size;
+    //!TODO: Decide if we want to copy these images
     cursor.representations = self.representations.copy;
+    cursor.hotSpot         = self.hotSpot;
     
     return cursor;
 }
@@ -139,6 +141,32 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 - (NSString *)prettyName {
     NSString *name = [MCCursorLibrary.cursorMap objectForKey:self.identifier];
     return name ? name : @"Unknown";
+}
+
+- (id)valueForKey:(NSString *)key {
+    if ([key isEqualToString:@"hotSpot"]) {
+        return [NSValue valueWithPoint:self.hotSpot];
+    }
+    
+    if ([key isEqualToString:@"size"]) {
+        return [NSValue valueWithSize:self.size];
+    }
+    
+    return [super valueForKey:key];
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key {
+    if ([key isEqualToString:@"hotSpot"]) {
+        self.hotSpot = [value pointValue];
+        return;
+    }
+    
+    if ([key isEqualToString:@"size"]) {
+        self.size = [value sizeValue];
+        return;
+    }
+    
+    [super setValue:value forKey:key];
 }
 
 - (void)addRepresentation:(NSBitmapImageRep *)imageRep {

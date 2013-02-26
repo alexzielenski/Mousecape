@@ -17,6 +17,8 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 @interface MMAnimatingImageView ()
 @property (weak) MCSpriteLayer *spriteLayer;
 - (void)_initialize;
+- (void)_invalidateFrame;
+- (void)_invalidateAnimation;
 @end
 
 @implementation MMAnimatingImageView
@@ -29,11 +31,6 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 
 - (void)_initialize {
     self.shouldAnimate = YES;
-    
-    [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"frameDuration" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"frameCount" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"shouldAnimate" options:NSKeyValueObservingOptionNew context:nil];
     
     [self registerTypes];
     
@@ -54,17 +51,36 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     
     self.frameCount    = 1;
     self.frameDuration = 1;
-}
+    
+    
+    __weak MMAnimatingImageView *weakSelf = self;
+    [RACAble(self.image) subscribeNext:^(id x) {
+        weakSelf.spriteLayer.image = x;
+        [weakSelf _invalidateFrame];
+        [weakSelf _invalidateAnimation];
+    }];
+    
+    [[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] subscribeNext:^(id x) {
+        [weakSelf _invalidateFrame];
+        [weakSelf _invalidateAnimation];
+    }];
+    
+    [RACAble(self.shouldAnimate) subscribeNext:^(NSNumber *x) {
+        if (!x.boolValue) {
+            weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
+            [weakSelf.spriteLayer removeAllAnimations];
+            [weakSelf.spriteLayer setNeedsDisplay];
+        } else {
+            [weakSelf _invalidateAnimation];
+        }
+    }];
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"shouldAnimate"];
-    [self removeObserver:self forKeyPath:@"image"];
-    [self removeObserver:self forKeyPath:@"frameDuration"];
-    [self removeObserver:self forKeyPath:@"frameCount"];
 }
 
 - (void)viewDidChangeBackingProperties {
     [super viewDidChangeBackingProperties];
+    
+    //!TODO: see if this can be done with RAC
     self.layer.contentsScale       = self.window.backingScaleFactor;
     self.spriteLayer.contentsScale = self.window.backingScaleFactor;
     
@@ -72,58 +88,47 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     self.spriteLayer.contents = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    self.spriteLayer.maximumSize = self.frame.size;
-    if ([keyPath isEqualToString:@"image"]) {
-        self.spriteLayer.image = self.image;
-//        self.spriteLayer.contents = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
-        self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
-        self.spriteLayer.position = centerSizeInRect(self.spriteLayer.bounds.size, self.layer.bounds).origin;
-        self.frameDuration = self.frameDuration;
-        
-    } else if ([keyPath isEqualToString:@"frameCount"]) {
-        self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
-        self.spriteLayer.position = centerSizeInRect(self.spriteLayer.bounds.size, self.layer.bounds).origin;
-        self.frameDuration = self.frameDuration;
-        
-    } else if ([keyPath isEqualToString:@"frameDuration"]) {
-        if (self.frameCount == 1 || !self.shouldAnimate) {
-            self.spriteLayer.sampleIndex = self.frameCount + 1;
-            [self.spriteLayer removeAllAnimations];
-            return;
-        }
-        
-        CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
-        
-        anim.fromValue    = @(self.frameCount + 1); 
-        anim.toValue      = @(1);
-        anim.byValue      = @(-1);
-        anim.duration     = self.frameDuration * self.frameCount;
-        anim.repeatCount  = HUGE_VALF; // just keep repeating it
-        anim.autoreverses = NO; // do 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
-        anim.removedOnCompletion = NO;
-        anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        
-        [self.spriteLayer addAnimation:anim forKey:@"sampleIndex"]; // start
-    } else if ([keyPath isEqualToString:@"shouldAnimate"]) {
-        
-        if (!self.shouldAnimate) {
-            self.spriteLayer.sampleIndex = self.frameCount + 1;
-            [self.spriteLayer removeAllAnimations];
-            [self.spriteLayer setNeedsDisplay];
-        } else {
-            // Trigger the above case
-            self.frameDuration = self.frameDuration;
-        }
-    }
-}
-
 // Tell OSX that our view can accept images to be dragged in
 - (void)registerTypes {
 	[self registerForDraggedTypes:[NSArray arrayWithObjects:NSPasteboardTypeTIFF, NSPasteboardTypePNG, NSFilenamesPboardType, nil]];
 }
 
+- (void)viewDidMoveToWindow {
+    [self _invalidateFrame];
+}
+
+#pragma mark - Invalidators
+
+- (void)_invalidateFrame {
+    self.spriteLayer.maximumSize = self.frame.size;
+    
+    self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
+    self.spriteLayer.position = centerSizeInRect(self.spriteLayer.bounds.size, self.layer.bounds).origin;
+}
+
+- (void)_invalidateAnimation {
+    if (self.frameCount == 1 || !self.shouldAnimate) {
+        self.spriteLayer.sampleIndex = self.frameCount + 1;
+        [self.spriteLayer removeAllAnimations];
+        return;
+    }
+    
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
+    
+    anim.fromValue    = @(self.frameCount + 1);
+    anim.toValue      = @(1);
+    anim.byValue      = @(-1);
+    anim.duration     = self.frameDuration * self.frameCount;
+    anim.repeatCount  = HUGE_VALF; // just keep repeating it
+    anim.autoreverses = NO; // do 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
+    anim.removedOnCompletion = NO;
+    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    
+    [self.spriteLayer addAnimation:anim forKey:@"sampleIndex"]; // start
+}
+
 #pragma mark - NSDragDestination
+
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist

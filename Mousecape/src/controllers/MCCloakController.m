@@ -26,10 +26,12 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
         return [[self alloc] init];
     });
 }
+
 + (NSString *)mousecloakPath {
     NSBundle *bndl = [NSBundle mainBundle];
     return [bndl pathForAuxiliaryExecutable:@"mousecloak"];
 }
+
 - (void)applyCape:(MCCursorLibrary *)cursor {
     NSString *cursorPath = cursor.originalURL.path;
     
@@ -70,6 +72,7 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
                                                       userInfo:@{ MCCloakControllerAppliedCursorKey: cursor }];
     
 }
+
 - (NSString *)convertMightyMouse:(NSString *)mightyMouse { // and add to library
     NSString *output  = [[NSTemporaryDirectory() stringByAppendingPathComponent:mightyMouse.lastPathComponent].stringByDeletingLastPathComponent stringByAppendingPathExtension:@"cape"];
     
@@ -99,6 +102,7 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     return output;
     
 }
+
 - (void)restoreDefaults {
     NSTask *task = [NSTask launchedTaskWithLaunchPath:self.class.mousecloakPath arguments:@[ @"--reset", @"--suppressCopyright" ]];
     [task waitUntilExit];
@@ -114,11 +118,13 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
                                                         object:self
                                                       userInfo:nil];
 }
+
 - (float)cursorScale {
     float scale;
     CGSGetCursorScale(CGSMainConnectionID(), &scale);
     return scale;
 }
+
 - (void)setCursorScale:(float)cursorScale {
     [self willChangeValueForKey:@"cursorScale"];
     CGSSetCursorScale(CGSMainConnectionID(), cursorScale);

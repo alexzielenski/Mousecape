@@ -16,7 +16,6 @@
 @property (copy)   NSNumber *version;
 @property (assign, getter = isInCloud) BOOL inCloud;
 @property (assign, getter = isHiDPI)   BOOL hiDPI;
-@property (assign, getter = isApplied) BOOL applied;
 @property (readonly, copy) NSURL *originalURL;
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path;

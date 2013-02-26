@@ -556,6 +556,46 @@
 					<int key="connectionID">82</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">frameCountField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="512946431"/>
+					</object>
+					<int key="connectionID">434</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">frameDurationField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="727578632"/>
+					</object>
+					<int key="connectionID">435</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">identifierField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="665022162"/>
+					</object>
+					<int key="connectionID">436</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">hotSpotField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1070557382"/>
+					</object>
+					<int key="connectionID">437</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sizeField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="800918012"/>
+					</object>
+					<int key="connectionID">438</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: imageView.scale</string>
 						<reference key="source" ref="603689351"/>
@@ -580,44 +620,12 @@
 					<int key="connectionID">407</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: cursor.frameCount</string>
-						<reference key="source" ref="512946431"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="512946431"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: cursor.frameCount</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">cursor.frameCount</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">420</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="727578632"/>
 						<reference key="destination" ref="1070557382"/>
 					</object>
 					<int key="connectionID">408</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: cursor.frameDuration</string>
-						<reference key="source" ref="727578632"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="727578632"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: cursor.frameDuration</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">cursor.frameDuration</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">422</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -628,44 +636,12 @@
 					<int key="connectionID">409</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: hotSpotValue</string>
-						<reference key="source" ref="1070557382"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1070557382"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: hotSpotValue</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">hotSpotValue</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">430</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
 						<reference key="source" ref="800918012"/>
 						<reference key="destination" ref="665022162"/>
 					</object>
 					<int key="connectionID">410</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: sizeValue</string>
-						<reference key="source" ref="800918012"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="800918012"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: sizeValue</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">sizeValue</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">433</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -682,22 +658,6 @@
 						<reference key="destination" ref="512946431"/>
 					</object>
 					<int key="connectionID">406</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: cursor.identifier</string>
-						<reference key="source" ref="665022162"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="665022162"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: cursor.identifier</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">cursor.identifier</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">418</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2435,7 +2395,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">433</int>
+			<int key="maxID">438</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2446,7 +2406,7 @@
 						<string key="frameCountField">NSTextField</string>
 						<string key="frameDurationField">NSTextField</string>
 						<string key="hotSpotField">NSTextField</string>
-						<string key="identifierField">NSTextField</string>
+						<string key="identifierField">NSComboBox</string>
 						<string key="imageView">MCScaledImageView</string>
 						<string key="sizeField">NSTextField</string>
 					</dictionary>
@@ -2465,7 +2425,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="identifierField">
 							<string key="name">identifierField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">NSComboBox</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="imageView">
 							<string key="name">imageView</string>

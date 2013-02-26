@@ -15,29 +15,10 @@
 static const NSString *MCAppliedCursorValueTransformerName = @"mousecape.appliedCursorTransformer";
 static NSArray *librarySortDescriptors =  nil;
 
-@interface MCAppliedCursorValueTransformer : NSValueTransformer
-@end
-
-@implementation MCAppliedCursorValueTransformer
-
-+ (BOOL)allowsReverseTransformation {
-    return NO;
-}
-
-+ (Class)transformedValueClass {
-    return [NSString class];
-}
-
-- (NSString *)transformedValue:(NSString *)value {
-    NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
-    return [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
-}
-
-@end
-
 @interface MCLibraryViewController ()
 @property (readwrite, strong) NSMutableArray *libraries;
 @property (copy) NSString *libraryPath;
+@property (strong) RACSignal *_appliedSignal;
 - (void)_init;
 // KVO
 - (void)insertObject:(MCCursorLibrary *)library inLibrariesAtIndex:(NSUInteger)index;
@@ -53,15 +34,16 @@ static NSArray *librarySortDescriptors =  nil;
     
     librarySortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
     
-    MCAppliedCursorValueTransformer *trns = [[MCAppliedCursorValueTransformer alloc] init];
-    [NSValueTransformer setValueTransformer:trns forName: (NSString *)MCAppliedCursorValueTransformerName];
-    
 }
 
 - (void)_init {
     self.libraries = [NSMutableArray array];
-    [self addObserver:self forKeyPath:@"appliedLibrary" options:NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:@"appliedCursorField" options:NSKeyValueObservingOptionOld context:nil];
+    
+    __weak MCLibraryViewController *weakSelf = self;
+    [RACAble(self.appliedLibrary.name) subscribeNext:^(NSString *value) {
+        NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
+        weakSelf.appliedCursorField.stringValue = [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
+    }];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -78,28 +60,6 @@ static NSArray *librarySortDescriptors =  nil;
     }
     
     return self;
-}
-- (void)loadView {
-    [super loadView];
-}
-
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"appliedLibrary"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"appliedLibrary"]) {
-        MCCursorLibrary *oldLib = change[NSKeyValueChangeOldKey];
-        if (oldLib && ![oldLib isKindOfClass:[NSNull class]])
-            oldLib.applied = NO;
-        
-        self.appliedLibrary.applied = YES;
-    } else if ([keyPath isEqualToString:@"appliedCursorField"]) {
-        NSTextField *oldField = change[NSKeyValueChangeOldKey];
-        [oldField unbind:@"value"];
-
-        [self.appliedCursorField bind:@"value" toObject:self withKeyPath:@"appliedLibrary.name" options:@{ NSValueTransformerNameBindingOption: MCAppliedCursorValueTransformerName }];
-    }
 }
 
 - (void)loadLibraryAtPath:(NSString *)path {
@@ -220,8 +180,10 @@ static NSArray *librarySortDescriptors =  nil;
 - (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
     NSArray *filtered = [self.libraries filteredArrayUsingPredicate:pred];
+    
     if (filtered.count > 0)
         return filtered[0];
+    
     return nil;
 }
 
@@ -373,8 +335,13 @@ static NSArray *librarySortDescriptors =  nil;
 #pragma mark - NSTableViewDelgate
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+    __weak MCTableCellView *weakView = cellView;
+    
     [cellView.cursorLine bind:@"animationsEnabled" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"MCAnimationsEnabled" options:nil];
-//    cellView.cursorLine.animationsEnabled = NO;
+    [cellView rac_bind:@"applied" toObject:self withKeyPath:@"appliedLibrary" transform:^id(id value) {
+        return @(weakView.objectValue == value);
+    }];
+    
     return cellView;
 }
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {

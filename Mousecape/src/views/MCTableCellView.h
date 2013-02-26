@@ -13,5 +13,5 @@
 @property (strong) IBOutlet MCCursorLine *cursorLine;
 @property (strong) IBOutlet NSImageView *appliedView;
 @property (strong) IBOutlet NSImageView *hdView;
-//@property (assign, getter = isApplied) BOOL applied;
+@property (assign, getter = isApplied) BOOL applied;
 @end

@@ -30,17 +30,10 @@
     [super windowDidLoad];
 
     self.currentEditViewController = self.capeViewController;
-    [self addObserver:self forKeyPath:@"listViewController.selectedObject" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"listViewController.selectedObject"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath  isEqualToString:@"listViewController.selectedObject"]) {
+    
+    [RACAble(self.listViewController.selectedObject) subscribeNext:^(id x) {
         [self _changeEditViewsForSelection];
-    }
+    }];
 }
 
 - (void)_changeEditViewsForSelection {

@@ -1349,7 +1349,7 @@
 													<string key="NSFrameSize">{563, 480}</string>
 													<reference key="NSSuperview" ref="898630647"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="381142097"/>
+													<reference key="NSNextKeyView" ref="492060797"/>
 													<string key="NSReuseIdentifierKey">_NS:13</string>
 													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -1489,7 +1489,7 @@
 									<string key="NSFrameSize">{563, 480}</string>
 									<reference key="NSSuperview" ref="673390197"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="898630647"/>
+									<reference key="NSNextKeyView" ref="381142097"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">215568</int>
 									<reference key="NSVScroller" ref="695155060"/>
@@ -1557,6 +1557,7 @@
 											<string key="NSFrame">{{14, 357}, {152, 32}}</string>
 											<reference key="NSSuperview" ref="374248567"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="187376610">
@@ -1751,6 +1752,7 @@
 						<string key="NSFrame">{{-3, 3}, {246, 14}}</string>
 						<reference key="NSSuperview" ref="896668540"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="185100133">
@@ -2517,7 +2519,7 @@
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{531, 64}</string>
 													<reference key="NSSuperview" ref="851999517"/>
-													<reference key="NSNextKeyView" ref="51249325"/>
+													<reference key="NSNextKeyView" ref="594049853"/>
 													<bool key="NSViewCanDrawConcurrently">YES</bool>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<string key="NSClassName">MCCursorLine</string>
@@ -2561,7 +2563,7 @@
 									</array>
 									<string key="NSFrame">{{14, 14}, {532, 66}}</string>
 									<reference key="NSSuperview" ref="492060797"/>
-									<reference key="NSNextKeyView" ref="851999517"/>
+									<reference key="NSNextKeyView" ref="51249325"/>
 									<bool key="NSViewCanDrawConcurrently">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">202914</int>
@@ -2889,26 +2891,6 @@
 						</object>
 					</object>
 					<int key="connectionID">1209</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: objectValue.applied</string>
-						<reference key="source" ref="317260581"/>
-						<reference key="destination" ref="492060797"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="317260581"/>
-							<reference key="NSDestination" ref="492060797"/>
-							<string key="NSLabel">hidden: objectValue.applied</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">objectValue.applied</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1268</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
