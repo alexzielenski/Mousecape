@@ -55,6 +55,13 @@
     
     [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
+    
+    
+    __block MCEditCursorViewController *blockSelf = self;
+    
+    [RACAble(self.imageView.hotSpot) subscribeNext:^(NSValue *x) {
+        blockSelf.cursor.hotSpot = x.pointValue;
+    }];
 }
 
 - (NSUndoManager *)undoManager {

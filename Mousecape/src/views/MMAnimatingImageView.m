@@ -32,7 +32,7 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 - (void)_initialize {
     self.shouldAnimate = YES;
     
-    [self registerTypes];
+//    [self registerTypes];
     
     self.layer = [CALayer layer];
     self.wantsLayer = YES;
@@ -55,22 +55,22 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     
     // Some of this stuff seems to be minorly expensive. Put it off the main thread
     __weak MMAnimatingImageView *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        
-        [[[RACAble(self.image) distinctUntilChanged] deliverOn:RACScheduler.mainThreadScheduler]
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    
+        [[RACAble(self.image) distinctUntilChanged]
          subscribeNext:^(id x) {
              weakSelf.spriteLayer.image = x;
              [weakSelf _invalidateFrame];
              [weakSelf _invalidateAnimation];
          }];
         
-        [[[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] deliverOn:RACScheduler.mainThreadScheduler] distinctUntilChanged]
+        [[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] distinctUntilChanged]
          subscribeNext:^(id x) {
              [weakSelf _invalidateFrame];
              [weakSelf _invalidateAnimation];
          }];
-        
-        [[[RACAble(self.shouldAnimate) deliverOn:RACScheduler.mainThreadScheduler] distinctUntilChanged]
+    
+        [[RACAble(self.shouldAnimate) distinctUntilChanged]
          subscribeNext:^(NSNumber *x) {
              if (!x.boolValue) {
                  weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
@@ -80,7 +80,7 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
                  [weakSelf _invalidateAnimation];
              }
          }];
-    });
+//    });
     
 }
 
@@ -119,6 +119,8 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
         [self.spriteLayer removeAllAnimations];
         return;
     }
+    
+    [self.spriteLayer removeAllAnimations];
     
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
     

@@ -162,7 +162,10 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 - (IBAction)doubleClick:(id)sender {
     [self _createEditWindowController];
 
-    NSUInteger clickedRow = self.libraryController.tableView.clickedRow;
+    NSInteger clickedRow = self.libraryController.tableView.clickedRow;
+    if (clickedRow == -1)
+        return;
+    
     BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
     MCCursorLibrary *cape = self.libraryController.libraries[clickedRow];
     

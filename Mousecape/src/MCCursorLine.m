@@ -26,7 +26,6 @@
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index;
 - (void)cursorView:(MCCursorView *)cv selected:(BOOL)selected;
 - (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index;
-- (void)_unqueueCursorViewsAfterIndex:(NSUInteger)index;
 
 @end
 
@@ -51,6 +50,7 @@
             MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
             self.imageView = im;
         }
+        __weak MCCursorView *weakSelf = self;
         
         RACScheduler *backgroundScheduler = [RACScheduler scheduler];
         
@@ -59,16 +59,26 @@
         RAC(self.imageView.frameDuration) = [RACAble(self.cursor.frameDuration) deliverOn:backgroundScheduler];
         RAC(self.imageView.frameCount)    = [RACAble(self.cursor.frameCount) deliverOn:backgroundScheduler];
         RAC(self.imageView.image)         = [RACAble(self.cursor.imageWithAllReps) deliverOn:backgroundScheduler];
-//        
-//        __weak MCCursorView *weakSelf = self;
-//
-//        //!TODO: This makes shit lag?
-//        [RACAble(self.selected) subscribeNext:^(id x) {
-//            [weakSelf.parentLine cursorView:self selected:self.isSelected];
-//        }];
-//        
+        
+        
+        //!TODO: This makes shit lag?
+        [RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
+            [weakSelf.parentLine cursorView:weakSelf selected:selected.boolValue];
+        }];
+        
+//        [self addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
+}
+
+- (void)dealloc {
+//    [self removeObserver:self forKeyPath:@"selected"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"selected"]) {
+        [self.parentLine cursorView:self selected:self.isSelected];
+    }
 }
 
 - (void)viewDidMoveToWindow {
@@ -130,8 +140,9 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask || event.clickCount == 2) {
-        self.selected = !self.isSelected;
+    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask || event.clickCount >= 2) {
+        if (event.clickCount == 2)
+            self.selected = !self.isSelected;
     } else {
         [super mouseDown:event];
     }
@@ -187,6 +198,13 @@
 
 - (void)reloadData {    
     NSUInteger itemCount = [self.dataSource numberOfCursorsInLine:self];
+
+    while (self.cursorViews.count > itemCount) {
+        if (self.cursorViews.count > itemCount) {
+            [[self.cursorViews lastObject] removeFromSuperview];
+            [self.cursorViews removeLastObject];
+        }
+    }
     
     for (NSUInteger idx = 0; idx < itemCount; idx++) {
         MCCursor *currentCursor = [self.dataSource cursorLine:self cursorAtIndex:idx];
@@ -198,10 +216,6 @@
         [self addSubview:cursorView];
         
         cursorView.cursor = currentCursor;
-        
-        if (idx == itemCount - 1) {
-            [self _unqueueCursorViewsAfterIndex:idx];
-        }
     }
     
     // resize us to fit
@@ -219,17 +233,6 @@
     
     self.cursorViews[index] = [[MCCursorView alloc] init];
     return [self _dequeueCursorViewForIndex:index];
-}
-
-- (void)_unqueueCursorViewsAfterIndex:(NSUInteger)index {
-    index++;
-    
-    for (int x = 0; x < self.cursorViews.count - index; x++) {
-        NSView *v = self.cursorViews.lastObject;
-        [v removeFromSuperview];
-        [self.cursorViews removeObject:v];
-    }
-    
 }
 
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index {

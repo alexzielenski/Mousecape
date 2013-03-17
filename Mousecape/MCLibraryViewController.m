@@ -12,7 +12,6 @@
 #import "NSArray+CWSortedInsert.h"
 #import "MCCloakController.h"
 
-static const NSString *MCAppliedCursorValueTransformerName = @"mousecape.appliedCursorTransformer";
 static NSArray *librarySortDescriptors =  nil;
 
 @interface MCLibraryViewController ()

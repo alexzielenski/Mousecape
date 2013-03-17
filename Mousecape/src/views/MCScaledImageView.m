@@ -184,10 +184,23 @@
         
         // hotSpot.x = (clickPoint.x - self.lastFrame.origin.x) / scale
         // hotSpot.y = ((self.lastFrame.origin.y + self.lastFrame.size.height) - clickPoint.y) / scale
-        // clickPoint.y = hotSpot.y * scale - 
+        // clickPoint.y = hotSpot.y * scale -
         
         // scale down magnitude
-        self.hotSpot = NSMakePoint(clickPoint.x / self.lastScaleFactor, clickPoint.y / self.lastScaleFactor);
+        NSPoint hs = NSMakePoint(clickPoint.x / self.lastScaleFactor, clickPoint.y / self.lastScaleFactor);
+        hs.x = round(hs.x);
+        hs.y = round(hs.y);
+        
+        if (hs.x < 0)
+            hs.x = 0;
+        if (hs.x > self.sampleSize.width)
+            hs.x = self.sampleSize.width;
+        if (hs.y < 0)
+            hs.y = 0;
+        if (hs.y > self.sampleSize.height)
+            hs.y = self.sampleSize.height;
+        
+        self.hotSpot = hs;
         [self setNeedsDisplay:YES];
     }
     
