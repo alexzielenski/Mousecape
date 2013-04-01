@@ -214,7 +214,7 @@
 		FAD5D28316D1781500DD4302 /* HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HD.png; sourceTree = "<group>"; };
 		FAD5D28416D1781500DD4302 /* HD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD@2x.png"; sourceTree = "<group>"; };
 		FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPreferences.h; sourceTree = "<group>"; };
-		FAFC2D0916DC0B2500EBB128 /* libToolPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libToolPods.a; path = Pods/build/Release/libToolPods.a; sourceTree = "<group>"; };
+		FAFC2D0916DC0B2500EBB128 /* libToolPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libToolPods.a; path = Pods/build/Release/libToolPods.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,8 +304,8 @@
 				FA9D05AD16D423D7000732AA /* Models */,
 				FA9D05AC16D423CD000732AA /* Views */,
 				FA9D05A916D4138A000732AA /* EditWindow.xib */,
-				FA9D05B416D42801000732AA /* EditCursor.xib */,
 				FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */,
+				FA9D05B416D42801000732AA /* EditCursor.xib */,
 				FA2022F016DAD36C00B74958 /* LovePreferences.xib */,
 				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
 				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,

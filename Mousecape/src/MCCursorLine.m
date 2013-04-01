@@ -25,6 +25,7 @@
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index;
 - (void)cursorView:(MCCursorView *)cv selected:(BOOL)selected;
 - (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index;
+- (NSUInteger)limitedItemCount;
 
 @end
 
@@ -32,11 +33,13 @@
 
 - (id)init {
     if ((self = [super init])) {
+        self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
         if (!self.textField) {
             NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
             self.textField = tf;
             self.textField.stringValue     = @"Unknown";
-            self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
+//            self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
             self.textField.bezeled         = NO;
             self.textField.drawsBackground = NO;
             self.textField.editable        = NO;
@@ -50,7 +53,6 @@
             self.imageView = im;
         }
         __weak MCCursorView *weakSelf = self;
-        
         
         RAC(self.imageView.shouldAnimate) = RACAble(self.parentLine.animationsEnabled);
         RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
@@ -139,6 +141,8 @@
 
 @implementation MCCursorLine
 - (void)_initialize {
+    self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
     self.animationsEnabled = YES;
     self.wellWidth = 64.0f;
     self.cursorViews = [NSMutableArray array];
@@ -146,7 +150,8 @@
     self.highlightColor = [NSColor colorWithDeviceRed:0.71 green:0.843 blue:1.0 alpha:1.0];
     self.selectedCursorIndices = [NSMutableIndexSet indexSet];
     self.selectionKeyMask = NSCommandKeyMask;
-
+    self.shouldLimitToBounds = YES;
+    
     __weak MCCursorLine *weakSelf = self;
     [RACAble(self.dataSource) subscribeNext:^(id x) {
         [weakSelf reloadData];
@@ -185,7 +190,11 @@
 
 - (void)reloadData {    
     NSUInteger itemCount = [self.dataSource numberOfCursorsInLine:self];
-
+    NSUInteger limitedItemCount = self.limitedItemCount;
+    
+    if (self.shouldLimitToBounds)
+        itemCount = MIN(itemCount, limitedItemCount);
+    
     while (self.cursorViews.count > itemCount) {
         if (self.cursorViews.count > itemCount) {
             [[self.cursorViews lastObject] removeFromSuperview];
@@ -210,6 +219,10 @@
     
 }
 
+- (NSUInteger)limitedItemCount {
+    return floor(self.enclosingScrollView.documentVisibleRect.size.width / self.wellWidth);
+}
+
 - (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index {
     if (self.cursorViews.count > index) {
         return self.cursorViews[index];
@@ -219,7 +232,7 @@
         return nil;
     
     self.cursorViews[index] = [[MCCursorView alloc] init];
-    return [self _dequeueCursorViewForIndex:index];
+    return self.cursorViews[index];
 }
 
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index {
