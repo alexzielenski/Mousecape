@@ -15,7 +15,6 @@
 @property (strong) MMAnimatingImageView *imageView;
 @property (weak)   MCCursorLine *parentLine;
 @property (assign, getter = isSelected) BOOL selected;
-@property (assign) BOOL layedOut;
 @end
 
 @interface MCCursorLine ()
@@ -52,41 +51,21 @@
         }
         __weak MCCursorView *weakSelf = self;
         
-        RACScheduler *backgroundScheduler = [RACScheduler scheduler];
         
-        RAC(self.imageView.shouldAnimate) = [RACAble(self.parentLine.animationsEnabled) deliverOn:backgroundScheduler];
-        RAC(self.textField.stringValue)   = [RACAble(self.cursor.prettyName) deliverOn:backgroundScheduler];
-        RAC(self.imageView.frameDuration) = [RACAble(self.cursor.frameDuration) deliverOn:backgroundScheduler];
-        RAC(self.imageView.frameCount)    = [RACAble(self.cursor.frameCount) deliverOn:backgroundScheduler];
-        RAC(self.imageView.image)         = [RACAble(self.cursor.imageWithAllReps) deliverOn:backgroundScheduler];
+        RAC(self.imageView.shouldAnimate) = RACAble(self.parentLine.animationsEnabled);
+        RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
+        RAC(self.imageView.frameDuration) = RACAble(self.cursor.frameDuration);
+        RAC(self.imageView.frameCount)    = RACAble(self.cursor.frameCount);
+        RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
         
-        
-        //!TODO: This makes shit lag?
         [RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
             [weakSelf.parentLine cursorView:weakSelf selected:selected.boolValue];
         }];
-        
-//        [self addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
 
-- (void)dealloc {
-//    [self removeObserver:self forKeyPath:@"selected"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"selected"]) {
-        [self.parentLine cursorView:self selected:self.isSelected];
-    }
-}
-
 - (void)viewDidMoveToWindow {
-    if (self.layedOut)
-        return;
-    
-    //!TODO: Do this a better way
-    self.layedOut = YES;
     self.imageView.frame = NSMakeRect(8.0f, 16.0f, 48.0f, 48.0f);
     self.textField.frame = NSMakeRect(0, 2.0f, 64.0f, 14.0f);
     
@@ -96,6 +75,12 @@
     [self addSubview:self.imageView];
     [self addSubview:self.textField];
     
+    [textField setFrame:NSMakeRect(0, 2, self.bounds.size.width, 14.0)];
+    [imageView setFrame:NSMakeRect(NSMidX(self.bounds) - NSMidX(imageView.bounds), NSMaxY(textField.frame), 48, 48)];
+    
+    
+    // auto layout causes issues with View-Based Table Views
+    /*
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[imageView(==48)]-(8)-|"
                                                                  options:0
                                                                  metrics:nil
@@ -108,6 +93,8 @@
                                                                  options:0
                                                                  metrics:nil
                                                                    views:NSDictionaryOfVariableBindings(imageView, textField)]];
+     */
+
 }
 
 - (void)drawRect:(NSRect)rect {
