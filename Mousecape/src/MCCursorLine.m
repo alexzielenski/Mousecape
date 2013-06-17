@@ -215,6 +215,7 @@
     }
     
     // resize us to fit
+
     self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.cursorViews.count * self.wellWidth, self.frame.size.height);
     
 }

@@ -334,12 +334,15 @@ static NSArray *librarySortDescriptors =  nil;
 #pragma mark - NSTableViewDelgate
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    __weak MCTableCellView *weakView = cellView;
     
     [cellView.cursorLine bind:@"animationsEnabled" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"MCAnimationsEnabled" options:nil];
-    [cellView rac_bind:@"applied" toObject:self withKeyPath:@"appliedLibrary" transform:^id(id value) {
-        return @(weakView.objectValue == value);
-    }];
+    RAC(cellView, applied) = [RACSignal combineLatest:@[
+                                                        RACAbleWithStart(cellView, objectValue),
+                                                        RACAbleWithStart(self.appliedLibrary)
+                                                        ]
+                                               reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
+                                                   return @(objectValue == appliedLib);
+                                               }];
     
     return cellView;
 }

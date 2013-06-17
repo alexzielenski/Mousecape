@@ -43,18 +43,20 @@
     __weak MCTableCellView *weakSelf = self;
     
     RAC(self.cursorLine.dataSource) = [RACSignal return:self];
-    
-    [self.appliedView rac_bind:@"hidden" toObject:self withNegatedKeyPath:@"applied"];
-    [[RACAble(self.applied) distinctUntilChanged] subscribeNext:^(id x) {
-        [weakSelf layout];
+    weakSelf.appliedView.hidden = !weakSelf.applied;
+
+    [RACAble(self.applied) subscribeNext:^(id x) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            weakSelf.appliedView.hidden = !weakSelf.applied;
+            [weakSelf layout];
+        });
     }];
 }
 
 - (void)layout {
-    [super layout];
-    
+    [super layout];    
     BOOL applied = self.applied;
-    
+
     if (!applied) {
         self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width), self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
     } else {
@@ -69,8 +71,8 @@
 
 - (MCCursor *)cursorLine:(MCCursorLine *)cursorLine cursorAtIndex:(NSUInteger)index {
     //!TODO: Sort somewhere else
-//    return [[[self.objectValue valueForKey:@"cursors"] allValues] objectAtIndex:index];
-    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
+    return [[[self.objectValue valueForKey:@"cursors"] allValues] objectAtIndex:index];
+//    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
 }
 
 @end
