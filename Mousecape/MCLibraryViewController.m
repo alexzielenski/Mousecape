@@ -336,13 +336,14 @@ static NSArray *librarySortDescriptors =  nil;
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     
     [cellView.cursorLine bind:@"animationsEnabled" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"MCAnimationsEnabled" options:nil];
-    RAC(cellView, applied) = [RACSignal combineLatest:@[
-                                                        RACAbleWithStart(cellView, objectValue),
-                                                        RACAbleWithStart(self.appliedLibrary)
-                                                        ]
-                                               reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
-                                                   return @(objectValue == appliedLib);
-                                               }];
+    if (![cellView rac_propertyForKeyPath:@"applied"])
+        RAC(cellView, applied) = [RACSignal combineLatest:@[
+                                                            RACAbleWithStart(cellView, objectValue),
+                                                            RACAble(self.appliedLibrary)
+                                                            ]
+                                                   reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
+                                                       return @(objectValue == appliedLib);
+                                                   }];
     
     return cellView;
 }
