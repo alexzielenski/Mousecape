@@ -123,17 +123,17 @@
         NSTableCellView *header = [tableView makeViewWithIdentifier:@"LibraryCell" owner:self];
         NSString *name = self.cursorLibrary.name;
         header.textField.stringValue = name ? name : @"NO CURSOR";
-        
+
         return header;
     }
     
     row--;
     
     NSTableCellView *cv = [tableView makeViewWithIdentifier:@"CursorCell" owner:self];
-    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] prettyName];
+//    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] prettyName];
     
-    [cv.textField unbind:@"value"];
-    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"prettyName" options:nil];
+//    [cv.textField unbind:@"value"];
+//    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"prettyName" options:nil];
     
     return cv;
 }
@@ -153,6 +153,14 @@
     if (row == 0)
         return 48.0;
     return 18.0;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    if (row == 0) {
+        return self.cursorLibrary;
+    }
+    
+    return self.sortedValues[row - 1];
 }
 
 @end

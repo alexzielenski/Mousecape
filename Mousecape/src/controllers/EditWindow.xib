@@ -86,15 +86,21 @@
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="28" name="value" keyPath="objectValue.name" id="89m-mg-4eW"/>
+                                                                            </connections>
                                                                         </textField>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="199">
                                                                             <rect key="frame" x="17" y="7" width="122" height="11"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                            <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Cape" id="200">
+                                                                            <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Author" id="200">
                                                                                 <font key="font" metaFont="miniSystem"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="28" name="value" keyPath="objectValue.author" id="is4-rx-B3e"/>
+                                                                            </connections>
                                                                         </textField>
                                                                     </subviews>
                                                                     <constraints>
@@ -121,6 +127,9 @@
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="188" name="value" keyPath="objectValue.prettyName" id="YVZ-jB-cP9"/>
+                                                                            </connections>
                                                                         </textField>
                                                                     </subviews>
                                                                     <constraints>
@@ -349,4 +358,43 @@
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
     </resources>
+    <classes>
+        <class className="MCEditCapeViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCapeViewController.h"/>
+        </class>
+        <class className="MCEditCursorViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="identifierField" candidateClass="NSComboBox"/>
+                <relationship kind="outlet" name="imageView" candidateClass="MCScaledImageView"/>
+                <relationship kind="outlet" name="sizeField" candidateClass="NSTextField"/>
+            </relationships>
+        </class>
+        <class className="MCEditListViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addCursor:"/>
+                <relationship kind="action" name="removeCursor:"/>
+                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+        <class className="MCEditWindowController" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditWindowController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="capeViewController" candidateClass="MCEditCapeViewController"/>
+                <relationship kind="outlet" name="cursorViewController" candidateClass="MCEditCursorViewController"/>
+                <relationship kind="outlet" name="listViewController" candidateClass="MCEditListViewController"/>
+                <relationship kind="outlet" name="splitView" candidateClass="NSSplitView"/>
+            </relationships>
+        </class>
+        <class className="MCScaledImageView" superclassName="NSView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCScaledImageView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
 </document>
