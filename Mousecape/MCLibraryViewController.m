@@ -172,6 +172,8 @@ static NSArray *librarySortDescriptors =  nil;
 }
 
 - (void)removeObjectFromLibrariesAtIndex:(NSUInteger)index {
+    if (self.libraries[index] == self.appliedLibrary)
+        self.appliedLibrary = nil;
     if (index < self.libraries.count)
         [self.libraries removeObjectAtIndex:index];
 }
@@ -336,14 +338,21 @@ static NSArray *librarySortDescriptors =  nil;
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     
     [cellView.cursorLine bind:@"animationsEnabled" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"MCAnimationsEnabled" options:nil];
-    if (![cellView rac_propertyForKeyPath:@"applied"])
-        RAC(cellView, applied) = [RACSignal combineLatest:@[
-                                                            RACAbleWithStart(cellView, objectValue),
-                                                            RACAble(self.appliedLibrary)
-                                                            ]
-                                                   reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
-                                                       return @(objectValue == appliedLib);
-                                                   }];
+
+    @weakify(self);
+
+    if (!cellView.appliedDisposable) {
+        RACDisposable *binding = [[RACSignal combineLatest:@[
+                                                             RACAble(cellView, objectValue),
+                                                             RACAble(self, appliedLibrary)
+                                                             ]
+                                                    reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
+                                                        @strongify(self);
+                                                        return @(objectValue == self.appliedLibrary);
+                                                    }] toProperty:@"applied" onObject:cellView];
+        cellView.appliedDisposable = binding;
+    }
+    cellView.applied = [self tableView:tableView objectValueForTableColumn:tableColumn row:row] == self.appliedLibrary;
     
     return cellView;
 }
