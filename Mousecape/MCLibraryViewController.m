@@ -15,7 +15,7 @@
 static NSArray *librarySortDescriptors =  nil;
 
 @interface MCLibraryViewController ()
-@property (readwrite, strong) NSMutableArray *libraries;
+@property (readwrite, strong) NSMutableOrderedSet *libraries;
 @property (copy) NSString *libraryPath;
 @property (strong) RACSignal *_appliedSignal;
 - (void)_init;
@@ -36,7 +36,7 @@ static NSArray *librarySortDescriptors =  nil;
 }
 
 - (void)_init {
-    self.libraries = [NSMutableArray array];
+    self.libraries = [NSMutableOrderedSet orderedSet];
     
     __weak MCLibraryViewController *weakSelf = self;
     [RACAble(self.appliedLibrary.name) subscribeNext:^(NSString *value) {
@@ -152,7 +152,8 @@ static NSArray *librarySortDescriptors =  nil;
         return;
     }
     
-    [self.libraries insertObject:library sortedUsingDescriptors:librarySortDescriptors];
+    [self.libraries addObject:library];
+    [self.libraries sortUsingDescriptors:librarySortDescriptors];
 }
 
 - (void)removeLibrary:(MCCursorLibrary *)library {
@@ -180,10 +181,10 @@ static NSArray *librarySortDescriptors =  nil;
 
 - (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-    NSArray *filtered = [self.libraries filteredArrayUsingPredicate:pred];
+    NSSet *filtered = [self.libraries.set filteredSetUsingPredicate:pred];
     
     if (filtered.count > 0)
-        return filtered[0];
+        return filtered.anyObject;
     
     return nil;
 }

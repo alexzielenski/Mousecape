@@ -20,7 +20,7 @@ static const NSString *MCCursorDictionaryPointsHighKey      = @"PointsHigh";
 static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations";
 
 @interface MCCursor ()
-@property (readwrite, strong) NSMutableArray *representations;
+@property (readwrite, strong) NSMutableOrderedSet *representations;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
@@ -55,7 +55,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     cursor.frameDuration   = self.frameDuration;
     cursor.size            = self.size;
     //!TODO: Decide if we want to copy these images
-    cursor.representations = self.representations.copy;
+    cursor.representations = self.representations.mutableCopy;
     cursor.hotSpot         = self.hotSpot;
     
     return cursor;
@@ -81,7 +81,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
             self.size          =  NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
 //            self.repeatCount   = repeatCount.unsignedIntegerValue;
             
-            NSMutableArray *bitmaps = [NSMutableArray array];
+            NSMutableOrderedSet *bitmaps = [NSMutableOrderedSet orderedSet];
             
             for (NSData *data in reps) {
                 // data in v2.0 documents are saved as PNGs
@@ -104,7 +104,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    [image addRepresentations:self.representations];
+    [image addRepresentations:self.representations.array];
     
     image.matchesOnMultipleResolution  = YES;
         

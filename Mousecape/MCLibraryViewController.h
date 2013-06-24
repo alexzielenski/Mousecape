@@ -36,6 +36,6 @@
 @end
 
 @interface MCLibraryViewController (Properties)
-@property (readonly, strong) NSArray *libraries;
+@property (readonly, strong) NSOrderedSet *libraries;
 @end
 

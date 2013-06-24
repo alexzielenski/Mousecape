@@ -734,6 +734,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F5AB9DB79C764C448C9FE807 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
@@ -752,6 +753,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F5AB9DB79C764C448C9FE807 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";

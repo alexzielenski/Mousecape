@@ -14,5 +14,5 @@
 @property (strong) IBOutlet NSImageView *appliedView;
 @property (strong) IBOutlet NSImageView *hdView;
 @property (assign, getter = isApplied) BOOL applied;
-@property (strong) RACDisposable *appliedDisposable;
+@property (weak) RACDisposable *appliedDisposable;
 @end

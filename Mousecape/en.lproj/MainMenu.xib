@@ -481,7 +481,7 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="744" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="nW7-AK-7vO">
@@ -614,9 +614,6 @@ CA
                                     </subviews>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="550" id="1019"/>
-                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="538">
                                     <rect key="frame" x="-100" y="-100" width="540" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -633,9 +630,6 @@ CA
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="630">
                                         <rect key="frame" x="17" y="443" width="146" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="1010"/>
-                                        </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="No Cursor Selected" id="631">
                                             <font key="font" metaFont="systemBold"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -645,6 +639,9 @@ CA
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="638">
                                         <rect key="frame" x="20" y="418" width="55" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="49" id="Hay-c5-iCj"/>
+                                        </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Author:" id="639">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -671,9 +668,6 @@ CA
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="979">
                                         <rect key="frame" x="81" y="418" width="82" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="76" id="993"/>
-                                        </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="980">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -691,25 +685,22 @@ CA
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="630" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="20" symbolic="YES" id="632"/>
-                                    <constraint firstItem="630" firstAttribute="top" secondItem="602" secondAttribute="top" constant="20" symbolic="YES" id="633"/>
-                                    <constraint firstItem="638" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="23" id="640"/>
-                                    <constraint firstItem="638" firstAttribute="top" secondItem="630" secondAttribute="bottom" constant="8" symbolic="YES" id="641"/>
-                                    <constraint firstItem="642" firstAttribute="leading" secondItem="638" secondAttribute="leading" id="644"/>
-                                    <constraint firstItem="642" firstAttribute="top" secondItem="638" secondAttribute="bottom" constant="8" symbolic="YES" id="645"/>
-                                    <constraint firstItem="642" firstAttribute="trailing" secondItem="638" secondAttribute="trailing" id="646"/>
-                                    <constraint firstItem="662" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="20" symbolic="YES" id="664"/>
-                                    <constraint firstItem="662" firstAttribute="top" secondItem="642" secondAttribute="bottom" constant="8" symbolic="YES" id="665"/>
-                                    <constraint firstItem="979" firstAttribute="baseline" secondItem="638" secondAttribute="baseline" id="982"/>
-                                    <constraint firstItem="985" firstAttribute="baseline" secondItem="642" secondAttribute="baseline" id="988"/>
-                                    <constraint firstItem="985" firstAttribute="leading" secondItem="979" secondAttribute="leading" id="992"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="1017"/>
-                                    <constraint firstAttribute="trailing" secondItem="985" secondAttribute="trailing" constant="20" symbolic="YES" id="1025"/>
-                                    <constraint firstAttribute="trailing" secondItem="662" secondAttribute="trailing" constant="20" symbolic="YES" id="1028"/>
-                                    <constraint firstAttribute="trailing" secondItem="979" secondAttribute="trailing" constant="20" symbolic="YES" id="1029"/>
-                                    <constraint firstAttribute="trailing" secondItem="630" secondAttribute="trailing" constant="20" symbolic="YES" id="1030"/>
-                                    <constraint firstAttribute="trailing" secondItem="979" secondAttribute="trailing" constant="20" symbolic="YES" id="1032"/>
-                                    <constraint firstItem="985" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="84" id="1033"/>
+                                    <constraint firstItem="979" firstAttribute="leading" secondItem="985" secondAttribute="leading" id="5ev-br-8WJ"/>
+                                    <constraint firstItem="638" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="23" id="B8g-9g-mKp"/>
+                                    <constraint firstItem="642" firstAttribute="top" secondItem="638" secondAttribute="bottom" constant="8" symbolic="YES" id="CBk-9r-1sT"/>
+                                    <constraint firstItem="638" firstAttribute="top" secondItem="630" secondAttribute="bottom" constant="8" symbolic="YES" id="F7k-do-ryF"/>
+                                    <constraint firstItem="642" firstAttribute="leading" secondItem="638" secondAttribute="leading" id="O1X-Ak-eeu"/>
+                                    <constraint firstItem="979" firstAttribute="leading" secondItem="638" secondAttribute="trailing" constant="12" id="Sca-WW-s1t"/>
+                                    <constraint firstItem="642" firstAttribute="baseline" secondItem="985" secondAttribute="baseline" id="Wzl-07-4uA"/>
+                                    <constraint firstItem="630" firstAttribute="leading" secondItem="662" secondAttribute="leading" id="a8r-O6-5oM"/>
+                                    <constraint firstAttribute="trailing" secondItem="630" secondAttribute="trailing" constant="20" symbolic="YES" id="aVE-jB-TYx"/>
+                                    <constraint firstItem="662" firstAttribute="trailing" secondItem="985" secondAttribute="trailing" id="nTz-xN-1eZ"/>
+                                    <constraint firstItem="979" firstAttribute="baseline" secondItem="638" secondAttribute="baseline" id="rwj-Ed-gzJ"/>
+                                    <constraint firstItem="630" firstAttribute="top" secondItem="602" secondAttribute="top" constant="20" symbolic="YES" id="t1b-UV-8pA"/>
+                                    <constraint firstItem="979" firstAttribute="trailing" secondItem="985" secondAttribute="trailing" id="uTP-wu-HLf"/>
+                                    <constraint firstItem="630" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="20" symbolic="YES" id="xRa-zr-mdZ"/>
+                                    <constraint firstItem="662" firstAttribute="top" secondItem="642" secondAttribute="bottom" constant="8" symbolic="YES" id="yG1-St-mCR"/>
+                                    <constraint firstItem="979" firstAttribute="trailing" secondItem="630" secondAttribute="trailing" id="zgu-vU-p4H"/>
                                 </constraints>
                             </customView>
                         </subviews>
@@ -720,10 +711,10 @@ CA
                     </splitView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1000" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="1002"/>
-                    <constraint firstItem="1000" firstAttribute="top" secondItem="372" secondAttribute="top" id="1003"/>
-                    <constraint firstItem="1000" firstAttribute="bottom" secondItem="372" secondAttribute="bottom" id="1004"/>
-                    <constraint firstItem="1000" firstAttribute="trailing" secondItem="372" secondAttribute="trailing" id="1015"/>
+                    <constraint firstItem="1000" firstAttribute="top" secondItem="372" secondAttribute="top" id="6dD-Id-CuA"/>
+                    <constraint firstItem="1000" firstAttribute="bottom" secondItem="372" secondAttribute="bottom" id="FTb-gm-gEb"/>
+                    <constraint firstItem="1000" firstAttribute="trailing" secondItem="372" secondAttribute="trailing" id="kwX-hc-G9P"/>
+                    <constraint firstItem="1000" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="v8I-1d-xUR"/>
                 </constraints>
             </view>
         </window>
@@ -820,4 +811,88 @@ CA
         <image name="HD" width="30" height="18"/>
         <image name="applied" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="DTScrollView" superclassName="RBLScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DTScrollView.h"/>
+        </class>
+        <class className="MCAppDelegate" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCAppDelegate.h"/>
+            <relationships>
+                <relationship kind="action" name="doubleClick:"/>
+                <relationship kind="action" name="editCursor:"/>
+                <relationship kind="action" name="showPreferences:" candidateClass="NSMenuItem"/>
+                <relationship kind="outlet" name="accessory" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="detailController" candidateClass="MCDetailVewController"/>
+                <relationship kind="outlet" name="libraryController" candidateClass="MCLibraryViewController"/>
+                <relationship kind="outlet" name="window" candidateClass="NSWindow"/>
+            </relationships>
+        </class>
+        <class className="MCCursorLine" superclassName="NSView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCCursorLine.h"/>
+        </class>
+        <class className="MCDetailVewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCDetailVewController.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="restore:"/>
+                <relationship kind="action" name="update:"/>
+                <relationship kind="outlet" name="applyButton" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="authorLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="updateButton" candidateClass="NSButton"/>
+                <relationship kind="outlet" name="versionLabel" candidateClass="NSTextField"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="createSidekick:"/>
+                <relationship kind="action" name="importCape:"/>
+                <relationship kind="action" name="importMightyMouse:"/>
+                <relationship kind="action" name="removeCape:"/>
+                <relationship kind="outlet" name="appliedCursorField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+        <class className="MCTableCellView" superclassName="NSTableCellView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCTableCellView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="appliedView" candidateClass="NSImageView"/>
+                <relationship kind="outlet" name="cursorLine" candidateClass="MCCursorLine"/>
+                <relationship kind="outlet" name="hdView" candidateClass="NSImageView"/>
+            </relationships>
+        </class>
+        <class className="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="browseDocumentVersions:"/>
+                <relationship kind="action" name="duplicateDocument:"/>
+                <relationship kind="action" name="lockDocument:"/>
+                <relationship kind="action" name="moveDocument:"/>
+                <relationship kind="action" name="moveDocumentToUbiquityContainer:"/>
+                <relationship kind="action" name="printDocument:"/>
+                <relationship kind="action" name="renameDocument:"/>
+                <relationship kind="action" name="revertDocumentToSaved:"/>
+                <relationship kind="action" name="runPageLayout:"/>
+                <relationship kind="action" name="saveDocument:"/>
+                <relationship kind="action" name="saveDocumentAs:"/>
+                <relationship kind="action" name="saveDocumentTo:"/>
+                <relationship kind="action" name="saveDocumentToPDF:"/>
+                <relationship kind="action" name="unlockDocument:"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NSTextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSTextView.h"/>
+            <relationships>
+                <relationship kind="action" name="orderFrontSharingServicePicker:"/>
+                <relationship kind="action" name="toggleQuickLookPreviewPanel:"/>
+            </relationships>
+        </class>
+        <class className="RBLScrollView" superclassName="NSScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RBLScrollView.h"/>
+        </class>
+    </classes>
 </document>
