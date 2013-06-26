@@ -23,6 +23,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+## MASPreferences
+
+# MASPreferences
+
+This component is intended as a replacement for SS_PrefsController by Matt Legend Gemmell and Selectable Toolbar by Brandon Walkin. It is designed to use NSViewController subclasses for preference panes.
+
+# How to use
+
+You can find a Demo project at [MASPreferencesDemo](https://github.com/shpakovski/MASPreferencesDemo).
+
+# License
+
+MASPreferences is licensed under the BSD license
+
 ## ReactiveCocoa
 
 **Copyright (c) 2012 - 2013, GitHub, Inc.**

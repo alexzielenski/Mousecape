@@ -9,11 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "MCCursorDocument.h"
 #import "MCLibraryViewController.h"
-#import "MCDetailVewController.h"
 
 @interface MCLibraryWindowController : NSWindowController
 @property (assign) IBOutlet MCLibraryViewController *libraryController;
-@property (assign) IBOutlet MCDetailVewController *detailController;
 @property (assign) IBOutlet NSTextField *accessory;
 @property (weak) MCCursorDocument *currentCursor;
 @property (weak) MCCursorDocument *appliedCursor;

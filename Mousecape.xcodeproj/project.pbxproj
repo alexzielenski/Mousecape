@@ -37,7 +37,6 @@
 		FA3EC58016C9D42700F66CD5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */; };
 		FA3EC58216C9EFAE00F66CD5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */; };
 		FA3EC58716C9FA1900F66CD5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */; };
-		FA9221F216C91930004E382D /* MCDetailVewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9221F116C91930004E382D /* MCDetailVewController.m */; };
 		FA92221316C9CB20004E382D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA92221216C9CB20004E382D /* Foundation.framework */; };
 		FA92221616C9CB20004E382D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA92221516C9CB20004E382D /* main.m */; };
 		FA92221A16C9CB20004E382D /* mousecloak.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA92221916C9CB20004E382D /* mousecloak.1 */; };
@@ -150,8 +149,6 @@
 		FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FA3EC58816CB08EF00F66CD5 /* NSCursor_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCursor_Private.h; sourceTree = "<group>"; };
-		FA9221F016C91930004E382D /* MCDetailVewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailVewController.h; path = src/controllers/MCDetailVewController.h; sourceTree = "<group>"; };
-		FA9221F116C91930004E382D /* MCDetailVewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCDetailVewController.m; path = src/controllers/MCDetailVewController.m; sourceTree = "<group>"; };
 		FA92221016C9CB20004E382D /* mousecloak */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mousecloak; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA92221216C9CB20004E382D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA92221516C9CB20004E382D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -457,8 +454,6 @@
 				FAD39852177A2FA400DEFF87 /* MCLibraryWindowController.m */,
 				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
 				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
-				FA9221F016C91930004E382D /* MCDetailVewController.h */,
-				FA9221F116C91930004E382D /* MCDetailVewController.m */,
 				FA2C88EF16CC92C20036CCC2 /* MCCloakController.h */,
 				FA2C88F016CC92C20036CCC2 /* MCCloakController.m */,
 			);
@@ -588,7 +583,6 @@
 				FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */,
 				FAD39858177A449100DEFF87 /* MCEditWindowController.m in Sources */,
 				FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */,
-				FA9221F216C91930004E382D /* MCDetailVewController.m in Sources */,
 				FA2C88DE16CC87680036CCC2 /* MCGeneralPreferencesViewController.m in Sources */,
 				FA2C88F116CC92C30036CCC2 /* MCCloakController.m in Sources */,
 				FAD39853177A2FA400DEFF87 /* MCLibraryWindowController.m in Sources */,

@@ -39,7 +39,6 @@
     [super windowDidLoad];
 
     self.libraryController.windowController = self;
-    self.detailController.windowController  = self;
     
     [self _setupFacade];
     
@@ -95,9 +94,6 @@
         [[loadSignal deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{
             
             @strongify(self);
-            //!TODO: Do this somewhere else
-            [self.libraryController.tableView reloadData];
-            
             [self.window.contentView setNeedsLayout:YES];
             
             NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
@@ -111,10 +107,8 @@
     
     [loadCommand execute:self];
     
-    [RACAble(self.appliedCursor.library.name) subscribeNext:^(NSString *value) {
-        @strongify(self);
-        NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
-        self.accessory.stringValue = [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
+    RAC(self.accessory.stringValue) = [RACAble(self.appliedCursor.library.name) map:^id(NSString *value) {
+        return [NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape")stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
     }];
 }
 
