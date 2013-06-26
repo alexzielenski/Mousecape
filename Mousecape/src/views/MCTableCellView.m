@@ -43,7 +43,11 @@
 - (void)viewDidMoveToWindow {
     @weakify(self);
     
-    RAC(self.cursorLine.dataSource) = [RACSignal return:self];
+    [RACAbleWithStart(self.cursorLine) subscribeNext:^(MCCursorLine *cursorLine) {
+        @strongify(self);
+        cursorLine.dataSource = self;
+    }];
+    
     [self.textField rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
     [[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
         @strongify(self);

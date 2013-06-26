@@ -29,8 +29,7 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
          }
      ];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleDocumentNeedWindowNotification:) name:@"MCDocumentNeedWindowNotification" object:nil];
-    
-    
+
 #ifdef DEBUG
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
@@ -45,6 +44,14 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
     if (![filename.pathExtension.lowercaseString isEqualToString:@"cape"])
         return NO;
+    
+    NSError *err = nil;
+    MCCursorDocument *document = [[MCCursorDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filename] ofType:@"cape" error:&err];
+    if (err)
+        NSRunAlertPanel(@"Could not read cursor file.", err.localizedDescription ? err.localizedDescription : @"These are not the droids you are looking for", @"Crap", nil,  nil);
+    
+    [document makeWindowControllers];
+    
     
     // add to library
 //    NSError *err = [self.libraryController addToLibrary:filename];

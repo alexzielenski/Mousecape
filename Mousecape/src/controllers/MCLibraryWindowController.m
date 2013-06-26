@@ -9,14 +9,13 @@
 #import "MCLibraryWindowController.h"
 #import "NSFileManager+DirectoryLocations.h"
 #import "MCCloakController.h"
-#import "MCEditWindowController.h"
 
 @interface MCLibraryWindowController ()
+@property (copy) NSURL *libraryURL;
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *documents;
-//@property (strong) MCEditWindowController *editWindowController;
 @property (strong) NSArray *librarySortDescriptors;
 - (void)composeAccessory;
-
+- (void)_setupFacade;
 @end
 
 
@@ -42,23 +41,11 @@
     self.libraryController.windowController = self;
     self.detailController.windowController  = self;
     
-    NSString *appSupport = [[NSFileManager defaultManager] applicationSupportDirectory];
-    NSString *capesPath  = [appSupport stringByAppendingPathComponent:@"capes"];
-    
-    [[NSFileManager defaultManager] createDirectoryAtPath:capesPath
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:nil];
-    [self.libraryController loadLibraryAtPath:capesPath];
-
-    [self.window.contentView setNeedsLayout:YES];
-
-    
-    NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
-    MCCursorDocument *applied   = [self.libraryController libraryWithIdentifier:appliedIdentifier];
-    self.appliedCursor = applied;
+    [self _setupFacade];
     
     @weakify(self);
+    
+    //!TODO: Release the observers in dealloc
     [[NSNotificationCenter defaultCenter] addObserverForName:MCCloakControllerDidApplyCursorNotification
                                                       object:nil
                                                        queue:nil
@@ -82,6 +69,103 @@
                                                   }];
     
     [self composeAccessory];
+}
+
+- (void)_setupFacade {
+    @weakify(self);
+    
+    /*
+     This code asynchronously loads the library and updates the interface on the main thread when completed.
+     */
+    RACCommand *loadCommand = [RACCommand command];
+    [[loadCommand addSignalBlock:^RACSignal *(id sender) {
+        @strongify(self);
+        NSString *appSupport = [[NSFileManager defaultManager] applicationSupportDirectory];
+        NSString *capesPath  = [appSupport stringByAppendingPathComponent:@"capes"];
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:capesPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:nil];
+        
+        // -loadLibraryAtURL: sends updates on how far it is in loading the library, we want the completed signal
+        return [self loadLibraryAtURL:[NSURL fileURLWithPath:capesPath]];
+        
+    }] subscribeNext:^(RACSignal *loadSignal) {
+        [[loadSignal deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{
+            
+            @strongify(self);
+            //!TODO: Do this somewhere else
+            [self.libraryController.tableView reloadData];
+            
+            [self.window.contentView setNeedsLayout:YES];
+            
+            NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
+            MCCursorDocument *applied   = [self libraryWithIdentifier:appliedIdentifier];
+            self.appliedCursor = applied;
+            
+            // Set original selection
+            self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow];
+        }];
+    }];
+    
+    [loadCommand execute:self];
+    
+    [RACAble(self.appliedCursor.library.name) subscribeNext:^(NSString *value) {
+        @strongify(self);
+        NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
+        self.accessory.stringValue = [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
+    }];
+}
+
+- (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"library.identifier == %@", identifier];
+    NSSet *filtered = [self.documents.set filteredSetUsingPredicate:pred];
+
+    if (filtered.count > 0)
+        return filtered.anyObject;
+    
+    return nil;
+}
+
+- (RACReplaySubject *)loadLibraryAtURL:(NSURL *)url {
+    RACReplaySubject *subject = [RACReplaySubject subject];
+    
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        @strongify(self);
+        self.libraryURL = url;
+    
+        NSFileManager *manager = [NSFileManager defaultManager];
+        BOOL isDir;
+        BOOL exists = [manager fileExistsAtPath:url.path isDirectory:&isDir];
+        
+        if (!exists || !isDir) {
+            NSLog(@"Invalid library path");
+            return;
+        }
+        
+        NSArray *contents = [manager contentsOfDirectoryAtURL:url
+                                   includingPropertiesForKeys:nil
+                                                      options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                                                        error:nil];
+        for (NSURL *url in contents) {
+            if (![url.pathExtension.lowercaseString isEqualToString:@"cape"])
+                continue;
+            MCCursorDocument *doc = [[MCCursorDocument alloc] initForURL:url
+                                                       withContentsOfURL:url
+                                                                  ofType:@"cape"
+                                                                   error:nil];
+            
+            // Make the document send the notification where we will add it
+            [doc makeWindowControllers];
+            [subject sendNext:doc];
+        }
+        
+        [subject sendCompleted];
+    });
+    
+    return subject;
 }
 
 - (void)composeAccessory {
@@ -115,12 +199,26 @@
 - (void)addDocument:(MCCursorDocument *)doc {
     if ([self.documents containsObject:doc])
         return;
+    if ([self libraryWithIdentifier:doc.library.identifier])
+        return;
+    
+    if (!doc.fileURL) {
+        doc.fileURL = [[self.libraryURL URLByAppendingPathComponent:doc.library.identifier] URLByAppendingPathExtension:@"cape"];
+        [doc saveDocument:self];
+    } else if (![[doc.fileURL URLByDeletingLastPathComponent].path isEqualToString:self.libraryURL.path]) {
+        // If we are importing a cape, save it to the library and set that document to the curren tone
+        [doc saveToURL:[self.libraryURL URLByAppendingPathComponent:doc.fileURL.lastPathComponent] ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
+    }
     
     [self.documents addObject:doc];
-//    [doc addWindowController:self];
+    [doc addWindowController:self];
     [self.documents sortUsingDescriptors:self.librarySortDescriptors];
     
-    [self.libraryController.tableView reloadData];
+    @weakify(self);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
+        [self.libraryController.tableView reloadData];
+    });
 }
 
 - (void)removeDocument:(MCCursorDocument *)document {
@@ -132,7 +230,7 @@
 }
 
 - (MCCursorDocument *)document {
-    return nil;
+    return self.currentCursor;
 }
 
 - (void)capeAction:(MCCursorDocument *)cape {    
@@ -143,31 +241,16 @@
     BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
     
     if (shouldApply) {
-        [self applyCape:cape];
+        [cape apply:self];
     } else {
-        [self editCape:cape];
+        [cape edit:self];
     }
 }
 
-- (void)applyCape:(MCCursorDocument *)cape {
-    if (!cape)
-        return;
-    
+- (IBAction)restoreDefaults:(id)sender {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[MCCloakController sharedCloakController] applyCape:cape];
+        [[MCCloakController sharedCloakController] restoreDefaults];
     });
-}
-
-- (void)editCape:(MCCursorDocument *)cape {
-    if (!cape)
-        return;
-    
-    if (!cape.editWindowController)
-        cape.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
-    
-    [cape addWindowController:cape.editWindowController];
-    [[NSDocumentController sharedDocumentController] addDocument:cape];
-    [cape showWindows];
 }
 
 #pragma mark - NSWindowDelegate

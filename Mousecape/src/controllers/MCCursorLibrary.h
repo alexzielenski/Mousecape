@@ -22,10 +22,10 @@
 + (MCCursorLibrary *)cursorLibraryWithDictionary:(NSDictionary *)dictionary;
 + (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)cursors;
 
-- (id)initWithContentsOfFile:(NSString *)path;
-- (id)initWithContentsOfURL:(NSURL *)URL;
-- (id)initWithDictionary:(NSDictionary *)dictionary;
-- (id)initWithCursors:(NSDictionary *)cursors;
+- (instancetype)initWithContentsOfFile:(NSString *)path;
+- (instancetype)initWithContentsOfURL:(NSURL *)URL;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithCursors:(NSDictionary *)cursors;
 
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
 
