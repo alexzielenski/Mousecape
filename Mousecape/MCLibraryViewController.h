@@ -16,23 +16,7 @@
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) MCLibraryWindowController *windowController;
 
-// accessory
-@property (weak) IBOutlet NSTextField *appliedCursorField;
-
-- (void)loadLibraryAtPath:(NSString *)path;
-
-- (NSError *)addToLibrary:(NSString *)path;
-- (NSError *)removeFromLibrary:(MCCursorDocument *)library;
-
-- (void)addLibrary:(MCCursorDocument *)library;
-- (void)removeLibrary:(MCCursorDocument *)library;
-
-- (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier;
-
-- (IBAction)createSidekick:(id)sender;
-- (IBAction)removeCape:(id)sender;
-- (IBAction)importMightyMouse:(id)sender;
-- (IBAction)importCape:(id)sender;
 - (IBAction)doubleClick:(id)sender;
+- (IBAction)contextMenu:(NSMenuItem *)sender;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "MCCursorDocument.h"
+#import "MCCloakController.h"
+#import "MCEditWindowController.h"
 
 @interface MCCursorDocument ()
 - (void)startObservingLibrary:(MCCursorLibrary *)library;
@@ -35,6 +37,7 @@ static void *MCCursorDocumentContext;
             [self startObservingLibrary:x.lastObject];
         }];
         
+        self.library = [[MCCursorLibrary alloc] init];
     }
     
     return self;
@@ -76,24 +79,10 @@ static void *MCCursorDocumentContext;
 }
 
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError {
-    // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-    
-    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-    }
-    
     return [self.library writeToFile:absoluteURL.path atomically:NO];
 }
 
-- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {
-    // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-    // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-    // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-    }
-        
+- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {        
     [self.undoManager disableUndoRegistration];
     self.library = [[MCCursorLibrary alloc] initWithContentsOfURL:absoluteURL];
     [self.undoManager enableUndoRegistration];
@@ -115,6 +104,35 @@ static void *MCCursorDocumentContext;
 
 - (NSString *)displayName {
     return self.library.name;
+}
+
+- (NSDocument *)duplicateAndReturnError:(NSError *__autoreleasing *)outError {
+    MCCursorDocument *doc = [[MCCursorDocument alloc] initWithType:@"cape" error:nil];
+    doc.library = [self.library copy];
+    doc.library.identifier = [doc.library.identifier stringByAppendingFormat:@".%f", [NSDate timeIntervalSinceReferenceDate]];
+    
+    // register the document
+    [[NSDocumentController sharedDocumentController] addDocument:self];
+    [doc makeWindowControllers];
+    
+    *outError = nil;
+    return doc;
+}
+
+#pragma mark - Actions
+
+- (void)apply:(id)sender {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[MCCloakController sharedCloakController] applyCape:self];
+    });
+}
+
+- (void)edit:(id)sender {
+    if (!self.editWindowController)
+        self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
+    
+    [self addWindowController:self.editWindowController];
+    [self showWindows];
 }
 
 #pragma mark - Wrapper

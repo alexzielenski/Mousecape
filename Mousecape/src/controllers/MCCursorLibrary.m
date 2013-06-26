@@ -56,17 +56,17 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return [[MCCursorLibrary alloc] initWithCursors:dictionary];
 }
 
-- (id)initWithContentsOfFile:(NSString *)path {
+- (instancetype)initWithContentsOfFile:(NSString *)path {
     return [self initWithContentsOfURL:[NSURL fileURLWithPath:path]];
 }
 
-- (id)initWithContentsOfURL:(NSURL *)URL {    
+- (instancetype)initWithContentsOfURL:(NSURL *)URL {
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfURL:URL];
     return [self initWithDictionary:dictionary];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary {
-    if ((self = [super init])) {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+    if ((self = [self init])) {
         self.cursors = [NSMutableDictionary dictionary];
         if (![self _readFromDictionary:dictionary]) {
             return nil;
@@ -75,9 +75,22 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return self;
 }
 
-- (id)initWithCursors:(NSDictionary *)cursors {
-    if ((self = [super init])) {
+- (instancetype)initWithCursors:(NSDictionary *)cursors {
+    if ((self = [self init])) {
         self.cursors = cursors.mutableCopy;
+    }
+    
+    return self;
+}
+
+- (instancetype)init {
+    if ((self = [super init])) {
+        self.name = @"Unnamed";
+        self.author = NSUserName();
+        self.hiDPI = NO;
+        self.inCloud = NO;
+        self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
+        self.version = @1.0;
     }
     
     return self;
@@ -104,8 +117,10 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 }
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary {
-    if (!dictionary)
+    if (!dictionary || !dictionary.count) {
+        NSLog(@"cannot make library from empty dicitonary");
         return NO;
+    }
     
     NSNumber *minimumVersion  = dictionary[MCCursorDictionaryMinimumVersionKey];
     NSNumber *version         = dictionary[MCCursorDictionaryVersionKey];
@@ -124,8 +139,10 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     self.hiDPI      = hiDPI.boolValue;
     self.inCloud    = cloud.boolValue;
     
-    if (!self.identifier)
+    if (!self.identifier) {
+        NSLog(@"cannot make library from dictionary with no identifier");
         return NO;
+    }
     
     CGFloat doubleVersion = version.doubleValue;
     
@@ -134,9 +151,6 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     [self.cursors removeAllObjects];
     [self addCursorsFromDictionary:cursorDicts ofVersion:doubleVersion];
-    
-    if (self.cursors.count == 0)
-        return NO;
     
     return YES;
 }

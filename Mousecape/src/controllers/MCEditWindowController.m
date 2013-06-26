@@ -97,10 +97,6 @@
 
 #pragma mark - NSWindowDelegate
 
-- (void)windowWillClose:(NSNotification *)notification {
-//    [self.document removeWindowController:self];
-}
-
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
     return self.document.undoManager;
 }
