@@ -13,5 +13,6 @@ return _sharedObject; \
 
     #import <Cocoa/Cocoa.h>
     #import "MCPreferences.h"
-
+    #import <ReactiveCocoa.h>
+    #import <EXTScope.h>
 #endif

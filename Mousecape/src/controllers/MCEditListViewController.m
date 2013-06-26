@@ -39,35 +39,26 @@
     return self;
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"cursorLibrary"];
-}
-
-- (NSUndoManager *)undoManager {
-    return self.view.window.undoManager;
-}
-
 - (void)_commonInit {
-    [self addObserver:self forKeyPath:@"cursorLibrary" options:NSKeyValueObservingOptionNew context:nil];
     [self.tableView reloadData];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"cursorLibrary"]) {
-        static NSArray *sortDescriptors = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            sortDescriptors = @[
-                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {return [obj1 compare:obj2 options:NSNumericSearch];}],
-                                [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES selector:@selector(caseInsensitiveCompare:)]
-                                ];
-        });
+    
+    @weakify(self);
+    [[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+        @strongify(self);
+        if (!self.tableView.sortDescriptors.count)
+            [self.tableView setSortDescriptors:@[
+                                                 [NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+                                                        return [obj1 compare:obj2 options:NSNumericSearch | NSCaseInsensitiveSearch];
+                                                    }],
+                                                 ]];
+        
         // get new keys & sort em
-        self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:sortDescriptors];
-    }
-    [self.tableView reloadData];
-    self.selectedObject = self.cursorLibrary;
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
+        [self.tableView reloadData];
+        
+        self.selectedObject = self.cursorLibrary;
+        [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+    }];
 }
 
 - (void)reloadCursor:(MCCursor *)cursor {
@@ -80,7 +71,14 @@
 #pragma mark - UI
 
 - (IBAction)addCursor:(id)sender {
-    NSLog(@"add");
+    MCCursor *cursor = [[MCCursor alloc] init];
+    [self.cursorLibrary addCursor:cursor forIdentifier:[NSString stringWithFormat:@"Cursor %lu", self.cursorLibrary.cursors.count + 1]];
+    
+    self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
+    [self.tableView reloadData];
+    
+    self.selectedObject = cursor;
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.sortedValues indexOfObject:cursor] + 1] byExtendingSelection:NO];
 }
 
 - (IBAction)removeCursor:(id)sender {
@@ -108,7 +106,7 @@
 
 #pragma mark - NSTableViewDataSource
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {    
     return self.cursorLibrary.cursors.count + 1;
 }
 
@@ -125,20 +123,11 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (row == 0) {
         NSTableCellView *header = [tableView makeViewWithIdentifier:@"LibraryCell" owner:self];
-        NSString *name = self.cursorLibrary.name;
-        header.textField.stringValue = name ? name : @"NO CURSOR";
-        
         return header;
     }
     
-    row--;
-    
+
     NSTableCellView *cv = [tableView makeViewWithIdentifier:@"CursorCell" owner:self];
-    cv.textField.stringValue = [[self.sortedValues objectAtIndex:row] prettyName];
-    
-    [cv.textField unbind:@"value"];
-    [cv.textField bind:@"value" toObject:self.sortedValues[row] withKeyPath:@"prettyName" options:nil];
-    
     return cv;
 }
 
@@ -157,6 +146,14 @@
     if (row == 0)
         return 48.0;
     return 18.0;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    if (row == 0) {
+        return self.cursorLibrary;
+    }
+    
+    return self.sortedValues[--row];
 }
 
 @end

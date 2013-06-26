@@ -7,6 +7,7 @@
 //
 
 #import "MCTableCellView.h"
+#import "MCCursorDocument.h"
 
 @interface MCTableCellView ()
 - (void)_initialize;
@@ -14,8 +15,6 @@
 
 @implementation MCTableCellView
 - (void)_initialize {
-    [self addObserver:self forKeyPath:@"objectValue" options:NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:@"cursorLine" options:NSKeyValueObservingOptionOld context:nil];
 }
 
 - (id)init {
@@ -41,54 +40,43 @@
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"objectValue"]) {
-        id oldValue = [change valueForKey:NSKeyValueChangeOldKey];
-        if (oldValue && ![oldValue isKindOfClass:[NSNull class]])
-            [oldValue removeObserver:self forKeyPath:@"applied"];
-        
-        [self.objectValue addObserver:self forKeyPath:@"applied" options:NSKeyValueObservingOptionOld context:nil];        
-        [self.cursorLine reloadData];
-        
-    } else if ([keyPath isEqualToString:@"cursorLine"]) {
-        MCCursorLine *line = [change valueForKey:NSKeyValueChangeOldKey];
-        if (line && ![line isKindOfClass:[NSNull class]] && line.dataSource == self)
-            line.dataSource = nil;
-        
-        self.cursorLine.dataSource = self;
-        
-    } else if ([keyPath isEqualToString:@"applied"]) {
-        BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
-        NSNumber *oldValue = [change valueForKey:NSKeyValueChangeOldKey];
-        
-        // dont dirty the layout if nothing happened
-        if (oldValue && ![oldValue isKindOfClass:[NSNull class]]) {
-            if (oldValue.boolValue == applied) {
-                return;
-            }
-        }
-        
-        [self layout];
-    }
+- (void)viewDidMoveToWindow {
+    @weakify(self);
+    
+    RAC(self.cursorLine.dataSource) = [RACSignal return:self];
+    [self.textField rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
+    [[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+        @strongify(self);
+        if (self.backgroundStyle == NSBackgroundStyleDark)
+            self.hdView.image = [NSImage imageNamed:@"HD-alt"];
+        else
+            self.hdView.image = [NSImage imageNamed:@"HD"];
+    }];
+    
 }
 
 - (void)layout {
-    [super layout];
+#define SIDESPACING 14.0
+#define ITEMSPACING 8.0
     
-    BOOL applied = [[self.objectValue valueForKeyPath:@"applied"] boolValue];
-    
-    if (!applied) {
-        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width), self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+    if (self.hdView.isHidden) {
+        NSRect frame = self.appliedView.frame;
+        frame.origin.x = self.frame.size.width - SIDESPACING - frame.size.width;
+        
+        self.appliedView.frame = frame;
     } else {
-        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width) - 8 - self.appliedView.frame.size.width, self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+        NSRect frame = self.appliedView.frame;
+        NSRect hdFrame = self.hdView.frame;
+        
+        hdFrame.origin.x = self.frame.size.width - SIDESPACING - hdFrame.size.width;
+        frame.origin.x   = hdFrame.origin.x - ITEMSPACING - frame.size.width;
+        
+        self.hdView.frame = hdFrame;
+        self.appliedView.frame = frame;
     }
     
-    //!TODO After I layer backed the scroll view the apply checkbox stopped re-displaying
-}
-- (void)dealloc {
-    [self.objectValue removeObserver:self forKeyPath:@"applied"];
-    [self removeObserver:self forKeyPath:@"objectValue"];
-    [self removeObserver:self forKeyPath:@"cursorLine"];
+    [super layout];
+    
 }
 
 #pragma mark - MCCursorLineDataSource
@@ -98,8 +86,8 @@
 
 - (MCCursor *)cursorLine:(MCCursorLine *)cursorLine cursorAtIndex:(NSUInteger)index {
     //!TODO: Sort somewhere else
-    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
-//    return [[[self.objectValue valueForKeyPath:@"cursors"] allValues] objectAtIndex:index];
+    return [[[self.objectValue valueForKey:@"cursors"] allValues] objectAtIndex:index];
+//    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
 }
 
 @end

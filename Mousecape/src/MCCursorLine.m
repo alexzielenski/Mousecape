@@ -24,6 +24,8 @@
 - (void)_initialize;
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index;
 - (void)cursorView:(MCCursorView *)cv selected:(BOOL)selected;
+- (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index;
+- (NSUInteger)limitedItemCount;
 
 @end
 
@@ -31,17 +33,13 @@
 
 - (id)init {
     if ((self = [super init])) {
-        [self addObserver:self forKeyPath:@"cursor.representations" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"cursor.prettyName" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"parentLine" options:NSKeyValueObservingOptionOld context:nil];
-        
+        self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
         if (!self.textField) {
             NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 14)];
             self.textField = tf;
             self.textField.stringValue     = @"Unknown";
-            self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
+//            self.textField.font            = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize] - 1];
             self.textField.bezeled         = NO;
             self.textField.drawsBackground = NO;
             self.textField.editable        = NO;
@@ -54,39 +52,24 @@
             MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
             self.imageView = im;
         }
+
+        @weakify(self);
         
+        RAC(self.imageView.shouldAnimate) = RACAble(self.parentLine.animationsEnabled);
+        RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
+        RAC(self.imageView.frameDuration) = RACAble(self.cursor.frameDuration);
+        RAC(self.imageView.frameCount)    = RACAble(self.cursor.frameCount);
+        RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
+        
+        [RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
+            @strongify(self);
+            [self.parentLine cursorView:self selected:selected.boolValue];
+        }];
     }
     return self;
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"parentLine"];
-    [self removeObserver:self forKeyPath:@"cursor.representations"];
-    [self removeObserver:self forKeyPath:@"cursor.prettyName"];
-    [self removeObserver:self forKeyPath:@"cursor"];
-    [self removeObserver:self forKeyPath:@"selected"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"cursor.representations"]) {
-        self.imageView.frameDuration = self.cursor.frameDuration;
-        self.imageView.frameCount    = self.cursor.frameCount;
-        self.imageView.image         = self.cursor.imageWithAllReps;
-        
-    } else if ([keyPath isEqualToString:@"cursor.prettyName"]) {
-        self.textField.stringValue = self.cursor.prettyName;
-        
-    } else if ([keyPath isEqualToString:@"selected"]) {
-        [self.parentLine cursorView:self selected:self.isSelected];
-    } else if ([keyPath isEqualToString:@"parentLine"]) {
-        [self.imageView unbind:@"shouldAnimate"];
-        [self.imageView bind:@"shouldAnimate" toObject:self.parentLine withKeyPath:@"animationsEnabled" options:nil];
-//        self.imageView.shouldAnimate = self.parentLine.animationsEnabled;
-    }
-}
-
 - (void)viewDidMoveToWindow {
-    
     self.imageView.frame = NSMakeRect(8.0f, 16.0f, 48.0f, 48.0f);
     self.textField.frame = NSMakeRect(0, 2.0f, 64.0f, 14.0f);
     
@@ -96,6 +79,12 @@
     [self addSubview:self.imageView];
     [self addSubview:self.textField];
     
+    [textField setFrame:NSMakeRect(0, 2, self.bounds.size.width, 14.0)];
+    [imageView setFrame:NSMakeRect(NSMidX(self.bounds) - NSMidX(imageView.bounds), NSMaxY(textField.frame), 48, 48)];
+    
+    
+    // auto layout causes issues with View-Based Table Views
+    /*
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[imageView(==48)]-(8)-|"
                                                                  options:0
                                                                  metrics:nil
@@ -108,11 +97,10 @@
                                                                  options:0
                                                                  metrics:nil
                                                                    views:NSDictionaryOfVariableBindings(imageView, textField)]];
+     */
 
-    
-    [self observeValueForKeyPath:@"cursor.name" ofObject:self change:nil context:nil];
-    [self observeValueForKeyPath:@"cursor.representations" ofObject:self change:nil context:nil];
 }
+
 - (void)drawRect:(NSRect)rect {
     [super drawRect:rect];
     
@@ -141,9 +129,11 @@
     }
     
 }
+
 - (void)mouseDown:(NSEvent *)event {
-    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask || event.clickCount == 2) {
-        self.selected = !self.isSelected;
+    if ((event.modifierFlags & self.parentLine.selectionKeyMask) == self.parentLine.selectionKeyMask || event.clickCount >= 2) {
+        if (event.clickCount == 2)
+            self.selected = !self.isSelected;
     } else {
         [super mouseDown:event];
     }
@@ -153,6 +143,8 @@
 
 @implementation MCCursorLine
 - (void)_initialize {
+    self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
     self.animationsEnabled = YES;
     self.wellWidth = 64.0f;
     self.cursorViews = [NSMutableArray array];
@@ -160,21 +152,34 @@
     self.highlightColor = [NSColor colorWithDeviceRed:0.71 green:0.843 blue:1.0 alpha:1.0];
     self.selectedCursorIndices = [NSMutableIndexSet indexSet];
     self.selectionKeyMask = NSCommandKeyMask;
-    [self addObserver:self forKeyPath:@"dataSource" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"shouldAllowSelection" options:NSKeyValueObservingOptionNew context:nil];
+    self.shouldLimitToBounds = YES;
+    
+    __weak MCCursorLine *weakSelf = self;
+    [RACAble(self.dataSource) subscribeNext:^(id x) {
+        [weakSelf reloadData];
+    }];
+    
+    [RACAble(self.shouldAllowSelection) subscribeNext:^(NSNumber *x) {
+        if (!x.boolValue)
+            [weakSelf deselectAll];
+    }];
+    
 }
+
 - (id)init {
     if ((self = [super init])) {
         [self _initialize];
     }
     return self;
 }
+
 - (id)initWithCoder:(NSCoder *)decoder {
     if ((self = [super initWithCoder:decoder])) {
         [self _initialize];
     }
     return self;
 }
+
 - (id)initWithFrame:(NSRect)frame {
 
     self = [super initWithFrame:frame];
@@ -184,41 +189,24 @@
     
     return self;
 }
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"dataSource"];
-    [self removeObserver:self forKeyPath:@"shouldAllowSelection"];
-}
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"dataSource"])
-        [self reloadData];
-    
-    else if ([keyPath isEqualToString:@"shouldAllowSelection"]) {
-        if (!self.shouldAllowSelection) {
-            self.selectedCursorIndices = [NSMutableIndexSet indexSet];
-            
-            for (MCCursorView *view in self.cursorViews) {
-                view.selected = NO;
-            }
-            
-        }
-    }
-}
-- (void)reloadData {
-    NSUInteger itemCount = [self.dataSource numberOfCursorsInLine:self];
 
-    // re-use cursor views we want
-    while (self.cursorViews.count != itemCount) {
+- (void)reloadData {    
+    NSUInteger itemCount = [self.dataSource numberOfCursorsInLine:self];
+    NSUInteger limitedItemCount = self.limitedItemCount;
+    
+    if (self.shouldLimitToBounds)
+        itemCount = MIN(itemCount, limitedItemCount);
+    
+    while (self.cursorViews.count > itemCount) {
         if (self.cursorViews.count > itemCount) {
-            [self.cursorViews.lastObject removeFromSuperview];
+            [[self.cursorViews lastObject] removeFromSuperview];
             [self.cursorViews removeLastObject];
-        } else {
-            [self.cursorViews addObject:[[MCCursorView alloc] init]];
         }
     }
-        
+    
     for (NSUInteger idx = 0; idx < itemCount; idx++) {
         MCCursor *currentCursor = [self.dataSource cursorLine:self cursorAtIndex:idx];
-        MCCursorView *cursorView = [self.cursorViews objectAtIndex:idx];
+        MCCursorView *cursorView = [self _dequeueCursorViewForIndex:idx];
         cursorView.parentLine = self;
         cursorView.selected   = NO;
         
@@ -229,12 +217,29 @@
     }
     
     // resize us to fit
-    self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.cursorViews.count * self.wellWidth, self.frame.size.height);
-    
+    self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, itemCount * self.wellWidth, self.frame.size.height);
 }
+
+- (NSUInteger)limitedItemCount {
+    return floor(self.enclosingScrollView.documentVisibleRect.size.width / self.wellWidth);
+}
+
+- (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index {
+    if (self.cursorViews.count > index) {
+        return self.cursorViews[index];
+    }
+    
+    if (index != self.cursorViews.count)
+        return nil;
+    
+    self.cursorViews[index] = [[MCCursorView alloc] init];
+    return self.cursorViews[index];
+}
+
 - (NSRect)frameForCursorAtIndex:(NSUInteger)index {
     return NSMakeRect(index * self.wellWidth, 0, self.wellWidth, self.frame.size.height);
 }
+
 - (void)cursorView:(MCCursorView *)cv selected:(BOOL)selected {
     if (self.shouldAllowSelection && selected) {
         [self.selectedCursorIndices addIndex:[self.cursorViews indexOfObject:cv]];
@@ -243,6 +248,14 @@
     }
     
     [self.cursorViews makeObjectsPerformSelector:@selector(display)];
+}
+
+- (void)deselectAll {
+    self.selectedCursorIndices = [NSMutableIndexSet indexSet];
+    
+    for (MCCursorView *view in self.cursorViews) {
+        view.selected = NO;
+    }
 }
 
 @end

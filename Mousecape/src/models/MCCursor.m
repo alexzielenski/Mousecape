@@ -20,7 +20,7 @@ static const NSString *MCCursorDictionaryPointsHighKey      = @"PointsHigh";
 static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations";
 
 @interface MCCursor ()
-@property (readwrite, strong) NSMutableArray *representations;
+@property (readwrite, strong) NSMutableOrderedSet *representations;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
@@ -52,9 +52,10 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     MCCursor *cursor = [[MCCursor allocWithZone:zone] init];
     
     cursor.frameCount      = self.frameCount;
-    cursor.frameCount      = self.frameDuration;
+    cursor.frameDuration   = self.frameDuration;
     cursor.size            = self.size;
-    cursor.representations = self.representations.copy;
+    cursor.representations = self.representations.mutableCopy;
+    cursor.hotSpot         = self.hotSpot;
     
     return cursor;
 }
@@ -79,7 +80,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
             self.size          =  NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
 //            self.repeatCount   = repeatCount.unsignedIntegerValue;
             
-            NSMutableArray *bitmaps = [NSMutableArray array];
+            NSMutableOrderedSet *bitmaps = [NSMutableOrderedSet orderedSet];
             
             for (NSData *data in reps) {
                 // data in v2.0 documents are saved as PNGs
@@ -102,7 +103,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    [image addRepresentations:self.representations];
+    [image addRepresentations:self.representations.array];
     
     image.matchesOnMultipleResolution  = YES;
         
@@ -141,6 +142,32 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     return name ? name : @"Unknown";
 }
 
+- (id)valueForKey:(NSString *)key {
+    if ([key isEqualToString:@"hotSpot"]) {
+        return [NSValue valueWithPoint:self.hotSpot];
+    }
+    
+    if ([key isEqualToString:@"size"]) {
+        return [NSValue valueWithSize:self.size];
+    }
+    
+    return [super valueForKey:key];
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key {
+    if ([key isEqualToString:@"hotSpot"]) {
+        self.hotSpot = [value pointValue];
+        return;
+    }
+    
+    if ([key isEqualToString:@"size"]) {
+        self.size = [value sizeValue];
+        return;
+    }
+    
+    [super setValue:value forKey:key];
+}
+
 - (void)addRepresentation:(NSBitmapImageRep *)imageRep {
     if (![self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:self.representations.count];
@@ -167,6 +194,23 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
         [self didChangeValueForKey:@"imageWithAllReps"];
     }
+}
+
+- (BOOL)isEqualTo:(MCCursor *)object {
+    if (![object isKindOfClass:self.class]) {
+        return NO;
+    }
+    
+   BOOL props =  (object.frameCount == self.frameCount &&
+                  object.frameDuration == self.frameDuration &&
+                  NSEqualSizes(object.size, self.size) &&
+                  NSEqualPoints(object.hotSpot, self.hotSpot) &&
+                  [object.identifier isEqualToString:self.identifier] &&
+                  object.parentLibrary == self.parentLibrary);
+    
+    props = ([self.representations isEqualToOrderedSet:object.representations]);
+    
+    return props;
 }
 
 @end

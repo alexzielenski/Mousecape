@@ -2,7 +2,7 @@
 //  MCEditWindowController.h
 //  Mousecape
 //
-//  Created by Alex Zielenski on 2/19/13.
+//  Created by Alex Zielenski on 6/25/13.
 //  Copyright (c) 2013 Alex Zielenski. All rights reserved.
 //
 
@@ -11,11 +11,10 @@
 #import "MCEditCapeViewController.h"
 #import "MCEditCursorViewController.h"
 
-@interface MCEditWindowController : NSWindowController <NSSplitViewDelegate>
-@property (assign) NSWindow *parentWindow;
-@property (assign) IBOutlet NSSplitView *splitView;
-@property (strong) IBOutlet MCEditListViewController *listViewController;
-@property (strong) IBOutlet MCEditCapeViewController *capeViewController;
-@property (strong) IBOutlet MCEditCursorViewController *cursorViewController;
-@property (copy) MCCursorLibrary *currentLibrary;
+@interface MCEditWindowController : NSWindowController <NSWindowDelegate>
+@property (weak) NSWindow *parentWindow;
+@property (weak) IBOutlet NSSplitView *splitView;
+@property (weak) IBOutlet MCEditListViewController *listViewController;
+@property (weak) IBOutlet MCEditCapeViewController *capeViewController;
+@property (weak) IBOutlet MCEditCursorViewController *cursorViewController;
 @end
