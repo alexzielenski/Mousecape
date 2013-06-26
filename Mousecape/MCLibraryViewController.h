@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "MCCursorDocument.h"
 #import "MCLibraryViewController.h"
-#import "MCDetailVewController.h"
 
 @class MCLibraryWindowController;
 @interface MCLibraryViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>

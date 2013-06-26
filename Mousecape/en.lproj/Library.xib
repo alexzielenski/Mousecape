@@ -8,7 +8,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MCLibraryWindowController">
             <connections>
                 <outlet property="accessory" destination="1156" id="Nrp-nm-hdX"/>
-                <outlet property="detailController" destination="974" id="RsL-QE-DgA"/>
                 <outlet property="libraryController" destination="684" id="kod-ok-ob2"/>
                 <outlet property="window" destination="371" id="hFH-i8-hBx"/>
             </connections>
@@ -193,6 +192,9 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="currentCursor.library.name" id="paZ-30-NzQ"/>
+                                        </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="638">
                                         <rect key="frame" x="17" y="418" width="55" height="17"/>
@@ -223,6 +225,9 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="currentCursor.library.author" id="LFx-nL-EfU"/>
+                                        </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="985">
                                         <rect key="frame" x="74" y="393" width="89" height="17"/>
@@ -232,6 +237,9 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="currentCursor.library.version" id="9l5-JR-wk5"/>
+                                        </connections>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="r5v-rk-m7i" customClass="MCActionButton">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="34"/>
@@ -307,15 +315,6 @@
                 <outlet property="appliedCursorField" destination="1156" id="1190"/>
                 <outlet property="tableView" destination="537" id="760"/>
                 <outlet property="view" destination="537" id="685"/>
-            </connections>
-        </viewController>
-        <viewController title="Detail" id="974" customClass="MCDetailVewController">
-            <connections>
-                <outlet property="applyButton" destination="b7v-KH-AZ9" id="tDI-9C-ZVy"/>
-                <outlet property="authorLabel" destination="979" id="996"/>
-                <outlet property="titleLabel" destination="630" id="976"/>
-                <outlet property="versionLabel" destination="985" id="995"/>
-                <outlet property="view" destination="602" id="975"/>
             </connections>
         </viewController>
         <menu id="1036">
