@@ -45,23 +45,6 @@
     }];
 }
 
-- (IBAction)apply:(id)sender {
-    if (!self.windowController.currentCursor)
-        return;
-    
-    [self.windowController applyCape:self.windowController.currentCursor];
-}
-
-- (IBAction)edit:(id)sender {
-    [self.windowController editCape:self.windowController.currentCursor];
-}
-
-- (IBAction)restore:(id)sender {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[MCCloakController sharedCloakController] restoreDefaults];
-    });
-}
-
 - (IBAction)update:(id)sender {
     
 }

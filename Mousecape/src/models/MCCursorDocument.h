@@ -17,14 +17,4 @@
 - (IBAction)apply:(id)sender;
 - (IBAction)edit:(id)sender;
 
-
-
-#pragma mark - Wrapper
-//- (NSString *)name;
-//- (NSString *)author;
-//- (NSString *)identifier;
-//- (NSNumber *)version;
-//- (BOOL)isInCloud;
-//- (BOOL)isHiDPI;
-//- (NSDictionary *)cursors;
 @end

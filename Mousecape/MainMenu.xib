@@ -13,17 +13,22 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder">
             <connections>
+                <action selector="apply:" destination="bZb-Za-Y3W" id="chl-xl-8Ne"/>
                 <action selector="arrangeInFront:" destination="5" id="39"/>
                 <action selector="capitalizeWord:" destination="714" id="737"/>
                 <action selector="centerSelectionInVisibleArea:" destination="736" id="771"/>
                 <action selector="checkSpelling:" destination="726" id="750"/>
-                <action selector="clearRecentDocuments:" destination="126" id="127"/>
                 <action selector="copy:" destination="687" id="752"/>
                 <action selector="cut:" destination="686" id="738"/>
                 <action selector="delete:" destination="690" id="753"/>
+                <action selector="duplicateDocument:" destination="1bD-2e-FXP" id="ebz-BY-et7"/>
+                <action selector="edit:" destination="48n-PG-nJl" id="afS-6T-RI4"/>
                 <action selector="hide:" destination="134" id="367"/>
                 <action selector="hideOtherApplications:" destination="145" id="368"/>
+                <action selector="importMightyMouse:" destination="6QU-ui-byS" id="dMw-km-SHH"/>
                 <action selector="lowercaseWord:" destination="713" id="754"/>
+                <action selector="newDocument:" destination="82" id="FGQ-wo-HSJ"/>
+                <action selector="openDocument:" destination="uC9-fL-yXQ" id="nXI-WG-Toh"/>
                 <action selector="orderFrontSubstitutionsPanel:" destination="716" id="757"/>
                 <action selector="paste:" destination="688" id="739"/>
                 <action selector="pasteAsPlainText:" destination="689" id="751"/>
@@ -35,11 +40,11 @@
                 <action selector="performFindPanelAction:" destination="791" id="792"/>
                 <action selector="performMiniaturize:" destination="23" id="37"/>
                 <action selector="performZoom:" destination="239" id="240"/>
-                <action selector="print:" destination="78" id="86"/>
                 <action selector="redo:" destination="684" id="742"/>
+                <action selector="removeCape:" destination="UhA-CB-0Qe" id="99z-I8-fLe"/>
+                <action selector="restoreDefaults:" destination="W10-6C-gRw" id="ZrV-eY-vk4"/>
                 <action selector="revertDocumentToSaved:" destination="112" id="364"/>
-                <action selector="runPageLayout:" destination="77" id="87"/>
-                <action selector="saveDocument:" destination="75" id="362"/>
+                <action selector="saveDocument:" destination="75" id="sQr-o6-o1l"/>
                 <action selector="selectAll:" destination="691" id="755"/>
                 <action selector="showGuessPanel:" destination="725" id="749"/>
                 <action selector="showHelp:" destination="111" id="360"/>
@@ -102,29 +107,15 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="81">
                         <items>
-                            <menuItem title="New" keyEquivalent="n" id="82"/>
-                            <menuItem title="Open…" keyEquivalent="o" id="72"/>
-                            <menuItem title="Open Recent" id="124">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="125">
-                                    <items>
-                                        <menuItem title="Clear Menu" id="126">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
+                            <menuItem title="New Cape" keyEquivalent="n" id="82"/>
+                            <menuItem title="Import Cape" keyEquivalent="o" id="uC9-fL-yXQ"/>
                             <menuItem isSeparatorItem="YES" id="79"/>
                             <menuItem title="Close" keyEquivalent="w" id="73"/>
                             <menuItem title="Save…" keyEquivalent="s" id="75"/>
+                            <menuItem title="Duplicate Cape" keyEquivalent="S" id="1bD-2e-FXP"/>
                             <menuItem title="Revert to Saved" id="112">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="74"/>
-                            <menuItem title="Page Setup..." keyEquivalent="P" id="77">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="78"/>
                         </items>
                     </menu>
                 </menuItem>
@@ -156,7 +147,9 @@
                                         </menuItem>
                                         <menuItem title="Find Next" tag="2" keyEquivalent="g" id="733"/>
                                         <menuItem title="Find Previous" tag="3" keyEquivalent="G" id="734"/>
-                                        <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="735"/>
+                                        <menuItem title="Use Selection for Find" tag="7" id="735">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem title="Jump to Selection" keyEquivalent="j" id="736"/>
                                     </items>
                                 </menu>
@@ -251,9 +244,6 @@ DQ
 </string>
                             </menuItem>
                             <menuItem title="Edit Cape" keyEquivalent="e" id="48n-PG-nJl"/>
-                            <menuItem title="Duplicate Cape" keyEquivalent="e" id="fsd-2a-EDF">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                            </menuItem>
                             <menuItem title="Remove Cape" id="UhA-CB-0Qe">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
@@ -303,6 +293,39 @@ CA
             <relationships>
                 <relationship kind="action" name="showPreferences:" candidateClass="NSMenuItem"/>
                 <relationship kind="outlet" name="window" candidateClass="NSWindow"/>
+            </relationships>
+        </class>
+        <class className="MCCursorDocument" superclassName="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCCursorDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="edit:"/>
+            </relationships>
+        </class>
+        <class className="MCDetailVewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCDetailVewController.h"/>
+            <relationships>
+                <relationship kind="action" name="update:"/>
+                <relationship kind="outlet" name="authorLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="versionLabel" candidateClass="NSTextField"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="contextMenu:" candidateClass="NSMenuItem"/>
+                <relationship kind="action" name="doubleClick:"/>
+                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryWindowController" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryWindowController.h"/>
+            <relationships>
+                <relationship kind="action" name="restoreDefaults:"/>
+                <relationship kind="outlet" name="accessory" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="detailController" candidateClass="MCDetailVewController"/>
+                <relationship kind="outlet" name="libraryController" candidateClass="MCLibraryViewController"/>
             </relationships>
         </class>
         <class className="NSDocument">

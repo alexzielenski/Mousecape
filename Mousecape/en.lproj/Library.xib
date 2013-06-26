@@ -13,7 +13,12 @@
                 <outlet property="window" destination="371" id="hFH-i8-hBx"/>
             </connections>
         </customObject>
-        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder">
+            <connections>
+                <action selector="apply:" destination="b7v-KH-AZ9" id="aTE-ua-i54"/>
+                <action selector="edit:" destination="r5v-rk-m7i" id="KOm-8s-h8X"/>
+            </connections>
+        </customObject>
         <customObject id="-3" userLabel="Application"/>
         <window title="Mousecape" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -295,7 +300,10 @@
         <customObject id="420" customClass="NSFontManager"/>
         <viewController title="Library Controller" id="684" customClass="MCLibraryViewController">
             <connections>
-                <action selector="removeCape:" destination="1037" id="1199"/>
+                <action selector="contextMenu:" destination="1262" id="CsS-3G-Hg0"/>
+                <action selector="contextMenu:" destination="1037" id="NrX-vT-xQM"/>
+                <action selector="contextMenu:" destination="1038" id="S6J-Gs-A1B"/>
+                <action selector="contextMenu:" destination="1039" id="W4C-mH-7bc"/>
                 <outlet property="appliedCursorField" destination="1156" id="1190"/>
                 <outlet property="tableView" destination="537" id="760"/>
                 <outlet property="view" destination="537" id="685"/>
@@ -303,9 +311,6 @@
         </viewController>
         <viewController title="Detail" id="974" customClass="MCDetailVewController">
             <connections>
-                <action selector="apply:" destination="1038" id="1198"/>
-                <action selector="apply:" destination="b7v-KH-AZ9" id="hKA-us-AwY"/>
-                <action selector="edit:" destination="r5v-rk-m7i" id="ANg-KK-CM3"/>
                 <outlet property="applyButton" destination="b7v-KH-AZ9" id="tDI-9C-ZVy"/>
                 <outlet property="authorLabel" destination="979" id="996"/>
                 <outlet property="titleLabel" destination="630" id="976"/>
@@ -320,11 +325,11 @@
 DQ
 </string>
                 </menuItem>
-                <menuItem title="Edit" keyEquivalent="e" id="1039"/>
-                <menuItem title="Duplicate" keyEquivalent="e" id="1262">
+                <menuItem title="Edit" tag="1" keyEquivalent="e" id="1039"/>
+                <menuItem title="Duplicate" tag="2" keyEquivalent="e" id="1262">
                     <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                 </menuItem>
-                <menuItem title="Remove" id="1037">
+                <menuItem title="Remove" tag="3" id="1037">
                     <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
