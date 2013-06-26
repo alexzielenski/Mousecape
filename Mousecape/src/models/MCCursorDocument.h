@@ -15,6 +15,7 @@
 @property (strong) NSWindowController *editWindowController;
 
 - (IBAction)apply:(id)sender;
+- (IBAction)remove:(id)sender;
 - (IBAction)edit:(id)sender;
 
 @end

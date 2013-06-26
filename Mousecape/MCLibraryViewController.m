@@ -13,10 +13,63 @@
 #import "MCCloakController.h"
 #import "MCLibraryWindowController.h"
 
+@interface MCLibraryViewController ()
+- (void)startWatchingWindowController:(MCLibraryWindowController *)ctrl;
+- (void)stopWatchingWindowController:(MCLibraryWindowController *)ctrl;
+@end
+
 @implementation MCLibraryViewController
 - (void)awakeFromNib {
     self.tableView.target = self;
     self.tableView.doubleAction = @selector(doubleClick:);
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        [[RACAble(self.windowController) mapPreviousWithStart:nil
+                                                     combine:^id(id previous, id current) {
+                                                         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                                                         if (previous)
+                                                             dict[@"previous"] = previous;
+                                                         if (current)
+                                                             dict[@"current"] = current;
+                                                         return dict;
+                                                         
+                                                     }] subscribeNext:^(NSDictionary *x) {
+                                                         if ([x objectForKey:@"previous"])
+                                                             [self stopWatchingWindowController:[x objectForKey:@"previous"]];
+                                                         if ([x objectForKey:@"current"])
+                                                             [self startWatchingWindowController:[x objectForKey:@"current"]];
+                                                     }];
+    }
+    
+    return self;
+}
+
+static void *MCDocumentsContext;
+- (void)startWatchingWindowController:(MCLibraryWindowController *)ctrl {
+    [ctrl addObserver:self forKeyPath:@"documents" options:NSKeyValueObservingOptionNew context:&MCDocumentsContext];
+}
+- (void)stopWatchingWindowController:(MCLibraryWindowController *)ctrl {
+    [ctrl removeObserver:self forKeyPath:@"documents"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context != &MCDocumentsContext)
+        return;
+    
+    @weakify(self);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
+        NSUInteger kind     = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+        NSIndexSet *indices = change[NSKeyValueChangeIndexesKey];
+        
+        if (kind == NSKeyValueChangeInsertion)
+            [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectGap];
+        else if (kind == NSKeyValueChangeRemoval)
+            [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectFade];
+        
+    });    
 }
 
 #pragma mark - Interface Actions
@@ -36,7 +89,7 @@
             break;
         }
         case 3: { // Remove
-            [clickedDocument close];
+            [clickedDocument remove:sender];
         }
         default:
             break;
@@ -63,8 +116,23 @@
 //    }];
 //}
 
+- (void)capeAction:(MCCursorDocument *)cape {
+    NSInteger clickedRow = self.tableView.clickedRow;
+    if (clickedRow == -1 || !cape)
+        return;
+    
+    BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
+    
+    if (shouldApply) {
+        [cape apply:self];
+    } else {
+        [cape edit:self];
+    }
+}
+
+
 - (void)doubleClick:(id)sender {
-    [self.windowController capeAction:self.windowController.currentCursor];
+    [self capeAction:self.windowController.currentCursor];
 }
 
 #pragma mark - NSTableViewDelgate

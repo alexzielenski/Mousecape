@@ -15,6 +15,7 @@
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) MCLibraryWindowController *windowController;
 
+- (IBAction)capeAction:(MCCursorDocument *)sender;
 - (IBAction)doubleClick:(id)sender;
 - (IBAction)contextMenu:(NSMenuItem *)sender;
 

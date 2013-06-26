@@ -33,7 +33,7 @@ static void *MCCursorDocumentContext;
             @strongify(self);
 
             if (x.count > 1)
-                [self stopObservingLibrary:x.firstObject];
+                [self stopObservingLibrary:x[0]];
             [self startObservingLibrary:x.lastObject];
         }];
         
@@ -75,7 +75,7 @@ static void *MCCursorDocumentContext;
 }
 
 - (void)makeWindowControllers {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDocumentNeedWindowNotification" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCCursorDocumentWantsAdoptionNotification" object:self];
 }
 
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError {
@@ -125,6 +125,20 @@ static void *MCCursorDocumentContext;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [[MCCloakController sharedCloakController] applyCape:self];
     });
+}
+
+- (IBAction)remove:(id)sender {
+    // Set our file path to nil and remove the cape file.
+    NSError *err = nil;
+    [[NSFileManager defaultManager] removeItemAtURL:self.fileURL error:&err];
+    if (err) {
+        //!TODO: Do something with the error
+        return;
+    }
+    self.fileURL = nil;
+    
+    // Send a notification saying we have been disavowed
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCCursorDocumentOrphanedNotification" object:self];
 }
 
 - (void)edit:(id)sender {

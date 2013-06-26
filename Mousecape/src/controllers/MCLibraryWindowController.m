@@ -9,6 +9,7 @@
 #import "MCLibraryWindowController.h"
 #import "NSFileManager+DirectoryLocations.h"
 #import "MCCloakController.h"
+#import "NSOrderedSet+AZSortedInsert.h"
 
 @interface MCLibraryWindowController ()
 @property (copy) NSURL *libraryURL;
@@ -25,7 +26,7 @@
     self = [super initWithWindow:window];
     if (self) {
         self.documents = [NSMutableOrderedSet orderedSet];
-        self.librarySortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
+        self.librarySortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"library.name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
     }
     
     return self;
@@ -77,6 +78,7 @@
      This code asynchronously loads the library and updates the interface on the main thread when completed.
      */
     RACCommand *loadCommand = [RACCommand command];
+    
     [[loadCommand addSignalBlock:^RACSignal *(id sender) {
         @strongify(self);
         NSString *appSupport = [[NSFileManager defaultManager] applicationSupportDirectory];
@@ -86,7 +88,7 @@
                                   withIntermediateDirectories:YES
                                                    attributes:nil
                                                         error:nil];
-        
+        [self.libraryController.tableView beginUpdates];
         // -loadLibraryAtURL: sends updates on how far it is in loading the library, we want the completed signal
         return [self loadLibraryAtURL:[NSURL fileURLWithPath:capesPath]];
         
@@ -94,6 +96,7 @@
         [[loadSignal deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{
             @strongify(self);
             [self.window.contentView setNeedsLayout:YES];
+            [self.window makeKeyAndOrderFront:self];
             
             NSString *appliedIdentifier = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
             MCCursorDocument *applied   = [self libraryWithIdentifier:appliedIdentifier];
@@ -102,7 +105,8 @@
             // Set original selection
             dispatch_async(dispatch_get_main_queue(), ^{
                 // need the update this on the main thread
-                self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow];
+                [self.libraryController.tableView endUpdates];
+                self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow != -1 ? self.libraryController.tableView.selectedRow : 0];
             });
 
         }];
@@ -153,9 +157,7 @@
                                                        withContentsOfURL:url
                                                                   ofType:@"cape"
                                                                    error:nil];
-            
-            // Make the document send the notification where we will add it
-            [doc makeWindowControllers];
+            [self addDocument:doc];
             [subject sendNext:doc];
         }
         
@@ -194,10 +196,14 @@
 }
 
 - (void)addDocument:(MCCursorDocument *)doc {
-    if ([self.documents containsObject:doc])
+    if ([self.documents containsObject:doc]) {
+        NSLog(@"Cannot add same document twice");
         return;
-    if ([self libraryWithIdentifier:doc.library.identifier])
+    }
+    if ([self libraryWithIdentifier:doc.library.identifier]) {
+        NSLog(@"Document exists with that identifier already");
         return;
+    }
     
     if (!doc.fileURL) {
         doc.fileURL = [[self.libraryURL URLByAppendingPathComponent:doc.library.identifier] URLByAppendingPathExtension:@"cape"];
@@ -207,41 +213,34 @@
         [doc saveToURL:[self.libraryURL URLByAppendingPathComponent:doc.fileURL.lastPathComponent] ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
     }
     
-    [self.documents addObject:doc];
-//    [doc addWindowController:self];
-    [self.documents sortUsingDescriptors:self.librarySortDescriptors];
+    NSUInteger idx = [self.documents indexForInsertingObject:doc sortedUsingDescriptors:self.librarySortDescriptors];
+    NSIndexSet *indices = [NSIndexSet indexSetWithIndex:idx];
     
-    @weakify(self);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        @strongify(self);
-        [self.libraryController.tableView reloadData];
-    });
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
+    [self.documents insertObject:doc atIndex:idx];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
+    
+//    [doc addWindowController:self];
+//    [self.documents sortUsingDescriptors:self.librarySortDescriptors];
 }
 
 - (void)removeDocument:(MCCursorDocument *)document {
     if (![self.documents containsObject:document])
         return;
     
+    [document.editWindowController close];
+    [document removeWindowController:document.editWindowController];
     [document removeWindowController:self];
-    [self.document removeObject:document];
+    
+    NSIndexSet *set = [NSIndexSet indexSetWithIndex:[self.documents indexOfObject:document]];
+    
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:@"documents"];
+    [self.documents removeObject:document];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:@"documents"];
 }
 
 - (MCCursorDocument *)document {
     return self.currentCursor;
-}
-
-- (void)capeAction:(MCCursorDocument *)cape {    
-    NSInteger clickedRow = self.libraryController.tableView.clickedRow;
-    if (clickedRow == -1 || !cape)
-        return;
-    
-    BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
-    
-    if (shouldApply) {
-        [cape apply:self];
-    } else {
-        [cape edit:self];
-    }
 }
 
 - (IBAction)restoreDefaults:(id)sender {
@@ -259,18 +258,18 @@
     }
     
     // let's keep a reference to ourself and not have us thrown away while we clear out references.
-    MCLibraryWindowController *me = self;
+//    MCLibraryWindowController *me = self;
     
     // detach the view controllers from the document first
-    self.currentCursor = nil;
-    self.appliedCursor = nil;
+//    me.currentCursor = nil;
+//    me.appliedCursor = nil;
     
     // disassociate this window controller from the document
-    for (NSDocument *doc in me.documents) {
-        [doc removeWindowController:me];
-    }
-    
-    [me.documents removeAllObjects];
+//    for (NSDocument *doc in me.documents) {
+//        [doc removeWindowController:me];
+//    }
+//    
+//    [me.documents removeAllObjects];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {

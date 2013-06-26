@@ -42,7 +42,7 @@
                 <action selector="performMiniaturize:" destination="23" id="37"/>
                 <action selector="performZoom:" destination="239" id="240"/>
                 <action selector="redo:" destination="684" id="742"/>
-                <action selector="removeCape:" destination="UhA-CB-0Qe" id="99z-I8-fLe"/>
+                <action selector="remove:" destination="UhA-CB-0Qe" id="YPY-21-jdG"/>
                 <action selector="restoreDefaults:" destination="W10-6C-gRw" id="ZrV-eY-vk4"/>
                 <action selector="revertDocumentToSaved:" destination="112" id="364"/>
                 <action selector="saveDocument:" destination="75" id="sQr-o6-o1l"/>
@@ -299,11 +299,13 @@ CA
             <relationships>
                 <relationship kind="action" name="apply:"/>
                 <relationship kind="action" name="edit:"/>
+                <relationship kind="action" name="remove:"/>
             </relationships>
         </class>
         <class className="MCLibraryViewController" superclassName="NSViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryViewController.h"/>
             <relationships>
+                <relationship kind="action" name="capeAction:" candidateClass="MCCursorDocument"/>
                 <relationship kind="action" name="contextMenu:" candidateClass="NSMenuItem"/>
                 <relationship kind="action" name="doubleClick:"/>
                 <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>

@@ -59,7 +59,7 @@
     NSRectFill(NSMakeRect(0, 0, frame.size.width, 1.0));
     NSRectFill(NSMakeRect(0, 2, frame.size.width, 1.0));
     
-    [[NSColor colorWithWhite:0.6 alpha:1.0] set];
+    [[NSColor colorWithCalibratedWhite:0.6 alpha:1.0] set];
     NSRectFill(NSMakeRect(0, 1, frame.size.width, 1.0));
     
     if (!controlView.window.isKeyWindow || !self.isEnabled) {

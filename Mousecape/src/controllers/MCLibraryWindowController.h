@@ -23,7 +23,6 @@
 - (void)removeDocument:(MCCursorDocument *)document;
 
 // Asks preferences what to do on double click, apply or edit
-- (void)capeAction:(MCCursorDocument *)cape;
 - (IBAction)restoreDefaults:(id)sender;
 @end
 

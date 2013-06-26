@@ -28,7 +28,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
                MCPreferencesAppliedClickActionKey: @(0)
          }
      ];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleDocumentNeedWindowNotification:) name:@"MCDocumentNeedWindowNotification" object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(adoptDocumentNotification:) name:@"MCCursorDocumentWantsAdoptionNotification" object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(disavowDocumentNotification:) name:@"MCCursorDocumentOrphanedNotification" object:nil];
 
 #ifdef DEBUG
     
@@ -37,8 +38,9 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 #endif
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
-    return YES;
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    [self.libraryWindowController showWindow:self];
+    return NO;
 }
 
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
@@ -64,10 +66,14 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 
 #pragma mark - Interface Actions
 
-- (void)handleDocumentNeedWindowNotification:(NSNotification *)notification {
+- (void)adoptDocumentNotification:(NSNotification *)notification {
     MCCursorDocument *doc = notification.object;
     [self.libraryWindowController addDocument:doc];
-    [self.libraryWindowController.window makeKeyAndOrderFront:doc];
+}
+
+- (void)disavowDocumentNotification:(NSNotification *)notification {
+    MCCursorDocument *doc = notification.object;
+    [self.libraryWindowController removeDocument:doc];
 }
 
 - (IBAction)showPreferences:(NSMenuItem *)sender {
