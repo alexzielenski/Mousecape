@@ -26,6 +26,7 @@
                 <action selector="hide:" destination="134" id="367"/>
                 <action selector="hideOtherApplications:" destination="145" id="368"/>
                 <action selector="importMightyMouse:" destination="6QU-ui-byS" id="dMw-km-SHH"/>
+                <action selector="installTool:" destination="0uS-4r-bZF" id="kBg-nj-9OM"/>
                 <action selector="lowercaseWord:" destination="713" id="754"/>
                 <action selector="newDocument:" destination="82" id="FGQ-wo-HSJ"/>
                 <action selector="openDocument:" destination="uC9-fL-yXQ" id="nXI-WG-Toh"/>
@@ -48,6 +49,7 @@
                 <action selector="selectAll:" destination="691" id="755"/>
                 <action selector="showGuessPanel:" destination="725" id="749"/>
                 <action selector="showHelp:" destination="111" id="360"/>
+                <action selector="showPreferences:" destination="mk8-Mh-vgd" id="96B-bL-Un1"/>
                 <action selector="startSpeaking:" destination="709" id="748"/>
                 <action selector="stopSpeaking:" destination="710" id="756"/>
                 <action selector="terminate:" destination="136" id="369"/>
@@ -281,16 +283,13 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <customObject id="FvX-gW-305" customClass="MCAppDelegate">
-            <connections>
-                <action selector="showPreferences:" destination="mk8-Mh-vgd" id="8EL-z1-fYA"/>
-            </connections>
-        </customObject>
+        <customObject id="FvX-gW-305" customClass="MCAppDelegate"/>
     </objects>
     <classes>
         <class className="MCAppDelegate" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCAppDelegate.h"/>
             <relationships>
+                <relationship kind="action" name="installTool:"/>
                 <relationship kind="action" name="showPreferences:" candidateClass="NSMenuItem"/>
                 <relationship kind="outlet" name="window" candidateClass="NSWindow"/>
             </relationships>
@@ -300,15 +299,6 @@ CA
             <relationships>
                 <relationship kind="action" name="apply:"/>
                 <relationship kind="action" name="edit:"/>
-            </relationships>
-        </class>
-        <class className="MCDetailVewController" superclassName="NSViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCDetailVewController.h"/>
-            <relationships>
-                <relationship kind="action" name="update:"/>
-                <relationship kind="outlet" name="authorLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="versionLabel" candidateClass="NSTextField"/>
             </relationships>
         </class>
         <class className="MCLibraryViewController" superclassName="NSViewController">
@@ -324,7 +314,6 @@ CA
             <relationships>
                 <relationship kind="action" name="restoreDefaults:"/>
                 <relationship kind="outlet" name="accessory" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="detailController" candidateClass="MCDetailVewController"/>
                 <relationship kind="outlet" name="libraryController" candidateClass="MCLibraryViewController"/>
             </relationships>
         </class>

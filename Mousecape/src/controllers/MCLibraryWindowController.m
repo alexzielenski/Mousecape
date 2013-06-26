@@ -92,7 +92,6 @@
         
     }] subscribeNext:^(RACSignal *loadSignal) {
         [[loadSignal deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{
-            
             @strongify(self);
             [self.window.contentView setNeedsLayout:YES];
             
@@ -101,7 +100,11 @@
             self.appliedCursor = applied;
             
             // Set original selection
-            self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // need the update this on the main thread
+                self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow];
+            });
+
         }];
     }];
     
@@ -205,7 +208,7 @@
     }
     
     [self.documents addObject:doc];
-    [doc addWindowController:self];
+//    [doc addWindowController:self];
     [self.documents sortUsingDescriptors:self.librarySortDescriptors];
     
     @weakify(self);
@@ -268,6 +271,10 @@
     }
     
     [me.documents removeAllObjects];
+}
+
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {
+    return @"Mousecape";
 }
 
 @end

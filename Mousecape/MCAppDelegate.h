@@ -14,4 +14,5 @@
 @property (strong) NSWindowController *preferencesWindowController;
 @property (strong) MCLibraryWindowController *libraryWindowController;
 - (IBAction)showPreferences:(NSMenuItem *)sender;
+- (IBAction)installTool:(id)sender;
 @end

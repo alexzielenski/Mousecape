@@ -62,6 +62,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     return YES;
 }
 
+#pragma mark - Interface Actions
+
 - (void)handleDocumentNeedWindowNotification:(NSNotification *)notification {
     MCCursorDocument *doc = notification.object;
     [self.libraryWindowController addDocument:doc];
@@ -78,6 +80,11 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     }
     
     [self.preferencesWindowController showWindow:self];
+}
+
+- (IBAction)installTool:(id)sender {
+    NSLog(@"User wants to install mousecloak");
+    // Alias mousecloak to the user's path
 }
 
 @end
