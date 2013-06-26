@@ -30,9 +30,8 @@
 - (NSDictionary *)dictionaryRepresentation;
 
 - (NSString *)prettyName;
-
 @end
 
 @interface MCCursor (Properties)
-@property (readonly, strong) NSArray *representations;
+@property (readonly, strong) NSOrderedSet *representations;
 @end

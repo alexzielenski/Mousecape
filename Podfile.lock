@@ -1,7 +1,26 @@
 PODS:
   - GBCli (1.0)
+  - JRSwizzle (1.0)
   - MASPreferences (1.0)
+  - ReactiveCocoa (1.0.0):
+    - ReactiveCocoa/Core (= 1.0.0)
+    - ReactiveCocoa/RACExtensions (= 1.0.0)
+  - ReactiveCocoa/Core (1.0.0):
+    - JRSwizzle (~> 1.0)
+    - libextobjc/EXTConcreteProtocol (~> 0.2.5)
+    - libextobjc/EXTKeyPathCoding (~> 0.2.5)
+    - libextobjc/EXTScope (~> 0.2.5)
+  - ReactiveCocoa/RACExtensions (1.0.0):
+    - ReactiveCocoa/Core
+  - libextobjc/EXTConcreteProtocol (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTKeyPathCoding (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTScope (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.2.5)
 
 DEPENDENCIES:
   - GBCli (~> 1.0)
   - MASPreferences (~> 1.0)
+  - ReactiveCocoa (~> 1.0.0)

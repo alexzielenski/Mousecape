@@ -8,10 +8,11 @@
 
 #import "MCDetailVewController.h"
 #import "MCCloakController.h"
+#import "MCLibraryWindowController.h"
 #import "CGSCursor.h"
 
 @interface MCDetailVewController ()
-
+- (void)_commonInit;
 @end
 
 @implementation MCDetailVewController
@@ -19,7 +20,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self addObserver:self forKeyPath:@"currentLibrary" options:NSKeyValueObservingOptionNew context:nil];
+        [self _commonInit];
     }
     
     return self;
@@ -27,40 +28,32 @@
 
 - (id)initWithCoder:(NSCoder *)decoder {
     if ((self = [super initWithCoder:decoder])) {
-        [self addObserver:self forKeyPath:@"currentLibrary" options:NSKeyValueObservingOptionNew context:nil];
+        [self _commonInit];
     }
     return self;
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"currentLibrary"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"currentLibrary"]) {
-        
-        if (self.currentLibrary) {
-            self.titleLabel.stringValue = self.currentLibrary.name;
-            self.authorLabel.stringValue = self.currentLibrary.author;
-            self.versionLabel.stringValue = [NSString stringWithFormat:@"%.01f", self.currentLibrary.version.floatValue];
-            
-        } else {
-            self.titleLabel.stringValue = @"No Cursor Selected";
-            self.authorLabel.stringValue = @"";
-            self.versionLabel.stringValue = @"";
-            
-        }
-    }
+- (void)_commonInit {
+    RAC(self.titleLabel.stringValue) = [RACAble(self.windowController.currentCursor.library.name) map:^NSString *(NSString *value) {
+        return (value) ? value : NSLocalizedString(@"No Cursor Selected", @"Detail pane, no selection");
+    }];
+    RAC(self.authorLabel.stringValue) = [RACAble(self.windowController.currentCursor.library.author) map:^(NSString *value) {
+        return (value) ? value : @"";
+    }];
+    RAC(self.versionLabel.objectValue) = [RACAble(self.windowController.currentCursor.library.version) map:^(NSNumber *value) {
+        return [NSString stringWithFormat:@"%.01f", value.floatValue];
+    }];
 }
 
 - (IBAction)apply:(id)sender {
-    if (!self.currentLibrary)
+    if (!self.windowController.currentCursor)
         return;
     
-    __block MCDetailVewController *blockSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[MCCloakController sharedCloakController] applyCape:blockSelf.currentLibrary];
-    });
+    [self.windowController applyCape:self.windowController.currentCursor];
+}
+
+- (IBAction)edit:(id)sender {
+    [self.windowController editCape:self.windowController.currentCursor];
 }
 
 - (IBAction)restore:(id)sender {

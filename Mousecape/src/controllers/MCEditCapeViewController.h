@@ -10,5 +10,5 @@
 #import "MCCursorLibrary.h"
 
 @interface MCEditCapeViewController : NSViewController
-@property (strong) MCCursorLibrary *cursorLibrary;
+@property (weak) MCCursorLibrary *cursorLibrary;
 @end

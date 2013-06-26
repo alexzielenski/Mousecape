@@ -11,57 +11,29 @@
 #import "MCTableCellView.h"
 #import "NSArray+CWSortedInsert.h"
 #import "MCCloakController.h"
-
-static const NSString *MCAppliedCursorValueTransformerName = @"mousecape.appliedCursorTransformer";
-static NSArray *librarySortDescriptors =  nil;
-
-@interface MCAppliedCursorValueTransformer : NSValueTransformer
-@end
-
-@implementation MCAppliedCursorValueTransformer
-
-+ (BOOL)allowsReverseTransformation {
-    return NO;
-}
-
-+ (Class)transformedValueClass {
-    return [NSString class];
-}
-
-- (NSString *)transformedValue:(NSString *)value {
-    NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
-    return [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
-}
-
-@end
+#import "MCLibraryWindowController.h"
 
 @interface MCLibraryViewController ()
-@property (readwrite, strong) NSMutableArray *libraries;
 @property (copy) NSString *libraryPath;
+@property (strong) RACSignal *_appliedSignal;
 - (void)_init;
-// KVO
-- (void)insertObject:(MCCursorLibrary *)library inLibrariesAtIndex:(NSUInteger)index;
-- (void)removeObjectFromLibrariesAtIndex:(NSUInteger)index;
-
 - (void)sidekickAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @implementation MCLibraryViewController
-+ (void)initialize {
-    [super initialize];
-    
-    librarySortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
-    
-    MCAppliedCursorValueTransformer *trns = [[MCAppliedCursorValueTransformer alloc] init];
-    [NSValueTransformer setValueTransformer:trns forName: (NSString *)MCAppliedCursorValueTransformerName];
-    
+- (void)awakeFromNib {
+    self.tableView.target = self;
+    self.tableView.doubleAction = @selector(doubleClick:);
 }
 
-- (void)_init {
-    self.libraries = [NSMutableArray array];
-    [self addObserver:self forKeyPath:@"appliedLibrary" options:NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:@"appliedCursorField" options:NSKeyValueObservingOptionOld context:nil];
+- (void)_init {    
+    @weakify(self);
+    [RACAble(self.windowController.appliedCursor.library.name) subscribeNext:^(NSString *value) {
+        @strongify(self);
+        NSString *appliedCape = NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape");
+        self.appliedCursorField.stringValue = [appliedCape stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
+    }];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -78,28 +50,6 @@ static NSArray *librarySortDescriptors =  nil;
     }
     
     return self;
-}
-- (void)loadView {
-    [super loadView];
-}
-
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"appliedLibrary"];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"appliedLibrary"]) {
-        MCCursorLibrary *oldLib = change[NSKeyValueChangeOldKey];
-        if (oldLib && ![oldLib isKindOfClass:[NSNull class]])
-            oldLib.applied = NO;
-        
-        self.appliedLibrary.applied = YES;
-    } else if ([keyPath isEqualToString:@"appliedCursorField"]) {
-        NSTextField *oldField = change[NSKeyValueChangeOldKey];
-        [oldField unbind:@"value"];
-
-        [self.appliedCursorField bind:@"value" toObject:self withKeyPath:@"appliedLibrary.name" options:@{ NSValueTransformerNameBindingOption: MCAppliedCursorValueTransformerName }];
-    }
 }
 
 - (void)loadLibraryAtPath:(NSString *)path {
@@ -120,9 +70,14 @@ static NSArray *librarySortDescriptors =  nil;
             continue;
         
         NSString *filePath = [path stringByAppendingPathComponent:fileName];
-        MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfFile:filePath];
-        if (library) {
-            [self addLibrary:library];
+        NSURL *url = [NSURL fileURLWithPath:filePath];
+        MCCursorDocument *document = [[MCCursorDocument alloc] initForURL:url
+                                                        withContentsOfURL:url
+                                                                   ofType:@"cape"
+                                                                    error:nil];
+        
+        if (document) {
+            [self addLibrary:document];
         }
     }
   
@@ -131,29 +86,28 @@ static NSArray *librarySortDescriptors =  nil;
 
 #pragma mark - Library Management
 - (NSError *)addToLibrary:(NSString *)path {
-    MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfFile:path];
+    if ([path.pathExtension.lowercaseString isEqualToString:@"cape"])
+        return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:3 userInfo:@{ NSLocalizedDescriptionKey: @"This is not a cursor document." }];
     
     NSError *error = nil;
+
+    MCCursorDocument *document = [[MCCursorDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] ofType:@"cape" error:&error];
+    if (error)
+        return error;
+    
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[self.libraryPath stringByAppendingPathComponent:library.identifier] stringByAppendingPathExtension:@"cape"];
+    NSString *destinationPath = [[self.libraryPath stringByAppendingPathComponent:document.library.identifier] stringByAppendingPathExtension:@"cape"];
     [manager copyItemAtPath:path toPath:destinationPath error:&error];
     
     if (error != nil) {
         return error;
     }
     
-    // cursor has been copied. load it into our library now
-    [library setValue:[NSURL fileURLWithPath:destinationPath] forKey:@"originalURL"];
+    document.fileURL = [NSURL fileURLWithPath:destinationPath];
     
-    if (library)
-        [self addLibrary:library];
+    [self addLibrary:document];
     
-    else {
-        [manager removeItemAtPath:destinationPath error:nil];
-        return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:1 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Invalid cursor file (%@)", path]}];
-    }
-    
-    NSUInteger idx = [self.libraries indexOfObject:library];
+    NSUInteger idx = [self.windowController.documents indexOfObject:document];
     
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:idx] withAnimation:NSTableViewAnimationSlideDown];
@@ -165,13 +119,13 @@ static NSArray *librarySortDescriptors =  nil;
     
 }
 
-- (NSError *)removeFromLibrary:(MCCursorLibrary *)library {
-    if (![self.libraries containsObject:library])
+- (NSError *)removeFromLibrary:(MCCursorDocument *)library {
+    if (![self.windowController.documents containsObject:library])
         return [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:2 userInfo:@{NSLocalizedDescriptionKey : @"Library is not a member of this controller"}];
     
     NSError *error = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
-    [manager removeItemAtURL:library.originalURL error:&error];
+    [manager removeItemAtURL:library.fileURL error:&error];
     
     if (error != nil) {
         return error;
@@ -182,46 +136,31 @@ static NSArray *librarySortDescriptors =  nil;
     return nil;
 }
 
-- (void)addLibrary:(MCCursorLibrary *)library {
-    if ([[self.libraries valueForKeyPath:@"identifier"] containsObject:library.identifier]) {
-        NSLog(@"A library with the identifier %@ already exists", library.identifier);
+- (void)addLibrary:(MCCursorDocument *)library {
+    if ([[self.windowController.documents valueForKeyPath:@"library.identifier"] containsObject:library.library.identifier]) {
+        NSLog(@"A library with the identifier %@ already exists", library.library.identifier);
         return;
     }
     
-    if (!library.identifier) {
+    if (!library.library.identifier) {
         NSLog(@"Library must contain an identifier");
         return;
     }
     
-    [self.libraries insertObject:library sortedUsingDescriptors:librarySortDescriptors];
+    [self.windowController addDocument:library];
 }
 
-- (void)removeLibrary:(MCCursorLibrary *)library {
-    NSUInteger libraryIndex = [self.libraries indexOfObject:library];
-    if (libraryIndex != NSNotFound) {
-        [self removeObjectFromLibrariesAtIndex:libraryIndex];
-    }
+- (void)removeLibrary:(MCCursorDocument *)library {
+    [self.windowController removeDocument:library];
 }
 
-- (void)removeLibraryAtIndex:(NSUInteger)index {
-    [self removeObjectFromLibrariesAtIndex:index];
-}
-
-- (void)insertObject:(MCCursorLibrary *)library inLibrariesAtIndex:(NSUInteger)index {
-    if (index <= self.libraries.count)
-        [self.libraries insertObject:library atIndex:index];
-}
-
-- (void)removeObjectFromLibrariesAtIndex:(NSUInteger)index {
-    if (index < self.libraries.count)
-        [self.libraries removeObjectAtIndex:index];
-}
-
-- (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-    NSArray *filtered = [self.libraries filteredArrayUsingPredicate:pred];
+- (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"library.identifier == %@", identifier];
+    NSSet *filtered = [self.windowController.documents.set filteredSetUsingPredicate:pred];
+    
     if (filtered.count > 0)
-        return filtered[0];
+        return filtered.anyObject;
+    
     return nil;
 }
 
@@ -234,10 +173,10 @@ static NSArray *librarySortDescriptors =  nil;
         MCTableCellView *cellView = [self.tableView viewAtColumn:0 row:idx makeIfNecessary:NO];
         MCCursorLine *line = cellView.cursorLine;
         
-        __block MCCursorLibrary *objectValue = (MCCursorLibrary *)cellView.objectValue;
+        __weak MCCursorDocument *objectValue = (MCCursorDocument *)cellView.objectValue;
         [line.selectedCursorIndices enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             MCCursor *selectedCursor = [line.dataSource cursorLine:line cursorAtIndex:idx];
-            selectedCursors[[objectValue identifierForCursor:selectedCursor]] = selectedCursor;
+            selectedCursors[[objectValue.library identifierForCursor:selectedCursor]] = selectedCursor;
         }];
         
     }
@@ -289,12 +228,12 @@ static NSArray *librarySortDescriptors =  nil;
         
         NSString *path = [[self.libraryPath stringByAppendingPathComponent:library.identifier] stringByAppendingPathExtension:@"cape"];
         if ([library writeToFile:path atomically:NO]) {
-            [library setValue:[NSURL fileURLWithPath:path] forKey:@"originalURL"];
-            [self addLibrary:library];
+            MCCursorDocument *document = [[MCCursorDocument alloc] initWithType:@"cape" error:nil];
+            document.library = library;
+            document.fileURL = [NSURL fileURLWithPath:path];
+            [self addLibrary:document];
             
             [self.tableView reloadData];
-        } else {
-            
         }
         
     }
@@ -319,7 +258,7 @@ static NSArray *librarySortDescriptors =  nil;
     if (returnCode == NSAlertDefaultReturn) {
         NSUInteger row = (self.tableView.clickedRow != -1) ? self.tableView.clickedRow : self.tableView.selectedRow;
         
-        MCCursorLibrary *selectedLibrary = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+        MCCursorDocument *selectedLibrary = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
         [self removeFromLibrary:selectedLibrary];
         
         MCSetFlag(alert.suppressionButton.state == NSOnState, MCSuppressDeleteLibraryConfirmationKey);
@@ -370,30 +309,56 @@ static NSArray *librarySortDescriptors =  nil;
     }];
 }
 
+- (void)doubleClick:(id)sender {
+    [self.windowController capeAction:self.windowController.currentCursor];
+}
+
 #pragma mark - NSTableViewDelgate
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCTableCellView *cellView = (MCTableCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+    
     [cellView.cursorLine bind:@"animationsEnabled" toObject:[NSUserDefaults standardUserDefaults] withKeyPath:@"MCAnimationsEnabled" options:nil];
-//    cellView.cursorLine.animationsEnabled = NO;
+
+    @weakify(self);
+
+    if (!cellView.appliedDisposable) {
+        RACDisposable *binding = [[[RACSignal combineLatest:@[
+                                                             RACAble(cellView, objectValue),
+                                                             RACAble(self.windowController, appliedCursor)
+                                                             ]
+                                                    reduce:^(id objectValue, MCCursorLibrary *appliedLib) {
+                                                        @strongify(self);
+                                                        return @(objectValue == self.windowController.appliedCursor);
+                                                    }] deliverOn:[RACScheduler mainThreadScheduler]] toProperty:@"applied" onObject:cellView];
+        cellView.appliedDisposable = binding;
+    }
+    cellView.applied = [self tableView:tableView objectValueForTableColumn:tableColumn row:row] == self.windowController.appliedCursor;
+    
     return cellView;
 }
+
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     return nil;
 }
+
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (self.tableView.selectedRow == -1)
-        self.selectedLibrary = nil;
+        self.windowController.currentCursor = nil;
     else {
-        MCCursorLibrary *selectedLibrary = [[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue];
-        self.selectedLibrary = selectedLibrary;
+        MCCursorDocument *selectedLibrary = [[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue];
+        self.windowController.currentCursor = selectedLibrary;
     }
 }
+
 #pragma mark - NSTableViewDataSource
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.libraries.count;
+    return [self.windowController.documents count];
 }
+
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
-    return [self.libraries objectAtIndex:rowIndex];
+    return [self.windowController.documents objectAtIndex:rowIndex];
 }
 
 @end

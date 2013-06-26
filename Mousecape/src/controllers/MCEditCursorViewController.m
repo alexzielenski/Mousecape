@@ -14,7 +14,6 @@
 @end
 
 @implementation MCEditCursorViewController
-@dynamic hotSpotValue, sizeValue;
 
 - (id)init {
     if ((self = [super init])) {
@@ -39,91 +38,34 @@
     return self;
 }
 
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"cursor"];
-}
-
 - (void)_commonInit {
-    [self addObserver:self forKeyPath:@"cursor" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior context:nil];
-    [self addObserver:self forKeyPath:@"cursor.identifier" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"cursor.frameDuration" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"cursor.frameCount" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"cursor.size" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:self forKeyPath:@"cursor.hotSpot" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior | NSKeyValueObservingOptionNew context:nil];
     
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"cursor"]) {
-        BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
-        if (isPrior) {
-            [self.undoManager disableUndoRegistration];
-            
-        } else {
-            self.imageView.image      = self.cursor.imageWithAllReps;
-            self.imageView.sampleSize = self.cursor.size;
-            self.imageView.hotSpot    = self.cursor.hotSpot;
-            
-            [self willChangeValueForKey:@"sizeValue"];
-            [self willChangeValueForKey:@"hotSpotValue"];
-            
-            [self didChangeValueForKey:@"hotSpotValue"];
-            [self didChangeValueForKey:@"sizeValue"];
-            
-            [self.undoManager enableUndoRegistration];
-        }
-    } else {
-        if ([change objectForKey:NSKeyValueChangeOldKey] == [change objectForKey:NSKeyValueChangeNewKey])
-            return;
-        
-        if (![[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue]) {
-            if ([keyPath isEqualToString:@"cursor.hotSpot"] || [keyPath isEqualToString:@"cursor.size"]) {
-                
-                self.imageView.sampleSize = self.cursor.size;
-                self.imageView.hotSpot    = self.cursor.hotSpot;
-                
-                [self didChangeValueForKey:@"hotSpotValue"];
-                [self didChangeValueForKey:@"sizeValue"];
-            }    
-            return;
-        }
-        
-        if (!self.cursor)
-            return;
-        
-        if ([keyPath isEqualToString:@"cursor.hotSpot"] || [keyPath isEqualToString:@"cursor.size"]) {
-            [self willChangeValueForKey:@"sizeValue"];
-            [self willChangeValueForKey:@"hotSpotValue"];
-        }
-        
-        [[self.undoManager prepareWithInvocationTarget:self.cursor] setValue:[change objectForKey:NSKeyValueChangeOldKey] forKey:keyPath.pathExtension];
-        NSString *title   = [NSString stringWithFormat:@"Change %@", [keyPath.pathExtension capitalizedString]];
-        [self.undoManager setActionName:NSLocalizedString(title, @"Undo")];
-    }
+- (void)loadView {
+    [super loadView];
+    
+    RAC(self.imageView.image) = [RACAble(self.cursor.imageWithAllReps) distinctUntilChanged];
+    
+    [self.identifierField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.identifier"];
+    [self.frameCountField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameCount" nilValue:@0];
+    [self.frameDurationField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameDuration" nilValue:@1.0];
+    [self.hotSpotField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.hotSpot"];
+    [self.sizeField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.size"];
+    
+    [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
+    [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
+    
+    
+    @weakify(self);
+    [RACAble(self.imageView.hotSpot) subscribeNext:^(NSValue *x) {
+        @strongify(self);
+        self.cursor.hotSpot = x.pointValue;
+    }];
 }
 
 - (NSUndoManager *)undoManager {
     return self.view.window.undoManager;
-}
-
-- (NSValue *)hotSpotValue {
-    if (self.cursor)
-        return [NSValue valueWithPoint:self.cursor.hotSpot];
-    return [NSValue valueWithPoint:NSZeroPoint];
-}
-
-- (void)setHotSpotValue:(NSValue *)hotSpotValue {
-    self.cursor.hotSpot = hotSpotValue.pointValue;
-}
-
-- (NSValue *)sizeValue {
-    if (self.cursor)
-        return [NSValue valueWithSize:self.cursor.size];
-    return [NSValue valueWithSize:NSZeroSize];
-}
-
-- (void)setSizeValue:(NSValue *)sizeValue {
-    self.cursor.size = sizeValue.sizeValue;
 }
 
 #pragma mark - NSComboBoxDataSource

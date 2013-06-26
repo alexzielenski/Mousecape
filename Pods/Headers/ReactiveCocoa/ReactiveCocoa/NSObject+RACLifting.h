@@ -1,0 +1,1 @@
+../../../ReactiveCocoa/ReactiveCocoaFramework/ReactiveCocoa/NSObject+RACLifting.h
