@@ -2,39 +2,42 @@
 //  MCEditWindowController.m
 //  Mousecape
 //
-//  Created by Alex Zielenski on 2/19/13.
+//  Created by Alex Zielenski on 6/25/13.
 //  Copyright (c) 2013 Alex Zielenski. All rights reserved.
 //
 
 #import "MCEditWindowController.h"
+#import "MCCursorDocument.h"
 
 @interface MCEditWindowController ()
 @property (weak) NSViewController *currentEditViewController;
 - (void)_changeEditViewsForSelection;
 - (void)_replaceViewController:(NSViewController *)original withViewController:(NSViewController *)replacement;
+- (MCCursorDocument *)document;
 @end
 
 @implementation MCEditWindowController
-@dynamic currentLibrary;
 
-- (id)initWithWindow:(NSWindow *)window {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+- (NSString *)windowNibName {
+    return @"EditWindow";
 }
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-
+    
     self.currentEditViewController = self.capeViewController;
     
+    RAC(self.listViewController.cursorLibrary) = RACAbleWithStart(self.document.library);
     [RACAble(self.listViewController.selectedObject) subscribeNext:^(id x) {
         [self _changeEditViewsForSelection];
     }];
 }
+
+- (MCCursorDocument *)document {
+    return (MCCursorDocument *)[super document];
+}
+
+#pragma mark - View Changing
 
 - (void)_changeEditViewsForSelection {
     BOOL capeEditor = [self.listViewController.selectedObject isKindOfClass:[MCCursorLibrary class]];
@@ -52,9 +55,7 @@
         if (self.currentEditViewController != self.cursorViewController) {
             [self _replaceViewController:self.capeViewController withViewController:self.cursorViewController];
         }
-        
-        
-        self.cursorViewController.cursor = self.listViewController.selectedObject;        
+        self.cursorViewController.cursor = self.listViewController.selectedObject;
     }
 }
 
@@ -72,25 +73,14 @@
     self.currentEditViewController = replacement;
 }
 
-#pragma mark - Accessors
-- (MCCursorLibrary *)currentLibrary {
-    return self.listViewController.cursorLibrary;
-}
-
-- (void)setCurrentLibrary:(MCCursorLibrary *)currentLibrary {
-    [self willChangeValueForKey:@"currentLibrary"];
-    self.listViewController.cursorLibrary = currentLibrary;
-    [self didChangeValueForKey:@"currentLibrary"];
-}
-
 #pragma mark - NSSplitViewDelegate
+
 - (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
         return proposedMin + 180.0;
     return proposedMin + 440.0;
 }
 
-//!TODO: Fix the constraint breakage here
 - (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
     if (offset == 0)
         return 180;
@@ -99,6 +89,16 @@
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview {
     return subview == self.listViewController.view;
+}
+
+#pragma mark - NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)notification {
+    [self.document removeWindowController:self];
+}
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return self.document.undoManager;
 }
 
 @end

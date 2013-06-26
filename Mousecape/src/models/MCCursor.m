@@ -54,7 +54,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     cursor.frameCount      = self.frameCount;
     cursor.frameDuration   = self.frameDuration;
     cursor.size            = self.size;
-    //!TODO: Decide if we want to copy these images
     cursor.representations = self.representations.mutableCopy;
     cursor.hotSpot         = self.hotSpot;
     
@@ -195,6 +194,23 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
         [self didChangeValueForKey:@"imageWithAllReps"];
     }
+}
+
+- (BOOL)isEqualTo:(MCCursor *)object {
+    if (![object isKindOfClass:self.class]) {
+        return NO;
+    }
+    
+   BOOL props =  (object.frameCount == self.frameCount &&
+                  object.frameDuration == self.frameDuration &&
+                  NSEqualSizes(object.size, self.size) &&
+                  NSEqualPoints(object.hotSpot, self.hotSpot) &&
+                  [object.identifier isEqualToString:self.identifier] &&
+                  object.parentLibrary == self.parentLibrary);
+    
+    props = ([self.representations isEqualToOrderedSet:object.representations]);
+    
+    return props;
 }
 
 @end

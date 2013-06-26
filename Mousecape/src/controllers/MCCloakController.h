@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MCCursorLibrary.h"
+#import "MCCursorDocument.h"
 
 extern NSString *MCCloakControllerDidApplyCursorNotification;
 extern NSString *MCCloakControllerDidRestoreCursorNotification;
@@ -19,7 +19,7 @@ extern NSString *MCCloakControllerAppliedCursorKey;
 @property (copy)   void(^outputBlock)(NSString *output);
 
 + (MCCloakController *)sharedCloakController;
-- (void)applyCape:(MCCursorLibrary *)cursor;
+- (void)applyCape:(MCCursorDocument *)cursor;
 - (NSString *)convertMightyMouse:(NSString *)mightyMouse;
 - (void)restoreDefaults;
 

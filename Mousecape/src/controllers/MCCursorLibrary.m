@@ -21,7 +21,6 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 
 @interface MCCursorLibrary ()
 @property (readwrite, strong) NSMutableDictionary *cursors;
-@property (readwrite, copy) NSURL *originalURL;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
 
@@ -61,9 +60,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return [self initWithContentsOfURL:[NSURL fileURLWithPath:path]];
 }
 
-- (id)initWithContentsOfURL:(NSURL *)URL {
-    self.originalURL = URL;
-    
+- (id)initWithContentsOfURL:(NSURL *)URL {    
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfURL:URL];
     return [self initWithDictionary:dictionary];
 }
@@ -92,7 +89,6 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     lib.cursors = [[NSMutableDictionary alloc] initWithDictionary:self.cursors copyItems:YES];
     [lib.cursors.allValues makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:lib];
     
-    lib.originalURL      = self.originalURL;
     lib.name             = self.name;
     lib.author           = self.author;
     lib.hiDPI            = self.hiDPI;
@@ -242,5 +238,19 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         [cursor didChangeValueForKey:@"prettyName"];
     }
     [self didChangeValueForKey:@"cursors"];
+}
+
+- (BOOL)isEqualTo:(MCCursorLibrary *)object {
+    if (![object isKindOfClass:self.class]) {
+        return NO;
+    }
+    
+    return ([object.name isEqualToString:self.name] &&
+            [object.author isEqualToString:self.author] &&
+            [object.identifier isEqualToString:self.identifier] &&
+            [object.version isEqualToNumber:self.version] &&
+            object.inCloud == self.inCloud &&
+            object.isHiDPI == self.isHiDPI &&
+            [object.cursors isEqualToDictionary:self.cursors]);
 }
 @end

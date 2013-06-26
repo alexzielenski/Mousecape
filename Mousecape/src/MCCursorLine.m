@@ -52,7 +52,8 @@
             MMAnimatingImageView *im = [[MMAnimatingImageView alloc] init];
             self.imageView = im;
         }
-        __weak MCCursorView *weakSelf = self;
+
+        @weakify(self);
         
         RAC(self.imageView.shouldAnimate) = RACAble(self.parentLine.animationsEnabled);
         RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
@@ -61,7 +62,8 @@
         RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
         
         [RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
-            [weakSelf.parentLine cursorView:weakSelf selected:selected.boolValue];
+            @strongify(self);
+            [self.parentLine cursorView:self selected:selected.boolValue];
         }];
     }
     return self;
@@ -215,9 +217,7 @@
     }
     
     // resize us to fit
-
-    self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.cursorViews.count * self.wellWidth, self.frame.size.height);
-    
+    self.frame = NSMakeRect(self.frame.origin.x, self.frame.origin.y, itemCount * self.wellWidth, self.frame.size.height);
 }
 
 - (NSUInteger)limitedItemCount {

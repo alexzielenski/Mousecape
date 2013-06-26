@@ -8,6 +8,7 @@
 
 #import "MCDetailVewController.h"
 #import "MCCloakController.h"
+#import "MCLibraryWindowController.h"
 #import "CGSCursor.h"
 
 @interface MCDetailVewController ()
@@ -33,25 +34,30 @@
 }
 
 - (void)_commonInit {
-    RAC(self.titleLabel.stringValue) = [RACAble(self.currentLibrary.name) map:^NSString *(NSString *value) {
+    RAC(self.titleLabel.stringValue) = [RACAble(self.windowController.currentCursor.library.name) map:^NSString *(NSString *value) {
         return (value) ? value : NSLocalizedString(@"No Cursor Selected", @"Detail pane, no selection");
     }];
-    RAC(self.authorLabel.stringValue) = [RACAble(self.currentLibrary.author) map:^(NSString *value) {
+    RAC(self.authorLabel.stringValue) = [RACAble(self.windowController.currentCursor.library.author) map:^(NSString *value) {
         return (value) ? value : @"";
     }];
-    RAC(self.versionLabel.objectValue) = [RACAble(self.currentLibrary.version) map:^(NSNumber *value) {
+    RAC(self.versionLabel.objectValue) = [RACAble(self.windowController.currentCursor.library.version) map:^(NSNumber *value) {
         return [NSString stringWithFormat:@"%.01f", value.floatValue];
     }];
 }
 
 - (IBAction)apply:(id)sender {
-    if (!self.currentLibrary)
+    if (!self.windowController.currentCursor)
         return;
     
-    __block MCDetailVewController *blockSelf = self;
+    @weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[MCCloakController sharedCloakController] applyCape:blockSelf.currentLibrary];
+        @strongify(self);
+        [[MCCloakController sharedCloakController] applyCape:self.windowController.currentCursor];
     });
+}
+
+- (IBAction)edit:(id)sender {
+    [self.windowController editCape:self.windowController.currentCursor];
 }
 
 - (IBAction)restore:(id)sender {

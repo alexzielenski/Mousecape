@@ -15,7 +15,7 @@
 		FA139FD916C57A1E00AF6D2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FD816C57A1E00AF6D2E /* main.m */; };
 		FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FA139FDB16C57A1E00AF6D2E /* Credits.rtf */; };
 		FA139FE016C57A1E00AF6D2E /* MCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */; };
-		FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA139FE116C57A1E00AF6D2E /* MainMenu.xib */; };
+		FA139FE316C57A1E00AF6D2E /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA139FE116C57A1E00AF6D2E /* Library.xib */; };
 		FA139FEB16C58CF900AF6D2E /* MCLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */; };
 		FA139FEE16C58D1600AF6D2E /* MCCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FED16C58D1600AF6D2E /* MCCursor.m */; };
 		FA139FF116C58D2B00AF6D2E /* MCCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */; };
@@ -24,12 +24,7 @@
 		FA13A03516C82D1800AF6D2E /* CapeDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03316C82D1800AF6D2E /* CapeDocument.icns */; };
 		FA13A03616C82D1800AF6D2E /* Mousecape.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA13A03416C82D1800AF6D2E /* Mousecape.icns */; };
 		FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */; };
-		FA2022F116DAD36C00B74958 /* MCLovePreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */; };
-		FA2022F216DAD36C00B74958 /* LovePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F016DAD36C00B74958 /* LovePreferences.xib */; };
-		FA2022F416DAD40C00B74958 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F316DAD40C00B74958 /* heart.png */; };
-		FA2022F616DAD4FD00B74958 /* heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F516DAD4FD00B74958 /* heart@2x.png */; };
-		FA2022FA16DAD8AD00B74958 /* MCUpdatePreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */; };
-		FA2022FB16DAD8AD00B74958 /* UpdatePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */; };
+		FA1F516F1779C51700E99127 /* MCActionButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F516E1779C51700E99127 /* MCActionButtonCell.m */; };
 		FA2022FD16DAD91E00B74958 /* software-update.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA2022FC16DAD91E00B74958 /* software-update.icns */; };
 		FA20230216DADB6200B74958 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022FF16DADB6200B74958 /* RBLClipView.m */; };
 		FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA20230116DADB6200B74958 /* RBLScrollView.m */; };
@@ -39,8 +34,6 @@
 		FA2C88EE16CC921D0036CCC2 /* mousecloak in Copy Executables */ = {isa = PBXBuildFile; fileRef = FA92221016C9CB20004E382D /* mousecloak */; };
 		FA2C88F116CC92C30036CCC2 /* MCCloakController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2C88F016CC92C20036CCC2 /* MCCloakController.m */; };
 		FA2C88F216CD7BAD0036CCC2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */; };
-		FA2C88FC16CDB5180036CCC2 /* applied.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2C88F816CDB5180036CCC2 /* applied.png */; };
-		FA2C88FD16CDB5180036CCC2 /* applied@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA2C88F916CDB5180036CCC2 /* applied@2x.png */; };
 		FA3EC58016C9D42700F66CD5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */; };
 		FA3EC58216C9EFAE00F66CD5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */; };
 		FA3EC58716C9FA1900F66CD5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */; };
@@ -49,8 +42,6 @@
 		FA92221616C9CB20004E382D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA92221516C9CB20004E382D /* main.m */; };
 		FA92221A16C9CB20004E382D /* mousecloak.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA92221916C9CB20004E382D /* mousecloak.1 */; };
 		FA967A4C16DAEBC500A8A621 /* MCFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = FA967A4B16DAEBC500A8A621 /* MCFormatters.m */; };
-		FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05A816D4138A000732AA /* MCEditWindowController.m */; };
-		FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05A916D4138A000732AA /* EditWindow.xib */; };
 		FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B016D42404000732AA /* MCEditListViewController.m */; };
 		FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05B316D42801000732AA /* MCEditCursorViewController.m */; };
 		FA9D05B616D42801000732AA /* EditCursor.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9D05B416D42801000732AA /* EditCursor.xib */; };
@@ -58,12 +49,16 @@
 		FA9D05BC16D44019000732AA /* NSImage+BestRep.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05BB16D44019000732AA /* NSImage+BestRep.m */; };
 		FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */; };
 		FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9D05C116D45182000732AA /* MCEditCapeViewController.m */; };
+		FAA85FA0177926A200397D11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAA85F9F177926A200397D11 /* Images.xcassets */; };
 		FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */; };
 		FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB5E8CB16C85F4600B41654 /* CursorMap.plist */; };
 		FAB5E8D216C872B200B41654 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB5E8D116C872B200B41654 /* QuartzCore.framework */; };
 		FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */; };
-		FAD5D28516D1781500DD4302 /* HD.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28316D1781500DD4302 /* HD.png */; };
-		FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD5D28416D1781500DD4302 /* HD@2x.png */; };
+		FAD3984F177A14B700DEFF87 /* MCCursorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD3984D177A14B700DEFF87 /* MCCursorDocument.m */; };
+		FAD39850177A14B700DEFF87 /* EditWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD3984E177A14B700DEFF87 /* EditWindow.xib */; };
+		FAD39853177A2FA400DEFF87 /* MCLibraryWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD39852177A2FA400DEFF87 /* MCLibraryWindowController.m */; };
+		FAD39855177A35A800DEFF87 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD39854177A35A800DEFF87 /* MainMenu.xib */; };
+		FAD39858177A449100DEFF87 /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD39857177A449100DEFF87 /* MCEditWindowController.m */; };
 		FAFC2D0A16DC0B2500EBB128 /* libToolPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC2D0916DC0B2500EBB128 /* libToolPods.a */; };
 /* End PBXBuildFile section */
 
@@ -122,7 +117,7 @@
 		FA139FDC16C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FA139FDE16C57A1E00AF6D2E /* MCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCAppDelegate.h; sourceTree = "<group>"; };
 		FA139FDF16C57A1E00AF6D2E /* MCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCAppDelegate.m; sourceTree = "<group>"; };
-		FA139FE216C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FA139FE216C57A1E00AF6D2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Library.xib; sourceTree = "<group>"; };
 		FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLibraryViewController.h; sourceTree = "<group>"; };
 		FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLibraryViewController.m; sourceTree = "<group>"; };
 		FA139FEC16C58D1600AF6D2E /* MCCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursor.h; path = src/models/MCCursor.h; sourceTree = "<group>"; };
@@ -137,14 +132,8 @@
 		FA13A03416C82D1800AF6D2E /* Mousecape.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Mousecape.icns; path = resources/Mousecape.icns; sourceTree = "<group>"; };
 		FA13A03816C82E5500AF6D2E /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		FA13A03916C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
-		FA2022EE16DAD36C00B74958 /* MCLovePreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLovePreferencesViewController.h; path = src/controllers/MCLovePreferencesViewController.h; sourceTree = "<group>"; };
-		FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLovePreferencesViewController.m; path = src/controllers/MCLovePreferencesViewController.m; sourceTree = "<group>"; };
-		FA2022F016DAD36C00B74958 /* LovePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LovePreferences.xib; path = src/controllers/LovePreferences.xib; sourceTree = "<group>"; };
-		FA2022F316DAD40C00B74958 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
-		FA2022F516DAD4FD00B74958 /* heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@2x.png"; sourceTree = "<group>"; };
-		FA2022F716DAD8AC00B74958 /* MCUpdatePreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCUpdatePreferencesViewController.h; path = src/controllers/MCUpdatePreferencesViewController.h; sourceTree = "<group>"; };
-		FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCUpdatePreferencesViewController.m; path = src/controllers/MCUpdatePreferencesViewController.m; sourceTree = "<group>"; };
-		FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdatePreferences.xib; path = src/controllers/UpdatePreferences.xib; sourceTree = "<group>"; };
+		FA1F516D1779C51700E99127 /* MCActionButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCActionButtonCell.h; path = src/views/MCActionButtonCell.h; sourceTree = "<group>"; };
+		FA1F516E1779C51700E99127 /* MCActionButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCActionButtonCell.m; path = src/views/MCActionButtonCell.m; sourceTree = "<group>"; };
 		FA2022FC16DAD91E00B74958 /* software-update.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "software-update.icns"; sourceTree = "<group>"; };
 		FA2022FE16DADB6200B74958 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBLClipView.h; path = Mousecape/src/views/RBLClipView.h; sourceTree = SOURCE_ROOT; };
 		FA2022FF16DADB6200B74958 /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBLClipView.m; path = Mousecape/src/views/RBLClipView.m; sourceTree = SOURCE_ROOT; };
@@ -157,8 +146,6 @@
 		FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralPreferences.xib; path = src/controllers/GeneralPreferences.xib; sourceTree = "<group>"; };
 		FA2C88EF16CC92C20036CCC2 /* MCCloakController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCloakController.h; path = src/controllers/MCCloakController.h; sourceTree = "<group>"; };
 		FA2C88F016CC92C20036CCC2 /* MCCloakController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCloakController.m; path = src/controllers/MCCloakController.m; sourceTree = "<group>"; };
-		FA2C88F816CDB5180036CCC2 /* applied.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applied.png; sourceTree = "<group>"; };
-		FA2C88F916CDB5180036CCC2 /* applied@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "applied@2x.png"; sourceTree = "<group>"; };
 		FA3EC57D16C9D31A00F66CD5 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = Pods/build/Release/libPods.a; sourceTree = "<group>"; };
 		FA3EC57F16C9D42700F66CD5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -189,9 +176,6 @@
 		FA92223016C9CD0D004E382D /* CGSWorkspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
 		FA967A4A16DAEBC500A8A621 /* MCFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCFormatters.h; sourceTree = "<group>"; };
 		FA967A4B16DAEBC500A8A621 /* MCFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCFormatters.m; sourceTree = "<group>"; };
-		FA9D05A716D4138A000732AA /* MCEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditWindowController.h; path = src/controllers/MCEditWindowController.h; sourceTree = "<group>"; };
-		FA9D05A816D4138A000732AA /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = src/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
-		FA9D05A916D4138A000732AA /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/controllers/EditWindow.xib; sourceTree = "<group>"; };
 		FA9D05AF16D42404000732AA /* MCEditListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditListViewController.h; path = src/controllers/MCEditListViewController.h; sourceTree = "<group>"; };
 		FA9D05B016D42404000732AA /* MCEditListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditListViewController.m; path = src/controllers/MCEditListViewController.m; sourceTree = "<group>"; };
 		FA9D05B216D42801000732AA /* MCEditCursorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditCursorViewController.h; path = src/controllers/MCEditCursorViewController.h; sourceTree = "<group>"; };
@@ -205,14 +189,21 @@
 		FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryRowView.m; path = src/views/MCLibraryRowView.m; sourceTree = "<group>"; };
 		FA9D05C016D45182000732AA /* MCEditCapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditCapeViewController.h; path = src/controllers/MCEditCapeViewController.h; sourceTree = "<group>"; };
 		FA9D05C116D45182000732AA /* MCEditCapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditCapeViewController.m; path = src/controllers/MCEditCapeViewController.m; sourceTree = "<group>"; };
+		FAA85F9F177926A200397D11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMAnimatingImageView.h; path = src/views/MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMAnimatingImageView.m; path = src/views/MMAnimatingImageView.m; sourceTree = "<group>"; };
 		FAB5E8CB16C85F4600B41654 /* CursorMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CursorMap.plist; path = resources/CursorMap.plist; sourceTree = "<group>"; };
 		FAB5E8D116C872B200B41654 /* QuartzCore.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSpriteLayer.h; path = src/views/MCSpriteLayer.h; sourceTree = "<group>"; };
 		FAB5E8D416C872C800B41654 /* MCSpriteLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCSpriteLayer.m; path = src/views/MCSpriteLayer.m; sourceTree = "<group>"; };
-		FAD5D28316D1781500DD4302 /* HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HD.png; sourceTree = "<group>"; };
-		FAD5D28416D1781500DD4302 /* HD@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD@2x.png"; sourceTree = "<group>"; };
+		FAD3984C177A14B700DEFF87 /* MCCursorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursorDocument.h; path = src/models/MCCursorDocument.h; sourceTree = "<group>"; };
+		FAD3984D177A14B700DEFF87 /* MCCursorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorDocument.m; path = src/models/MCCursorDocument.m; sourceTree = "<group>"; };
+		FAD3984E177A14B700DEFF87 /* EditWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditWindow.xib; path = src/models/EditWindow.xib; sourceTree = "<group>"; };
+		FAD39851177A2FA400DEFF87 /* MCLibraryWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLibraryWindowController.h; path = src/controllers/MCLibraryWindowController.h; sourceTree = "<group>"; };
+		FAD39852177A2FA400DEFF87 /* MCLibraryWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryWindowController.m; path = src/controllers/MCLibraryWindowController.m; sourceTree = "<group>"; };
+		FAD39854177A35A800DEFF87 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		FAD39856177A449100DEFF87 /* MCEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditWindowController.h; path = src/controllers/MCEditWindowController.h; sourceTree = "<group>"; };
+		FAD39857177A449100DEFF87 /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = src/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
 		FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPreferences.h; sourceTree = "<group>"; };
 		FAFC2D0916DC0B2500EBB128 /* libToolPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libToolPods.a; path = Pods/build/Release/libToolPods.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -303,12 +294,11 @@
 				FA9D05AE16D423E8000732AA /* Controllers */,
 				FA9D05AD16D423D7000732AA /* Models */,
 				FA9D05AC16D423CD000732AA /* Views */,
-				FA9D05A916D4138A000732AA /* EditWindow.xib */,
-				FA2022F916DAD8AD00B74958 /* UpdatePreferences.xib */,
+				FAD3984E177A14B700DEFF87 /* EditWindow.xib */,
 				FA9D05B416D42801000732AA /* EditCursor.xib */,
-				FA2022F016DAD36C00B74958 /* LovePreferences.xib */,
 				FA2C88DD16CC87680036CCC2 /* GeneralPreferences.xib */,
-				FA139FE116C57A1E00AF6D2E /* MainMenu.xib */,
+				FA139FE116C57A1E00AF6D2E /* Library.xib */,
+				FAD39854177A35A800DEFF87 /* MainMenu.xib */,
 				FA139FD316C57A1E00AF6D2E /* Supporting Files */,
 			);
 			path = Mousecape;
@@ -317,6 +307,7 @@
 		FA139FD316C57A1E00AF6D2E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FAA85F9F177926A200397D11 /* Images.xcassets */,
 				FA2C88F716CDB5180036CCC2 /* images */,
 				FA13A03316C82D1800AF6D2E /* CapeDocument.icns */,
 				FAB5E8CB16C85F4600B41654 /* CursorMap.plist */,
@@ -349,12 +340,6 @@
 		FA2C88F716CDB5180036CCC2 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				FA2022F316DAD40C00B74958 /* heart.png */,
-				FA2022F516DAD4FD00B74958 /* heart@2x.png */,
-				FAD5D28316D1781500DD4302 /* HD.png */,
-				FAD5D28416D1781500DD4302 /* HD@2x.png */,
-				FA2C88F816CDB5180036CCC2 /* applied.png */,
-				FA2C88F916CDB5180036CCC2 /* applied@2x.png */,
 				FA2022FC16DAD91E00B74958 /* software-update.icns */,
 			);
 			name = images;
@@ -426,6 +411,8 @@
 			children = (
 				FA139FF216C58EF400AF6D2E /* MCCursorLine.h */,
 				FA139FF316C58EF500AF6D2E /* MCCursorLine.m */,
+				FA1F516D1779C51700E99127 /* MCActionButtonCell.h */,
+				FA1F516E1779C51700E99127 /* MCActionButtonCell.m */,
 				FAB5E8C416C843ED00B41654 /* MMAnimatingImageView.h */,
 				FAB5E8C516C843ED00B41654 /* MMAnimatingImageView.m */,
 				FAB5E8D316C872C800B41654 /* MCSpriteLayer.h */,
@@ -447,6 +434,8 @@
 				FA139FED16C58D1600AF6D2E /* MCCursor.m */,
 				FA139FEF16C58D2B00AF6D2E /* MCCursorLibrary.h */,
 				FA139FF016C58D2B00AF6D2E /* MCCursorLibrary.m */,
+				FAD3984C177A14B700DEFF87 /* MCCursorDocument.h */,
+				FAD3984D177A14B700DEFF87 /* MCCursorDocument.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -454,8 +443,8 @@
 		FA9D05AE16D423E8000732AA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FA9D05A716D4138A000732AA /* MCEditWindowController.h */,
-				FA9D05A816D4138A000732AA /* MCEditWindowController.m */,
+				FAD39856177A449100DEFF87 /* MCEditWindowController.h */,
+				FAD39857177A449100DEFF87 /* MCEditWindowController.m */,
 				FA9D05AF16D42404000732AA /* MCEditListViewController.h */,
 				FA9D05B016D42404000732AA /* MCEditListViewController.m */,
 				FA9D05B216D42801000732AA /* MCEditCursorViewController.h */,
@@ -464,10 +453,8 @@
 				FA9D05C116D45182000732AA /* MCEditCapeViewController.m */,
 				FA2C88DB16CC87680036CCC2 /* MCGeneralPreferencesViewController.h */,
 				FA2C88DC16CC87680036CCC2 /* MCGeneralPreferencesViewController.m */,
-				FA2022EE16DAD36C00B74958 /* MCLovePreferencesViewController.h */,
-				FA2022EF16DAD36C00B74958 /* MCLovePreferencesViewController.m */,
-				FA2022F716DAD8AC00B74958 /* MCUpdatePreferencesViewController.h */,
-				FA2022F816DAD8AD00B74958 /* MCUpdatePreferencesViewController.m */,
+				FAD39851177A2FA400DEFF87 /* MCLibraryWindowController.h */,
+				FAD39852177A2FA400DEFF87 /* MCLibraryWindowController.m */,
 				FA139FE916C58CF900AF6D2E /* MCLibraryViewController.h */,
 				FA139FEA16C58CF900AF6D2E /* MCLibraryViewController.m */,
 				FA9221F016C91930004E382D /* MCDetailVewController.h */,
@@ -525,7 +512,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MC;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Alex Zielenski";
 			};
 			buildConfigurationList = FA139FC216C57A1E00AF6D2E /* Build configuration list for PBXProject "Mousecape" */;
@@ -553,22 +540,16 @@
 			files = (
 				FA139FD716C57A1E00AF6D2E /* InfoPlist.strings in Resources */,
 				FA139FDD16C57A1E00AF6D2E /* Credits.rtf in Resources */,
-				FA139FE316C57A1E00AF6D2E /* MainMenu.xib in Resources */,
+				FA139FE316C57A1E00AF6D2E /* Library.xib in Resources */,
 				FA13A03516C82D1800AF6D2E /* CapeDocument.icns in Resources */,
+				FAD39850177A14B700DEFF87 /* EditWindow.xib in Resources */,
 				FA13A03616C82D1800AF6D2E /* Mousecape.icns in Resources */,
 				FAB5E8CC16C85F4600B41654 /* CursorMap.plist in Resources */,
 				FA2C88DF16CC87680036CCC2 /* GeneralPreferences.xib in Resources */,
-				FA2C88FC16CDB5180036CCC2 /* applied.png in Resources */,
-				FA2C88FD16CDB5180036CCC2 /* applied@2x.png in Resources */,
-				FAD5D28516D1781500DD4302 /* HD.png in Resources */,
-				FAD5D28616D1781500DD4302 /* HD@2x.png in Resources */,
-				FA9D05AB16D4138A000732AA /* EditWindow.xib in Resources */,
 				FA9D05B616D42801000732AA /* EditCursor.xib in Resources */,
-				FA2022F216DAD36C00B74958 /* LovePreferences.xib in Resources */,
-				FA2022F416DAD40C00B74958 /* heart.png in Resources */,
-				FA2022F616DAD4FD00B74958 /* heart@2x.png in Resources */,
-				FA2022FB16DAD8AD00B74958 /* UpdatePreferences.xib in Resources */,
+				FAA85FA0177926A200397D11 /* Images.xcassets in Resources */,
 				FA2022FD16DAD91E00B74958 /* software-update.icns in Resources */,
+				FAD39855177A35A800DEFF87 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,21 +586,22 @@
 				FA13A00816C81E4D00AF6D2E /* MCTableCellView.m in Sources */,
 				FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */,
 				FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */,
+				FAD39858177A449100DEFF87 /* MCEditWindowController.m in Sources */,
 				FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */,
 				FA9221F216C91930004E382D /* MCDetailVewController.m in Sources */,
 				FA2C88DE16CC87680036CCC2 /* MCGeneralPreferencesViewController.m in Sources */,
 				FA2C88F116CC92C30036CCC2 /* MCCloakController.m in Sources */,
+				FAD39853177A2FA400DEFF87 /* MCLibraryWindowController.m in Sources */,
 				FA0CB45616D05CE7006C239D /* NSArray+CWSortedInsert.m in Sources */,
 				FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */,
-				FA9D05AA16D4138A000732AA /* MCEditWindowController.m in Sources */,
 				FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */,
 				FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */,
+				FAD3984F177A14B700DEFF87 /* MCCursorDocument.m in Sources */,
 				FA9D05B916D42B7C000732AA /* MCScaledImageView.m in Sources */,
 				FA9D05BC16D44019000732AA /* NSImage+BestRep.m in Sources */,
+				FA1F516F1779C51700E99127 /* MCActionButtonCell.m in Sources */,
 				FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */,
 				FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */,
-				FA2022F116DAD36C00B74958 /* MCLovePreferencesViewController.m in Sources */,
-				FA2022FA16DAD8AD00B74958 /* MCUpdatePreferencesViewController.m in Sources */,
 				FA20230216DADB6200B74958 /* RBLClipView.m in Sources */,
 				FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */,
 				FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */,
@@ -662,12 +644,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		FA139FE116C57A1E00AF6D2E /* MainMenu.xib */ = {
+		FA139FE116C57A1E00AF6D2E /* Library.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FA139FE216C57A1E00AF6D2E /* en */,
 			);
-			name = MainMenu.xib;
+			name = Library.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -677,7 +659,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -709,7 +690,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

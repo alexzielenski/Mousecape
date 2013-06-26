@@ -32,17 +32,8 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     return [bndl pathForAuxiliaryExecutable:@"mousecloak"];
 }
 
-- (void)applyCape:(MCCursorLibrary *)cursor {
-    NSString *cursorPath = cursor.originalURL.path;
-    
-    if (!cursor.originalURL ) {
-        cursorPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:cursor.identifier] stringByAppendingPathExtension:@"cape"];
-        
-        if (![cursor writeToFile:cursorPath atomically:NO]) {
-            NSLog(@"Failed to write cape to disk to apply");
-            return;
-        }
-    }
+- (void)applyCape:(MCCursorDocument *)cursor {
+    NSString *cursorPath = cursor.fileURL.path;
 
     NSPipe *pipe = [NSPipe pipe];
     
@@ -60,7 +51,7 @@ NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAp
     [task launch];
     [task waitUntilExit];
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         
         [[NSCursor dragCopyCursor] set];
         [[NSCursor arrowCursor] push];

@@ -30,7 +30,6 @@
 - (NSDictionary *)dictionaryRepresentation;
 
 - (NSString *)prettyName;
-
 @end
 
 @interface MCCursor (Properties)

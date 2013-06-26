@@ -48,8 +48,8 @@
     RAC(self.imageView.image) = [RACAble(self.cursor.imageWithAllReps) distinctUntilChanged];
     
     [self.identifierField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.identifier"];
-    [self.frameCountField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameCount"];
-    [self.frameDurationField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameDuration"];
+    [self.frameCountField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameCount" nilValue:@0];
+    [self.frameDurationField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameDuration" nilValue:@1.0];
     [self.hotSpotField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.sizeField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.size"];
     
@@ -57,10 +57,10 @@
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
     
     
-    __block MCEditCursorViewController *blockSelf = self;
-    
+    @weakify(self);
     [RACAble(self.imageView.hotSpot) subscribeNext:^(NSValue *x) {
-        blockSelf.cursor.hotSpot = x.pointValue;
+        @strongify(self);
+        self.cursor.hotSpot = x.pointValue;
     }];
 }
 

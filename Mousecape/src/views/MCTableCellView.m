@@ -7,6 +7,7 @@
 //
 
 #import "MCTableCellView.h"
+#import "MCCursorDocument.h"
 
 @interface MCTableCellView ()
 - (void)_initialize;
@@ -40,28 +41,42 @@
 }
 
 - (void)viewDidMoveToWindow {
-    __weak MCTableCellView *weakSelf = self;
+    @weakify(self);
     
     RAC(self.cursorLine.dataSource) = [RACSignal return:self];
-    weakSelf.appliedView.hidden = !weakSelf.applied;
-
-    [RACAble(self.applied) subscribeNext:^(id x) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.appliedView.hidden = !weakSelf.applied;
-            [weakSelf layout];
-        });
+    [self.textField rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
+    [[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+        @strongify(self);
+        if (self.backgroundStyle == NSBackgroundStyleDark)
+            self.hdView.image = [NSImage imageNamed:@"HD-alt"];
+        else
+            self.hdView.image = [NSImage imageNamed:@"HD"];
     }];
+    
 }
 
 - (void)layout {
-    [super layout];    
-    BOOL applied = self.applied;
-
-    if (!applied) {
-        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width), self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+#define SIDESPACING 14.0
+#define ITEMSPACING 8.0
+    
+    if (self.hdView.isHidden) {
+        NSRect frame = self.appliedView.frame;
+        frame.origin.x = self.frame.size.width - SIDESPACING - frame.size.width;
+        
+        self.appliedView.frame = frame;
     } else {
-        self.hdView.frame = NSMakeRect(self.bounds.size.width - self.hdView.frame.size.width - (self.bounds.size.width - self.appliedView.frame.origin.x - self.appliedView.frame.size.width) - 8 - self.appliedView.frame.size.width, self.hdView.frame.origin.y, self.hdView.frame.size.width, self.hdView.frame.size.height);
+        NSRect frame = self.appliedView.frame;
+        NSRect hdFrame = self.hdView.frame;
+        
+        hdFrame.origin.x = self.frame.size.width - SIDESPACING - hdFrame.size.width;
+        frame.origin.x   = hdFrame.origin.x - ITEMSPACING - frame.size.width;
+        
+        self.hdView.frame = hdFrame;
+        self.appliedView.frame = frame;
     }
+    
+    [super layout];
+    
 }
 
 #pragma mark - MCCursorLineDataSource

@@ -53,7 +53,7 @@
     self.shouldDrawBezel = YES;
     self.shouldDragToRemove = YES;
 
-    __weak MCScaledImageView *weakSelf = self;
+    @weakify(self);
     [[RACSignal merge:@[
       RACAble(self.scale),
       RACAble(self.sampleSize),
@@ -61,7 +61,8 @@
       RACAble(self.image),
       RACAble(self.shouldDrawBezel)
       ]] subscribeNext:^(id x) {
-        [weakSelf setNeedsDisplay:YES];
+        @strongify(self);
+        [self setNeedsDisplay:YES];
     }];
     
 }

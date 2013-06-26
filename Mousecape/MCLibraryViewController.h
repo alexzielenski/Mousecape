@@ -7,12 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCCursorDocument.h"
+#import "MCLibraryViewController.h"
+#import "MCDetailVewController.h"
 
-@class MCCursorLibrary;
+@class MCLibraryWindowController;
 @interface MCLibraryViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 @property (weak) IBOutlet NSTableView *tableView;
-@property (weak) MCCursorLibrary *selectedLibrary;
-@property (weak) MCCursorLibrary *appliedLibrary;
+@property (weak) MCLibraryWindowController *windowController;
 
 // accessory
 @property (weak) IBOutlet NSTextField *appliedCursorField;
@@ -20,22 +22,17 @@
 - (void)loadLibraryAtPath:(NSString *)path;
 
 - (NSError *)addToLibrary:(NSString *)path;
-- (NSError *)removeFromLibrary:(MCCursorLibrary *)library;
+- (NSError *)removeFromLibrary:(MCCursorDocument *)library;
 
-- (void)addLibrary:(MCCursorLibrary *)library;
-- (void)removeLibrary:(MCCursorLibrary *)library;
-- (void)removeLibraryAtIndex:(NSUInteger)index;
+- (void)addLibrary:(MCCursorDocument *)library;
+- (void)removeLibrary:(MCCursorDocument *)library;
 
-- (MCCursorLibrary *)libraryWithIdentifier:(NSString *)identifier;
+- (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier;
 
 - (IBAction)createSidekick:(id)sender;
 - (IBAction)removeCape:(id)sender;
 - (IBAction)importMightyMouse:(id)sender;
 - (IBAction)importCape:(id)sender;
+- (IBAction)doubleClick:(id)sender;
 
 @end
-
-@interface MCLibraryViewController (Properties)
-@property (readonly, strong) NSOrderedSet *libraries;
-@end
-

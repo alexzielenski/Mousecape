@@ -7,22 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MCLibraryViewController.h"
-#import "MCDetailVewController.h"
-#import "MCEditWindowController.h"
+#import "MCLibraryWindowController.h"
 
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
-
-@property (assign) IBOutlet MCLibraryViewController *libraryController;
-@property (assign) IBOutlet MCDetailVewController *detailController;
-@property (strong) MCEditWindowController *editWindowController;
 @property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSTextField *accessory;
 @property (strong) NSWindowController *preferencesWindowController;
-
-- (void)composeAccessory;
+@property (strong) MCLibraryWindowController *libraryWindowController;
 - (IBAction)showPreferences:(NSMenuItem *)sender;
-- (IBAction)editCursor:(id)sender;
-- (IBAction)doubleClick:(id)sender;
-
 @end
