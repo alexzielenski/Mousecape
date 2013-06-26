@@ -39,14 +39,12 @@
 #import <ReactiveCocoa/RACObservablePropertySubject.h>
 
 #ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-//#import <ReactiveCocoa/EXTKeyPathCoding.h>
-#import <libextobjc/EXTKeyPathCoding.h>
+#import <EXTKeyPathCoding.h>
 #import <ReactiveCocoa/UIControl+RACSignalSupport.h>
 #import <ReactiveCocoa/UITextField+RACSignalSupport.h>
 #import <ReactiveCocoa/UITextView+RACSignalSupport.h>
 #elif TARGET_OS_MAC
-//#import <ReactiveCocoa/EXTKeyPathCoding.h>
-#import <libextobjc/EXTKeyPathCoding.h>
+#import <EXTKeyPathCoding.h>
 #import <ReactiveCocoa/NSButton+RACCommandSupport.h>
 #import <ReactiveCocoa/NSObject+RACAppKitBindings.h>
 #endif
