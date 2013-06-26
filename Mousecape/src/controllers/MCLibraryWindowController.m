@@ -13,7 +13,7 @@
 
 @interface MCLibraryWindowController ()
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *documents;
-@property (strong) MCEditWindowController *editWindowController;
+//@property (strong) MCEditWindowController *editWindowController;
 @property (strong) NSArray *librarySortDescriptors;
 - (void)composeAccessory;
 
@@ -117,8 +117,10 @@
         return;
     
     [self.documents addObject:doc];
-    
+//    [doc addWindowController:self];
     [self.documents sortUsingDescriptors:self.librarySortDescriptors];
+    
+    [self.libraryController.tableView reloadData];
 }
 
 - (void)removeDocument:(MCCursorDocument *)document {
@@ -141,18 +143,31 @@
     BOOL shouldApply = [NSUserDefaults.standardUserDefaults integerForKey:MCPreferencesAppliedClickActionKey] == 0;
     
     if (shouldApply) {
-        [self.detailController apply:self];
+        [self applyCape:cape];
     } else {
         [self editCape:cape];
     }
 }
 
-- (void)editCape:(MCCursorDocument *)cape {
-    if (!self.editWindowController)
-        self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
+- (void)applyCape:(MCCursorDocument *)cape {
+    if (!cape)
+        return;
     
-    [cape addWindowController:self.editWindowController];
-    [self.editWindowController showWindow:self];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[MCCloakController sharedCloakController] applyCape:cape];
+    });
+}
+
+- (void)editCape:(MCCursorDocument *)cape {
+    if (!cape)
+        return;
+    
+    if (!cape.editWindowController)
+        cape.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"EditWindow"];
+    
+    [cape addWindowController:cape.editWindowController];
+    [[NSDocumentController sharedDocumentController] addDocument:cape];
+    [cape showWindows];
 }
 
 #pragma mark - NSWindowDelegate

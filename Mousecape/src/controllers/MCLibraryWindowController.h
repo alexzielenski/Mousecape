@@ -20,7 +20,11 @@
 
 - (void)addDocument:(MCCursorDocument *)document;
 - (void)removeDocument:(MCCursorDocument *)document;
+
+// Asks preferences what to do on double click, apply or edit
 - (void)capeAction:(MCCursorDocument *)cape;
+
+- (void)applyCape:(MCCursorDocument *)cape;
 - (void)editCape:(MCCursorDocument *)cape;
 
 @end

@@ -93,9 +93,7 @@ static void *MCCursorDocumentContext;
     if (outError) {
         *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
     }
-    
-    [self.undoManager removeAllActions];
-    
+        
     [self.undoManager disableUndoRegistration];
     self.library = [[MCCursorLibrary alloc] initWithContentsOfURL:absoluteURL];
     [self.undoManager enableUndoRegistration];
@@ -108,11 +106,15 @@ static void *MCCursorDocumentContext;
 }
 
 + (BOOL)autosavesInPlace {
-    return YES;
+    return NO;
 }
 
 - (BOOL)hasUndoManager {
     return YES;
+}
+
+- (NSString *)displayName {
+    return self.library.name;
 }
 
 #pragma mark - Wrapper

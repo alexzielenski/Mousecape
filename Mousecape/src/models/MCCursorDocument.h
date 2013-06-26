@@ -12,6 +12,12 @@
 
 @interface MCCursorDocument : NSDocument
 @property (strong) MCCursorLibrary *library;
+@property (strong) NSWindowController *editWindowController;
+
+- (IBAction)apply:(id)sender;
+- (IBAction)edit:(id)sender;
+
+
 
 #pragma mark - Wrapper
 //- (NSString *)name;

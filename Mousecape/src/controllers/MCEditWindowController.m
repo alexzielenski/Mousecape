@@ -37,6 +37,10 @@
     return (MCCursorDocument *)[super document];
 }
 
+- (void)saveDocument:(id)sender {
+    [self.document saveDocument:self];
+}
+
 #pragma mark - View Changing
 
 - (void)_changeEditViewsForSelection {
@@ -94,7 +98,7 @@
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
-    [self.document removeWindowController:self];
+//    [self.document removeWindowController:self];
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {

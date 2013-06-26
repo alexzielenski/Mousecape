@@ -49,11 +49,7 @@
     if (!self.windowController.currentCursor)
         return;
     
-    @weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        @strongify(self);
-        [[MCCloakController sharedCloakController] applyCape:self.windowController.currentCursor];
-    });
+    [self.windowController applyCape:self.windowController.currentCursor];
 }
 
 - (IBAction)edit:(id)sender {
