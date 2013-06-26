@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <libextobjc/metamacros.h>
+#import <metamacros.h>
 
 @class RACSequence;
 

@@ -9,8 +9,7 @@
 #import "NSTask+RACSupport.h"
 #import "NSFileHandle+RACSupport.h"
 #import "NSNotificationCenter+RACSupport.h"
-//#import <ReactiveCocoa/EXTScope.h>
-#import <libextobjc/EXTScope.h>
+#import <EXTScope.h>
 
 NSString * const NSTaskRACSupportErrorDomain = @"NSTaskRACSupportErrorDomain";
 

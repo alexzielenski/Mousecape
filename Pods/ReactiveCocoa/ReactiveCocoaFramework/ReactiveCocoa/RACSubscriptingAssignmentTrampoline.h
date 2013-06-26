@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import <ReactiveCocoa/EXTKeyPathCoding.h>
-#import <libextobjc/EXTKeyPathCoding.h>
+#import <EXTKeyPathCoding.h>
 #import <ReactiveCocoa/NSObject+RACPropertySubscribing.h>
 
 // Lets you assign a keypath / property to a signal. The value of the keypath or
