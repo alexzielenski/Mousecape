@@ -10,36 +10,10 @@
 #import "MCCursorDocument.h"
 
 @interface MCTableCellView ()
-- (void)_initialize;
+@property (nonatomic, strong) NSArray *sortedValues;
 @end
 
 @implementation MCTableCellView
-- (void)_initialize {
-}
-
-- (id)init {
-    if ((self = [super init])) {
-        [self _initialize];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(NSRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self _initialize];
-    }
-    
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)decoder {
-    if ((self = [super initWithCoder:decoder])) {
-        [self _initialize];
-    }
-    return self;
-}
-
 - (void)viewDidMoveToWindow {
     @weakify(self);
     
@@ -49,7 +23,7 @@
     }];
     
     [self.textField rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
-    [[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+    [[RACAbleWithStart(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
         @strongify(self);
         if (self.backgroundStyle == NSBackgroundStyleDark)
             self.hdView.image = [NSImage imageNamed:@"HD-alt"];
@@ -57,11 +31,24 @@
             self.hdView.image = [NSImage imageNamed:@"HD"];
     }];
     
+    [RACAbleWithStart(self.objectValue.library.cursors) subscribeNext:^(NSDictionary *cursors) {
+        @strongify(self);
+        self.sortedValues = [cursors.allValues sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
+        
+        [self.cursorLine reloadData];
+    }];
+    
+}
+
+- (MCCursorDocument *)objectValue {
+    return (MCCursorDocument *)[super objectValue];
 }
 
 - (void)layout {
 #define SIDESPACING 14.0
 #define ITEMSPACING 8.0
+    
+    [super layout];
     
     if (self.hdView.isHidden) {
         NSRect frame = self.appliedView.frame;
@@ -78,19 +65,16 @@
         self.hdView.frame = hdFrame;
         self.appliedView.frame = frame;
     }
-    
-    [super layout];
-    
 }
 
 #pragma mark - MCCursorLineDataSource
 - (NSUInteger)numberOfCursorsInLine:(MCCursorLine *)cursorLine {
-    return [[self.objectValue valueForKeyPath:@"cursors"] count];
+    return self.sortedValues.count;
 }
 
 - (MCCursor *)cursorLine:(MCCursorLine *)cursorLine cursorAtIndex:(NSUInteger)index {
     //!TODO: Sort somewhere else
-    return [[[self.objectValue valueForKey:@"cursors"] allValues] objectAtIndex:index];
+    return [self.sortedValues objectAtIndex:index];
 //    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
 }
 

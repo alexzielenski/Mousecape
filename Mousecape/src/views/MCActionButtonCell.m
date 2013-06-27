@@ -62,12 +62,15 @@
     [[NSColor colorWithCalibratedWhite:0.6 alpha:1.0] set];
     NSRectFill(NSMakeRect(0, 1, frame.size.width, 1.0));
     
+    if (self.isHighlighted) {
+        [[[NSColor blackColor] colorWithAlphaComponent:0.1] setFill];
+        NSRectFillUsingOperation(NSMakeRect(0, 3, frame.size.width, frame.size.height - 3.0), NSCompositeSourceOver);
+    }
+    
     if (!controlView.window.isKeyWindow || !self.isEnabled) {
         [[[NSColor whiteColor] colorWithAlphaComponent: !self.isEnabled ? 0.6 : 0.4] set];
         NSRectFillUsingOperation(NSMakeRect(0, 3, frame.size.width, frame.size.height - 3.0), NSCompositeSourceOver);
-        
     }
-        
     
     [ctx restoreGraphicsState];
 }

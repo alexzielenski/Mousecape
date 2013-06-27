@@ -10,7 +10,7 @@
 #import "MCCursorDocument.h"
 #import "MCLibraryViewController.h"
 
-@interface MCLibraryWindowController : NSWindowController
+@interface MCLibraryWindowController : NSWindowController <NSWindowDelegate>
 @property (assign) IBOutlet MCLibraryViewController *libraryController;
 @property (assign) IBOutlet NSTextField *accessory;
 @property (weak) MCCursorDocument *currentCursor;

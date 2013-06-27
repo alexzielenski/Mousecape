@@ -32,14 +32,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="744" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
+                            <scrollView canDrawConcurrently="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" id="nW7-AK-7vO">
+                                <clipView key="contentView" canDrawConcurrently="YES" id="nW7-AK-7vO">
                                     <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="112" rowSizeStyle="automatic" viewBased="YES" id="537">
+                                        <tableView canDrawConcurrently="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="112" rowSizeStyle="automatic" viewBased="YES" id="537">
                                             <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -59,7 +59,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="588" customClass="MCTableCellView">
+                                                        <tableCellView canDrawConcurrently="YES" id="588" customClass="MCTableCellView">
                                                             <rect key="frame" x="1" y="1" width="560" height="112"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -72,7 +72,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <imageView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1059">
+                                                                <imageView canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1059">
                                                                     <rect key="frame" x="492" y="87" width="16" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applied" id="1060"/>
@@ -84,7 +84,7 @@
                                                                         </binding>
                                                                     </connections>
                                                                 </imageView>
-                                                                <imageView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1215">
+                                                                <imageView canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1215">
                                                                     <rect key="frame" x="516" y="86" width="30" height="18"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="HD" id="1216">
@@ -139,16 +139,10 @@
                                                                 </scrollView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="8Fm-rB-E8W" firstAttribute="top" secondItem="1215" secondAttribute="bottom" constant="6" id="5sp-fu-z6W"/>
                                                                 <constraint firstItem="867" firstAttribute="top" secondItem="588" secondAttribute="top" constant="8" id="8hV-Yt-wre"/>
-                                                                <constraint firstItem="1059" firstAttribute="top" secondItem="588" secondAttribute="top" constant="9" id="KDG-Jk-EXp"/>
                                                                 <constraint firstAttribute="trailing" secondItem="CSp-55-J2o" secondAttribute="trailing" constant="14" id="Ruw-jy-iSk"/>
                                                                 <constraint firstItem="CSp-55-J2o" firstAttribute="leading" secondItem="588" secondAttribute="leading" constant="14" id="XUU-ml-iDm"/>
-                                                                <constraint firstItem="1215" firstAttribute="top" secondItem="588" secondAttribute="top" constant="8" id="Xlp-go-z7D"/>
-                                                                <constraint firstItem="1215" firstAttribute="leading" secondItem="1059" secondAttribute="trailing" constant="8" id="aF1-bC-UGz"/>
-                                                                <constraint firstAttribute="trailing" secondItem="1215" secondAttribute="trailing" constant="14" id="dJm-zv-Peq"/>
                                                                 <constraint firstItem="CSp-55-J2o" firstAttribute="top" secondItem="588" secondAttribute="top" constant="31" id="m6q-8N-18X"/>
-                                                                <constraint firstItem="8Fm-rB-E8W" firstAttribute="top" secondItem="1059" secondAttribute="bottom" constant="7" id="xjU-8Y-asQ"/>
                                                                 <constraint firstItem="867" firstAttribute="leading" secondItem="588" secondAttribute="leading" constant="15" id="yzk-Z3-UY0"/>
                                                             </constraints>
                                                             <connections>

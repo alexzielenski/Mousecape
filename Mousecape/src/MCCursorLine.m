@@ -81,24 +81,6 @@
     
     [textField setFrame:NSMakeRect(0, 2, self.bounds.size.width, 14.0)];
     [imageView setFrame:NSMakeRect(NSMidX(self.bounds) - NSMidX(imageView.bounds), NSMaxY(textField.frame), 48, 48)];
-    
-    
-    // auto layout causes issues with View-Based Table Views
-    /*
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[imageView(==48)]-(8)-|"
-                                                                 options:0
-                                                                 metrics:nil
-                                                                   views:NSDictionaryOfVariableBindings(imageView)]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(3)-[textField]-(3)-|"
-                                                                 options:0
-                                                                 metrics:nil
-                                                                   views:NSDictionaryOfVariableBindings(textField)]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView][textField(==14)]-(2)-|"
-                                                                 options:0
-                                                                 metrics:nil
-                                                                   views:NSDictionaryOfVariableBindings(imageView, textField)]];
-     */
-
 }
 
 - (void)drawRect:(NSRect)rect {
@@ -154,14 +136,16 @@
     self.selectionKeyMask = NSCommandKeyMask;
     self.shouldLimitToBounds = YES;
     
-    __weak MCCursorLine *weakSelf = self;
+    @weakify(self);
     [RACAble(self.dataSource) subscribeNext:^(id x) {
-        [weakSelf reloadData];
+        @strongify(self);
+        [self reloadData];
     }];
     
     [RACAble(self.shouldAllowSelection) subscribeNext:^(NSNumber *x) {
+        @strongify(self);
         if (!x.boolValue)
-            [weakSelf deselectAll];
+            [self deselectAll];
     }];
     
 }

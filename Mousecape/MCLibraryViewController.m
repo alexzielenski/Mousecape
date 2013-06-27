@@ -9,7 +9,6 @@
 #import "MCLibraryViewController.h"
 #import "MCCursorLibrary.h"
 #import "MCTableCellView.h"
-#import "NSArray+CWSortedInsert.h"
 #import "MCCloakController.h"
 #import "MCLibraryWindowController.h"
 

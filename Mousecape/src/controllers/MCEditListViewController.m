@@ -39,9 +39,7 @@
     return self;
 }
 
-- (void)_commonInit {
-    [self.tableView reloadData];
-    
+- (void)_commonInit {    
     @weakify(self);
     [[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
         @strongify(self);

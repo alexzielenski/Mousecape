@@ -48,10 +48,13 @@ static void *MCCursorDocumentContext;
 }
 
 - (void)startObservingLibrary:(MCCursorLibrary *)library {
+    // Observe top level features
     [library addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"author" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"version" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
+    
+    [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
 }
 
 - (void)stopObservingLibrary:(MCCursorLibrary *)library {
@@ -59,6 +62,7 @@ static void *MCCursorDocumentContext;
     [library removeObserver:self forKeyPath:@"author"];
     [library removeObserver:self forKeyPath:@"identifier"];
     [library removeObserver:self forKeyPath:@"version"];
+    [library removeObserver:self forKeyPath:@"cursors"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -67,6 +71,10 @@ static void *MCCursorDocumentContext;
         return;
     }
     
+    if ([keyPath isEqualToString:@"cursors"]) {
+        NSLog(@"%@", change);
+        return;
+    }
     
     [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:self.library] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
     if (!self.undoManager.isUndoing)

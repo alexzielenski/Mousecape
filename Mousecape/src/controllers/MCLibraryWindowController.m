@@ -251,25 +251,27 @@
 
 #pragma mark - NSWindowDelegate
 
-- (void)windowWillClose:(NSNotification*) notification {
+- (void)windowWillClose:(NSNotification *) notification {
     NSWindow *window = self.window;
     if (notification.object != window) {
         return;
     }
     
     // let's keep a reference to ourself and not have us thrown away while we clear out references.
-//    MCLibraryWindowController *me = self;
+    MCLibraryWindowController *me = self;
     
     // detach the view controllers from the document first
-//    me.currentCursor = nil;
-//    me.appliedCursor = nil;
+    me.currentCursor = nil;
+    me.appliedCursor = nil;
     
     // disassociate this window controller from the document
-//    for (NSDocument *doc in me.documents) {
-//        [doc removeWindowController:me];
-//    }
-//    
-//    [me.documents removeAllObjects];
+    for (NSDocument *doc in me.documents) {
+        [doc removeWindowController:me];
+    }
+
+    [me.documents removeAllObjects];
+    
+    [NSApp terminate:self];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {
