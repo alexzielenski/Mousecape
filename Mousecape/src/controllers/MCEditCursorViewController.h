@@ -14,8 +14,11 @@
 @property (strong) MCCursor *cursor;
 @property (strong) IBOutlet MCScaledImageView *imageView;
 @property (weak) IBOutlet NSComboBox  *identifierField;
-@property (weak) IBOutlet NSTextField *sizeField;
 @property (weak) IBOutlet NSTextField *hotSpotField;
 @property (weak) IBOutlet NSTextField *frameCountField;
 @property (weak) IBOutlet NSTextField *frameDurationField;
+@property (weak) IBOutlet NSSegmentedControl *segmentedControl;
+
+- (IBAction)segment:(NSSegmentedControl *)sender;
+
 @end

@@ -26,7 +26,10 @@
 - (void)addRepresentation:(NSBitmapImageRep *)imageRep;
 - (void)removeRepresentation:(NSBitmapImageRep *)imageRep;
 
+- (NSArray *)keyReps;
+
 - (NSImage *)imageWithAllReps;
+- (NSImage *)imageWithKeyReps;
 - (NSDictionary *)dictionaryRepresentation;
 
 - (NSString *)prettyName;

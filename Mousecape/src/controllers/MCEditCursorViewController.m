@@ -16,24 +16,66 @@
 - (void)loadView {
     [super loadView];
     
-    
     [self.undoManager disableUndoRegistration];
-    RAC(self.imageView.image) = [RACAble(self.cursor.imageWithAllReps) distinctUntilChanged];
+    @weakify(self);
 
+    [RACAbleWithStart(self.cursor.representations) subscribeNext:^(NSOrderedSet *reps) {
+        @strongify(self);
+        NSSize baseSize = NSMakeSize(self.cursor.size.width, self.cursor.size.height * self.cursor.frameCount);
+        for (NSImageRep *rep in reps) {
+            CGFloat scl = rep.pixelsWide / baseSize.width;
+            NSUInteger ctrl = -1;
+            if (scl == 1.0)
+                ctrl = 0;
+            else if (scl == 2)
+                ctrl = 1;
+            else if (scl == 5)
+                ctrl = 2;
+            else if (scl == 10)
+                ctrl = 3;
+            
+            if (ctrl != -1)
+                [self.segmentedControl.cell setImage:[NSImage imageNamed:NSImageNameMenuOnStateTemplate] forSegment:ctrl];
+        }
+    }];
+    
+    RAC(self.imageView.image) = [RACAble(self.cursor.imageWithKeyReps) distinctUntilChanged];
+    
     [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
     
-    @weakify(self);
     [[RACAble(self.imageView.hotSpot) distinctUntilChanged] subscribeNext:^(NSValue *x) {
         @strongify(self);
         if (!NSEqualPoints(x.pointValue, self.cursor.hotSpot))
             self.cursor.hotSpot = x.pointValue;
     }];
+    
+    [RACAbleWithStart(self.imageView.scale) subscribeNext:^(NSNumber *scale) {
+        @strongify(self);
+        NSUInteger ctrl = 0;
+        CGFloat scl     = scale.doubleValue;
+        
+        if (scl >= 1.5 && scl < 3.5)
+            ctrl = 1;
+        else if (scl >= 3.5 && scl < 7.5)
+            ctrl = 2;
+        else if (scl >= 7.5)
+            ctrl = 3;
+        self.segmentedControl.selectedSegment = ctrl;
+    }];
+    
     [self.undoManager enableUndoRegistration];
 }
 
 - (NSUndoManager *)undoManager {
     return self.view.window.undoManager;
+}
+
+#pragma mark - Actions
+
+- (IBAction)segment:(NSSegmentedControl *)sender {
+    // In IB the tags are set to the scale value
+    self.imageView.scale = [sender.cell tagForSegment:sender.selectedSegment];
 }
 
 #pragma mark - NSComboBoxDataSource

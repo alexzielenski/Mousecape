@@ -11,11 +11,9 @@
 #import "NSBezierPath+StrokeExtensions.h"
 
 @implementation MCSegmentedControl
-
 + (Class)cellClass {
     return MCSegmentedCell.class;
 }
-
 @end
 
 @implementation MCSegmentedCell
@@ -40,11 +38,21 @@
     
     CGFloat currentX = 0.0;
     for (NSUInteger x = 0; x < self.segmentCount; x++) {
+        if (x > 0 && self.selectedSegment != x - 1) {
+            [gOuterStroke set];
+            NSRectFillUsingOperation(NSMakeRect(currentX, 0, 1.0, cellFrame.size.height), NSCompositeSourceOver);
+        }
+        
         NSRect segmentRect = NSMakeRect(currentX, 0, [self widthForSegment:x], cellFrame.size.height);
         
         if (x == self.selectedSegment) {
+            if (x == self.segmentCount - 1)
+                segmentRect.size.width += 5;
+            
             [[NSColor alternateSelectedControlColor] setFill];
+            segmentRect.size.width += 1;
             NSRectFillUsingOperation(segmentRect, NSCompositeSourceOver);
+            segmentRect.size.width -= 1;
         }
         
         if (x == self.segmentCount - 1)
@@ -52,11 +60,6 @@
         
         [self drawSegment:x inFrame:segmentRect withView:controlView];
         currentX += segmentRect.size.width;
-        
-        if (x < self.segmentCount - 1) {
-            [gOuterStroke set];
-            NSRectFillUsingOperation(NSMakeRect(currentX, 0, 1.0, cellFrame.size.height), NSCompositeSourceOver);
-        }
     }
 }
 

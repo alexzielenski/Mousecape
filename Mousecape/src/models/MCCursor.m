@@ -108,12 +108,40 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     return NO;
 }
 
+- (NSArray *)keyReps {
+    NSMutableArray *ar = [NSMutableArray array];
+    NSSize size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+    
+    for (NSImageRep *rep in self.representations) {
+        CGFloat xMultiplier = rep.pixelsWide / size.width;
+        CGFloat yMultiplier = rep.pixelsHigh / size.height;
+        
+        if (xMultiplier != yMultiplier)
+            continue;
+        
+        if (xMultiplier == 1 ||
+            xMultiplier == 2 ||
+            xMultiplier == 5 ||
+            xMultiplier == 10)
+            [ar addObject:rep];
+        
+    }
+    
+    return ar;
+}
+
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
     [image addRepresentations:self.representations.array];
-    
     image.matchesOnMultipleResolution  = YES;
         
+    return image;
+}
+
+- (NSImage *)imageWithKeyReps {
+    NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
+    image.matchesOnMultipleResolution = YES;
+    [image addRepresentations:self.keyReps];
     return image;
 }
 

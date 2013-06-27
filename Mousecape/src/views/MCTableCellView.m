@@ -72,9 +72,7 @@
 }
 
 - (MCCursor *)cursorLine:(MCCursorLine *)cursorLine cursorAtIndex:(NSUInteger)index {
-    //!TODO: Sort somewhere else
     return [self.sortedValues objectAtIndex:index];
-//    return [[[[self.objectValue valueForKeyPath:@"cursors"] allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]] objectAtIndex:index];
 }
 
 @end
