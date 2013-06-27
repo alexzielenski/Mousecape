@@ -87,12 +87,13 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         self.inCloud = NO;
         self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
         self.version = @1.0;
+        self.cursors = [NSMutableSet set];
     }
     
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone {
+- (instancetype)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
     
     lib.cursors = [[NSMutableSet alloc] initWithSet:self.cursors copyItems:YES];
