@@ -15,4 +15,13 @@ return _sharedObject; \
     #import "MCPreferences.h"
     #import <ReactiveCocoa.h>
     #import <EXTScope.h>
+
+#define gColorNormal [NSColor colorWithCalibratedWhite:0.961 alpha:1.000]
+#define gColorDragging [NSColor colorWithCalibratedWhite:0.359 alpha:0.2500]
+
+#define gOuterStrokeDragging [NSColor colorWithCalibratedWhite:0.631 alpha:1.000]
+#define gInnerStrokeDragging [NSColor colorWithCalibratedWhite:0.898 alpha:1.000]
+#define gOuterStroke [NSColor colorWithCalibratedWhite:0.667 alpha:1.000]
+#define gInnerStroke [NSColor colorWithCalibratedWhite:1.0 alpha:1.000]
+
 #endif

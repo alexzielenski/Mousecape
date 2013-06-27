@@ -9,14 +9,6 @@
 #import "MCScaledImageView.h"
 #import "NSImage+BestRep.h"
 
-#define gColorNormal [NSColor colorWithCalibratedWhite:0.961 alpha:1.000]
-#define gColorDragging [NSColor colorWithCalibratedWhite:0.359 alpha:0.2500]
-
-#define gOuterStrokeDragging [NSColor colorWithCalibratedWhite:0.631 alpha:1.000]
-#define gInnerStrokeDragging [NSColor colorWithCalibratedWhite:0.898 alpha:1.000]
-#define gOuterStroke [NSColor colorWithCalibratedWhite:0.667 alpha:1.000]
-#define gInnerStroke [NSColor colorWithCalibratedWhite:1.0 alpha:1.000]
-
 @interface MCScaledImageView ()
 @property (readwrite, weak) NSBitmapImageRep *lastRepresentation;
 @property (assign) NSRect lastFrame;

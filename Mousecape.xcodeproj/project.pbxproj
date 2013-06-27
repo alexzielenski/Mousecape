@@ -58,6 +58,9 @@
 		FAD39855177A35A800DEFF87 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD39854177A35A800DEFF87 /* MainMenu.xib */; };
 		FAD39858177A449100DEFF87 /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD39857177A449100DEFF87 /* MCEditWindowController.m */; };
 		FAD56057177B75670099F68D /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD56056177B75670099F68D /* NSOrderedSet+AZSortedInsert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FAD5605D177C992B0099F68D /* MCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD5605C177C992B0099F68D /* MCSegmentedControl.m */; };
+		FAD56063177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD56062177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m */; };
+		FAD56066177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD56065177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.m */; };
 		FAFC2D0A16DC0B2500EBB128 /* libToolPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC2D0916DC0B2500EBB128 /* libToolPods.a */; };
 /* End PBXBuildFile section */
 
@@ -201,6 +204,12 @@
 		FAD39857177A449100DEFF87 /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = src/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
 		FAD56055177B75670099F68D /* NSOrderedSet+AZSortedInsert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOrderedSet+AZSortedInsert.h"; sourceTree = "<group>"; };
 		FAD56056177B75670099F68D /* NSOrderedSet+AZSortedInsert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOrderedSet+AZSortedInsert.m"; sourceTree = "<group>"; };
+		FAD5605B177C992B0099F68D /* MCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSegmentedControl.h; path = src/views/MCSegmentedControl.h; sourceTree = "<group>"; };
+		FAD5605C177C992B0099F68D /* MCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCSegmentedControl.m; path = src/views/MCSegmentedControl.m; sourceTree = "<group>"; };
+		FAD56061177CA70C0099F68D /* NSBezierPath+StrokeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+StrokeExtensions.h"; sourceTree = "<group>"; };
+		FAD56062177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+StrokeExtensions.m"; sourceTree = "<group>"; };
+		FAD56064177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+PXRoundedRectangleAdditions.h"; sourceTree = "<group>"; };
+		FAD56065177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+PXRoundedRectangleAdditions.m"; sourceTree = "<group>"; };
 		FAFC2C7516DB0BDC00EBB128 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPreferences.h; sourceTree = "<group>"; };
 		FAFC2D0916DC0B2500EBB128 /* libToolPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libToolPods.a; path = Pods/build/Release/libToolPods.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,6 +338,10 @@
 				FA9D05BB16D44019000732AA /* NSImage+BestRep.m */,
 				FAD56055177B75670099F68D /* NSOrderedSet+AZSortedInsert.h */,
 				FAD56056177B75670099F68D /* NSOrderedSet+AZSortedInsert.m */,
+				FAD56064177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.h */,
+				FAD56065177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.m */,
+				FAD56061177CA70C0099F68D /* NSBezierPath+StrokeExtensions.h */,
+				FAD56062177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m */,
 			);
 			name = categories;
 			path = src/categories;
@@ -420,6 +433,8 @@
 				FA9D05B816D42B7C000732AA /* MCScaledImageView.m */,
 				FA9D05BD16D4423E000732AA /* MCLibraryRowView.h */,
 				FA9D05BE16D4423E000732AA /* MCLibraryRowView.m */,
+				FAD5605B177C992B0099F68D /* MCSegmentedControl.h */,
+				FAD5605C177C992B0099F68D /* MCSegmentedControl.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -579,14 +594,17 @@
 				FA139FF116C58D2B00AF6D2E /* MCCursorLibrary.m in Sources */,
 				FA139FF416C58EF500AF6D2E /* MCCursorLine.m in Sources */,
 				FA13A00816C81E4D00AF6D2E /* MCTableCellView.m in Sources */,
+				FAD5605D177C992B0099F68D /* MCSegmentedControl.m in Sources */,
 				FA13A03A16C82E5500AF6D2E /* NSFileManager+DirectoryLocations.m in Sources */,
 				FAB5E8C616C843ED00B41654 /* MMAnimatingImageView.m in Sources */,
 				FAD39858177A449100DEFF87 /* MCEditWindowController.m in Sources */,
+				FAD56066177CA7470099F68D /* NSBezierPath+PXRoundedRectangleAdditions.m in Sources */,
 				FAB5E8D516C872C800B41654 /* MCSpriteLayer.m in Sources */,
 				FAD56057177B75670099F68D /* NSOrderedSet+AZSortedInsert.m in Sources */,
 				FA2C88DE16CC87680036CCC2 /* MCGeneralPreferencesViewController.m in Sources */,
 				FA2C88F116CC92C30036CCC2 /* MCCloakController.m in Sources */,
 				FAD39853177A2FA400DEFF87 /* MCLibraryWindowController.m in Sources */,
+				FAD56063177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m in Sources */,
 				FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */,
 				FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */,
 				FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */,
