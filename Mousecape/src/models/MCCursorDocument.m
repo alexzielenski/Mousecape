@@ -24,17 +24,18 @@ static void *MCCursorDocumentContext;
         @weakify(self);
         [[RACAble(self.library) mapPreviousWithStart:nil
                                              combine:^id(id previous, id current) {
-                                                 if (previous && current)
-                                                     return @[previous, current];
-                                                 else if (previous)
-                                                     return @[];
-                                                 return @[current];
-                                             }] subscribeNext:^(NSArray *x) {
+                                                 NSMutableDictionary *rtn = [NSMutableDictionary dictionary];
+                                                 if (previous)
+                                                     rtn[@"previous"] = previous;
+                                                 if (current)
+                                                     rtn[@"current"] = current;
+                                                 return rtn;
+                                             }] subscribeNext:^(NSDictionary *x) {
             @strongify(self);
-
-            if (x.count > 1)
-                [self stopObservingLibrary:x[0]];
-            [self startObservingLibrary:x.lastObject];
+            if (x[@"previous"])
+                [self stopObservingLibrary:x[@"previous"]];
+            if (x[@"current"])
+                [self startObservingLibrary:x[@"current"]];
         }];
         
         self.library = [[MCCursorLibrary alloc] init];
@@ -102,7 +103,7 @@ static void *MCCursorDocumentContext;
     [library addObserver:self forKeyPath:@"version" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior context:&MCCursorDocumentContext];
     
-    for (MCCursor *cursor in self.library.cursors)
+    for (MCCursor *cursor in library.cursors)
         [self startObservingCursor:cursor];
     
 }
@@ -123,7 +124,7 @@ static void *MCCursorContext;
     [library removeObserver:self forKeyPath:@"version"];
     [library removeObserver:self forKeyPath:@"cursors"];
     
-    for (MCCursor *cursor in self.library.cursors)
+    for (MCCursor *cursor in library.cursors)
         [self stopObservingCursor:cursor];
 }
 
@@ -175,12 +176,11 @@ static void *MCCursorContext;
         }
         
         return;
-    }
-    
-    if (context == &MCCursorContext) {
-        MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
-        if (proxy.parentLibrary != self.library)
+    } else if (context == &MCCursorContext) {
+        if ([object parentLibrary] != self.library)
             return;
+        
+        MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
         
         id oldValue = change[NSKeyValueChangeOldKey];
         
@@ -202,16 +202,13 @@ static void *MCCursorContext;
             // Other stuffs
             [proxy setValue:[oldValue copy] forKeyPath:keyPath];
         }
-        
-        NSLog(@"%@", change);
-        
+                
         if (!self.undoManager.isUndoing)
             [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", action]];
         
         return;
     }
-        
-        
+    
     [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:object] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
     if (!self.undoManager.isUndoing)
         [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", keyPath.capitalizedString]];
