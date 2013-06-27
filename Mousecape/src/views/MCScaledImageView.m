@@ -59,25 +59,26 @@
     
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect {    
+    [NSGraphicsContext saveGraphicsState];
     
     if (self.shouldDrawBezel) {
         [gColorNormal set];
-        NSRectFillUsingOperation(self.bounds, NSCompositeSourceOver);
+        NSRectFillUsingOperation(self.bounds, NSCompositeCopy);
         
+        [NSGraphicsContext saveGraphicsState];
         NSBezierPath *path = [NSBezierPath bezierPathWithRect:self.bounds];
-        
-        
         
         [gInnerStroke set];
         [path setLineWidth:4.0f];
         [path stroke];
-        
+
         [gOuterStroke set];
         [path setLineWidth:2.0f];
         [path stroke];
         
         [path setClip];
+        [NSGraphicsContext restoreGraphicsState];
     }
     
     if (!self.image) return;
@@ -155,6 +156,8 @@
         NSRectFill(verticalLine);
         NSRectFill(horizontalLine);
     }
+    
+    [NSGraphicsContext restoreGraphicsState];
     
 }
 
