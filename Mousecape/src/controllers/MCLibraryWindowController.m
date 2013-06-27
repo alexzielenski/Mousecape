@@ -38,7 +38,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-
+    
     self.libraryController.windowController = self;
     
     [self _setupFacade];

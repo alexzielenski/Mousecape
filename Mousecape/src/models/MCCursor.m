@@ -25,14 +25,18 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 @end
 
 @implementation MCCursor
-@dynamic identifier;
-
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version {
     return [[self alloc] initWithCursorDictionary:dict ofVersion:version];
 }
 
 - (id)init {
     if ((self = [super init])) {
+        self.frameCount = 1;
+        self.frameDuration = 1.0;
+        self.size = NSZeroSize;
+        self.hotSpot = NSZeroPoint;
+        self.representations = [NSMutableOrderedSet orderedSet];
+        
     }
     return self;
 }
@@ -61,6 +65,9 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 }
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version {
+    if (!dictionary || !dictionary.count)
+        return NO;
+    
     NSNumber *frameCount    = [dictionary objectForKey:MCCursorDictionaryFrameCountKey];
     NSNumber *frameDuration = [dictionary objectForKey:MCCursorDictionaryFrameDuratiomKey];
 //    NSNumber *repeatCount   = dictionary[MCCursorDictionaryRepeatCountKey];
@@ -127,14 +134,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
     
     return drep;
-}
-
-- (NSString *)identifier {
-    return [self.parentLibrary identifierForCursor:self];
-}
-
-- (void)setIdentifier:(NSString *)identifier {
-    [self.parentLibrary moveCursor:self toIdentifier:identifier];
 }
 
 - (NSString *)prettyName {

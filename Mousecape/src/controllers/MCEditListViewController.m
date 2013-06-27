@@ -8,9 +8,11 @@
 
 #import "MCEditListViewController.h"
 #import "MCLibraryRowView.h"
+#import "NSOrderedSet+AZSortedInsert.h"
 
 @interface MCEditListViewController ()
-@property (strong) NSArray *sortedValues;
+@property (strong) NSMutableOrderedSet *sortedValues;
+@property (strong) NSArray *sortDescriptors;
 - (void)_commonInit;
 @end
 
@@ -39,61 +41,100 @@
     return self;
 }
 
-- (void)_commonInit {    
+static void *MCCursorChangeContext;
+- (void)_commonInit {
+    self.sortedValues = [NSMutableOrderedSet orderedSet];
+    self.sortDescriptors = @[
+                             [NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+                                 return [obj1 compare:obj2 options:NSNumericSearch | NSCaseInsensitiveSearch];
+                             }],
+                             ];
+    
     @weakify(self);
-    [[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+    [[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(MCCursorLibrary *library) {
         @strongify(self);
-        if (!self.tableView.sortDescriptors.count)
-            [self.tableView setSortDescriptors:@[
-                                                 [NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
-                                                        return [obj1 compare:obj2 options:NSNumericSearch | NSCaseInsensitiveSearch];
-                                                    }],
-                                                 ]];
-        
-        // get new keys & sort em
-        self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
         [self.tableView reloadData];
-        
-        self.selectedObject = self.cursorLibrary;
+        self.selectedObject = library;
         [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     }];
+    
+    [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:&MCCursorChangeContext];
 }
 
-- (void)reloadCursor:(MCCursor *)cursor {
-    NSUInteger sortedIndex = [self.sortedValues indexOfObject:cursor];
-    if (sortedIndex != NSNotFound) {
-        [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:sortedIndex] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context != &MCCursorChangeContext) {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
     }
+    NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+    NSUInteger selection  = self.tableView.selectedRow;
+    
+    [self.tableView beginUpdates];
+    
+    if (kind == NSKeyValueChangeInsertion) {
+        NSSet *objects = change[NSKeyValueChangeNewKey];
+        for (id object in objects) {
+            NSUInteger idx = [self.sortedValues indexForInsertingObject:object sortedUsingDescriptors:self.sortDescriptors];
+            [self.sortedValues insertObject:object atIndex:idx];
+            [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:idx + 1] withAnimation:NSTableViewAnimationEffectGap];
+            selection = idx;
+        }
+    } else if (kind == NSKeyValueChangeSetting) {
+        NSSet *objects = change[NSKeyValueChangeNewKey];
+        if ([objects isKindOfClass:[NSNull class]])
+            self.sortedValues = [NSMutableOrderedSet orderedSet];
+        else
+            self.sortedValues = [NSMutableOrderedSet orderedSetWithArray:[objects sortedArrayUsingDescriptors:self.sortDescriptors]];
+        [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, self.sortedValues.count)] withAnimation:NSTableViewAnimationEffectGap];
+    } else if (kind == NSKeyValueChangeRemoval) {
+        NSSet *objects = change[NSKeyValueChangeOldKey];
+        for (id object in objects) {
+            NSUInteger idx = [self.sortedValues indexOfObject:object];
+            BOOL select = (self.tableView.selectedRow == idx + 1);
+            if (select) {
+                selection = idx;
+            }
+            [self.sortedValues removeObjectAtIndex:idx];
+            [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:idx + 1] withAnimation:NSTableViewAnimationEffectFade];
+        }
+    } else if (kind == NSKeyValueChangeReplacement) {
+//        NSLog(@"%@", change);
+    }
+    
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:MIN(selection, self.sortedValues.count)] byExtendingSelection:NO];
+    
+    [self.tableView endUpdates];
 }
 
 #pragma mark - UI
 
 - (IBAction)addCursor:(id)sender {
     MCCursor *cursor = [[MCCursor alloc] init];
-    [self.cursorLibrary addCursor:cursor forIdentifier:[NSString stringWithFormat:@"Cursor %lu", self.cursorLibrary.cursors.count + 1]];
-    
-    self.sortedValues = [self.cursorLibrary.cursors.allValues sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
-    [self.tableView reloadData];
-    
-    self.selectedObject = cursor;
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.sortedValues indexOfObject:cursor] + 1] byExtendingSelection:NO];
+    cursor.identifier = [NSString stringWithFormat:@"Cursor %lu", self.cursorLibrary.cursors.count + 1];
+    [self.cursorLibrary addCursor:cursor];
 }
 
 - (IBAction)removeCursor:(id)sender {
-    NSAlert *sureAlert = [NSAlert alertWithMessageText:@"Are you sure?"
-                                         defaultButton:@"Positive"
-                                       alternateButton:@"Nevermind"
-                                           otherButton:nil
-                             informativeTextWithFormat:@"This operation cannot be undone"];
+    if (![self.selectedObject isKindOfClass:[MCCursor class]])
+        return;
     
-    sureAlert.showsSuppressionButton = !MCFlag(MCSuppressDeleteCursorConfirmationKey);
-    [sureAlert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(confirmationAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    if (MCFlag(MCSuppressDeleteCursorConfirmationKey)) {
+        [self confirmationAlertDidEnd:nil returnCode:NSAlertDefaultReturn contextInfo:self.selectedObject];
+    } else {
+        NSAlert *sureAlert = [NSAlert alertWithMessageText:@"Are you sure?"
+                                             defaultButton:@"Positive"
+                                           alternateButton:@"Nevermind"
+                                               otherButton:nil
+                                 informativeTextWithFormat:@"This operation cannot be undone"];
+        sureAlert.showsSuppressionButton = YES;
+        [sureAlert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(confirmationAlertDidEnd:returnCode:contextInfo:) contextInfo:(void *)self.selectedObject];
+    }
 }
 
-- (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+- (void)confirmationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(MCCursor *)selectedCursor {
     if (returnCode == NSAlertDefaultReturn) {
-        NSUInteger row = self.tableView.selectedRow;
-        MCCursor *selectedCursor = self.sortedValues[row - 1];
+        [alert.window orderOut:self];
+        
         [self.cursorLibrary removeCursor:selectedCursor];
         
         MCSetFlag(alert.suppressionButton.state == NSOnState, MCSuppressDeleteCursorConfirmationKey);
@@ -105,7 +146,7 @@
 #pragma mark - NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {    
-    return self.cursorLibrary.cursors.count + 1;
+    return self.sortedValues.count + 1;
 }
 
 #pragma mark - NSTableViewDelegate

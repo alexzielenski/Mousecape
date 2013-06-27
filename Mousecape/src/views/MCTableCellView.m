@@ -31,10 +31,9 @@
             self.hdView.image = [NSImage imageNamed:@"HD"];
     }];
     
-    [RACAbleWithStart(self.objectValue.library.cursors) subscribeNext:^(NSDictionary *cursors) {
+    [RACAbleWithStart(self.objectValue.library.cursors) subscribeNext:^(NSSet *cursors) {
         @strongify(self);
-        self.sortedValues = [cursors.allValues sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
-        
+        self.sortedValues = [cursors sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
         [self.cursorLine reloadData];
     }];
     

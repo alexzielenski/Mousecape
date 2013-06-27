@@ -20,22 +20,19 @@
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path;
 + (MCCursorLibrary *)cursorLibraryWithContentsOfURL:(NSURL *)URL;
 + (MCCursorLibrary *)cursorLibraryWithDictionary:(NSDictionary *)dictionary;
-+ (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)cursors;
++ (MCCursorLibrary *)cursorLibraryWithCursors:(NSSet *)cursors;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;
 - (instancetype)initWithContentsOfURL:(NSURL *)URL;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (instancetype)initWithCursors:(NSDictionary *)cursors;
+- (instancetype)initWithCursors:(NSSet *)cursors;
 
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
 
-- (void)addCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier;
+- (void)addCursor:(MCCursor *)cursor;
 - (void)removeCursor:(MCCursor *)cursor;
-- (void)removeCursorForIdentifier:(NSString *)identifier;
 
-- (void)moveCursor:(MCCursor *)cursor toIdentifier:(NSString *)identifier;
-
-- (NSString *)identifierForCursor:(MCCursor *)cursor;
+- (MCCursor *)cursorWithIdentifier:(NSString *)identifier;
 
 + (NSDictionary *)cursorMap;
 - (NSDictionary *)dictionaryRepresentation;
@@ -43,5 +40,5 @@
 @end
 
 @interface MCCursorLibrary (Properties)
-@property (readonly, strong) NSDictionary *cursors;
+@property (nonatomic, readonly, strong) NSSet *cursors;
 @end

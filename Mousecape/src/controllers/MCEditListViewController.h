@@ -16,6 +16,5 @@
 
 - (IBAction)addCursor:(id)sender;
 - (IBAction)removeCursor:(id)sender;
-- (void)reloadCursor:(MCCursor *)cursor;
 
 @end

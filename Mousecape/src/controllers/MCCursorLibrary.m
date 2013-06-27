@@ -20,13 +20,9 @@ static const NSString *MCCursorDictionaryCapeNameKey       = @"CapeName";
 static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 
 @interface MCCursorLibrary ()
-@property (readwrite, strong) NSMutableDictionary *cursors;
+@property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
-
-// KVO Backing
-- (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key;
-
 @end
 
 @implementation MCCursorLibrary
@@ -52,8 +48,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return [[MCCursorLibrary alloc] initWithDictionary:dictionary];
 }
 
-+ (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)dictionary {
-    return [[MCCursorLibrary alloc] initWithCursors:dictionary];
++ (MCCursorLibrary *)cursorLibraryWithCursors:(NSSet *)set {
+    return [[MCCursorLibrary alloc] initWithCursors:set];
 }
 
 - (instancetype)initWithContentsOfFile:(NSString *)path {
@@ -67,7 +63,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     if ((self = [self init])) {
-        self.cursors = [NSMutableDictionary dictionary];
+        self.cursors = [NSMutableSet set];
         if (![self _readFromDictionary:dictionary]) {
             return nil;
         }
@@ -75,7 +71,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return self;
 }
 
-- (instancetype)initWithCursors:(NSDictionary *)cursors {
+- (instancetype)initWithCursors:(NSSet *)cursors {
     if ((self = [self init])) {
         self.cursors = cursors.mutableCopy;
     }
@@ -99,8 +95,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 - (id)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
     
-    lib.cursors = [[NSMutableDictionary alloc] initWithDictionary:self.cursors copyItems:YES];
-    [lib.cursors.allValues makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:lib];
+    lib.cursors = [[NSMutableSet alloc] initWithSet:self.cursors copyItems:YES];
+    [lib.cursors makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:lib];
     
     lib.name             = self.name;
     lib.author           = self.author;
@@ -159,8 +155,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     for (NSString *key in cursorDicts.allKeys) {
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
         MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
-        
-        [self addCursor:cursor forIdentifier:key];
+        cursor.identifier = key;
+        [self addCursor:cursor];
     }
 }
 
@@ -177,8 +173,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     drep[MCCursorDictionaryIdentifierKey]     = self.identifier;
     
     NSMutableDictionary *cursors = [NSMutableDictionary dictionary];
-    for (NSString *key in self.cursors) {
-        cursors[key] = [[self.cursors objectForKey:key] dictionaryRepresentation];
+    for (MCCursor *cursor in self.cursors) {
+        cursors[cursor.identifier] = [cursor dictionaryRepresentation];
     }
     
     drep[MCCursorDictionaryCursorsKey] = cursors;
@@ -186,75 +182,53 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return drep;
 }
 
-- (void)addCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier {
-    if (cursor) {
-        [self setCursor:cursor forKey:identifier];
-    }
+- (void)addCursor:(MCCursor *)cursor {
+    if (!cursor)
+        return;
+    if ([self.cursors containsObject:cursor])
+        return;
+    
+    NSSet *mutation = [NSSet setWithObject:cursor];
+
+    [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:mutation];
+    
+    [cursor willChangeValueForKey:@"identifier"];
+    [cursor willChangeValueForKey:@"prettyName"];
+    
+    cursor.parentLibrary = self;
+    [self.cursors addObject:cursor];
+    
+    [cursor didChangeValueForKey:@"prettyName"];
+    [cursor didChangeValueForKey:@"identifier"];
+    
+    [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:mutation];
 }
 
 - (void)removeCursor:(MCCursor *)cursor {
-    NSArray *keys = [self.cursors allKeysForObject:cursor];
-    for (NSString *key in keys)
-        [self setCursor:nil forKey:key];
-}
-
-- (void)removeCursorForIdentifier:(NSString *)identifier {
-    if ([self.cursors objectForKey:identifier] != nil) {
-        [self setCursor:nil forKey:identifier];
-    }
-}
-
-- (void)moveCursor:(MCCursor *)cursor toIdentifier:(NSString *)identifier {
-    if (!identifier)
+    if (![self.cursors containsObject:cursor])
         return;
     
-    NSString *ident = [self identifierForCursor:cursor];
-    if (ident)
-        [self setCursor:nil forKey:ident];
-    [self setCursor:cursor forKey:identifier];
+    NSSet *change = [NSSet setWithObject:cursor];
+    [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
+    [cursor willChangeValueForKey:@"identifier"];
+    [cursor willChangeValueForKey:@"prettyName"];
+    
+    cursor.parentLibrary = nil;
+    [self.cursors removeObject:cursor];
+    
+    [cursor didChangeValueForKey:@"prettyName"];
+    [cursor didChangeValueForKey:@"identifier"];
+    [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
 }
 
-- (NSString *)identifierForCursor:(MCCursor *)cursor {
-    NSArray *allKeys = [self.cursors allKeysForObject:cursor];
-    if (allKeys.count > 0)
-        return allKeys[0];
+- (MCCursor *)cursorWithIdentifier:(NSString *)identifier {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
+    NSSet *filtered = [self.cursors filteredSetUsingPredicate:predicate];
+    if (filtered.count)
+        return filtered.anyObject;
     return nil;
 }
 
-- (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
-    //!TODO:!IMPORTANT: Make this method not a fuckup. The moveCursor method sends too many KVO observation stuffs
-    
-//    [self willChangeValueForKey:@"cursors"];
-    //!TODO: Provide KVO changes elsewhere
-    
-    if (!cursor) {
-        MCCursor *c = self.cursors[key];
-        [c willChangeValueForKey:@"prettyName"];
-        [c willChangeValueForKey:@"identifier"];
-        [c setParentLibrary:nil];
-        [self.cursors removeObjectForKey:key];
-        [c didChangeValueForKey:@"identifier"];
-        [c didChangeValueForKey:@"prettyName"];
-        
-    } else {
-        MCCursor *c = self.cursors[key];
-        if (c) {
-            [c willChangeValueForKey:@"prettyName"];
-            [c willChangeValueForKey:@"identifier"];
-            //! TODO: Provide nice way of handling naming conflicts
-            [c didChangeValueForKey:@"identifier"];
-            [c didChangeValueForKey:@"prettyName"];
-        }
-        
-        [cursor willChangeValueForKey:@"prettyName"];
-        [cursor willChangeValueForKey:@"identifier"];
-        cursor.parentLibrary = self;
-        [self.cursors setObject:cursor forKey:key];
-        [cursor didChangeValueForKey:@"identifier"];
-        [cursor didChangeValueForKey:@"prettyName"];
-    }
-//    [self didChangeValueForKey:@"cursors"];
-}
 
 - (BOOL)isEqualTo:(MCCursorLibrary *)object {
     if (![object isKindOfClass:self.class]) {
@@ -267,6 +241,6 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
             [object.version isEqualToNumber:self.version] &&
             object.inCloud == self.inCloud &&
             object.isHiDPI == self.isHiDPI &&
-            [object.cursors isEqualToDictionary:self.cursors]);
+            [object.cursors isEqualToSet:self.cursors]);
 }
 @end
