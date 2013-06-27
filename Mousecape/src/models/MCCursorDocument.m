@@ -47,13 +47,60 @@ static void *MCCursorDocumentContext;
     [self stopObservingLibrary:self.library];
 }
 
+- (void)makeWindowControllers {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCCursorDocumentWantsAdoptionNotification" object:self];
+}
+
+- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError {
+    return [self.library writeToFile:absoluteURL.path atomically:NO];
+}
+
+- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {        
+    [self.undoManager disableUndoRegistration];
+    self.library = [[MCCursorLibrary alloc] initWithContentsOfURL:absoluteURL];
+    [self.undoManager enableUndoRegistration];
+    
+    return YES;
+}
+
+- (BOOL)isEntireFileLoaded {
+    return !(!self.library);
+}
+
++ (BOOL)autosavesInPlace {
+    return NO;
+}
+
+- (BOOL)hasUndoManager {
+    return YES;
+}
+
+- (NSString *)displayName {
+    return self.library.name;
+}
+
+- (NSDocument *)duplicateAndReturnError:(NSError *__autoreleasing *)outError {
+    MCCursorDocument *doc = [[MCCursorDocument alloc] initWithType:@"cape" error:nil];
+    doc.library = [self.library copy];
+    doc.library.identifier = [doc.library.identifier stringByAppendingFormat:@".%f", [NSDate timeIntervalSinceReferenceDate]];
+    
+    // register the document
+    [[NSDocumentController sharedDocumentController] addDocument:self];
+    [doc makeWindowControllers];
+    
+    *outError = nil;
+    return doc;
+}
+
+#pragma mark - Undo Support
+
 - (void)startObservingLibrary:(MCCursorLibrary *)library {
     // Observe top level features
     [library addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"author" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"version" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
-    [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
+    [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:&MCCursorDocumentContext];
     
     for (NSString *key in self.library.cursors)
         [self startObservingCursor:self.library.cursors[key]];
@@ -116,7 +163,7 @@ static void *MCCursorContext;
             // Other stuffs
             [proxy setValue:[oldValue copy] forKeyPath:keyPath];
         }
-            
+        
         
         if (!self.undoManager.isUndoing)
             [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", action]];
@@ -125,59 +172,23 @@ static void *MCCursorContext;
     }
     
     if ([keyPath isEqualToString:@"cursors"]) {
-        NSLog(@"%@", change);
+        if ([change[NSKeyValueChangeKindKey] unsignedIntegerValue] == NSKeyValueChangeSetting) {
+            NSDictionary *oldCursors = (NSDictionary *)change[NSKeyValueChangeOldKey];
+            for (NSString *key in oldCursors)
+                [self stopObservingCursor:(MCCursor *)oldCursors[key]];
+            
+            NSDictionary *newCursors = (NSDictionary *)change[NSKeyValueChangeNewKey];
+            for (NSString *key in newCursors)
+                [self startObservingCursor:(MCCursor *)newCursors[key]];
+            
+        }
         return;
     }
     
     [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:object] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
     if (!self.undoManager.isUndoing)
         [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", keyPath.capitalizedString]];
-        
-}
-
-- (void)makeWindowControllers {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCCursorDocumentWantsAdoptionNotification" object:self];
-}
-
-- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError **)outError {
-    return [self.library writeToFile:absoluteURL.path atomically:NO];
-}
-
-- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {        
-    [self.undoManager disableUndoRegistration];
-    self.library = [[MCCursorLibrary alloc] initWithContentsOfURL:absoluteURL];
-    [self.undoManager enableUndoRegistration];
     
-    return YES;
-}
-
-- (BOOL)isEntireFileLoaded {
-    return !(!self.library);
-}
-
-+ (BOOL)autosavesInPlace {
-    return NO;
-}
-
-- (BOOL)hasUndoManager {
-    return YES;
-}
-
-- (NSString *)displayName {
-    return self.library.name;
-}
-
-- (NSDocument *)duplicateAndReturnError:(NSError *__autoreleasing *)outError {
-    MCCursorDocument *doc = [[MCCursorDocument alloc] initWithType:@"cape" error:nil];
-    doc.library = [self.library copy];
-    doc.library.identifier = [doc.library.identifier stringByAppendingFormat:@".%f", [NSDate timeIntervalSinceReferenceDate]];
-    
-    // register the document
-    [[NSDocumentController sharedDocumentController] addDocument:self];
-    [doc makeWindowControllers];
-    
-    *outError = nil;
-    return doc;
 }
 
 #pragma mark - Actions
