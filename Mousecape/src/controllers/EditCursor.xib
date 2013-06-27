@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.6" systemVersion="13A476u" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4457.9" systemVersion="13A497d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4457.9"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MCEditCursorViewController">
@@ -112,6 +112,14 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="cursor.frameCount" id="lsv-24-MJb">
+                            <dictionary key="options">
+                                <integer key="NSNotApplicablePlaceholder" value="0"/>
+                                <integer key="NSNoSelectionPlaceholder" value="0"/>
+                                <integer key="NSNullPlaceholder" value="0"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="0"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="182" id="407"/>
                     </connections>
                 </textField>
@@ -132,6 +140,14 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="cursor.frameDuration" id="RLt-BQ-ZK6">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                                <integer key="NSNotApplicablePlaceholder" value="1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="1"/>
+                                <integer key="NSNullPlaceholder" value="1"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="195" id="408"/>
                     </connections>
                 </textField>
@@ -145,6 +161,14 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="cursor.hotSpot" id="jrS-ev-Zc7">
+                            <dictionary key="options">
+                                <string key="NSNotApplicablePlaceholder">{0, 0}</string>
+                                <string key="NSNoSelectionPlaceholder">{0, 0}</string>
+                                <string key="NSNullPlaceholder">{0, 0}</string>
+                                <string key="NSMultipleValuesPlaceholder">{0, 0}</string>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="211" id="409"/>
                     </connections>
                 </textField>
@@ -158,6 +182,14 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="cursor.size" id="LRn-1E-cAa">
+                            <dictionary key="options">
+                                <string key="NSNotApplicablePlaceholder">{0, 0}</string>
+                                <string key="NSNoSelectionPlaceholder">{0, 0}</string>
+                                <string key="NSNullPlaceholder">{0, 0}</string>
+                                <string key="NSMultipleValuesPlaceholder">{0, 0}</string>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="223" id="410"/>
                     </connections>
                 </textField>
@@ -173,6 +205,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </comboBoxCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="cursor.identifier" id="7g7-rx-BaR"/>
                         <outlet property="dataSource" destination="-2" id="405"/>
                         <outlet property="nextKeyView" destination="168" id="406"/>
                     </connections>
@@ -242,4 +275,26 @@
     <resources>
         <image name="NSAddOnTexture" width="11" height="11"/>
     </resources>
+    <classes>
+        <class className="MCEditCursorViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="identifierField" candidateClass="NSComboBox"/>
+                <relationship kind="outlet" name="imageView" candidateClass="MCScaledImageView"/>
+                <relationship kind="outlet" name="sizeField" candidateClass="NSTextField"/>
+            </relationships>
+        </class>
+        <class className="MCPointFormatter" superclassName="NSFormatter">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCPointFormatter.h"/>
+        </class>
+        <class className="MCScaledImageView" superclassName="NSView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCScaledImageView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
 </document>

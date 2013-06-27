@@ -53,8 +53,20 @@ static void *MCCursorDocumentContext;
     [library addObserver:self forKeyPath:@"author" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"version" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
-    
     [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
+    
+    for (NSString *key in self.library.cursors)
+        [self startObservingCursor:self.library.cursors[key]];
+    
+}
+
+static void *MCCursorContext;
+- (void)startObservingCursor:(MCCursor *)cursor {
+    [cursor addObserver:self forKeyPath:@"frameDuration" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
+    [cursor addObserver:self forKeyPath:@"frameCount" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
+    [cursor addObserver:self forKeyPath:@"size" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
+    [cursor addObserver:self forKeyPath:@"hotSpot" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
+    [cursor addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
 }
 
 - (void)stopObservingLibrary:(MCCursorLibrary *)library {
@@ -63,11 +75,52 @@ static void *MCCursorDocumentContext;
     [library removeObserver:self forKeyPath:@"identifier"];
     [library removeObserver:self forKeyPath:@"version"];
     [library removeObserver:self forKeyPath:@"cursors"];
+    
+    for (MCCursor *cursor in self.library.cursors)
+        [self stopObservingCursor:cursor];
+}
+
+- (void)stopObservingCursor:(MCCursor *)cursor {
+    [cursor removeObserver:self forKeyPath:@"frameDuration"];
+    [cursor removeObserver:self forKeyPath:@"frameCount"];
+    [cursor removeObserver:self forKeyPath:@"size"];
+    [cursor removeObserver:self forKeyPath:@"hotSpot"];
+    [cursor removeObserver:self forKeyPath:@"identifier"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context != &MCCursorDocumentContext) {
+    if (context != &MCCursorDocumentContext && context != &MCCursorContext) {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    
+    if (context == &MCCursorContext) {
+        MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
+        id oldValue = change[NSKeyValueChangeOldKey];
+        
+        NSString *action = keyPath.capitalizedString;
+        
+        // Primitives
+        if ([keyPath isEqualToString:@"frameDuration"]) {
+            [proxy setFrameDuration:[(NSNumber *)oldValue doubleValue]];
+            action = @"Frame Duration";
+        } else if ([keyPath isEqualToString:@"frameCount"]) {
+            [proxy setFrameCount:[(NSNumber *)oldValue unsignedIntegerValue]];
+            action = @"Frame Count";
+        } else if ([keyPath isEqualToString:@"size"]) {
+            [proxy setSize:[(NSValue *)oldValue sizeValue]];
+        } else if ([keyPath isEqualToString:@"hotSpot"]) {
+            [proxy setHotSpot:[(NSValue *)oldValue pointValue]];
+            action = @"Hot Spot";
+        } else {
+            // Other stuffs
+            [proxy setValue:[oldValue copy] forKeyPath:keyPath];
+        }
+            
+        
+        if (!self.undoManager.isUndoing)
+            [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", action]];
+        
         return;
     }
     
@@ -76,7 +129,7 @@ static void *MCCursorDocumentContext;
         return;
     }
     
-    [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:self.library] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
+    [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:object] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
     if (!self.undoManager.isUndoing)
         [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", keyPath.capitalizedString]];
         

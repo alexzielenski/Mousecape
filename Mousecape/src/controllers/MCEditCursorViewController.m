@@ -10,58 +10,26 @@
 #import "MCCursorLibrary.h"
 
 @interface MCEditCursorViewController ()
-- (void)_commonInit;
 @end
 
 @implementation MCEditCursorViewController
-
-- (id)init {
-    if ((self = [super init])) {
-        [self _commonInit];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if ((self = [super initWithCoder:aDecoder])) {
-        [self _commonInit];
-    }
-    
-    return self;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        [self _commonInit];
-    }
-    
-    return self;
-}
-
-- (void)_commonInit {
-    
-}
-
 - (void)loadView {
     [super loadView];
     
+    
+    [self.undoManager disableUndoRegistration];
     RAC(self.imageView.image) = [RACAble(self.cursor.imageWithAllReps) distinctUntilChanged];
-    
-    [self.identifierField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.identifier"];
-    [self.frameCountField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameCount" nilValue:@0];
-    [self.frameDurationField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.frameDuration" nilValue:@1.0];
-    [self.hotSpotField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.hotSpot"];
-    [self.sizeField rac_bind:NSValueBinding toObject:self withKeyPath:@"cursor.size"];
-    
+
     [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
     
-    
     @weakify(self);
-    [RACAble(self.imageView.hotSpot) subscribeNext:^(NSValue *x) {
+    [[RACAble(self.imageView.hotSpot) distinctUntilChanged] subscribeNext:^(NSValue *x) {
         @strongify(self);
-        self.cursor.hotSpot = x.pointValue;
+        if (!NSEqualPoints(x.pointValue, self.cursor.hotSpot))
+            self.cursor.hotSpot = x.pointValue;
     }];
+    [self.undoManager enableUndoRegistration];
 }
 
 - (NSUndoManager *)undoManager {

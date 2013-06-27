@@ -202,7 +202,6 @@
             hs.y = self.sampleSize.height;
         
         self.hotSpot = hs;
-        [self setNeedsDisplay:YES];
     }
     
     [super mouseDown:event];

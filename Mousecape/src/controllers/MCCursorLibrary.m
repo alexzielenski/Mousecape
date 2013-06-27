@@ -222,7 +222,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 }
 
 - (void)setCursor:(MCCursor *)cursor forKey:(NSString *)key {
-    [self willChangeValueForKey:@"cursors"];
+    //!TODO:!IMPORTANT: Make this method not a fuckup. The moveCursor method sends too many KVO observation stuffs
+    
+//    [self willChangeValueForKey:@"cursors"];
     //!TODO: Provide KVO changes elsewhere
     
     if (!cursor) {
@@ -251,7 +253,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
         [cursor didChangeValueForKey:@"identifier"];
         [cursor didChangeValueForKey:@"prettyName"];
     }
-    [self didChangeValueForKey:@"cursors"];
+//    [self didChangeValueForKey:@"cursors"];
 }
 
 - (BOOL)isEqualTo:(MCCursorLibrary *)object {
