@@ -8,14 +8,17 @@
 
 #import "NSImage+BestRep.h"
 
+static CGFloat distance(CGFloat dX, CGFloat dY) {
+    return sqrt(pow(dX, 2) + pow(dY, 2));
+}
+
 @implementation NSImage (BestRep)
 
 - (NSImageRep *)bestRepresentationForContentsScale:(CGFloat)scale {
     NSSize scaledSize = NSMakeSize(self.size.width * scale, self.size.height * scale);
     
     NSImageRep *closestMatch = nil;
-    CGFloat closestDeltaW = 0;
-    CGFloat closestDeltaH = 0;
+    CGFloat closestDistance = 0;
     
     for (NSImageRep *rep in self.representations) {
         if ([rep isKindOfClass:[NSPDFImageRep class]])
@@ -30,31 +33,14 @@
             return rep;
         }
         
+        CGFloat dist = distance(deltaW, deltaH);
+        
         // start up
-        if (!closestMatch) {
+        if (!closestMatch || dist < closestDistance) {
             closestMatch = rep;
-            closestDeltaW = deltaW;
-            closestDeltaH = deltaH;
-            
+            closestDistance = dist;
             continue;
         }
-        
-        // Always prefer the larger image
-        if ((closestDeltaW < 0 && deltaW >= 0) || (closestDeltaH < 0 && deltaH >= 0)) {
-            closestMatch = rep;
-            closestDeltaW = closestDeltaW;
-            closestDeltaH = closestDeltaH;
-            continue;
-        }
-        
-        if (abs(deltaW) < abs(closestDeltaW) || abs(deltaH) < closestDeltaH) {
-            closestMatch = rep;
-            closestDeltaW = closestDeltaW;
-            closestDeltaH = closestDeltaH;
-            continue;
-        }
-        
-        
     }
     
     return closestMatch;
