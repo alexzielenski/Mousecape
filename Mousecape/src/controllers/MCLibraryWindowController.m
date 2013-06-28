@@ -210,7 +210,7 @@
         [doc saveDocument:self];
     } else if (![[doc.fileURL URLByDeletingLastPathComponent].path isEqualToString:self.libraryURL.path]) {
         // If we are importing a cape, save it to the library and set that document to the curren tone
-        [doc saveToURL:[self.libraryURL URLByAppendingPathComponent:doc.fileURL.lastPathComponent] ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
+        [doc saveToURL:[self.libraryURL URLByAppendingPathComponent:[doc.library.identifier stringByAppendingPathExtension:@"cape"]] ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
     }
     
     NSUInteger idx = [self.documents indexForInsertingObject:doc sortedUsingDescriptors:self.librarySortDescriptors];
