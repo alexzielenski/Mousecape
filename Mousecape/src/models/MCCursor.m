@@ -195,32 +195,45 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     [super setValue:value forKey:key];
 }
 
-- (void)addRepresentation:(NSBitmapImageRep *)imageRep {
+- (void)addRepresentation:(NSImageRep *)imageRep {
     if (![self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:self.representations.count];
 
         [self willChangeValueForKey:@"imageWithAllReps"];
+        [self willChangeValueForKey:@"imageWithKeyReps"];
         [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
         
         [self.representations addObject:imageRep];
         
         [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
+        [self didChangeValueForKey:@"imageWithKeyReps"];
         [self didChangeValueForKey:@"imageWithAllReps"];
     }
 }
 
-- (void)removeRepresentation:(NSBitmapImageRep *)imageRep {
+- (void)removeRepresentation:(NSImageRep *)imageRep {
     if ([self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:[self.representations indexOfObject:imageRep]];
         
         [self willChangeValueForKey:@"imageWithAllReps"];
+        [self willChangeValueForKey:@"imageWithKeyReps"];
         [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
         
         [self.representations removeObject:imageRep];
         
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
+        [self didChangeValueForKey:@"imageWithKeyReps"];
         [self didChangeValueForKey:@"imageWithAllReps"];
     }
+}
+
+- (NSImageRep *)representationWithScale:(CGFloat)scale {
+    CGFloat destW = self.size.width * scale;
+    CGFloat destH = self.size.height * scale * self.frameCount;
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"pixelsWide == %f && pixelsHigh == %f", destW, destH];
+    NSSet *filtered = [self.representations.set filteredSetUsingPredicate:pred];
+    return filtered.anyObject;
 }
 
 - (BOOL)isEqualTo:(MCCursor *)object {

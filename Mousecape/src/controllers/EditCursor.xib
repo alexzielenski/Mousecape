@@ -7,7 +7,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MCEditCursorViewController">
             <connections>
+                <action selector="actionButton:" destination="KIY-BR-q24" id="l8b-u2-Lu7"/>
                 <action selector="segment:" destination="BhM-Ss-uIp" id="hnS-TV-VmE"/>
+                <outlet property="actionButton" destination="KIY-BR-q24" id="Fcd-c2-v3q"/>
                 <outlet property="frameCountField" destination="168" id="434"/>
                 <outlet property="frameDurationField" destination="182" id="435"/>
                 <outlet property="hotSpotField" destination="195" id="437"/>
@@ -241,7 +243,9 @@
         <class className="MCEditCursorViewController" superclassName="NSViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
             <relationships>
+                <relationship kind="action" name="actionButton:"/>
                 <relationship kind="action" name="segment:" candidateClass="NSSegmentedControl"/>
+                <relationship kind="outlet" name="actionButton" candidateClass="NSButton"/>
                 <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>

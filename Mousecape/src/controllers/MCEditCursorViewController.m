@@ -10,6 +10,7 @@
 #import "MCCursorLibrary.h"
 
 @interface MCEditCursorViewController ()
+- (void)reloadActionButton;
 @end
 
 @implementation MCEditCursorViewController
@@ -19,9 +20,36 @@
     [self.undoManager disableUndoRegistration];
     @weakify(self);
 
-    [RACAbleWithStart(self.cursor.representations) subscribeNext:^(NSOrderedSet *reps) {
+    [self.segmentedControl setSelectedSegment:0];
+    
+    [[RACAbleWithStart(self.imageView.scale) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSNumber *scale) {
+        @strongify(self);
+        NSUInteger ctrl = 0;
+        CGFloat scl     = scale.doubleValue;
+        
+        if (scl >= 1.5 && scl < 3.5)
+            ctrl = 1;
+        else if (scl >= 3.5 && scl < 7.5)
+            ctrl = 2;
+        else if (scl >= 7.5)
+            ctrl = 3;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            @strongify(self);
+            self.segmentedControl.selectedSegment = ctrl;
+            [self reloadActionButton];
+        });
+    }];
+    
+    [[RACAbleWithStart(self.cursor.representations) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSOrderedSet *reps) {
         @strongify(self);
         NSSize baseSize = NSMakeSize(self.cursor.size.width, self.cursor.size.height * self.cursor.frameCount);
+        
+        [self.segmentedControl.cell setImage:nil forSegment:0];
+        [self.segmentedControl.cell setImage:nil forSegment:1];
+        [self.segmentedControl.cell setImage:nil forSegment:2];
+        [self.segmentedControl.cell setImage:nil forSegment:3];
+        
         for (NSImageRep *rep in reps) {
             CGFloat scl = rep.pixelsWide / baseSize.width;
             NSUInteger ctrl = -1;
@@ -36,6 +64,7 @@
             
             if (ctrl != -1)
                 [self.segmentedControl.cell setImage:[NSImage imageNamed:NSImageNameMenuOnStateTemplate] forSegment:ctrl];
+            [self reloadActionButton];
         }
     }];
     
@@ -50,20 +79,6 @@
             self.cursor.hotSpot = x.pointValue;
     }];
     
-    [RACAbleWithStart(self.imageView.scale) subscribeNext:^(NSNumber *scale) {
-        @strongify(self);
-        NSUInteger ctrl = 0;
-        CGFloat scl     = scale.doubleValue;
-        
-        if (scl >= 1.5 && scl < 3.5)
-            ctrl = 1;
-        else if (scl >= 3.5 && scl < 7.5)
-            ctrl = 2;
-        else if (scl >= 7.5)
-            ctrl = 3;
-        self.segmentedControl.selectedSegment = ctrl;
-    }];
-    
     [self.undoManager enableUndoRegistration];
 }
 
@@ -73,9 +88,37 @@
 
 #pragma mark - Actions
 
+- (void)reloadActionButton {
+    if ([self.cursor representationWithScale:[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]]) {
+        [self.actionButton setImage:[NSImage imageNamed:NSImageNameRemoveTemplate]];
+        [self.actionButton setTag: 1];
+    } else {
+        [self.actionButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
+        [self.actionButton setTag:0];
+    }
+}
+
 - (IBAction)segment:(NSSegmentedControl *)sender {
     // In IB the tags are set to the scale value
     self.imageView.scale = [sender.cell tagForSegment:sender.selectedSegment];
+}
+
+- (IBAction)actionButton:(NSButton *)sender {
+    if (sender.tag == 0) {
+        // Add
+    } else {
+        // Remove
+        [self.cursor removeRepresentation:[self.cursor representationWithScale:[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]]];
+        
+    }
+    
+    [self reloadActionButton];
+}
+
+- (void)setCurrentImageToFileAtURL:(NSURL *)url {
+    if (!url)
+        return;
+//    NSImageRep *rep = [NSImageRep imageRepWithContentsOfURL:url];
 }
 
 #pragma mark - NSComboBoxDataSource

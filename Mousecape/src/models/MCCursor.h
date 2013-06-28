@@ -23,8 +23,8 @@
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version;
 - (id)initWithCursorDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version;
 
-- (void)addRepresentation:(NSBitmapImageRep *)imageRep;
-- (void)removeRepresentation:(NSBitmapImageRep *)imageRep;
+- (void)addRepresentation:(NSImageRep *)imageRep;
+- (void)removeRepresentation:(NSImageRep *)imageRep;
 
 - (NSArray *)keyReps;
 
@@ -33,6 +33,8 @@
 - (NSDictionary *)dictionaryRepresentation;
 
 - (NSString *)prettyName;
+- (NSImageRep *)representationWithScale:(CGFloat)scale;
+
 @end
 
 @interface MCCursor (Properties)

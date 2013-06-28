@@ -115,6 +115,7 @@ static void *MCCursorContext;
     [cursor addObserver:self forKeyPath:@"size" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
     [cursor addObserver:self forKeyPath:@"hotSpot" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
     [cursor addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
+    [cursor addObserver:self forKeyPath:@"representations" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:&MCCursorContext];
 }
 
 - (void)stopObservingLibrary:(MCCursorLibrary *)library {
@@ -134,6 +135,7 @@ static void *MCCursorContext;
     [cursor removeObserver:self forKeyPath:@"size"];
     [cursor removeObserver:self forKeyPath:@"hotSpot"];
     [cursor removeObserver:self forKeyPath:@"identifier"];
+    [cursor removeObserver:self forKeyPath:@"representations"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -181,11 +183,31 @@ static void *MCCursorContext;
             return;
         
         MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
-        
         id oldValue = change[NSKeyValueChangeOldKey];
         
-        NSString *action = keyPath.capitalizedString;
+        if ([keyPath isEqualToString:@"representations"]) {
+            NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+            NSString *action = @"";
+            
+            if (kind == NSKeyValueChangeInsertion) {
+                for (NSImageRep *cursor in change[NSKeyValueChangeNewKey])
+                    [proxy removeRepresentation:cursor];
+                action = @"Add Representation";
+            } else if (kind == NSKeyValueChangeRemoval) {
+                for (NSImageRep *cursor in oldValue)
+                    [proxy addRepresentation:cursor];
+                action = @"Remove Representation";
+            }
+            
+            if (action.length && !self.undoManager.isUndoing) {
+                [self.undoManager setActionName:action];
+            }
+
+            return;
+        }
         
+        NSString *action = keyPath.capitalizedString;
+    
         // Primitives
         if ([keyPath isEqualToString:@"frameDuration"]) {
             [proxy setFrameDuration:[(NSNumber *)oldValue doubleValue]];

@@ -18,7 +18,10 @@
 @property (weak) IBOutlet NSTextField *frameCountField;
 @property (weak) IBOutlet NSTextField *frameDurationField;
 @property (weak) IBOutlet NSSegmentedControl *segmentedControl;
+@property (weak) IBOutlet NSButton *actionButton;
 
 - (IBAction)segment:(NSSegmentedControl *)sender;
+- (IBAction)actionButton:(NSButton *)sender;
+- (void)setCurrentImageToFileAtURL:(NSURL *)url;
 
 @end
