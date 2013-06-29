@@ -38,6 +38,10 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 #endif
 }
 
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    [self.libraryWindowController showWindow:self];
+}
+
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
     [self.libraryWindowController showWindow:self];
     
@@ -48,15 +52,15 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
     if (![filename.pathExtension.lowercaseString isEqualToString:@"cape"])
         return NO;
-    
+
     NSError *err = nil;
     MCCursorDocument *document = [[MCCursorDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filename] ofType:@"cape" error:&err];
     if (err)
         NSRunAlertPanel(@"Could not read cursor file.", err.localizedDescription ? err.localizedDescription : @"These are not the droids you are looking for", @"Crap", nil,  nil);
+    if (!document)
+        return NO;
     
-    [self.libraryWindowController addDocument:document];
-    
-    return YES;
+    return [self.libraryWindowController addDocument:document];
 }
 
 #pragma mark - Interface Actions
