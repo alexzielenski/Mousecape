@@ -13,6 +13,7 @@
 @interface MCCursorDocument : NSDocument
 @property (strong) MCCursorLibrary *library;
 @property (strong) NSWindowController *editWindowController;
+@property (assign) BOOL shouldVaryCursorSize;
 
 - (IBAction)apply:(id)sender;
 - (IBAction)remove:(id)sender;

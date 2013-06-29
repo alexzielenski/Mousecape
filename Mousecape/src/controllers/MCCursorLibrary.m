@@ -28,10 +28,10 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 @implementation MCCursorLibrary
 + (NSDictionary *)cursorMap {
     static NSDictionary *map = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    
+    if (!map) {
         map = [NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"CursorMap" ofType:@"plist"]];
-    });
+    }
     
     return map;
 }

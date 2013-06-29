@@ -34,6 +34,7 @@
 
 - (NSString *)prettyName;
 - (NSImageRep *)representationWithScale:(CGFloat)scale;
+- (NSImageRep *)smallestRepresentationWithScale:(CGFloat *)scale;
 
 @end
 

@@ -21,6 +21,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 @interface MCCursor ()
 @property (readwrite, strong) NSMutableOrderedSet *representations;
+@property (copy) NSString *prettyName;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
@@ -31,12 +32,20 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (id)init {
     if ((self = [super init])) {
+        self.prettyName = @"Unknown";
+        
+        [self rac_addDeallocDisposable:[self rac_deriveProperty:@"prettyName" from:[RACAble(self.identifier) map:^NSString *(NSString *ident) {
+            NSString *name = nil;
+            if (ident)
+                name = [MCCursorLibrary.cursorMap objectForKey:ident];
+            return name ? name : @"Unknown";
+        }]]];
+        
         self.frameCount = 1;
         self.frameDuration = 1.0;
         self.size = NSZeroSize;
         self.hotSpot = NSZeroPoint;
         self.representations = [NSMutableOrderedSet orderedSet];
-        
     }
     return self;
 }
@@ -110,23 +119,25 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 
 - (NSArray *)keyReps {
     NSMutableArray *ar = [NSMutableArray array];
-    NSSize size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+    NSImageRep *x1 = [self representationWithScale:1.0];
+    NSImageRep *x2 = [self representationWithScale:2.0];
+    NSImageRep *x5 = [self representationWithScale:5.0];
+    NSImageRep *x10 = [self representationWithScale:10.0];
     
-    for (NSImageRep *rep in self.representations) {
-        CGFloat xMultiplier = rep.pixelsWide / size.width;
-        CGFloat yMultiplier = rep.pixelsHigh / size.height;
-        
-        if (xMultiplier != yMultiplier)
-            continue;
-        
-        if (xMultiplier == 1 ||
-            xMultiplier == 2 ||
-            xMultiplier == 5 ||
-            xMultiplier == 10)
-            [ar addObject:rep];
-        
-    }
+    if (x1)
+        [ar addObject:x1];
+    if (x2)
+        [ar addObject:x2];
+    if (x5)
+        [ar addObject:x5];
+    if (x10)
+        [ar addObject:x10];
     
+    x1.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+    x2.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+    x5.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+    x10.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+
     return ar;
 }
 
@@ -162,11 +173,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
     
     return drep;
-}
-
-- (NSString *)prettyName {
-    NSString *name = [MCCursorLibrary.cursorMap objectForKey:self.identifier];
-    return name ? name : @"Unknown";
 }
 
 - (id)valueForKey:(NSString *)key {
@@ -234,6 +240,21 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"pixelsWide == %f && pixelsHigh == %f", destW, destH];
     NSSet *filtered = [self.representations.set filteredSetUsingPredicate:pred];
     return filtered.anyObject;
+}
+
+- (NSImageRep *)smallestRepresentationWithScale:(CGFloat *)scale {
+    NSArray *scales = @[ @1, @2, @5, @10 ];
+    for (NSNumber *sc in scales) {
+        CGFloat currentScale = sc.doubleValue;
+        NSImageRep *rep = [self representationWithScale:currentScale];
+        if (rep) {
+            if (*scale)
+                *scale = currentScale;
+            return rep;
+        }
+    }
+    
+    return nil;
 }
 
 - (BOOL)isEqualTo:(MCCursor *)object {

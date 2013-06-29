@@ -51,12 +51,12 @@ static void *MCCursorChangeContext;
                              ];
     
     @weakify(self);
-    [[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(MCCursorLibrary *library) {
+    [self rac_addDeallocDisposable:[[RACAble(self.cursorLibrary) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(MCCursorLibrary *library) {
         @strongify(self);
         [self.tableView reloadData];
         self.selectedObject = library;
         [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-    }];
+    }]];
     
     [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:&MCCursorChangeContext];
 }

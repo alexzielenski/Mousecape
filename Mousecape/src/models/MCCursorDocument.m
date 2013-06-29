@@ -21,23 +21,26 @@ static void *MCCursorDocumentContext;
 
 - (id)init {
     if ((self = [super init])) {
-        @weakify(self);
-        [[RACAble(self.library) mapPreviousWithStart:nil
-                                             combine:^id(id previous, id current) {
-                                                 NSMutableDictionary *rtn = [NSMutableDictionary dictionary];
-                                                 if (previous)
-                                                     rtn[@"previous"] = previous;
-                                                 if (current)
-                                                     rtn[@"current"] = current;
-                                                 return rtn;
-                                             }] subscribeNext:^(NSDictionary *x) {
-            @strongify(self);
-            if (x[@"previous"])
-                [self stopObservingLibrary:x[@"previous"]];
-            if (x[@"current"])
-                [self startObservingLibrary:x[@"current"]];
-        }];
+        self.shouldVaryCursorSize = YES;
         
+        @weakify(self);
+        RACDisposable *disp = [[RACAble(self.library) mapPreviousWithStart:nil
+                                                                   combine:^id(id previous, id current) {
+                                                                       NSMutableDictionary *rtn = [NSMutableDictionary dictionary];
+                                                                       if (previous)
+                                                                           rtn[@"previous"] = previous;
+                                                                       if (current)
+                                                                           rtn[@"current"] = current;
+                                                                       return rtn;
+                                                                   }] subscribeNext:^(NSDictionary *x) {
+                                                                       @strongify(self);
+                                                                       if (x[@"previous"])
+                                                                           [self stopObservingLibrary:x[@"previous"]];
+                                                                       if (x[@"current"])
+                                                                           [self startObservingLibrary:x[@"current"]];
+                                                                   }];
+        
+        [self rac_addDeallocDisposable:disp];
         self.library = [[MCCursorLibrary alloc] init];
     }
     
@@ -181,6 +184,16 @@ static void *MCCursorContext;
     } else if (context == &MCCursorContext) {
         if ([object parentLibrary] != self.library)
             return;
+        
+        if ([keyPath isEqualToString:@"frameCount"] && self.shouldVaryCursorSize) {
+            // When th frame count changes, change the size
+            MCCursor *cu = (MCCursor *)object;
+            CGFloat scale = 1.0;
+            NSImageRep *rep = [cu smallestRepresentationWithScale:&scale];
+            NSSize size = NSMakeSize(rep.pixelsWide / scale, rep.pixelsHigh / scale / cu.frameCount);
+            
+            cu.size = size;
+        }
         
         MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
         id oldValue = change[NSKeyValueChangeOldKey];

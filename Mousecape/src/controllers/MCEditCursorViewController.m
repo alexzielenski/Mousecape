@@ -22,7 +22,7 @@
 
     [self.segmentedControl setSelectedSegment:0];
     
-    [[RACAbleWithStart(self.imageView.scale) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSNumber *scale) {
+    [self rac_addDeallocDisposable:[[RACAbleWithStart(self.imageView.scale) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSNumber *scale) {
         @strongify(self);
         NSUInteger ctrl = 0;
         CGFloat scl     = scale.doubleValue;
@@ -39,9 +39,9 @@
             self.segmentedControl.selectedSegment = ctrl;
             [self reloadActionButton];
         });
-    }];
+    }]];
     
-    [[RACAbleWithStart(self.cursor.representations) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSOrderedSet *reps) {
+    [self rac_addDeallocDisposable:[[RACAbleWithStart(self.cursor.representations) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSOrderedSet *reps) {
         @strongify(self);
         NSSize baseSize = NSMakeSize(self.cursor.size.width, self.cursor.size.height * self.cursor.frameCount);
         
@@ -66,18 +66,18 @@
                 [self.segmentedControl.cell setImage:[NSImage imageNamed:NSImageNameMenuOnStateTemplate] forSegment:ctrl];
             [self reloadActionButton];
         }
-    }];
+    }]];
     
     RAC(self.imageView.image) = [RACAble(self.cursor.imageWithKeyReps) distinctUntilChanged];
     
     [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
     
-    [[RACAble(self.imageView.hotSpot) distinctUntilChanged] subscribeNext:^(NSValue *x) {
+    [self rac_addDeallocDisposable:[[RACAble(self.imageView.hotSpot) distinctUntilChanged] subscribeNext:^(NSValue *x) {
         @strongify(self);
         if (!NSEqualPoints(x.pointValue, self.cursor.hotSpot))
             self.cursor.hotSpot = x.pointValue;
-    }];
+    }]];
     
     [self.undoManager enableUndoRegistration];
 }
@@ -106,6 +106,15 @@
 - (IBAction)actionButton:(NSButton *)sender {
     if (sender.tag == 0) {
         // Add
+        NSOpenPanel *panel = [NSOpenPanel openPanel];
+        panel.allowedFileTypes = [NSImage imageFileTypes];
+        panel.message = [NSString stringWithFormat:@"Set %ldx cursor representation", (long)[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]];
+        panel.allowsMultipleSelection = NO;
+        @weakify(self);
+        [panel beginWithCompletionHandler:^(NSInteger result) {
+            @strongify(self);
+            [self setCurrentImageToFileAtURL:panel.URL];
+        }];
     } else {
         // Remove
         [self.cursor removeRepresentation:[self.cursor representationWithScale:[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]]];
@@ -118,7 +127,27 @@
 - (void)setCurrentImageToFileAtURL:(NSURL *)url {
     if (!url)
         return;
-//    NSImageRep *rep = [NSImageRep imageRepWithContentsOfURL:url];
+    
+    NSBitmapImageRep *rep = [NSBitmapImageRep imageRepWithContentsOfURL:url];
+    NSInteger multiplier = [self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment];
+    NSSize size = NSMakeSize(rep.pixelsWide / multiplier, rep.pixelsHigh / multiplier / self.cursor.frameCount);
+    
+    // If there are no other reps, change the size
+    // If there are reps, then scale down the pixel size of the new one and check to see if it is equal
+    // to the actual image size
+    if (self.cursor.representations.count) {
+        // Validate size
+        if (size.width != self.cursor.size.width || size.height != self.cursor.size.height) {
+            // Invalid size
+            NSLog(@"Bad cursor size");
+            return;
+        }
+    } else {
+        self.cursor.size = size;
+    }
+    
+    [[(NSBitmapImageRep *)rep representationUsingType:NSPNGFileType properties:nil] writeToFile:@"/Users/Alex/Desktop/k.png" atomically:NO];
+    [self.cursor addRepresentation:rep];
 }
 
 #pragma mark - NSComboBoxDataSource

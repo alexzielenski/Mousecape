@@ -54,18 +54,18 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     
     __weak MMAnimatingImageView *weakSelf = self;
     
-    [[RACAble(self.image) distinctUntilChanged]
-        subscribeNext:^(id x) {
-            weakSelf.spriteLayer.image = x;
-        }];
+    [self rac_addDeallocDisposable:[[RACAble(self.image) distinctUntilChanged]
+                                    subscribeNext:^(id x) {
+                                        weakSelf.spriteLayer.image = x;
+                                    }]];
     
-    [[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] distinctUntilChanged]
+    [self rac_addDeallocDisposable:[[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] distinctUntilChanged]
      subscribeNext:^(id x) {
          [weakSelf _invalidateFrame];
          [weakSelf _invalidateAnimation];
-     }];
+     }]];
     
-    [[RACAble(self.shouldAnimate) distinctUntilChanged]
+    [self rac_addDeallocDisposable:[[RACAble(self.shouldAnimate) distinctUntilChanged]
      subscribeNext:^(NSNumber *x) {
          if (!x.boolValue) {
              weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
@@ -74,7 +74,7 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
          } else {
              [weakSelf _invalidateAnimation];
          }
-     }];
+     }]];
     
 }
 

@@ -46,16 +46,18 @@
     self.shouldDragToRemove = YES;
 
     @weakify(self);
-    [[RACSignal merge:@[
-      RACAble(self.scale),
-      RACAble(self.sampleSize),
-      RACAble(self.hotSpot),
-      RACAble(self.image),
-      RACAble(self.shouldDrawBezel)
-      ]] subscribeNext:^(id x) {
+    RACDisposable *disp = [[RACSignal merge:@[
+                                              RACAble(self.scale),
+                                              RACAble(self.sampleSize),
+                                              RACAble(self.hotSpot),
+                                              RACAble(self.image),
+                                              RACAble(self.shouldDrawBezel)
+                                              ]] subscribeNext:^(id x) {
         @strongify(self);
         [self setNeedsDisplay:YES];
     }];
+    
+    [self rac_addDeallocDisposable:disp];
     
 }
 

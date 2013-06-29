@@ -60,11 +60,11 @@
         RAC(self.imageView.frameDuration) = RACAble(self.cursor.frameDuration);
         RAC(self.imageView.frameCount)    = RACAble(self.cursor.frameCount);
         RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
-        
-        [RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
+    
+        [self rac_addDeallocDisposable:[RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
             @strongify(self);
             [self.parentLine cursorView:self selected:selected.boolValue];
-        }];
+        }]];
     }
     return self;
 }
@@ -137,16 +137,16 @@
     self.shouldLimitToBounds = YES;
     
     @weakify(self);
-    [RACAble(self.dataSource) subscribeNext:^(id x) {
+    [self rac_addDeallocDisposable:[RACAble(self.dataSource) subscribeNext:^(id x) {
         @strongify(self);
         [self reloadData];
-    }];
+    }]];
     
-    [RACAble(self.shouldAllowSelection) subscribeNext:^(NSNumber *x) {
+    [self rac_addDeallocDisposable:[RACAble(self.shouldAllowSelection) subscribeNext:^(NSNumber *x) {
         @strongify(self);
         if (!x.boolValue)
             [self deselectAll];
-    }];
+    }]];
     
 }
 

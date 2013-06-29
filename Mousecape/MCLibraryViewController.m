@@ -25,7 +25,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
-        [[RACAble(self.windowController) mapPreviousWithStart:nil
+        [self rac_addDeallocDisposable:[[RACAble(self.windowController) mapPreviousWithStart:nil
                                                      combine:^id(id previous, id current) {
                                                          NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                                                          if (previous)
@@ -39,7 +39,7 @@
                                                              [self stopWatchingWindowController:[x objectForKey:@"previous"]];
                                                          if ([x objectForKey:@"current"])
                                                              [self startWatchingWindowController:[x objectForKey:@"current"]];
-                                                     }];
+                                                     }]];
     }
     
     return self;

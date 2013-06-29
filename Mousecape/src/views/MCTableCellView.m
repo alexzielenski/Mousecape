@@ -14,29 +14,33 @@
 @end
 
 @implementation MCTableCellView
-- (void)viewDidMoveToWindow {
-    @weakify(self);
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        @weakify(self);
+        
+        [self rac_addDeallocDisposable:[RACAble(self.cursorLine) subscribeNext:^(MCCursorLine *cursorLine) {
+            @strongify(self);
+            cursorLine.dataSource = self;
+        }]];
+        
+//        [self rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
+        RAC(self.textField.stringValue) = RACAble(self.objectValue.library.name);
+        [self rac_addDeallocDisposable:[[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
+            @strongify(self);
+            if (self.backgroundStyle == NSBackgroundStyleDark)
+                self.hdView.image = [NSImage imageNamed:@"HD-alt"];
+            else
+                self.hdView.image = [NSImage imageNamed:@"HD"];
+        }]];
+        
+        [self rac_addDeallocDisposable:[RACAble(self.objectValue.library.cursors) subscribeNext:^(NSSet *cursors) {
+            @strongify(self);
+            self.sortedValues = [cursors sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
+            [self.cursorLine reloadData];
+        }]];
+    }
     
-    [RACAbleWithStart(self.cursorLine) subscribeNext:^(MCCursorLine *cursorLine) {
-        @strongify(self);
-        cursorLine.dataSource = self;
-    }];
-    
-    [self.textField rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
-    [[RACAbleWithStart(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
-        @strongify(self);
-        if (self.backgroundStyle == NSBackgroundStyleDark)
-            self.hdView.image = [NSImage imageNamed:@"HD-alt"];
-        else
-            self.hdView.image = [NSImage imageNamed:@"HD"];
-    }];
-    
-    [RACAbleWithStart(self.objectValue.library.cursors) subscribeNext:^(NSSet *cursors) {
-        @strongify(self);
-        self.sortedValues = [cursors sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"prettyName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
-        [self.cursorLine reloadData];
-    }];
-    
+    return self;
 }
 
 - (MCCursorDocument *)objectValue {

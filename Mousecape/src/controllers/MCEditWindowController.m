@@ -28,9 +28,9 @@
     self.currentEditViewController = self.capeViewController;
     
     RAC(self.listViewController.cursorLibrary) = RACAbleWithStart(self.document.library);
-    [RACAble(self.listViewController.selectedObject) subscribeNext:^(id x) {
+    [self rac_addDeallocDisposable:[RACAble(self.listViewController.selectedObject) subscribeNext:^(id x) {
         [self _changeEditViewsForSelection];
-    }];
+    }]];
 }
 
 - (MCCursorDocument *)document {
