@@ -219,9 +219,6 @@
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
     [self.documents insertObject:doc atIndex:idx];
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
-    
-//    [doc addWindowController:self];
-//    [self.documents sortUsingDescriptors:self.librarySortDescriptors];
 }
 
 - (void)removeDocument:(MCCursorDocument *)document {

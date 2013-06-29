@@ -57,18 +57,14 @@ static void *MCDocumentsContext;
     if (context != &MCDocumentsContext)
         return;
     
-    @weakify(self);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        @strongify(self);
-        NSUInteger kind     = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
-        NSIndexSet *indices = change[NSKeyValueChangeIndexesKey];
+    NSUInteger kind     = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+    NSIndexSet *indices = change[NSKeyValueChangeIndexesKey];
+
+    if (kind == NSKeyValueChangeInsertion)
+        [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectGap];
+    else if (kind == NSKeyValueChangeRemoval)
+        [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectFade];
         
-        if (kind == NSKeyValueChangeInsertion)
-            [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectGap];
-        else if (kind == NSKeyValueChangeRemoval)
-            [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectFade];
-        
-    });    
 }
 
 #pragma mark - Interface Actions
