@@ -225,6 +225,9 @@
     if (![self.documents containsObject:document])
         return;
     
+    if (self.appliedCursor == document)
+        self.appliedCursor = nil;
+    
     [document.editWindowController close];
     [document removeWindowController:document.editWindowController];
     [document removeWindowController:self];
