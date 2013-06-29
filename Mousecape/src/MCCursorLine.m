@@ -59,7 +59,7 @@
         RAC(self.textField.stringValue)   = RACAble(self.cursor.prettyName);
         RAC(self.imageView.frameDuration) = RACAble(self.cursor.frameDuration);
         RAC(self.imageView.frameCount)    = RACAble(self.cursor.frameCount);
-        RAC(self.imageView.image)         = RACAble(self.cursor.imageWithAllReps);
+        RAC(self.imageView.image)         = RACAble(self.cursor.imageWithKeyReps);
     
         [self rac_addDeallocDisposable:[RACAble(self.selected) subscribeNext:^(NSNumber *selected) {
             @strongify(self);
