@@ -104,9 +104,14 @@
             
             // Set original selection
             dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
+                
                 // need the update this on the main thread
                 [self.libraryController.tableView endUpdates];
-                self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow != -1 ? self.libraryController.tableView.selectedRow : 0];
+                
+                if (self.documents.count) {
+                    self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow != -1 ? self.libraryController.tableView.selectedRow : 0];   
+                }
             });
 
         }];
