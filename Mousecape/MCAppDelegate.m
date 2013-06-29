@@ -40,6 +40,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
     [self.libraryWindowController showWindow:self];
+    
+    // If we return yes, then a new document would be created
     return NO;
 }
 
@@ -52,14 +54,7 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     if (err)
         NSRunAlertPanel(@"Could not read cursor file.", err.localizedDescription ? err.localizedDescription : @"These are not the droids you are looking for", @"Crap", nil,  nil);
     
-    [document makeWindowControllers];
-    
-    
-    // add to library
-//    NSError *err = [self.libraryController addToLibrary:filename];
-//    if (err) {
-//        NSRunAlertPanel(@"Could not add cursor to library", err.localizedDescription ? err.localizedDescription : @"These are not the droids you are looking for", @"Crap", nil,  nil);
-//    }
+    [self.libraryWindowController addDocument:document];
     
     return YES;
 }
