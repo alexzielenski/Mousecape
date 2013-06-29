@@ -26,15 +26,17 @@
 - (void)addRepresentation:(NSImageRep *)imageRep;
 - (void)removeRepresentation:(NSImageRep *)imageRep;
 
-- (NSArray *)keyReps;
 
-- (NSImage *)imageWithAllReps;
-- (NSImage *)imageWithKeyReps;
-- (NSDictionary *)dictionaryRepresentation;
-
-- (NSString *)prettyName;
 - (NSImageRep *)representationWithScale:(CGFloat)scale;
 - (NSImageRep *)smallestRepresentationWithScale:(CGFloat *)scale;
+
+- (NSDictionary *)dictionaryRepresentation;
+
+// Derived Properties
+- (NSArray *)keyReps;
+- (NSString *)prettyName;
+- (NSImage *)imageWithAllReps;
+- (NSImage *)imageWithKeyReps;
 
 @end
 

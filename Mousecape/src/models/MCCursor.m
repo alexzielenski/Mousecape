@@ -22,6 +22,10 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 @interface MCCursor ()
 @property (readwrite, strong) NSMutableOrderedSet *representations;
 @property (copy) NSString *prettyName;
+@property (strong) NSArray *keyReps;
+@property (strong) NSImage *imageWithAllReps;
+@property (strong) NSImage *imageWithKeyReps;
+- (NSArray *)keyScales;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
@@ -34,11 +38,47 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     if ((self = [super init])) {
         self.prettyName = @"Unknown";
         
+        @weakify(self);
         [self rac_addDeallocDisposable:[self rac_deriveProperty:@"prettyName" from:[RACAble(self.identifier) map:^NSString *(NSString *ident) {
             NSString *name = nil;
             if (ident)
                 name = [MCCursorLibrary.cursorMap objectForKey:ident];
             return name ? name : @"Unknown";
+        }]]];
+        
+        [self rac_addDeallocDisposable:[self rac_deriveProperty:@"keyReps" from:[RACAble(self.representations) map:^NSArray *(NSOrderedSet *value) {
+            @strongify(self);
+            
+            NSMutableArray *ar = [NSMutableArray array];
+            
+            for (NSNumber *scale in self.keyScales) {
+                CGFloat scl = scale.doubleValue;
+                NSImageRep *rep = [self representationWithScale:scl];
+                rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
+                
+                if (rep)
+                    [ar addObject:rep];
+                
+            }
+            return ar;
+            
+        }]]];
+        
+        [self rac_addDeallocDisposable:[self rac_deriveProperty:@"imageWithKeyReps" from:[RACAble(self.keyReps) map:^NSImage *(NSArray *value) {
+            @strongify(self);
+            NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
+            image.matchesOnMultipleResolution = YES;
+            [image addRepresentations:value];
+            return image;
+        }]]];
+        
+        [self rac_addDeallocDisposable:[self rac_deriveProperty:@"imageWithAllReps" from:[RACAble(self.representations) map:^NSImage *(NSOrderedSet *value) {
+            @strongify(self);
+            NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
+            [image addRepresentations:value.array];
+            image.matchesOnMultipleResolution  = YES;
+            
+            return image;
         }]]];
         
         self.frameCount = 1;
@@ -117,45 +157,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     return NO;
 }
 
-- (NSArray *)keyReps {
-    NSMutableArray *ar = [NSMutableArray array];
-    NSImageRep *x1 = [self representationWithScale:1.0];
-    NSImageRep *x2 = [self representationWithScale:2.0];
-    NSImageRep *x5 = [self representationWithScale:5.0];
-    NSImageRep *x10 = [self representationWithScale:10.0];
-    
-    if (x1)
-        [ar addObject:x1];
-    if (x2)
-        [ar addObject:x2];
-    if (x5)
-        [ar addObject:x5];
-    if (x10)
-        [ar addObject:x10];
-    
-    x1.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-    x2.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-    x5.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-    x10.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-
-    return ar;
-}
-
-- (NSImage *)imageWithAllReps {
-    NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    [image addRepresentations:self.representations.array];
-    image.matchesOnMultipleResolution  = YES;
-        
-    return image;
-}
-
-- (NSImage *)imageWithKeyReps {
-    NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    image.matchesOnMultipleResolution = YES;
-    [image addRepresentations:self.keyReps];
-    return image;
-}
-
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *drep = [NSMutableDictionary dictionary];
     drep[MCCursorDictionaryFrameCountKey]    = @(self.frameCount);
@@ -205,15 +206,9 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     if (![self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:self.representations.count];
 
-        [self willChangeValueForKey:@"imageWithAllReps"];
-        [self willChangeValueForKey:@"imageWithKeyReps"];
         [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
-        
         [self.representations addObject:imageRep];
-        
         [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
-        [self didChangeValueForKey:@"imageWithKeyReps"];
-        [self didChangeValueForKey:@"imageWithAllReps"];
     }
 }
 
@@ -221,15 +216,10 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     if ([self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:[self.representations indexOfObject:imageRep]];
         
-        [self willChangeValueForKey:@"imageWithAllReps"];
-        [self willChangeValueForKey:@"imageWithKeyReps"];
         [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
-        
         [self.representations removeObject:imageRep];
         
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
-        [self didChangeValueForKey:@"imageWithKeyReps"];
-        [self didChangeValueForKey:@"imageWithAllReps"];
     }
 }
 
@@ -243,7 +233,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 }
 
 - (NSImageRep *)smallestRepresentationWithScale:(CGFloat *)scale {
-    NSArray *scales = @[ @1, @2, @5, @10 ];
+    NSArray *scales = self.keyScales;
     for (NSNumber *sc in scales) {
         CGFloat currentScale = sc.doubleValue;
         NSImageRep *rep = [self representationWithScale:currentScale];
@@ -255,6 +245,10 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     }
     
     return nil;
+}
+
+- (NSArray *)keyScales {
+   return  @[ @1, @2, @5, @10 ];
 }
 
 - (BOOL)isEqualTo:(MCCursor *)object {
