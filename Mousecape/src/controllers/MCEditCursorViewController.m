@@ -146,7 +146,6 @@
         self.cursor.size = size;
     }
     
-    [[(NSBitmapImageRep *)rep representationUsingType:NSPNGFileType properties:nil] writeToFile:@"/Users/Alex/Desktop/k.png" atomically:NO];
     [self.cursor addRepresentation:rep];
 }
 
