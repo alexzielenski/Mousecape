@@ -10,7 +10,7 @@
 #import "MCCursor.h"
 #import "MCScaledImageView.h"
 
-@interface MCEditCursorViewController : NSViewController
+@interface MCEditCursorViewController : NSViewController <NSDraggingDestination>
 @property (strong) MCCursor *cursor;
 @property (strong) IBOutlet MCScaledImageView *imageView;
 @property (weak) IBOutlet NSComboBox  *identifierField;
@@ -22,6 +22,8 @@
 
 - (IBAction)segment:(NSSegmentedControl *)sender;
 - (IBAction)actionButton:(NSButton *)sender;
+
+- (void)setCurrentImageToImageRep:(NSImageRep *)rep;
 - (void)setCurrentImageToFileAtURL:(NSURL *)url;
 
 @end

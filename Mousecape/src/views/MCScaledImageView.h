@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MCScaledImageView : NSView
+@interface MCScaledImageView : NSView <NSDraggingDestination>
 @property (strong) NSImage *image;
 @property (assign) CGFloat scale;
 @property (assign) BOOL shouldDrawBezel;
@@ -16,6 +16,7 @@
 @property (assign) BOOL shouldDragToRemove;
 @property (assign) NSSize sampleSize;
 @property (assign) NSPoint hotSpot;
+@property (assign) IBOutlet id <NSDraggingDestination> delegate;
 @end
 
 @interface MCScaledImageView (Properties)

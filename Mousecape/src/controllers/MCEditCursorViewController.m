@@ -92,9 +92,13 @@
     if ([self.cursor representationWithScale:[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]]) {
         [self.actionButton setImage:[NSImage imageNamed:NSImageNameRemoveTemplate]];
         [self.actionButton setTag: 1];
+        
+        self.imageView.shouldDragToRemove = YES;
     } else {
         [self.actionButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
         [self.actionButton setTag:0];
+        
+        self.imageView.shouldDragToRemove = NO;
     }
 }
 
@@ -128,7 +132,11 @@
     if (!url)
         return;
     
-    NSBitmapImageRep *rep = [NSBitmapImageRep imageRepWithContentsOfURL:url];
+    NSImageRep *rep = [NSImageRep imageRepWithContentsOfURL:url];
+    [self setCurrentImageToImageRep:rep];
+}
+
+- (void)setCurrentImageToImageRep:(NSImageRep *)rep {
     NSInteger multiplier = [self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment];
     NSSize size = NSMakeSize(rep.pixelsWide / multiplier, rep.pixelsHigh / multiplier / self.cursor.frameCount);
     
@@ -191,6 +199,34 @@
     }
     
     return NSNotFound;
+}
+
+#pragma mark - NSDraggingDestination
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    if ([NSImageRep canInitWithPasteboard:sender.draggingPasteboard] &&
+        ![self.cursor representationWithScale:[self.segmentedControl.cell tagForSegment:self.segmentedControl.selectedSegment]])
+        return NSDragOperationCopy;
+    return NSDragOperationNone;
+}
+
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender {
+    return [self draggingEntered:sender];
+}
+
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
+    NSArray *reps = [NSImageRep imageRepsWithPasteboard:sender.draggingPasteboard];
+    
+    if (!reps.count || reps.count > 1)
+        return NO;
+
+    NSImageRep *rep = reps[0];
+    [self setCurrentImageToImageRep:rep];
+    return YES;
 }
 
 @end

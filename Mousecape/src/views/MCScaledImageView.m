@@ -9,6 +9,14 @@
 #import "MCScaledImageView.h"
 #import "NSImage+BestRep.h"
 
+NSWindow *MCWindowAtPoint(NSPoint screenPoint) {
+    for (NSWindow *window in [NSApp windows]) {
+        if ([window isVisible] && NSPointInRect(screenPoint, window.frame)) return window;
+    }
+    
+    return nil;
+}
+
 @interface MCScaledImageView ()
 @property (readwrite, weak) NSBitmapImageRep *lastRepresentation;
 @property (assign) NSRect lastFrame;
@@ -58,7 +66,8 @@
     }];
     
     [self rac_addDeallocDisposable:disp];
-    
+    [self registerForDraggedTypes:@[ NSFilenamesPboardType, (NSString *)kUTTypePNG ]];
+
 }
 
 - (void)drawRect:(NSRect)dirtyRect {    
@@ -174,7 +183,7 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    if (self.shouldChooseHotSpot) {
+    if (self.shouldChooseHotSpot && (event.modifierFlags & NSAlternateKeyMask) != NSAlternateKeyMask) {
         NSPoint clickPoint = [self convertPoint:event.locationInWindow fromView: nil];
 
         clickPoint.x -= self.lastFrame.origin.x;
@@ -205,11 +214,91 @@
 }
 //https://bitbucket.org/alunbestor/boxer/src/347a0bfa5b04/Boxer/BXDriveList.m use that for poof code
 - (void)mouseDragged:(NSEvent *)event {
-    if (self.shouldDragToRemove) {
+    if (self.shouldDragToRemove && (event.modifierFlags & NSAlternateKeyMask) == NSAlternateKeyMask) {        
+        NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
+        [pb declareTypes:[NSArray arrayWithObject:(NSString *)kUTTypePNG] owner:self];
+        [pb setData:[self.lastRepresentation representationUsingType:NSPNGFileType properties:Nil] forType:(NSString *)kUTTypePNG];
+        
+        NSImage *im = [[NSImage alloc] initWithSize:NSMakeSize(self.lastRepresentation.pixelsWide, self.lastRepresentation.pixelsHigh)];
+        [im addRepresentation:self.lastRepresentation];
+        [self dragImage:im
+                     at:NSMakePoint(self.lastFrame.origin.x, self.lastFrame.origin.y)
+                 offset:NSZeroSize
+                  event:event
+             pasteboard:pb
+                 source:self
+              slideBack:NO];
         
     }
     
     [super mouseDragged:event];
+}
+
+- (void)draggedImage:(NSImage *)draggedImage movedTo:(NSPoint)screenPoint {
+    NSPoint mousePoint = [NSEvent mouseLocation];
+    NSCursor *poof = [NSCursor disappearingItemCursor];
+    
+    //If there's no Boxer window under the mouse cursor, change the cursor to a poof to indicate we will discard the drive
+    if (!MCWindowAtPoint(mousePoint)) [poof set];
+    //otherwise, revert any poof cursor (which may already have been changed by valid drag destinations anyway)
+    else if ([[NSCursor currentCursor] isEqualTo: poof]) [[NSCursor arrowCursor] set];
+}
+
+
+- (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation {
+    NSPoint mousePoint = [NSEvent mouseLocation];
+    
+    if (operation == NSDragOperationNone && !MCWindowAtPoint(mousePoint)) {
+        //Calculate the center-point of the image for displaying the poof icon
+        NSRect imageRect;
+        imageRect.size          = image.size;
+        imageRect.origin        = screenPoint;
+        
+        NSPoint midPoint = NSMakePoint(NSMidX(imageRect), NSMidY(imageRect));
+        
+        //We make it square instead of fitting the width of the image,
+        //because the image may include a big fat horizontal margin
+        NSSize poofSize = imageRect.size;
+        poofSize.width = poofSize.height;
+            
+                //Reset the cursor back to normal
+        [[NSCursor arrowCursor] set];
+        
+                //Play the poof animation
+        NSShowAnimationEffect(NSAnimationEffectPoof, midPoint, poofSize, nil, nil, nil);
+    }
+
+}
+
+#pragma mark - NSDragDestination
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    if ([self.delegate respondsToSelector:@selector(draggingEntered:)])
+        return [self.delegate draggingEntered:sender];
+    return NSDragOperationNone;
+}
+
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender {
+    if ([self.delegate respondsToSelector:@selector(draggingUpdated:)])
+        return [self.delegate draggingUpdated:sender];
+    return NSDragOperationNone;
+}
+
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
+    if ([self.delegate respondsToSelector:@selector(prepareForDragOperation:)])
+        return [self.delegate prepareForDragOperation:sender];
+    return NO;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
+    if ([self.delegate respondsToSelector:@selector(performDragOperation:)])
+        return [self.delegate performDragOperation:sender];
+    return NO;
+}
+
+- (void)concludeDragOperation:(id<NSDraggingInfo>)sender {
+    if ([self.delegate respondsToSelector:@selector(concludeDragOperation:)])
+        [self.delegate concludeDragOperation:sender];
 }
 
 @end
