@@ -32,14 +32,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="744" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView canDrawConcurrently="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="114" horizontalPageScroll="10" verticalLineScroll="114" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" id="536" customClass="DTScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" canDrawConcurrently="YES" id="nW7-AK-7vO">
+                                <clipView key="contentView" id="nW7-AK-7vO">
                                     <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView canDrawConcurrently="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="112" rowSizeStyle="automatic" viewBased="YES" id="537">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="112" rowSizeStyle="automatic" viewBased="YES" id="537">
                                             <rect key="frame" x="0.0" y="0.0" width="563" height="480"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -102,7 +102,7 @@
                                                                         </binding>
                                                                     </connections>
                                                                 </imageView>
-                                                                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CSp-55-J2o" customClass="DTScrollView">
+                                                                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CSp-55-J2o" customClass="DTScrollView">
                                                                     <rect key="frame" x="14" y="15" width="532" height="66"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <clipView key="contentView" id="pfP-EN-NwU">
@@ -128,8 +128,8 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="66" id="g70-HX-16d"/>
                                                                     </constraints>
-                                                                    <scroller key="horizontalScroller" verticalHuggingPriority="750" id="UjQ-9M-rot">
-                                                                        <rect key="frame" x="1" y="49" width="530" height="16"/>
+                                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="UjQ-9M-rot">
+                                                                        <rect key="frame" x="-100" y="-100" width="530" height="16"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="dLm-ek-IfW">
@@ -170,7 +170,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="540">
-                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <rect key="frame" x="-100" y="-100" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
