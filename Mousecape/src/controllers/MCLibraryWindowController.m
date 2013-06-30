@@ -108,7 +108,7 @@
                 
                 // need the update this on the main thread
                 [self.libraryController.tableView endUpdates];
-                
+
                 if (self.documents.count) {
                     self.currentCursor = [self.documents objectAtIndex:self.libraryController.tableView.selectedRow != -1 ? self.libraryController.tableView.selectedRow : 0];   
                 }
@@ -136,21 +136,22 @@
 
 - (RACReplaySubject *)loadLibraryAtURL:(NSURL *)url {
     RACReplaySubject *subject = [RACReplaySubject subject];
+    self.libraryURL = url;
     
-    @weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        @strongify(self);
-        self.libraryURL = url;
+    NSFileManager *manager = [NSFileManager defaultManager];
+    BOOL isDir;
+    BOOL exists = [manager fileExistsAtPath:url.path isDirectory:&isDir];
     
-        NSFileManager *manager = [NSFileManager defaultManager];
-        BOOL isDir;
-        BOOL exists = [manager fileExistsAtPath:url.path isDirectory:&isDir];
-        
-        if (!exists || !isDir) {
-            NSLog(@"Invalid library path");
-            return;
-        }
-        
+    if (!exists || !isDir) {
+        NSLog(@"Invalid library path");
+        return nil;
+    }
+    
+//    @weakify(subject);
+//    @weakify(self);
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//        @strongify(subject);
+//        @strongify(self);
         NSArray *contents = [manager contentsOfDirectoryAtURL:url
                                    includingPropertiesForKeys:nil
                                                       options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants
@@ -167,7 +168,7 @@
         }
         
         [subject sendCompleted];
-    });
+//    });
     
     return subject;
 }
@@ -200,14 +201,14 @@
                                 views:NSDictionaryOfVariableBindings(accessory)]];
 }
 
-- (void)addDocument:(MCCursorDocument *)doc {
+- (BOOL)addDocument:(MCCursorDocument *)doc {
     if ([self.documents containsObject:doc]) {
         NSLog(@"Cannot add same document twice");
-        return;
+        return NO;
     }
     if ([self libraryWithIdentifier:doc.library.identifier]) {
         NSLog(@"Document exists with that identifier already");
-        return;
+        return NO;
     }
     
     if (!doc.fileURL) {
@@ -224,6 +225,9 @@
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
     [self.documents insertObject:doc atIndex:idx];
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
+    
+//    [(NSDocumentController *)[NSDocumentController sharedDocumentController] addDocument:doc];
+    return YES;
 }
 
 - (void)removeDocument:(MCCursorDocument *)document {
@@ -236,6 +240,8 @@
     [document.editWindowController close];
     [document removeWindowController:document.editWindowController];
     [document removeWindowController:self];
+    
+    [[NSDocumentController sharedDocumentController] removeDocument:document];
     
     NSIndexSet *set = [NSIndexSet indexSetWithIndex:[self.documents indexOfObject:document]];
     

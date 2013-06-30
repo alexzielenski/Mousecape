@@ -19,7 +19,7 @@
 - (RACReplaySubject *)loadLibraryAtURL:(NSURL *)url;
 - (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier;
 
-- (void)addDocument:(MCCursorDocument *)document;
+- (BOOL)addDocument:(MCCursorDocument *)document;
 - (void)removeDocument:(MCCursorDocument *)document;
 
 // Asks preferences what to do on double click, apply or edit
