@@ -10,13 +10,12 @@
 
 @class MCCursorLibrary;
 @interface MCCursor : NSObject <NSCopying>
-
-@property (assign) CGFloat           frameDuration;
-@property (assign) NSUInteger        frameCount;
-@property (assign) NSSize            size;
-@property (assign) NSPoint           hotSpot; 
-@property (copy)   NSString          *identifier;
-@property (weak)   MCCursorLibrary   *parentLibrary;
+@property (nonatomic, assign) CGFloat           frameDuration;
+@property (nonatomic, assign) NSUInteger        frameCount;
+@property (nonatomic, assign) NSSize            size;
+@property (nonatomic, assign) NSPoint           hotSpot; 
+@property (nonatomic, copy)   NSString          *identifier;
+@property (nonatomic, weak)   MCCursorLibrary   *parentLibrary;
 //@property (assign) NSUInteger        repeatCount; // v2.01
 
 // creating a cursor from a dictionary
@@ -41,5 +40,5 @@
 @end
 
 @interface MCCursor (Properties)
-@property (readonly, strong) NSOrderedSet *representations;
+@property (nonatomic, readonly, strong) NSOrderedSet *representations;
 @end

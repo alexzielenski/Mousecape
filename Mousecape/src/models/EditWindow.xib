@@ -77,7 +77,7 @@
                                                                             </connections>
                                                                         </textField>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vd4-6c-LsP">
-                                                                            <rect key="frame" x="17" y="7" width="163" height="11"/>
+                                                                            <rect key="frame" x="17" y="7" width="163" height="14"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Author" id="Njd-0s-xDL">
                                                                                 <font key="font" metaFont="smallSystem"/>
@@ -368,7 +368,9 @@
         <class className="MCEditCursorViewController" superclassName="NSViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
             <relationships>
+                <relationship kind="action" name="actionButton:" candidateClass="NSButton"/>
                 <relationship kind="action" name="segment:" candidateClass="NSSegmentedControl"/>
+                <relationship kind="outlet" name="actionButton" candidateClass="NSButton"/>
                 <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>

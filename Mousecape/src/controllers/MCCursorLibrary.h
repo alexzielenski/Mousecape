@@ -10,12 +10,12 @@
 #import "MCCursor.h"
 
 @interface MCCursorLibrary : NSObject <NSCopying>
-@property (copy)   NSString *name;
-@property (copy)   NSString *author;
-@property (copy)   NSString *identifier;
-@property (copy)   NSNumber *version;
-@property (assign, getter = isInCloud) BOOL inCloud;
-@property (assign, getter = isHiDPI)   BOOL hiDPI;
+@property (nonatomic, copy)   NSString *name;
+@property (nonatomic, copy)   NSString *author;
+@property (nonatomic, copy)   NSString *identifier;
+@property (nonatomic, copy)   NSNumber *version;
+@property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
+@property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path;
 + (MCCursorLibrary *)cursorLibraryWithContentsOfURL:(NSURL *)URL;

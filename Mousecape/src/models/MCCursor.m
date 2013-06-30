@@ -37,7 +37,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 - (id)init {
     if ((self = [super init])) {
         self.prettyName = @"Unknown";
-        
+            
         @weakify(self);
         [self rac_addDeallocDisposable:[self rac_deriveProperty:@"prettyName" from:[RACAble(self.identifier) map:^NSString *(NSString *ident) {
             NSString *name = nil;
@@ -48,7 +48,6 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
         
         [self rac_addDeallocDisposable:[self rac_deriveProperty:@"keyReps" from:[RACAble(self.representations) map:^NSArray *(NSOrderedSet *value) {
             @strongify(self);
-            
             NSMutableArray *ar = [NSMutableArray array];
             
             for (NSNumber *scale in self.keyScales) {
@@ -81,10 +80,10 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
             return image;
         }]]];
         
-        self.frameCount = 1;
-        self.frameDuration = 1.0;
-        self.size = NSZeroSize;
-        self.hotSpot = NSZeroPoint;
+        self.frameCount      = 1;
+        self.frameDuration   = 1.0;
+        self.size            = NSZeroSize;
+        self.hotSpot         = NSZeroPoint;
         self.representations = [NSMutableOrderedSet orderedSet];
     }
     return self;
@@ -125,7 +124,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     NSNumber *pointsWide    = [dictionary objectForKey:MCCursorDictionaryPointsWideKey];
     NSNumber *pointsHigh    = [dictionary objectForKey:MCCursorDictionaryPointsHighKey];
     NSArray *reps           = [dictionary objectForKey:MCCursorDictionaryRepresentationsKey];
-    
+
     // we only take version 2.0 documents.
     if (version == 2.0) {
         if (frameCount && frameDuration && hotSpotX && hotSpotY && pointsWide && pointsHigh && reps && reps.count > 0) {
@@ -263,7 +262,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
                   [object.identifier isEqualToString:self.identifier] &&
                   object.parentLibrary == self.parentLibrary);
     
-    props = ([self.representations isEqualToOrderedSet:object.representations]);
+    props = (props && [self.representations isEqualToOrderedSet:object.representations]);
     
     return props;
 }

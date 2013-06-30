@@ -192,15 +192,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     NSSet *mutation = [NSSet setWithObject:cursor];
 
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:mutation];
-    
-    [cursor willChangeValueForKey:@"identifier"];
-    [cursor willChangeValueForKey:@"prettyName"];
-    
+
     cursor.parentLibrary = self;
     [self.cursors addObject:cursor];
-    
-    [cursor didChangeValueForKey:@"prettyName"];
-    [cursor didChangeValueForKey:@"identifier"];
     
     [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:mutation];
 }
@@ -211,14 +205,10 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     NSSet *change = [NSSet setWithObject:cursor];
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
-    [cursor willChangeValueForKey:@"identifier"];
-    [cursor willChangeValueForKey:@"prettyName"];
     
     cursor.parentLibrary = nil;
     [self.cursors removeObject:cursor];
     
-    [cursor didChangeValueForKey:@"prettyName"];
-    [cursor didChangeValueForKey:@"identifier"];
     [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
 }
 

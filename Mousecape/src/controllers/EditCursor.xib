@@ -197,6 +197,9 @@
                             </segmentedCell>
                         </segmentedControl>
                     </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="dBf-Wc-N2u"/>
+                    </connections>
                 </customView>
             </subviews>
             <constraints>
@@ -243,7 +246,7 @@
         <class className="MCEditCursorViewController" superclassName="NSViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
             <relationships>
-                <relationship kind="action" name="actionButton:"/>
+                <relationship kind="action" name="actionButton:" candidateClass="NSButton"/>
                 <relationship kind="action" name="segment:" candidateClass="NSSegmentedControl"/>
                 <relationship kind="outlet" name="actionButton" candidateClass="NSButton"/>
                 <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
@@ -259,6 +262,9 @@
         </class>
         <class className="MCScaledImageView" superclassName="NSView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCScaledImageView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
         </class>
         <class className="MCSegmentedCell" superclassName="NSSegmentedCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCSegmentedCell.h"/>

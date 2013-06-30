@@ -11,9 +11,9 @@
 #import "MCCursorLibrary.h"
 
 @interface MCCursorDocument : NSDocument
-@property (strong) MCCursorLibrary *library;
-@property (strong) NSWindowController *editWindowController;
-@property (assign) BOOL shouldVaryCursorSize;
+@property (nonatomic, strong) MCCursorLibrary *library;
+@property (nonatomic, strong) NSWindowController *editWindowController;
+@property (nonatomic, assign) BOOL shouldVaryCursorSize;
 
 - (IBAction)apply:(id)sender;
 - (IBAction)remove:(id)sender;
