@@ -18,29 +18,11 @@
 static void *MCCursorDocumentContext;
 
 @implementation MCCursorDocument
-
+static void *MCCursorDocumentLibraryContext;
 - (id)init {
     if ((self = [super init])) {
         self.shouldVaryCursorSize = YES;
-        
-        @weakify(self);
-        RACDisposable *disp = [[RACAble(self.library) mapPreviousWithStart:nil
-                                                                   combine:^id(id previous, id current) {
-                                                                       NSMutableDictionary *rtn = [NSMutableDictionary dictionary];
-                                                                       if (previous)
-                                                                           rtn[@"previous"] = previous;
-                                                                       if (current)
-                                                                           rtn[@"current"] = current;
-                                                                       return rtn;
-                                                                   }] subscribeNext:^(NSDictionary *x) {
-                                                                       @strongify(self);
-                                                                       if (x[@"previous"])
-                                                                           [self stopObservingLibrary:x[@"previous"]];
-                                                                       if (x[@"current"])
-                                                                           [self startObservingLibrary:x[@"current"]];
-                                                                   }];
-        
-        [self rac_addDeallocDisposable:disp];
+        [self addObserver:self forKeyPath:@"library" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:&MCCursorDocumentLibraryContext];
         self.library = [[MCCursorLibrary alloc] init];
     }
     
@@ -48,6 +30,7 @@ static void *MCCursorDocumentContext;
 }
 
 - (void)dealloc {
+    [self removeObserver:self forKeyPath:@"library"];
     [self stopObservingLibrary:self.library];
 }
 
@@ -92,13 +75,17 @@ static void *MCCursorDocumentContext;
     [[NSDocumentController sharedDocumentController] addDocument:self];
     [doc makeWindowControllers];
     
-    *outError = nil;
+    if (*outError)
+        *outError = nil;
     return doc;
 }
 
 #pragma mark - Undo Support
 
 - (void)startObservingLibrary:(MCCursorLibrary *)library {
+    if (!library)
+        return;
+    
     // Observe top level features
     [library addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"author" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
@@ -113,6 +100,9 @@ static void *MCCursorDocumentContext;
 
 static void *MCCursorContext;
 - (void)startObservingCursor:(MCCursor *)cursor {
+    if (!cursor)
+        return;
+    
     [cursor addObserver:self forKeyPath:@"frameDuration" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
     [cursor addObserver:self forKeyPath:@"frameCount" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
     [cursor addObserver:self forKeyPath:@"size" options:NSKeyValueObservingOptionOld context:&MCCursorContext];
@@ -122,6 +112,9 @@ static void *MCCursorContext;
 }
 
 - (void)stopObservingLibrary:(MCCursorLibrary *)library {
+    if (!library)
+        return;
+    
     [library removeObserver:self forKeyPath:@"name"];
     [library removeObserver:self forKeyPath:@"author"];
     [library removeObserver:self forKeyPath:@"identifier"];
@@ -133,6 +126,9 @@ static void *MCCursorContext;
 }
 
 - (void)stopObservingCursor:(MCCursor *)cursor {
+    if (!cursor)
+        return;
+    
     [cursor removeObserver:self forKeyPath:@"frameDuration"];
     [cursor removeObserver:self forKeyPath:@"frameCount"];
     [cursor removeObserver:self forKeyPath:@"size"];
@@ -142,8 +138,19 @@ static void *MCCursorContext;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context != &MCCursorDocumentContext && context != &MCCursorContext) {
+    if (context != &MCCursorDocumentContext && context != &MCCursorContext && context != &MCCursorDocumentLibraryContext) {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    
+    if (context == &MCCursorDocumentLibraryContext) {
+        id oldValue = change[NSKeyValueChangeOldKey];
+        id newValue = change[NSKeyValueChangeNewKey];
+        
+        if (![oldValue isKindOfClass:[NSNull class]] && oldValue)
+            [self stopObservingLibrary:oldValue];
+        if (![newValue isKindOfClass:[NSNull class]] && newValue)
+            [self startObservingLibrary:newValue];
         return;
     }
     
