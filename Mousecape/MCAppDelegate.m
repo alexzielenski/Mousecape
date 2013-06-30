@@ -22,7 +22,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     self.libraryWindowController = [[MCLibraryWindowController alloc] initWithWindowNibName:@"Library"];
     (void)self.libraryWindowController.window;
-    
+    [self.libraryWindowController showWindow:self];
+
     [NSUserDefaults.standardUserDefaults registerDefaults:
          @{
                MCPreferencesAppliedClickActionKey: @(0)
@@ -36,10 +37,6 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
     
 #endif
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    [self.libraryWindowController showWindow:self];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
