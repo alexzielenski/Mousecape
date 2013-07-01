@@ -19,9 +19,9 @@
 @implementation MCSegmentedCell
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
-    CGFloat cornerRadius = 10;
+    CGFloat cornerRadius = 10.0;
     
-    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:cellFrame cornerRadius:cornerRadius inCorners:OSTopRightCorner];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:cellFrame cornerRadius:(float)cornerRadius inCorners:OSTopRightCorner];
 
     [gColorNormal set];
     [path fill];

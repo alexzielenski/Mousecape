@@ -69,7 +69,7 @@ static void *MCDocumentsContext;
 
 #pragma mark - Interface Actions
 - (IBAction)contextMenu:(NSMenuItem *)sender {
-    MCCursorDocument *clickedDocument = [self.windowController.documents objectAtIndex:self.tableView.clickedRow];
+    MCCursorDocument *clickedDocument = [self.windowController.documents objectAtIndex:(NSUInteger)self.tableView.clickedRow];
     switch (sender.tag) {
         case 0: { // Apply
             [clickedDocument apply:sender];

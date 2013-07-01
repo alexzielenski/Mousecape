@@ -270,6 +270,10 @@ NSWindow *MCWindowAtPoint(NSPoint screenPoint) {
 
 }
 
+- (BOOL)isOpaque {
+    return YES;
+}
+
 #pragma mark - NSDragDestination
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {

@@ -96,8 +96,9 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 - (instancetype)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
     
-    lib.cursors = [[NSMutableSet alloc] initWithSet:self.cursors copyItems:YES];
-    [lib.cursors makeObjectsPerformSelector:@selector(setParentLibrary:) withObject:lib];
+    for (MCCursor *c in self.cursors) {
+        [lib addCursor:c.copy];
+    }
     
     lib.name             = self.name;
     lib.author           = self.author;

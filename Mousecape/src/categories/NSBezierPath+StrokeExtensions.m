@@ -17,7 +17,7 @@
 - (void)strokeInsideWithinRect:(NSRect)clipRect
 {
     NSGraphicsContext *thisContext = [NSGraphicsContext currentContext];
-    float lineWidth = [self lineWidth];
+    double lineWidth = [self lineWidth];
     
     /* Save the current graphics context. */
     [thisContext saveGraphicsState];

@@ -20,18 +20,22 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 @implementation MCAppDelegate
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+    [self setUpEnvironment];
+    [self.libraryWindowController showWindow:self];
+}
+
+- (void)setUpEnvironment {
     self.libraryWindowController = [[MCLibraryWindowController alloc] initWithWindowNibName:@"Library"];
     (void)self.libraryWindowController.window;
-    [self.libraryWindowController showWindow:self];
-
+    
     [NSUserDefaults.standardUserDefaults registerDefaults:
-         @{
-               MCPreferencesAppliedClickActionKey: @(0)
-         }
+     @{
+       MCPreferencesAppliedClickActionKey: @(0)
+       }
      ];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(adoptDocumentNotification:) name:@"MCCursorDocumentWantsAdoptionNotification" object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(disavowDocumentNotification:) name:@"MCCursorDocumentOrphanedNotification" object:nil];
-
+    
 #ifdef DEBUG
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
@@ -87,6 +91,12 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
 - (IBAction)installTool:(id)sender {
     NSLog(@"User wants to install mousecloak");
     // Alias mousecloak to the user's path
+}
+
+#pragma mark - Sparkle
+
+- (void)appcast:(id)appcast failedToLoadWithError:(NSError *)error {
+    NSLog(@"%@", error.localizedDescription);
 }
 
 @end

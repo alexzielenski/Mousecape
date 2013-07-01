@@ -13,6 +13,9 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) NSWindowController *preferencesWindowController;
 @property (strong) MCLibraryWindowController *libraryWindowController;
+
+- (void)setUpEnvironment;
+
 - (IBAction)showPreferences:(NSMenuItem *)sender;
 - (IBAction)installTool:(id)sender;
 @end

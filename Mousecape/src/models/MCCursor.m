@@ -108,6 +108,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     cursor.size            = self.size;
     cursor.representations = self.representations.mutableCopy;
     cursor.hotSpot         = self.hotSpot;
+    cursor.identifier      = self.identifier;
     
     return cursor;
 }

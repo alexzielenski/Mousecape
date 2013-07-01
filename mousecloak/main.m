@@ -151,7 +151,7 @@ NSDictionary *processedCapeWithIdentifier(NSString *identifier) {
     return dict;
 }
 
-BOOL applyCursorForIdentifier(CFIndex frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
+BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
     if (frameCount > 24 || frameCount < 1) {
         MMLog(BOLD RED "Frame count of %s out of range [1...24]\n", ident.UTF8String);
         return YES;
@@ -352,18 +352,17 @@ NSDictionary *createCapeFromDirectory(NSString *path) {
     for (NSString *subpath in contents) {
         NSString *fullPath = [path stringByAppendingPathComponent:subpath];
         
-        BOOL isDir;
         [manager fileExistsAtPath:fullPath isDirectory:&isDir];
         
         if (!isDir)
             continue;
         
-        NSString *identifier = subpath;
+        NSString *ident = subpath;
         NSMutableDictionary *data = [NSMutableDictionary dictionary];
         
         NSUInteger fC;
         CGFloat hotX, hotY, pW, pH, fD;
-        printf(BOLD "Need metadata for %s.\n" RESET, [identifier cStringUsingEncoding:NSUTF8StringEncoding]);
+        printf(BOLD "Need metadata for %s.\n" RESET, [ident cStringUsingEncoding:NSUTF8StringEncoding]);
         printf("X Hotspot: ");
         scanf("%lf", &hotX);
         printf("Y Hotspot: ");
@@ -456,8 +455,8 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse) {
         unsigned char *bytes = (unsigned char*)rawData.bytes;
         
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&bytes
-                                                                        pixelsWide:wide.doubleValue
-                                                                        pixelsHigh:high.doubleValue * fc.integerValue
+                                                                        pixelsWide:wide.integerValue
+                                                                        pixelsHigh:high.integerValue * fc.integerValue
                                                                      bitsPerSample:bps.integerValue
                                                                    samplesPerPixel:spp.integerValue
                                                                           hasAlpha:YES

@@ -205,7 +205,7 @@
 }
 
 - (NSUInteger)limitedItemCount {
-    return floor(self.enclosingScrollView.documentVisibleRect.size.width / self.wellWidth);
+    return (NSUInteger)floor(self.enclosingScrollView.documentVisibleRect.size.width / self.wellWidth);
 }
 
 - (MCCursorView *)_dequeueCursorViewForIndex:(NSUInteger)index {
@@ -240,6 +240,10 @@
     for (MCCursorView *view in self.cursorViews) {
         view.selected = NO;
     }
+}
+
+- (BOOL)isOpaque {
+    return YES;
 }
 
 @end

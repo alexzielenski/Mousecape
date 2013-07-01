@@ -37,4 +37,8 @@ static NSColor *separatorColor;
 
 }
 
+- (BOOL)isOpaque {
+    return YES;
+}
+
 @end
