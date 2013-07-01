@@ -8,14 +8,15 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MCEditCursorViewController">
             <connections>
                 <action selector="actionButton:" destination="KIY-BR-q24" id="l8b-u2-Lu7"/>
+                <action selector="changeType:" destination="DrT-tO-ca2" id="RVM-c8-3DJ"/>
                 <action selector="segment:" destination="BhM-Ss-uIp" id="hnS-TV-VmE"/>
                 <outlet property="actionButton" destination="KIY-BR-q24" id="Fcd-c2-v3q"/>
                 <outlet property="frameCountField" destination="168" id="434"/>
                 <outlet property="frameDurationField" destination="182" id="435"/>
                 <outlet property="hotSpotField" destination="195" id="437"/>
-                <outlet property="identifierField" destination="223" id="436"/>
                 <outlet property="imageView" destination="Bhq-GG-J9U" id="t9l-bD-eJO"/>
                 <outlet property="segmentedControl" destination="BhM-Ss-uIp" id="vb6-bj-ejh"/>
+                <outlet property="typeButton" destination="DrT-tO-ca2" id="1XW-1x-uNU"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>
@@ -31,7 +32,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="wiS-hP-Lsw"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Identifier:" id="125">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="125">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -146,20 +147,6 @@
                         </binding>
                     </connections>
                 </textField>
-                <comboBox verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="223">
-                    <rect key="frame" x="129" y="546" width="304" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="224">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </comboBoxCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="cursor.identifier" id="7g7-rx-BaR"/>
-                        <outlet property="dataSource" destination="-2" id="405"/>
-                        <outlet property="nextKeyView" destination="168" id="406"/>
-                    </connections>
-                </comboBox>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B42-qM-Cdv">
                     <rect key="frame" x="18" y="18" width="394" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -201,40 +188,49 @@
                         <outlet property="delegate" destination="-2" id="dBf-Wc-N2u"/>
                     </connections>
                 </customView>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DrT-tO-ca2">
+                    <rect key="frame" x="127" y="546" width="306" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="sb6-mh-cLD">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="OtherViews" id="1xY-iA-Kxo"/>
+                    </popUpButtonCell>
+                </popUpButton>
             </subviews>
             <constraints>
+                <constraint firstItem="168" firstAttribute="top" secondItem="DrT-tO-ca2" secondAttribute="bottom" constant="9" id="26g-SU-l0f"/>
+                <constraint firstAttribute="trailing" secondItem="DrT-tO-ca2" secondAttribute="trailing" constant="20" symbolic="YES" id="2OR-p6-hIk"/>
                 <constraint firstItem="195" firstAttribute="centerY" secondItem="157" secondAttribute="centerY" id="3PV-Ah-nJt"/>
                 <constraint firstItem="124" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="62z-YJ-XpC"/>
-                <constraint firstItem="223" firstAttribute="leading" secondItem="168" secondAttribute="leading" id="7Wd-la-BG9"/>
                 <constraint firstItem="195" firstAttribute="top" secondItem="182" secondAttribute="bottom" constant="10" symbolic="YES" id="8ly-8C-Wzg"/>
                 <constraint firstItem="124" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="93P-La-NYN"/>
                 <constraint firstItem="KIY-BR-q24" firstAttribute="centerY" secondItem="B42-qM-Cdv" secondAttribute="centerY" id="9Q0-0j-Vme"/>
                 <constraint firstItem="KIY-BR-q24" firstAttribute="top" secondItem="Bhq-GG-J9U" secondAttribute="bottom" constant="8" symbolic="YES" id="ETl-wE-E9k"/>
-                <constraint firstItem="124" firstAttribute="top" secondItem="223" secondAttribute="top" id="F3Q-bw-3PL"/>
                 <constraint firstItem="Bhq-GG-J9U" firstAttribute="leading" secondItem="157" secondAttribute="leading" id="It4-cf-c9g"/>
                 <constraint firstItem="182" firstAttribute="trailing" secondItem="168" secondAttribute="trailing" id="KDd-4I-O5c"/>
                 <constraint firstItem="182" firstAttribute="top" secondItem="168" secondAttribute="bottom" constant="10" symbolic="YES" id="Qvp-oA-AyS"/>
                 <constraint firstItem="168" firstAttribute="leading" secondItem="182" secondAttribute="leading" id="TOv-ly-eVZ"/>
                 <constraint firstItem="168" firstAttribute="leading" secondItem="136" secondAttribute="trailing" constant="8" symbolic="YES" id="Tdx-8r-PEL"/>
                 <constraint firstItem="136" firstAttribute="leading" secondItem="144" secondAttribute="leading" id="UX1-os-ZYs"/>
-                <constraint firstAttribute="trailing" secondItem="223" secondAttribute="trailing" constant="20" symbolic="YES" id="Ume-Pi-9wq"/>
+                <constraint firstItem="DrT-tO-ca2" firstAttribute="leading" secondItem="168" secondAttribute="leading" id="UgN-kh-ncC"/>
                 <constraint firstItem="136" firstAttribute="leading" secondItem="124" secondAttribute="leading" id="Xpu-jO-Xbp"/>
-                <constraint firstItem="223" firstAttribute="leading" secondItem="124" secondAttribute="trailing" constant="8" symbolic="YES" id="dk9-oM-6Cw"/>
                 <constraint firstItem="KIY-BR-q24" firstAttribute="leading" secondItem="B42-qM-Cdv" secondAttribute="trailing" constant="4" id="fx5-vK-nIf"/>
+                <constraint firstItem="DrT-tO-ca2" firstAttribute="trailing" secondItem="168" secondAttribute="trailing" id="gQ9-LV-Qo1"/>
                 <constraint firstItem="182" firstAttribute="trailing" secondItem="195" secondAttribute="trailing" id="gTV-m5-aPO"/>
+                <constraint firstItem="DrT-tO-ca2" firstAttribute="top" secondItem="124" secondAttribute="top" id="gWk-QJ-cDZ"/>
                 <constraint firstItem="Bhq-GG-J9U" firstAttribute="trailing" secondItem="195" secondAttribute="trailing" id="hX1-Ym-vj5"/>
                 <constraint firstItem="157" firstAttribute="top" secondItem="144" secondAttribute="bottom" constant="8" symbolic="YES" id="huP-cP-7zu"/>
                 <constraint firstItem="182" firstAttribute="leading" secondItem="144" secondAttribute="trailing" constant="8" symbolic="YES" id="i3l-mF-6m0"/>
                 <constraint firstItem="Bhq-GG-J9U" firstAttribute="leading" secondItem="B42-qM-Cdv" secondAttribute="leading" id="jO2-Ye-2cM"/>
                 <constraint firstItem="182" firstAttribute="leading" secondItem="195" secondAttribute="leading" id="kh2-Zx-TDy"/>
+                <constraint firstItem="DrT-tO-ca2" firstAttribute="leading" secondItem="124" secondAttribute="trailing" constant="8" symbolic="YES" id="lBt-wx-UZk"/>
                 <constraint firstItem="144" firstAttribute="leading" secondItem="157" secondAttribute="leading" id="o2Q-Dh-JJE"/>
                 <constraint firstItem="Bhq-GG-J9U" firstAttribute="trailing" secondItem="KIY-BR-q24" secondAttribute="trailing" id="pp0-8u-a4A"/>
                 <constraint firstItem="195" firstAttribute="leading" secondItem="157" secondAttribute="trailing" constant="8" symbolic="YES" id="qEQ-MY-PGW"/>
-                <constraint firstItem="168" firstAttribute="top" secondItem="223" secondAttribute="bottom" constant="10" id="qpL-xQ-Z4R"/>
                 <constraint firstAttribute="bottom" secondItem="B42-qM-Cdv" secondAttribute="bottom" constant="20" symbolic="YES" id="s9d-4a-HuA"/>
                 <constraint firstItem="136" firstAttribute="bottom" secondItem="168" secondAttribute="bottom" id="ssq-uB-qq5"/>
                 <constraint firstItem="Bhq-GG-J9U" firstAttribute="top" secondItem="195" secondAttribute="bottom" constant="9" id="tuf-5M-ZqK"/>
-                <constraint firstItem="168" firstAttribute="trailing" secondItem="223" secondAttribute="trailing" id="uRT-ZL-c0p"/>
                 <constraint firstItem="B42-qM-Cdv" firstAttribute="baseline" secondItem="KIY-BR-q24" secondAttribute="baseline" id="vBg-xP-l4h"/>
             </constraints>
         </customView>
@@ -247,14 +243,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
             <relationships>
                 <relationship kind="action" name="actionButton:" candidateClass="NSButton"/>
+                <relationship kind="action" name="changeType:" candidateClass="NSPopUpButton"/>
                 <relationship kind="action" name="segment:" candidateClass="NSSegmentedControl"/>
                 <relationship kind="outlet" name="actionButton" candidateClass="NSButton"/>
                 <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
                 <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="identifierField" candidateClass="NSComboBox"/>
                 <relationship kind="outlet" name="imageView" candidateClass="MCScaledImageView"/>
                 <relationship kind="outlet" name="segmentedControl" candidateClass="NSSegmentedControl"/>
+                <relationship kind="outlet" name="typeButton" candidateClass="NSPopUpButton"/>
             </relationships>
         </class>
         <class className="MCPointFormatter" superclassName="NSFormatter">

@@ -8,6 +8,7 @@
 
 #import "MCEditCursorViewController.h"
 #import "MCCursorLibrary.h"
+#import <objc/runtime.h>
 
 @interface MCEditCursorViewController ()
 - (void)reloadActionButton;
@@ -69,7 +70,6 @@
     }]];
     
     RAC(self.imageView.image) = [RACAble(self.cursor.imageWithKeyReps) distinctUntilChanged];
-    
     [self.imageView rac_bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot"];
     [self.imageView rac_bind:@"sampleSize" toObject:self withKeyPath:@"cursor.size"];
     
@@ -78,6 +78,27 @@
         if (!NSEqualPoints(x.pointValue, self.cursor.hotSpot))
             self.cursor.hotSpot = x.pointValue;
     }]];
+    
+    [self.typeButton removeAllItems];
+    
+    NSDictionary *cursorMap = MCCursorLibrary.cursorMap;
+    NSArray *titles = [cursorMap.allValues sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    [self.typeButton addItemWithTitle:@"Unknown"];
+    [[self.typeButton itemAtIndex:0] setTag:-1];
+    
+    [self.typeButton.menu addItem:[NSMenuItem separatorItem]];
+    
+    [self.typeButton addItemsWithTitles:titles];
+    
+    [RACAbleWithStart(self.cursor.identifier) subscribeNext:^(NSString *x) {
+        @strongify(self);
+        NSDictionary *map = MCCursorLibrary.cursorMap;
+        if (map[x])
+            [self.typeButton selectItemWithTitle:map[x]];
+        else
+            [self.typeButton selectItemWithTag:-1];
+    }];
     
     [self.undoManager enableUndoRegistration];
 }
@@ -157,48 +178,18 @@
     [self.cursor addRepresentation:rep];
 }
 
-#pragma mark - NSComboBoxDataSource
-
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
-    return [MCCursorLibrary.cursorMap.allKeys objectAtIndex:index];
-}
-
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
-    return MCCursorLibrary.cursorMap.count;
-}
-
-- (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString {
-    NSArray *keys = MCCursorLibrary.cursorMap.allKeys;
-    NSArray *vals = MCCursorLibrary.cursorMap.allValues;
-    
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@", uncompletedString];
-    NSArray *autoCompletedKeys = [keys filteredArrayUsingPredicate:pred];
-    NSArray *autoCompletedVals = [vals filteredArrayUsingPredicate:pred];
-    
-    BOOL wantsKey = [uncompletedString hasPrefix:@"com.apple"];
-    
-    if (wantsKey && autoCompletedKeys.count > 0)
-        return autoCompletedKeys[0];
-    
-    if (autoCompletedVals.count > 0)
-        return autoCompletedVals[0];
-    
-    return @"";
-    
-}
-
-- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString {
-    if ([aString hasPrefix:@"com.apple"]) {
-        NSArray *keys = MCCursorLibrary.cursorMap.allKeys;
-        return [keys indexOfObject:aString];
-    } else {
-        NSArray *keys = [MCCursorLibrary.cursorMap allKeysForObject:aString];
-        if (keys.count > 0){
-            return [MCCursorLibrary.cursorMap.allKeys indexOfObject:keys[0]];
-        }
+- (IBAction)changeType:(NSPopUpButton *)sender {
+    if (sender.selectedTag == -1) {
+        self.cursor.identifier = @"";
+        return;
     }
     
-    return NSNotFound;
+    NSString *title = sender.selectedItem.title;
+    NSArray *keys  = [MCCursorLibrary.cursorMap allKeysForObject:title];
+    
+    if (keys.count) {
+        self.cursor.identifier = keys[0];
+    }
 }
 
 #pragma mark - NSDraggingDestination

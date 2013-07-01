@@ -13,7 +13,7 @@
 @interface MCEditCursorViewController : NSViewController <NSDraggingDestination>
 @property (strong) MCCursor *cursor;
 @property (strong) IBOutlet MCScaledImageView *imageView;
-@property (weak) IBOutlet NSComboBox  *identifierField;
+@property (weak) IBOutlet NSPopUpButton *typeButton;
 @property (weak) IBOutlet NSTextField *hotSpotField;
 @property (weak) IBOutlet NSTextField *frameCountField;
 @property (weak) IBOutlet NSTextField *frameDurationField;
@@ -21,6 +21,7 @@
 @property (weak) IBOutlet NSButton *actionButton;
 
 - (IBAction)segment:(NSSegmentedControl *)sender;
+- (IBAction)changeType:(NSPopUpButton *)sender;
 - (IBAction)actionButton:(NSButton *)sender;
 
 - (void)setCurrentImageToImageRep:(NSImageRep *)rep;
