@@ -11,6 +11,8 @@
 #import "MCCloakController.h"
 #import "NSOrderedSet+AZSortedInsert.h"
 
+NSString *MCLibraryDocumentRenamedNotification;
+
 @interface MCLibraryWindowController ()
 @property (copy) NSURL *libraryURL;
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *documents;
@@ -21,6 +23,10 @@
 
 
 @implementation MCLibraryWindowController
+
++ (void)initialize {
+    MCLibraryDocumentRenamedNotification = @"MCLibraryDocumentRenamed";
+}
 
 - (id)initWithWindow:(NSWindow *)window {
     self = [super initWithWindow:window];
@@ -211,16 +217,47 @@
         return NO;
     }
     
-    if (!doc.fileURL) {
-        doc.fileURL = [[self.libraryURL URLByAppendingPathComponent:doc.library.identifier] URLByAppendingPathExtension:@"cape"];
-        [doc saveDocument:self];
-    } else if (![[doc.fileURL URLByDeletingLastPathComponent].path isEqualToString:self.libraryURL.path]) {
-        // If we are importing a cape, save it to the library and set that document to the curren tone
-        [doc saveToURL:[self.libraryURL URLByAppendingPathComponent:[doc.library.identifier stringByAppendingPathExtension:@"cape"]] ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
-    }
-    
     NSUInteger idx = [self.documents indexForInsertingObject:doc sortedUsingDescriptors:self.librarySortDescriptors];
     NSIndexSet *indices = [NSIndexSet indexSetWithIndex:idx];
+    
+    @weakify(self);
+    @weakify(doc);
+    [doc rac_addDeallocDisposable:[RACAbleWithStart(doc, library.identifier) subscribeNext:^(NSString *identifier) {
+        @strongify(self);
+        @strongify(doc);
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSURL *expectedURL     = [[self.libraryURL URLByAppendingPathComponent:identifier] URLByAppendingPathExtension:@"cape"];
+        BOOL exists            = [manager fileExistsAtPath:doc.fileURL.path];
+        
+        if (![doc.fileURL isEqualTo:expectedURL] && exists) {
+            NSError *err = nil;
+            [manager moveItemAtURL:doc.fileURL toURL:expectedURL error:&err];
+            
+            // If it failed, it's not really a big deal, so do nothing
+            if (!err)
+                doc.fileURL = expectedURL;
+        } else if (!doc.fileURL || !exists) {
+            [doc saveToURL:expectedURL ofType:@"cape" forSaveOperation:NSSaveAsOperation error:nil];
+        }
+        
+    }]];
+    
+    [doc rac_addDeallocDisposable:[RACAble(doc, library.name) subscribeNext:^(NSString *name) {
+        @strongify(self);
+        @strongify(doc);
+        
+        NSUInteger newIndex     = [self.documents indexForInsertingObject:doc sortedUsingDescriptors:self.librarySortDescriptors];
+        NSUInteger currentIndex = [self.documents indexOfObject:doc];
+        
+        if (newIndex != currentIndex) {
+            [self.documents moveObjectsAtIndexes:[NSIndexSet indexSetWithIndex:currentIndex] toIndex:newIndex];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:MCLibraryDocumentRenamedNotification
+                                                                object:doc
+                                                              userInfo:@{ @"oldIndex": @(currentIndex), @"newIndex": @(newIndex) }];
+        }
+        
+    }]];
     
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
     [self.documents insertObject:doc atIndex:idx];

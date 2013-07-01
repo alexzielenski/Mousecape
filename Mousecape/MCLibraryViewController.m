@@ -40,6 +40,11 @@
                                                          if ([x objectForKey:@"current"])
                                                              [self startWatchingWindowController:[x objectForKey:@"current"]];
                                                      }]];
+        @weakify(self);
+        [[NSNotificationCenter defaultCenter] addObserverForName:MCLibraryDocumentRenamedNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            @strongify(self);
+            [self.tableView moveRowAtIndex:[note.userInfo[@"oldIndex"] unsignedIntegerValue] toIndex:[note.userInfo[@"newIndex"] unsignedIntegerValue]];
+        }];
     }
     
     return self;
@@ -64,7 +69,6 @@ static void *MCDocumentsContext;
         [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectGap];
     else if (kind == NSKeyValueChangeRemoval)
         [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationEffectFade];
-        
 }
 
 #pragma mark - Interface Actions

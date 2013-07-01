@@ -10,6 +10,8 @@
 #import "MCCursorDocument.h"
 #import "MCLibraryViewController.h"
 
+extern NSString *MCLibraryDocumentRenamedNotification;
+
 @interface MCLibraryWindowController : NSWindowController <NSWindowDelegate>
 @property (assign) IBOutlet MCLibraryViewController *libraryController;
 @property (assign) IBOutlet NSTextField *accessory;
