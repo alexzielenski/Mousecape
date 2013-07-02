@@ -15,7 +15,6 @@ NSString *MCCloakControllerDidRestoreCursorNotification  = @"MCCloakControllerDi
 NSString *MCCloakControllerAppliedCursorKey              = @"MCCloakControllerAppliedCursor";
 
 @interface MCCloakController ()
-+ (NSString *)mousecloakPath;
 @end
 
 @implementation MCCloakController

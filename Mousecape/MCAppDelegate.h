@@ -17,5 +17,4 @@
 - (void)setUpEnvironment;
 
 - (IBAction)showPreferences:(NSMenuItem *)sender;
-- (IBAction)installTool:(id)sender;
 @end

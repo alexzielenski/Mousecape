@@ -88,11 +88,6 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     [self.preferencesWindowController showWindow:self];
 }
 
-- (IBAction)installTool:(id)sender {
-    NSLog(@"User wants to install mousecloak");
-    // Alias mousecloak to the user's path
-}
-
 #pragma mark - Sparkle
 
 - (void)appcast:(id)appcast failedToLoadWithError:(NSError *)error {

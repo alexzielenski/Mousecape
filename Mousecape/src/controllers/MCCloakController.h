@@ -18,6 +18,7 @@ extern NSString *MCCloakControllerAppliedCursorKey;
 @property (assign) float cursorScale;
 @property (copy)   void(^outputBlock)(NSString *output);
 
++ (NSString *)mousecloakPath;
 + (MCCloakController *)sharedCloakController;
 - (void)applyCape:(MCCursorDocument *)cursor;
 - (NSString *)convertMightyMouse:(NSString *)mightyMouse;

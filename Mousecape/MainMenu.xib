@@ -26,7 +26,6 @@
                 <action selector="hide:" destination="134" id="367"/>
                 <action selector="hideOtherApplications:" destination="145" id="368"/>
                 <action selector="importMightyMouse:" destination="6QU-ui-byS" id="dMw-km-SHH"/>
-                <action selector="installTool:" destination="0uS-4r-bZF" id="kBg-nj-9OM"/>
                 <action selector="lowercaseWord:" destination="713" id="754"/>
                 <action selector="newDocument:" destination="82" id="FGQ-wo-HSJ"/>
                 <action selector="openDocument:" destination="uC9-fL-yXQ" id="nXI-WG-Toh"/>
@@ -81,9 +80,6 @@
                             <menuItem isSeparatorItem="YES" id="5B8-qb-qRF"/>
                             <menuItem title="Preferences…" keyEquivalent="," id="mk8-Mh-vgd"/>
                             <menuItem title="Check for Updates…" id="S2K-Dh-lnf">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="Install mousecloak" id="0uS-4r-bZF">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rs2-Gy-w54">
@@ -292,4 +288,73 @@ CA
             </connections>
         </customObject>
     </objects>
+    <classes>
+        <class className="MCAppDelegate" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCAppDelegate.h"/>
+            <relationships>
+                <relationship kind="action" name="installTool:"/>
+                <relationship kind="action" name="showPreferences:" candidateClass="NSMenuItem"/>
+                <relationship kind="outlet" name="window" candidateClass="NSWindow"/>
+            </relationships>
+        </class>
+        <class className="MCCursorDocument" superclassName="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCCursorDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="edit:"/>
+                <relationship kind="action" name="remove:"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="capeAction:" candidateClass="MCCursorDocument"/>
+                <relationship kind="action" name="contextMenu:" candidateClass="NSMenuItem"/>
+                <relationship kind="action" name="doubleClick:"/>
+                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryWindowController" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryWindowController.h"/>
+            <relationships>
+                <relationship kind="action" name="importMightyMouse:"/>
+                <relationship kind="action" name="restoreDefaults:"/>
+                <relationship kind="outlet" name="accessory" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="libraryController" candidateClass="MCLibraryViewController"/>
+            </relationships>
+        </class>
+        <class className="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="browseDocumentVersions:"/>
+                <relationship kind="action" name="duplicateDocument:"/>
+                <relationship kind="action" name="lockDocument:"/>
+                <relationship kind="action" name="moveDocument:"/>
+                <relationship kind="action" name="moveDocumentToUbiquityContainer:"/>
+                <relationship kind="action" name="printDocument:"/>
+                <relationship kind="action" name="renameDocument:"/>
+                <relationship kind="action" name="revertDocumentToSaved:"/>
+                <relationship kind="action" name="runPageLayout:"/>
+                <relationship kind="action" name="saveDocument:"/>
+                <relationship kind="action" name="saveDocumentAs:"/>
+                <relationship kind="action" name="saveDocumentTo:"/>
+                <relationship kind="action" name="saveDocumentToPDF:"/>
+                <relationship kind="action" name="unlockDocument:"/>
+            </relationships>
+        </class>
+        <class className="NSTextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSTextView.h"/>
+            <relationships>
+                <relationship kind="action" name="orderFrontSharingServicePicker:"/>
+                <relationship kind="action" name="toggleQuickLookPreviewPanel:"/>
+            </relationships>
+        </class>
+        <class className="SUUpdater" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SUUpdater.h"/>
+            <relationships>
+                <relationship kind="action" name="checkForUpdates:"/>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+    </classes>
 </document>
