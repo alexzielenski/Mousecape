@@ -26,6 +26,7 @@ extern NSString *MCLibraryDocumentRenamedNotification;
 
 // Asks preferences what to do on double click, apply or edit
 - (IBAction)restoreDefaults:(id)sender;
+- (IBAction)importMightyMouse:(id)sender;
 @end
 
 @interface MCLibraryWindowController (Properties)

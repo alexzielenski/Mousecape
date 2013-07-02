@@ -73,8 +73,9 @@ static void *MCCursorChangeContext;
     
     if (kind == NSKeyValueChangeInsertion) {
         NSSet *objects = change[NSKeyValueChangeNewKey];
-        for (id object in objects) {
+        for (MCCursor *object in objects) {
             NSUInteger idx = [self.sortedValues indexForInsertingObject:object sortedUsingDescriptors:self.sortDescriptors];
+            
             [self.sortedValues insertObject:object atIndex:idx];
             [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:idx + 1] withAnimation:NSTableViewAnimationEffectGap];
             selection = idx;
@@ -164,8 +165,6 @@ static void *MCCursorChangeContext;
         NSTableCellView *header = [tableView makeViewWithIdentifier:@"LibraryCell" owner:self];
         return header;
     }
-    
-
     NSTableCellView *cv = [tableView makeViewWithIdentifier:@"CursorCell" owner:self];
     return cv;
 }

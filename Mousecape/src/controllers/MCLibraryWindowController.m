@@ -297,6 +297,26 @@ NSString *MCLibraryDocumentRenamedNotification;
     });
 }
 
+- (IBAction)importMightyMouse:(id)sender {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.message = @"Choose a Mighty Mouse file to convert";
+    panel.allowsMultipleSelection = YES;
+    panel.allowedFileTypes = @[@"mightymouse"];
+    
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        if (result == NSOKButton) {
+            for (NSURL *url in panel.URLs) {
+                NSString *result = [[MCCloakController sharedCloakController] convertMightyMouse:url.path];
+                MCCursorDocument *document = [[MCCursorDocument alloc] initForURL:[NSURL fileURLWithPath:result]
+                                                                withContentsOfURL:[NSURL fileURLWithPath:result]
+                                                                           ofType:@"cape"
+                                                                            error:nil];
+                [document makeWindowControllers];
+            }
+        }
+    }];
+}
+
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *) notification {
