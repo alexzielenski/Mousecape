@@ -15,7 +15,7 @@
 @property (nonatomic, copy)   NSString *identifier;
 @property (nonatomic, copy)   NSNumber *version;
 @property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
-@property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
+@property (nonatomic, assign, getter = isHiDPI, readonly)   BOOL hiDPI;
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path;
 + (MCCursorLibrary *)cursorLibraryWithContentsOfURL:(NSURL *)URL;

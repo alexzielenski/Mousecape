@@ -25,6 +25,7 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
 @property (strong) NSArray *keyReps;
 @property (strong) NSImage *imageWithAllReps;
 @property (strong) NSImage *imageWithKeyReps;
+@property (assign, getter = isHiDPI) BOOL hiDPI;
 - (NSArray *)keyScales;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
@@ -79,6 +80,12 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
             
             return image;
         }]]];
+        
+        RAC(self.hiDPI) = [RACAble(self.representations) map:^id(id x) {
+            @strongify(self);
+            id legacy = [self representationWithScale:1.0];
+            return @(((self.representations.count > 0 && !legacy) || (self.representations.count > 1 && legacy)));
+        }];
         
         self.frameCount      = 1;
         self.frameDuration   = 1.0;
@@ -206,9 +213,11 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     if (![self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:self.representations.count];
 
+        [self.parentLibrary willChangeValueForKey:@"hiDPI"];
         [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
         [self.representations addObject:imageRep];
         [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:iset forKey:@"representations"];
+        [self.parentLibrary didChangeValueForKey:@"hiDPI"];
     }
 }
 
@@ -216,10 +225,11 @@ static const NSString *MCCursorDictionaryRepresentationsKey = @"Representations"
     if ([self.representations containsObject:imageRep]) {
         NSIndexSet *iset = [NSIndexSet indexSetWithIndex:[self.representations indexOfObject:imageRep]];
         
+        [self.parentLibrary willChangeValueForKey:@"hiDPI"];
         [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
         [self.representations removeObject:imageRep];
-        
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:iset forKey:@"representations"];
+        [self.parentLibrary didChangeValueForKey:@"hiDPI"];
     }
 }
 

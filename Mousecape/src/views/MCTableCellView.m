@@ -23,7 +23,6 @@
             cursorLine.dataSource = self;
         }]];
         
-//        [self rac_bind:NSValueBinding toObject:self withKeyPath:@"objectValue.library.name"];
         RAC(self.textField.stringValue) = RACAble(self.objectValue.library.name);
         [self rac_addDeallocDisposable:[[RACAble(self.backgroundStyle) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(id x) {
             @strongify(self);

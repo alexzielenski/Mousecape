@@ -26,6 +26,8 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
 @end
 
 @implementation MCCursorLibrary
+@dynamic hiDPI;
+
 + (NSDictionary *)cursorMap {
     static NSDictionary *map = nil;
     
@@ -83,7 +85,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     if ((self = [super init])) {
         self.name = @"Unnamed";
         self.author = NSUserName();
-        self.hiDPI = NO;
+//        self.hiDPI = NO;
         self.inCloud = NO;
         self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
         self.version = @1.0;
@@ -102,7 +104,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     
     lib.name             = self.name;
     lib.author           = self.author;
-    lib.hiDPI            = self.hiDPI;
+//    lib.hiDPI            = self.hiDPI;
     lib.inCloud          = self.inCloud;
     lib.version          = self.version;
     lib.identifier       = self.identifier;
@@ -125,7 +127,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     NSDictionary *cursorDicts = dictionary[MCCursorDictionaryCursorsKey];
     NSNumber *cloud           = dictionary[MCCursorDictionaryCloudKey];
     NSString *author          = dictionary[MCCursorDictionaryAuthorKey];
-    NSNumber *hiDPI           = dictionary[MCCursorDictionaryHiDPIKey];
+//    NSNumber *hiDPI           = dictionary[MCCursorDictionaryHiDPIKey];
     NSString *identifier      = dictionary[MCCursorDictionaryIdentifierKey];
     NSString *capeName        = dictionary[MCCursorDictionaryCapeNameKey];
     NSNumber *capeVersion     = dictionary[MCCursorDictionaryCapeVersionKey];
@@ -134,7 +136,7 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     self.version    = capeVersion;
     self.author     = author;
     self.identifier = identifier;
-    self.hiDPI      = hiDPI.boolValue;
+//    self.hiDPI      = hiDPI.boolValue;
     self.inCloud    = cloud.boolValue;
     
     if (!self.identifier) {
@@ -235,4 +237,13 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
             object.isHiDPI == self.isHiDPI &&
             [object.cursors isEqualToSet:self.cursors]);
 }
+
+#pragma mark - Properties
+
+- (BOOL)isHiDPI {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"isHiDPI == YES"];
+    NSSet *hi = [self.cursors filteredSetUsingPredicate:pred];
+    return hi.count == self.cursors.count && hi.count != 0;
+}
+
 @end

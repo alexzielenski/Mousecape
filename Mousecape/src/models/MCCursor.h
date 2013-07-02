@@ -25,11 +25,12 @@
 - (void)addRepresentation:(NSImageRep *)imageRep;
 - (void)removeRepresentation:(NSImageRep *)imageRep;
 
-
 - (NSImageRep *)representationWithScale:(CGFloat)scale;
 - (NSImageRep *)smallestRepresentationWithScale:(CGFloat *)scale;
 
 - (NSDictionary *)dictionaryRepresentation;
+- (BOOL)isHiDPI;
+
 
 // Derived Properties
 - (NSArray *)keyReps;
