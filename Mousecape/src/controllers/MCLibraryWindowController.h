@@ -12,7 +12,7 @@
 
 extern NSString *MCLibraryDocumentRenamedNotification;
 
-@interface MCLibraryWindowController : NSWindowController <NSWindowDelegate>
+@interface MCLibraryWindowController : NSWindowController <NSWindowDelegate, MCCursorLibraryValidator>
 @property (assign) IBOutlet MCLibraryViewController *libraryController;
 @property (assign) IBOutlet NSTextField *accessory;
 @property (weak) MCCursorDocument *currentCursor;

@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "MCCursor.h"
 
+@protocol MCCursorLibraryValidator <NSObject>
+
+- (BOOL)cursorLibrary:(MCCursorLibrary *)cursorLibrary validateIdentifier:(__autoreleasing id *)ioValue error:(NSError **)error;
+
+@end
+
 @interface MCCursorLibrary : NSObject <NSCopying>
 @property (nonatomic, copy)   NSString *name;
 @property (nonatomic, copy)   NSString *author;
@@ -26,6 +32,9 @@
 - (instancetype)initWithContentsOfURL:(NSURL *)URL;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithCursors:(NSSet *)cursors;
+
++ (id <MCCursorLibraryValidator>)validator;
++ (void)setValidator:(id <MCCursorLibraryValidator>)validator;
 
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
 

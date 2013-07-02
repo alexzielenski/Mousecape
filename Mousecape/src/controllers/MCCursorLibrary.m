@@ -112,6 +112,15 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
     return lib;
 }
 
+static id <MCCursorLibraryValidator> _validator;
++ (id <MCCursorLibraryValidator>)validator {
+    return _validator;
+}
+
++ (void)setValidator:(id <MCCursorLibraryValidator>)validator {
+    _validator = validator;
+}
+
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically {
     return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
 }
@@ -236,6 +245,14 @@ static const NSString *MCCursorDictionaryCapeVersionKey    = @"CapeVersion";
             object.inCloud == self.inCloud &&
             object.isHiDPI == self.isHiDPI &&
             [object.cursors isEqualToSet:self.cursors]);
+}
+
+- (BOOL)validateIdentifier:(id *)ioValue error:(__autoreleasing NSError **)outError {
+    if (self.class.validator && [self.class.validator respondsToSelector:@selector(cursorLibrary:validateIdentifier:error:)]) {
+        return [self.class.validator cursorLibrary:self validateIdentifier:ioValue error:outError];
+    }
+    
+    return YES;
 }
 
 #pragma mark - Properties

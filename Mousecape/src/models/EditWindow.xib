@@ -266,7 +266,11 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="i4C-qr-32z" name="value" keyPath="cursorLibrary.identifier" id="NBk-HA-VIm"/>
+                                            <binding destination="i4C-qr-32z" name="value" keyPath="cursorLibrary.identifier" id="UwD-jO-GSm">
+                                                <dictionary key="options">
+                                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8ue-j3-ObW">
@@ -361,46 +365,4 @@
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
     </resources>
-    <classes>
-        <class className="MCEditCapeViewController" superclassName="NSViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCapeViewController.h"/>
-        </class>
-        <class className="MCEditCursorViewController" superclassName="NSViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditCursorViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionButton:" candidateClass="NSButton"/>
-                <relationship kind="action" name="segment:" candidateClass="NSSegmentedControl"/>
-                <relationship kind="outlet" name="actionButton" candidateClass="NSButton"/>
-                <relationship kind="outlet" name="frameCountField" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="frameDurationField" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="hotSpotField" candidateClass="NSTextField"/>
-                <relationship kind="outlet" name="identifierField" candidateClass="NSComboBox"/>
-                <relationship kind="outlet" name="imageView" candidateClass="MCScaledImageView"/>
-                <relationship kind="outlet" name="segmentedControl" candidateClass="NSSegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="MCEditListViewController" superclassName="NSViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addCursor:"/>
-                <relationship kind="action" name="removeCursor:"/>
-                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
-            </relationships>
-        </class>
-        <class className="MCEditWindowController" superclassName="NSWindowController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCEditWindowController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="capeViewController" candidateClass="MCEditCapeViewController"/>
-                <relationship kind="outlet" name="cursorViewController" candidateClass="MCEditCursorViewController"/>
-                <relationship kind="outlet" name="listViewController" candidateClass="MCEditListViewController"/>
-                <relationship kind="outlet" name="splitView" candidateClass="NSSplitView"/>
-            </relationships>
-        </class>
-        <class className="MCScaledImageView" superclassName="NSView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCScaledImageView.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
 </document>

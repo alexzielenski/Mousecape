@@ -28,8 +28,8 @@ NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfi
     // remove open recent menu
     NSInteger openDocumentMenuItemIndex = [self.fileMenu indexOfItemWithTarget:nil andAction:@selector(openDocument:)];
     
-    if (openDocumentMenuItemIndex >= 0 && [[self.fileMenu itemAtIndex:openDocumentMenuItemIndex+1] hasSubmenu]) {
-        [self.fileMenu removeItemAtIndex:openDocumentMenuItemIndex+1];
+    if (openDocumentMenuItemIndex >= 0 && [[self.fileMenu itemAtIndex:openDocumentMenuItemIndex + 1] hasSubmenu]) {
+        [self.fileMenu removeItemAtIndex:openDocumentMenuItemIndex + 1];
     }
 }
 

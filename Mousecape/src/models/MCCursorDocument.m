@@ -89,7 +89,7 @@ static void *MCCursorDocumentLibraryContext;
     // Observe top level features
     [library addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"author" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
-    [library addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
+    [library addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld  context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"version" options:NSKeyValueObservingOptionOld context:&MCCursorDocumentContext];
     [library addObserver:self forKeyPath:@"cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior context:&MCCursorDocumentContext];
     
@@ -143,9 +143,10 @@ static void *MCCursorContext;
         return;
     }
     
+    id oldValue = change[NSKeyValueChangeOldKey];
+    id newValue = change[NSKeyValueChangeNewKey];
+    
     if (context == &MCCursorDocumentLibraryContext) {
-        id oldValue = change[NSKeyValueChangeOldKey];
-        id newValue = change[NSKeyValueChangeNewKey];
         
         if (![oldValue isKindOfClass:[NSNull class]] && oldValue)
             [self stopObservingLibrary:oldValue];
@@ -157,17 +158,14 @@ static void *MCCursorContext;
     if ([keyPath isEqualToString:@"cursors"]) {
         NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
         if (kind == NSKeyValueChangeSetting || kind == NSKeyValueChangeReplacement) {
-            NSSet *oldCursors = change[NSKeyValueChangeOldKey];
-            for (MCCursor *cursor in oldCursors)
+            for (MCCursor *cursor in oldValue)
                 [self stopObservingCursor:cursor];
             
-            NSSet *newCursors = change[NSKeyValueChangeNewKey];
-            for (MCCursor *cursor in newCursors)
+            for (MCCursor *cursor in newValue)
                 [self startObservingCursor:cursor];
             
         } else if (kind == NSKeyValueChangeInsertion) {
-            NSSet *objects = change[NSKeyValueChangeNewKey];
-            for (MCCursor *cursor in objects) {
+            for (MCCursor *cursor in oldValue) {
                 [self startObservingCursor:cursor];
                 
                 [[self.undoManager prepareWithInvocationTarget:self.library] removeCursor:cursor];
@@ -176,8 +174,7 @@ static void *MCCursorContext;
                 }
             }
         } else if (kind == NSKeyValueChangeRemoval) {
-            NSSet *objects = change[NSKeyValueChangeOldKey];
-            for (MCCursor *object in objects) {
+            for (MCCursor *object in oldValue) {
                 [self stopObservingCursor:object];
                 
                 [[self.undoManager prepareWithInvocationTarget:self.library] addCursor:object];
@@ -203,14 +200,13 @@ static void *MCCursorContext;
         }
         
         MCCursor *proxy = [self.undoManager prepareWithInvocationTarget:object];
-        id oldValue = change[NSKeyValueChangeOldKey];
         
         if ([keyPath isEqualToString:@"representations"]) {
             NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
             NSString *action = @"";
             
             if (kind == NSKeyValueChangeInsertion) {
-                for (NSImageRep *cursor in change[NSKeyValueChangeNewKey])
+                for (NSImageRep *cursor in newValue)
                     [proxy removeRepresentation:cursor];
                 action = @"Add Representation";
             } else if (kind == NSKeyValueChangeRemoval) {
@@ -251,7 +247,7 @@ static void *MCCursorContext;
         return;
     }
     
-    [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:object] setValue:[(NSString *)[change objectForKey:NSKeyValueChangeOldKey] copy] forKeyPath:keyPath];
+    [(MCCursorLibrary *)[self.undoManager prepareWithInvocationTarget:object] setValue:[(NSString *)oldValue copy] forKeyPath:keyPath];
     if (!self.undoManager.isUndoing)
         [self.undoManager setActionName:[NSString stringWithFormat:@"Edit %@", keyPath.capitalizedString]];
     

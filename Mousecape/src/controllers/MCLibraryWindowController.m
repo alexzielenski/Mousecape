@@ -17,6 +17,7 @@ NSString *MCLibraryDocumentRenamedNotification;
 @property (copy) NSURL *libraryURL;
 @property (nonatomic, strong, readwrite) NSMutableOrderedSet *documents;
 @property (strong) NSArray *librarySortDescriptors;
+- (NSSet *)allLibrariesWithIdentifier:(NSString *)identifier;
 - (void)composeAccessory;
 - (void)_setupFacade;
 @end
@@ -33,6 +34,7 @@ NSString *MCLibraryDocumentRenamedNotification;
     if (self) {
         self.documents = [NSMutableOrderedSet orderedSet];
         self.librarySortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"library.name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
+        [MCCursorLibrary setValidator:self];
     }
     
     return self;
@@ -131,13 +133,18 @@ NSString *MCLibraryDocumentRenamedNotification;
 }
 
 - (MCCursorDocument *)libraryWithIdentifier:(NSString *)identifier {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"library.identifier == %@", identifier];
-    NSSet *filtered = [self.documents.set filteredSetUsingPredicate:pred];
+    NSSet *filtered = [self allLibrariesWithIdentifier:identifier];
 
     if (filtered.count > 0)
         return filtered.anyObject;
     
     return nil;
+}
+
+- (NSSet *)allLibrariesWithIdentifier:(NSString *)identifier {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"library.identifier == %@", identifier];
+    NSSet *filtered = [self.documents.set filteredSetUsingPredicate:pred];
+    return filtered;
 }
 
 - (RACReplaySubject *)loadLibraryAtURL:(NSURL *)url {
@@ -216,6 +223,10 @@ NSString *MCLibraryDocumentRenamedNotification;
         NSLog(@"Document exists with that identifier already");
         return NO;
     }
+    if (!doc.library.identifier) {
+        NSLog(@"Cannot add document without an identifier");
+        return NO;
+    }
     
     NSUInteger idx = [self.documents indexForInsertingObject:doc sortedUsingDescriptors:self.librarySortDescriptors];
     NSIndexSet *indices = [NSIndexSet indexSetWithIndex:idx];
@@ -258,12 +269,11 @@ NSString *MCLibraryDocumentRenamedNotification;
         }
         
     }]];
-    
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
     [self.documents insertObject:doc atIndex:idx];
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"documents"];
     
-//    [(NSDocumentController *)[NSDocumentController sharedDocumentController] addDocument:doc];
+    [(NSDocumentController *)[NSDocumentController sharedDocumentController] addDocument:doc];
     return YES;
 }
 
@@ -277,7 +287,7 @@ NSString *MCLibraryDocumentRenamedNotification;
     [document.editWindowController close];
     [document removeWindowController:document.editWindowController];
     [document removeWindowController:self];
-    
+
     [[NSDocumentController sharedDocumentController] removeDocument:document];
     
     NSIndexSet *set = [NSIndexSet indexSetWithIndex:[self.documents indexOfObject:document]];
@@ -344,6 +354,16 @@ NSString *MCLibraryDocumentRenamedNotification;
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {
     return @"Mousecape";
+}
+
+- (BOOL)cursorLibrary:(MCCursorLibrary *)cursorLibrary validateIdentifier:(__autoreleasing id *)ioValue error:(NSError **)error {
+    if ([self libraryWithIdentifier:*ioValue]) {
+        *ioValue = [cursorLibrary identifier];
+        *error = [NSError errorWithDomain:@"com.alexzielenski.mousecape.errordomain" code:0 userInfo:@{ NSLocalizedDescriptionKey: @"A library already exists with that identifier." }];
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
