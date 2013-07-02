@@ -181,7 +181,10 @@
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="630">
                                         <rect key="frame" x="17" y="443" width="146" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="No Cursor Selected" id="631">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="7db-sF-hcT"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="charWrapping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="No Cursor Selected" usesSingleLineMode="YES" id="631">
                                             <font key="font" metaFont="systemBold"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +199,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="49" id="Fs2-G1-zdq"/>
                                         </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Author:" id="639">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Author:" id="639">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -205,7 +208,7 @@
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="642">
                                         <rect key="frame" x="17" y="393" width="55" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version:" id="643">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Version:" id="643">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -214,7 +217,10 @@
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="979">
                                         <rect key="frame" x="74" y="418" width="89" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="980">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="yMx-DK-bX0"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="charWrapping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="980">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -226,7 +232,10 @@
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="985">
                                         <rect key="frame" x="74" y="393" width="89" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="986">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="zen-be-dVu"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="charWrapping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="986">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -272,10 +281,10 @@
                                     <constraint firstItem="b7v-KH-AZ9" firstAttribute="leading" secondItem="r5v-rk-m7i" secondAttribute="leading" id="agT-a5-om5"/>
                                     <constraint firstItem="630" firstAttribute="top" secondItem="602" secondAttribute="top" constant="20" symbolic="YES" id="dH7-tb-PbA"/>
                                     <constraint firstItem="979" firstAttribute="leading" secondItem="638" secondAttribute="trailing" constant="8" symbolic="YES" id="fJH-M7-5qe"/>
-                                    <constraint firstItem="630" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="20" symbolic="YES" id="fbB-kK-CGC"/>
+                                    <constraint firstItem="630" firstAttribute="leading" secondItem="602" secondAttribute="leading" constant="20" id="fbB-kK-CGC"/>
                                     <constraint firstItem="979" firstAttribute="leading" secondItem="985" secondAttribute="leading" id="jQH-hc-CQG"/>
                                     <constraint firstItem="985" firstAttribute="leading" secondItem="642" secondAttribute="trailing" constant="8" symbolic="YES" id="pOy-0q-UVP"/>
-                                    <constraint firstAttribute="trailing" secondItem="630" secondAttribute="trailing" constant="20" symbolic="YES" id="qIf-oU-ayu"/>
+                                    <constraint firstAttribute="trailing" secondItem="630" secondAttribute="trailing" constant="20" id="qIf-oU-ayu"/>
                                     <constraint firstItem="b7v-KH-AZ9" firstAttribute="trailing" secondItem="r5v-rk-m7i" secondAttribute="trailing" id="rQY-SG-eJ1"/>
                                     <constraint firstItem="b7v-KH-AZ9" firstAttribute="bottom" secondItem="r5v-rk-m7i" secondAttribute="top" constant="1" id="uao-T3-sRf"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="xCQ-xp-R32"/>
@@ -359,4 +368,77 @@ CA
         <image name="HD" width="30" height="18"/>
         <image name="applied" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="DTScrollView" superclassName="RBLScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DTScrollView.h"/>
+        </class>
+        <class className="MCActionButton" superclassName="NSButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCActionButton.h"/>
+        </class>
+        <class className="MCActionButtonCell" superclassName="NSButtonCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCActionButtonCell.h"/>
+        </class>
+        <class className="MCCursorDocument" superclassName="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCCursorDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="apply:"/>
+                <relationship kind="action" name="edit:"/>
+                <relationship kind="action" name="remove:"/>
+            </relationships>
+        </class>
+        <class className="MCCursorLine" superclassName="NSView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCCursorLine.h"/>
+        </class>
+        <class className="MCLibraryViewController" superclassName="NSViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="capeAction:" candidateClass="MCCursorDocument"/>
+                <relationship kind="action" name="contextMenu:" candidateClass="NSMenuItem"/>
+                <relationship kind="action" name="doubleClick:"/>
+                <relationship kind="outlet" name="tableView" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+        <class className="MCLibraryWindowController" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCLibraryWindowController.h"/>
+            <relationships>
+                <relationship kind="action" name="importMightyMouse:"/>
+                <relationship kind="action" name="restoreDefaults:"/>
+                <relationship kind="outlet" name="accessory" candidateClass="NSTextField"/>
+                <relationship kind="outlet" name="libraryController" candidateClass="MCLibraryViewController"/>
+            </relationships>
+        </class>
+        <class className="MCTableCellView" superclassName="NSTableCellView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MCTableCellView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="appliedView" candidateClass="NSImageView"/>
+                <relationship kind="outlet" name="cursorLine" candidateClass="MCCursorLine"/>
+                <relationship kind="outlet" name="hdView" candidateClass="NSImageView"/>
+            </relationships>
+        </class>
+        <class className="NSDocument">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSDocument.h"/>
+            <relationships>
+                <relationship kind="action" name="browseDocumentVersions:"/>
+                <relationship kind="action" name="duplicateDocument:"/>
+                <relationship kind="action" name="lockDocument:"/>
+                <relationship kind="action" name="moveDocument:"/>
+                <relationship kind="action" name="moveDocumentToUbiquityContainer:"/>
+                <relationship kind="action" name="printDocument:"/>
+                <relationship kind="action" name="renameDocument:"/>
+                <relationship kind="action" name="revertDocumentToSaved:"/>
+                <relationship kind="action" name="runPageLayout:"/>
+                <relationship kind="action" name="saveDocument:"/>
+                <relationship kind="action" name="saveDocumentAs:"/>
+                <relationship kind="action" name="saveDocumentTo:"/>
+                <relationship kind="action" name="saveDocumentToPDF:"/>
+                <relationship kind="action" name="unlockDocument:"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="RBLScrollView" superclassName="NSScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RBLScrollView.h"/>
+        </class>
+    </classes>
 </document>
