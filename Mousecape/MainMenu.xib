@@ -280,7 +280,11 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <customObject id="FvX-gW-305" customClass="MCAppDelegate"/>
+        <customObject id="FvX-gW-305" customClass="MCAppDelegate">
+            <connections>
+                <outlet property="fileMenu" destination="81" id="dlw-e4-8qJ"/>
+            </connections>
+        </customObject>
         <customObject id="pDM-XV-lCH" customClass="SUUpdater">
             <connections>
                 <action selector="checkForUpdates:" destination="S2K-Dh-lnf" id="zhs-zp-bDw"/>
@@ -292,8 +296,8 @@ CA
         <class className="MCAppDelegate" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MCAppDelegate.h"/>
             <relationships>
-                <relationship kind="action" name="installTool:"/>
                 <relationship kind="action" name="showPreferences:" candidateClass="NSMenuItem"/>
+                <relationship kind="outlet" name="fileMenu" candidateClass="NSMenu"/>
                 <relationship kind="outlet" name="window" candidateClass="NSWindow"/>
             </relationships>
         </class>
