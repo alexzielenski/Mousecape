@@ -1,15 +1,15 @@
 //
-//  RBLScrollView.m
-//  Rebel
+//  BTRScrollView.m
+//  Originally from Rebel
 //
 //  Created by Jonathan Willing on 12/4/12.
 //  Copyright (c) 2012 GitHub. All rights reserved.
 //
 
-#import "RBLScrollView.h"
-#import "RBLClipView.h"
+#import "BTRScrollView.h"
+#import "BTRClipView.h"
 
-@implementation RBLScrollView
+@implementation BTRScrollView
 
 #pragma mark Lifecycle
 
@@ -25,7 +25,7 @@
 - (void)awakeFromNib {
 	[super awakeFromNib];
 	
-	if (![self.contentView isKindOfClass:RBLClipView.class] ) {
+	if (![self.contentView isKindOfClass:BTRClipView.class] ) {
 		[self swapClipView];
 	}
 }
@@ -35,9 +35,15 @@
 - (void)swapClipView {
 	self.wantsLayer = YES;
 	id documentView = self.documentView;
-	RBLClipView *clipView = [[RBLClipView alloc] initWithFrame:self.contentView.frame];
+	Class clipViewClass = [self.class clipViewClass];
+	BTRClipView *clipView = [[clipViewClass alloc] initWithFrame:self.contentView.frame];
+	clipView.backgroundColor = [self.contentView backgroundColor];
 	self.contentView = clipView;
 	self.documentView = documentView;
+}
+
++ (Class)clipViewClass {
+	return [BTRClipView class];
 }
 
 @end

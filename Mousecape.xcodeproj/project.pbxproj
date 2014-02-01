@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0CFECDCBF69348239BE834CD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3D37A12138416E9F405705 /* libPods.a */; };
+		FA01C511179B86E20024F050 /* BTRClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA01C50E179B86E20024F050 /* BTRClipView.m */; };
+		FA01C512179B86E20024F050 /* BTRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA01C510179B86E20024F050 /* BTRScrollView.m */; };
 		FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB45816D0610A006C239D /* DTScrollView.m */; };
 		FA139FCD16C57A1E00AF6D2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA139FCC16C57A1E00AF6D2E /* Cocoa.framework */; };
 		FA139FD716C57A1E00AF6D2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA139FD516C57A1E00AF6D2E /* InfoPlist.strings */; };
@@ -27,9 +29,8 @@
 		FA192711178110F20070CFB9 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA19270E178110660070CFB9 /* Sparkle.framework */; };
 		FA1F516F1779C51700E99127 /* MCActionButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F516E1779C51700E99127 /* MCActionButtonCell.m */; };
 		FA2022FD16DAD91E00B74958 /* software-update.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA2022FC16DAD91E00B74958 /* software-update.icns */; };
-		FA20230216DADB6200B74958 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2022FF16DADB6200B74958 /* RBLClipView.m */; };
-		FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA20230116DADB6200B74958 /* RBLScrollView.m */; };
 		FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA22AB8C178467A3007BDE11 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA22AB8B178467A3007BDE11 /* SystemConfiguration.framework */; };
 		FA2B9899177FAB3C00EDA275 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA2B9898177FAB3B00EDA275 /* XCTest.framework */; };
 		FA2B989F177FAB3C00EDA275 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA2B989D177FAB3C00EDA275 /* InfoPlist.strings */; };
 		FA2B98A1177FAB3C00EDA275 /* Mousecape_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2B98A0177FAB3C00EDA275 /* Mousecape_Tests.m */; };
@@ -127,6 +128,10 @@
 		4C3D37A12138416E9F405705 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1EF3F14DB642DC80BD246A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		F5AB9DB79C764C448C9FE807 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		FA01C50D179B86E20024F050 /* BTRClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRClipView.h; sourceTree = "<group>"; };
+		FA01C50E179B86E20024F050 /* BTRClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRClipView.m; sourceTree = "<group>"; };
+		FA01C50F179B86E20024F050 /* BTRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRScrollView.h; sourceTree = "<group>"; };
+		FA01C510179B86E20024F050 /* BTRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRScrollView.m; sourceTree = "<group>"; };
 		FA0CB45716D06109006C239D /* DTScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTScrollView.h; sourceTree = "<group>"; };
 		FA0CB45816D0610A006C239D /* DTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTScrollView.m; sourceTree = "<group>"; };
 		FA139FC816C57A1E00AF6D2E /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,13 +165,10 @@
 		FA1F516D1779C51700E99127 /* MCActionButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCActionButtonCell.h; path = src/views/MCActionButtonCell.h; sourceTree = "<group>"; };
 		FA1F516E1779C51700E99127 /* MCActionButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCActionButtonCell.m; path = src/views/MCActionButtonCell.m; sourceTree = "<group>"; };
 		FA2022FC16DAD91E00B74958 /* software-update.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "software-update.icns"; sourceTree = "<group>"; };
-		FA2022FE16DADB6200B74958 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBLClipView.h; path = Mousecape/src/views/RBLClipView.h; sourceTree = SOURCE_ROOT; };
-		FA2022FF16DADB6200B74958 /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBLClipView.m; path = Mousecape/src/views/RBLClipView.m; sourceTree = SOURCE_ROOT; };
-		FA20230016DADB6200B74958 /* RBLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBLScrollView.h; path = Mousecape/src/views/RBLScrollView.h; sourceTree = SOURCE_ROOT; };
-		FA20230116DADB6200B74958 /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBLScrollView.m; path = Mousecape/src/views/RBLScrollView.m; sourceTree = SOURCE_ROOT; };
 		FA20230416DADBAB00B74958 /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
 		FA20230516DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RBLCGColorAdditions.m"; sourceTree = "<group>"; };
-		FA2B9897177FAB3B00EDA275 /* Mousecape Tests.xctest */ = {isa = PBXFileReference; explicitFileType = folder; includeInIndex = 0; path = "Mousecape Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA22AB8B178467A3007BDE11 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FA2B9897177FAB3B00EDA275 /* Mousecape Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mousecape Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA2B9898177FAB3B00EDA275 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FA2B989C177FAB3C00EDA275 /* Mousecape Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mousecape Tests-Info.plist"; sourceTree = "<group>"; };
 		FA2B989E177FAB3C00EDA275 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA22AB8C178467A3007BDE11 /* SystemConfiguration.framework in Frameworks */,
 				FA3EC58716C9FA1900F66CD5 /* Cocoa.framework in Frameworks */,
 				FA3EC58216C9EFAE00F66CD5 /* ApplicationServices.framework in Frameworks */,
 				FA3EC58016C9D42700F66CD5 /* Accelerate.framework in Frameworks */,
@@ -309,6 +312,7 @@
 		FA139FCB16C57A1E00AF6D2E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA22AB8B178467A3007BDE11 /* SystemConfiguration.framework */,
 				FA3EC58116C9EFAE00F66CD5 /* ApplicationServices.framework */,
 				FA3EC57D16C9D31A00F66CD5 /* libPods.a */,
 				FAFC2D0916DC0B2500EBB128 /* libToolPods.a */,
@@ -471,10 +475,10 @@
 			children = (
 				FA0CB45716D06109006C239D /* DTScrollView.h */,
 				FA0CB45816D0610A006C239D /* DTScrollView.m */,
-				FA2022FE16DADB6200B74958 /* RBLClipView.h */,
-				FA2022FF16DADB6200B74958 /* RBLClipView.m */,
-				FA20230016DADB6200B74958 /* RBLScrollView.h */,
-				FA20230116DADB6200B74958 /* RBLScrollView.m */,
+				FA01C50D179B86E20024F050 /* BTRClipView.h */,
+				FA01C50E179B86E20024F050 /* BTRClipView.m */,
+				FA01C50F179B86E20024F050 /* BTRScrollView.h */,
+				FA01C510179B86E20024F050 /* BTRScrollView.m */,
 				FA967A4A16DAEBC500A8A621 /* MCFormatters.h */,
 				FA967A4B16DAEBC500A8A621 /* MCFormatters.m */,
 			);
@@ -706,6 +710,7 @@
 				FAD39853177A2FA400DEFF87 /* MCLibraryWindowController.m in Sources */,
 				FAD56063177CA70C0099F68D /* NSBezierPath+StrokeExtensions.m in Sources */,
 				FA0CB45916D0610A006C239D /* DTScrollView.m in Sources */,
+				FA01C511179B86E20024F050 /* BTRClipView.m in Sources */,
 				FA9D05B116D42404000732AA /* MCEditListViewController.m in Sources */,
 				FA9D05B516D42801000732AA /* MCEditCursorViewController.m in Sources */,
 				FAD3984F177A14B700DEFF87 /* MCCursorDocument.m in Sources */,
@@ -714,8 +719,7 @@
 				FA1F516F1779C51700E99127 /* MCActionButtonCell.m in Sources */,
 				FA9D05BF16D4423F000732AA /* MCLibraryRowView.m in Sources */,
 				FA9D05C216D45183000732AA /* MCEditCapeViewController.m in Sources */,
-				FA20230216DADB6200B74958 /* RBLClipView.m in Sources */,
-				FA20230316DADB6200B74958 /* RBLScrollView.m in Sources */,
+				FA01C512179B86E20024F050 /* BTRScrollView.m in Sources */,
 				FA20230616DADBAB00B74958 /* NSColor+RBLCGColorAdditions.m in Sources */,
 				FA967A4C16DAEBC500A8A621 /* MCFormatters.m in Sources */,
 			);
