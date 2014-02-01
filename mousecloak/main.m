@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "MCDefs.h"
 #import "CGSCursor.h"
 #import "CGSAccessibility.h"
@@ -54,6 +55,27 @@ static const NSArray *defaultCursors = nil;
 - (void)replacePlaceholdersAndPrintStringFromBlock:(GBOptionStringBlock)block;
 @end
 
+// http://developer.apple.com/library/mac/#qa/qa1133/_index.html
+static CFStringRef CopyCurrentConsoleUsername(SCDynamicStoreRef store)
+// Returns the name of the current console user, or NULL if there is
+// none. store may be NULL, in which case a transient dynamic store
+// session is used.
+{
+    CFStringRef result;
+    
+    result = SCDynamicStoreCopyConsoleUser(store, NULL, NULL);
+    return result;
+}
+
+NSString *appliedCapePathForUser(NSString *user) {
+    NSString *home = NSHomeDirectoryForUser(user);
+    NSString *pref = [home stringByAppendingPathComponent:@"Library/Preferences/com.alexzielenski.mousecape.plist"];
+    NSDictionary *preferences = [NSDictionary dictionaryWithContentsOfFile:pref];
+    NSString *ident = [preferences objectForKey:@"MCAppliedCursor"];
+    NSString *appSupport = [home stringByAppendingPathComponent:@"Library/Application Support"];
+    return [[[appSupport stringByAppendingPathComponent:@"Mousecape/capes"] stringByAppendingPathComponent:ident] stringByAppendingPathExtension:@"cape"];
+}
+
 void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
 	CFURLRef url = CFURLCreateWithFileSystemPath(NULL, path , kCFURLPOSIXPathStyle, false);
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
@@ -63,7 +85,7 @@ void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
     
     bool success = CGImageDestinationFinalize(destination);
     if (!success) {
-        NSLog(@"Failed to write image to %@", path);
+        MMLog("Failed to write image to %s\n", [(__bridge NSString *)path UTF8String]);
     }
     
     CFRelease(destination);
@@ -116,6 +138,11 @@ NSDictionary *capeWithIdentifier(NSString *identifier) {
     CGPoint hotSpot;
     CGSize size;
     CFArrayRef representations;
+    bool registered = false;
+    
+    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)identifier.UTF8String, &registered);
+    if (!registered)
+        return nil;
     
     if (![identifier hasPrefix:@"com.apple.cursor"]) {
         CGSCopyRegisteredCursorImages(CGSMainConnectionID(), (char*)identifier.UTF8String, &size, &hotSpot, &frameCount, &frameDuration, &representations);
@@ -161,7 +188,6 @@ BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPo
     char *idenfifier = (char *)ident.UTF8String;
     
     int seed;
-    
     CGError err = CGSRegisterCursorWithImages(CGSMainConnectionID(),
                                               idenfifier,
                                               true,
@@ -179,6 +205,9 @@ BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPo
 }
 
 BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
+    if (!cursor)
+        return NO;
+    
     NSNumber *frameCount    = cursor[MCCursorDictionaryFrameCountKey];
     NSNumber *frameDuration = cursor[MCCursorDictionaryFrameDuratiomKey];
     //    NSNumber *repeatCount   = cursor[MCCursorDictionaryRepeatCountKey];
@@ -218,17 +247,13 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
 void restoreCursorForIdentifier(NSString *ident) {
     bool registered = false;
     CGSIsCursorRegistered(CGSMainConnectionID(), (char *)ident.UTF8String, &registered);
-    
-    // dont try to backup a nonexistant cursor
-    if (!registered)
-        return;
-    
+        
     NSString *restoreIdent = restoreStringForIdentifier(ident);
     NSDictionary *cape = capeWithIdentifier(ident);
         
     MMLog("Restoring cursor %s from %s\n", restoreIdent.UTF8String, ident.UTF8String);
-    BOOL x = applyCapeForIdentifier(cape, restoreIdent);
-    (void)x;
+    if (cape && registered)
+        applyCapeForIdentifier(cape, restoreIdent);
 }
 
 void resetAllCursors() {
@@ -290,8 +315,8 @@ BOOL applyCape(NSDictionary *dictionary) {
     NSString *name = dictionary[MCCursorDictionaryCapeNameKey];
     NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
 
-    backupAllCursors();
-    resetAllCursors();
+//    backupAllCursors();
+//    resetAllCursors();
     
     MMLog("\nApplying cape: %s %.02f\n", name.UTF8String, version.floatValue);
     
@@ -551,60 +576,39 @@ void dumpCursorsToFile(NSString *path) {
     [cape writeToFile:path atomically:NO];
 }
 
+static void UserSpaceChanged(SCDynamicStoreRef	store, CFArrayRef changedKeys, void *info) {
+        CFStringRef         currentConsoleUser;
+        currentConsoleUser = CopyCurrentConsoleUsername(store);
+        MMLog("Current user is %s\n", [(__bridge NSString *)currentConsoleUser UTF8String]);
+        
+        if (!currentConsoleUser || CFEqual(currentConsoleUser, CFSTR("loginwindow"))) {
+            return;
+        }
+        
+        NSString *appliedPath = appliedCapePathForUser((__bridge NSString *)currentConsoleUser);
+        NSDictionary *cursorDictionary = [NSDictionary dictionaryWithContentsOfFile:appliedPath];
+        if (cursorDictionary) {
+            MMLog(BOLD GREEN "User Space Changed to %s, applying cape...\n" RESET, [(__bridge NSString *)currentConsoleUser UTF8String]);
+            applyCape(cursorDictionary);
+        }
+        
+        CFRelease(currentConsoleUser);
+}
+
+
 int main(int argc, char * argv[])
 {
-    @autoreleasepool {        
-        /*NSFileManager *man = [NSFileManager defaultManager];
-         
-         CGSSetCursorScale(CGSMainConnectionID(), 8.0);
-         
-         for (int x = 0; x < 100; x++) {
-         CFArrayRef images;
-         CGPoint hp;
-         CGSize size;
-         CFIndex fc;
-         CGFloat duration;
-         
-         CoreCursorCopyImages(CGSMainConnectionID(), x, &images, &size, &hp, &fc, &duration);
-         
-         NSArray *reps = (__bridge NSArray *)images;
-         
-         if (reps.count == 0)
-         continue;
-         
-         NSString *dir = [NSString stringWithFormat:@"/Users/Alex/Desktop/dump/com.apple.cursor.%d", x];
-         [man createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
-         
-         for (NSUInteger idx = 0; idx < reps.count; idx++) {
-         CGImageRef image = (__bridge CGImageRef)reps[idx];
-         
-         CGImageWriteToFile(image, (__bridge CFStringRef)[dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.png", idx]]);
-         
-         }
-         
-         }
-         
-         NSMutableDictionary *d = capeWithIdentifier(@"com.apple.cursor.16").mutableCopy;
-         d[@"FrameDuration"] = @(.1f);
-         applyCapeForIdentifier(d, @"com.apple.coregraphics.Arrow");
-         
-         NSLog(@"%@", capeWithIdentifier(@"com.apple.cursor.16"));
-         CoreCursorUnregisterAll(CGSMainConnectionID());
-         NSLog(@"%@", capeWithIdentifier(@"com.apple.cursor.5"));
-         CGSSetCursorScale(CGSMainConnectionID(), 1.0);
-         return 0;
-         */
-        
+    @autoreleasepool {
         defaultCursors = @[
-        @"com.apple.coregraphics.Arrow",
-        @"com.apple.coregraphics.IBeam",
-        @"com.apple.coregraphics.IBeamXOR",
-        @"com.apple.coregraphics.Alias",
-        @"com.apple.coregraphics.Copy",
-        @"com.apple.coregraphics.Move",
-        @"com.apple.coregraphics.ArrowCtx",
-        @"com.apple.coregraphics.Wait",
-        @"com.apple.coregraphics.Empty"];
+                           @"com.apple.coregraphics.Arrow",
+                           @"com.apple.coregraphics.IBeam",
+                           @"com.apple.coregraphics.IBeamXOR",
+                           @"com.apple.coregraphics.Alias",
+                           @"com.apple.coregraphics.Copy",
+                           @"com.apple.coregraphics.Move",
+                           @"com.apple.coregraphics.ArrowCtx",
+                           @"com.apple.coregraphics.Wait",
+                           @"com.apple.coregraphics.Empty"];
 
         GBSettings *settings = [GBSettings settingsWithName:@"mousecape" parent:nil];
         
@@ -644,6 +648,7 @@ int main(int argc, char * argv[])
         [options registerOption:'o' long:@"output" description:@"Use this option to tell where an output file goes. (For convert and create)" flags:GBValueRequired];
         [options registerOption:0 long:@"suppressCopyright" description:@"Suppress Copyright info" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
         [options registerOption:'s' long:@"scale" description:@"Scale the cursor to obscene multipliers or get the current scale" flags:GBValueOptional];
+        [options registerOption:0 long:@"listen" description:@"Keep mousecloak alive to apply the current Cape every user switch" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
         
         options.applicationName = ^{ return @"mousecloak"; };
         options.applicationVersion = ^{ return @"2.0"; };
@@ -694,6 +699,7 @@ int main(int argc, char * argv[])
         BOOL create  = [settings isKeyPresentAtThisLevel:@"create"];
         BOOL dump    = [settings isKeyPresentAtThisLevel:@"dump"];
         BOOL scale   = [settings isKeyPresentAtThisLevel:@"scale"];
+        BOOL listen  = [settings boolForKey:@"listen"];
         int amt = 0;
         
         if (convert) amt++;
@@ -808,13 +814,38 @@ int main(int argc, char * argv[])
                 }
             }            
             goto fin;
+        } else if (listen) {
+            SCDynamicStoreRef store = SCDynamicStoreCreate(NULL, CFSTR("com.apple.dts.ConsoleUser"), UserSpaceChanged, NULL);
+            assert(store != NULL);
+                        
+            CFStringRef key = SCDynamicStoreKeyCreateConsoleUser(NULL);
+            assert(key != NULL);
+            
+            CFArrayRef keys = CFArrayCreate(NULL, (const void **)&key, 1, &kCFTypeArrayCallBacks);
+            assert(keys != NULL);
+            
+            Boolean success = SCDynamicStoreSetNotificationKeys(store, keys, NULL);
+            assert(success);
+            
+            CFRunLoopSourceRef rls = SCDynamicStoreCreateRunLoopSource(NULL, store, 0);
+            assert(rls != NULL);
+            
+            MMLog(BOLD CYAN "Listening for User changes\n" RESET);
+            CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
+            CFRunLoopRun();
+            
+            // Cleanup
+            CFRunLoopSourceInvalidate(rls);
+            CFRelease(rls);
+            CFRelease(keys);
+            CFRelease(key);
+            CFRelease(store);
         }
-        
     fin:
         if (!suppressCopyright)
             [options replacePlaceholdersAndPrintStringFromBlock:options.printHelpFooter];
         
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 
