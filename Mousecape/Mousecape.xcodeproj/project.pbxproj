@@ -328,8 +328,9 @@
 			buildConfigurationList = FAC69F92189D603C00BC829D /* Build configuration list for PBXNativeTarget "Mousecape" */;
 			buildPhases = (
 				FAC69F5D189D603C00BC829D /* Sources */,
-				FAC69F5E189D603C00BC829D /* Frameworks */,
 				FAC69F5F189D603C00BC829D /* Resources */,
+				FAC69F5E189D603C00BC829D /* Frameworks */,
+				FA359841189DAAF900288163 /* Build Number */,
 			);
 			buildRules = (
 			);
@@ -385,6 +386,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Alex Zielenski";
 				TargetAttributes = {
+					FAC69F60189D603C00BC829D = {
+						DevelopmentTeam = 3GD8ABJ22W;
+					};
 					FAC69F81189D603C00BC829D = {
 						TestTargetID = FAC69F60189D603C00BC829D;
 					};
@@ -431,6 +435,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FA359841189DAAF900288163 /* Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nbuildPlist=${INFOPLIST_FILE}\nCFBundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nBuildNumberINCR=$((CFBundleVersion + 1))\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumberINCR\" $buildPlist\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FAC69F5D189D603C00BC829D /* Sources */ = {
@@ -549,7 +570,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -580,7 +601,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};
@@ -588,11 +609,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -601,11 +625,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
