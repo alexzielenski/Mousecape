@@ -8,6 +8,17 @@
 
 #import "MCPrefs.h"
 
-@implementation MCPrefs
+NSString *MCPreferencesAppliedCursorKey          = @"MCAppliedCursor";
+NSString *MCPreferencesAppliedClickActionKey     = @"MCLibraryClickAction";
+NSString *MCSuppressDeleteLibraryConfirmationKey = @"MCSuppressDeleteLibraryConfirmationKey";
+NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfirmationKey";
 
-@end
+NSString *MCDefaults(NSString *key) {
+    NSString *value = (NSString *)CFPreferencesCopyValue((CFStringRef)key, (CFStringRef)kMCDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+    return [value autorelease];
+}
+
+void MCSetDefault(id value, NSString *key) {
+    CFPreferencesSetValue((CFStringRef)key, (CFPropertyListRef)value, (CFStringRef)kMCDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+}
+

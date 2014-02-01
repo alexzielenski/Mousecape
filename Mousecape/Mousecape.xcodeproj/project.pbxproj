@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		FA25477A189D85890038E1D9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA254779189D85890038E1D9 /* ApplicationServices.framework */; };
 		FA35983C189D8F5400288163 /* MCCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983B189D8F5400288163 /* MCCursorLibrary.m */; };
+		FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
+		FA359840189DA3C100288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA8FF76B189D664400750E51 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FA8FF771189D66D800750E51 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
@@ -30,7 +32,7 @@
 		FAC69FD5189D609B00BC829D /* GBOptionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FD1189D609B00BC829D /* GBOptionsHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		FAC69FD6189D609B00BC829D /* GBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FD3189D609B00BC829D /* GBSettings.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		FAC69FDA189D632B00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
-		FAC69FDC189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
+		FAC69FDC189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAC69FDD189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,8 @@
 		FA254779189D85890038E1D9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FA35983A189D8F5400288163 /* MCCursorLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursorLibrary.h; path = classes/controllers/MCCursorLibrary.h; sourceTree = "<group>"; };
 		FA35983B189D8F5400288163 /* MCCursorLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorLibrary.m; path = classes/controllers/MCCursorLibrary.m; sourceTree = "<group>"; };
+		FA35983D189DA3BC00288163 /* MCPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPrefs.h; sourceTree = "<group>"; };
+		FA35983E189DA3BC00288163 /* MCPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPrefs.m; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
 		FA8FF76C189D66C400750E51 /* backup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = backup.h; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 				FAC69FCC189D609B00BC829D /* vendor */,
 				FAC69FCA189D609B00BC829D /* MCDefs.h */,
 				FAC69FDB189D636700BC829D /* MCDefs.m */,
+				FA35983D189DA3BC00288163 /* MCPrefs.h */,
+				FA35983E189DA3BC00288163 /* MCPrefs.m */,
 				FAC69FB0189D608900BC829D /* main.m */,
 				FA8FF769189D663B00750E51 /* restore.h */,
 				FA8FF76A189D664400750E51 /* restore.m */,
@@ -435,6 +441,7 @@
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
 				FA35983C189D8F5400288163 /* MCCursorLibrary.m in Sources */,
+				FA359840189DA3C100288163 /* MCPrefs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +461,7 @@
 				FA8FF76E189D66CB00750E51 /* backup.m in Sources */,
 				FAC69FD6189D609B00BC829D /* GBSettings.m in Sources */,
 				FAC69FD5189D609B00BC829D /* GBOptionsHelper.m in Sources */,
+				FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */,
 				FA8FF76B189D664400750E51 /* restore.m in Sources */,
 				FA8FF771189D66D800750E51 /* apply.m in Sources */,
 				FAC69FDD189D636700BC829D /* MCDefs.m in Sources */,

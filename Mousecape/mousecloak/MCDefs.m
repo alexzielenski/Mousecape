@@ -69,7 +69,7 @@ NSData *pngDataForImage(id image) {
     }
     
     // CGImage
-    CGImageRef obj = (__bridge CGImageRef)image;
+    CGImageRef obj = (CGImageRef)image;
     CFMutableDataRef mutableData = CFDataCreateMutable(kCFAllocatorDefault, 0);
     CGImageDestinationRef dest = CGImageDestinationCreateWithData(mutableData, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(dest, obj, NULL);
@@ -77,7 +77,7 @@ NSData *pngDataForImage(id image) {
     
     CFRelease(dest);
     
-    return (__bridge NSData *)(mutableData);
+    return [(NSData *)mutableData autorelease];
 }
 
 NSDictionary *capeWithIdentifier(NSString *identifier) {
