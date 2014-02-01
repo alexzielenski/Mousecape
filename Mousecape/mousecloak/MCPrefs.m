@@ -13,7 +13,7 @@ NSString *MCPreferencesAppliedClickActionKey     = @"MCLibraryClickAction";
 NSString *MCSuppressDeleteLibraryConfirmationKey = @"MCSuppressDeleteLibraryConfirmationKey";
 NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfirmationKey";
 
-NSString *MCDefaults(NSString *key) {
+id MCDefaults(NSString *key) {
     NSString *value = (NSString *)CFPreferencesCopyValue((CFStringRef)key, (CFStringRef)kMCDomain, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
     return [value autorelease];
 }
