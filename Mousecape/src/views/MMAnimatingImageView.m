@@ -39,11 +39,17 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     self.layer.contentsGravity = kCAGravityCenter;
     self.layer.bounds = self.bounds;
     self.layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin;
+    self.layer.delegate = self;
     
     MCSpriteLayer *spriteLayer = [MCSpriteLayer layerWithImage:nil sampleSize:CGSizeZero];
     spriteLayer.autoresizingMask = kCALayerNotSizable;
     spriteLayer.position = CGPointZero;//CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
     spriteLayer.contentsGravity = kCAGravityResize;
+    
+    NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                       [NSNull null], @"contents",
+                                       nil];
+    spriteLayer.actions = newActions;
     
     [self.layer addSublayer:spriteLayer];
     self.spriteLayer = spriteLayer;
@@ -52,27 +58,26 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     self.frameCount    = 1;
     self.frameDuration = 1;
     
-    __weak MMAnimatingImageView *weakSelf = self;
+    @weakify(self);
     
-    [self rac_addDeallocDisposable:[[RACAble(self.image) distinctUntilChanged]
-                                    subscribeNext:^(id x) {
-                                        weakSelf.spriteLayer.image = x;
-                                    }]];
+    [self.spriteLayer rac_bind:@"image" toObject:self withKeyPath:@"image"];
     
     [self rac_addDeallocDisposable:[[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] distinctUntilChanged]
      subscribeNext:^(id x) {
-         [weakSelf _invalidateFrame];
-         [weakSelf _invalidateAnimation];
+         @strongify(self);
+         [self _invalidateFrame];
+         [self _invalidateAnimation];
      }]];
     
     [self rac_addDeallocDisposable:[[RACAble(self.shouldAnimate) distinctUntilChanged]
      subscribeNext:^(NSNumber *x) {
+         @strongify(self);
          if (!x.boolValue) {
-             weakSelf.spriteLayer.sampleIndex = self.frameCount + 1;
-             [weakSelf.spriteLayer removeAllAnimations];
-             [weakSelf.spriteLayer setNeedsDisplay];
+             self.spriteLayer.sampleIndex = self.frameCount + 1;
+             [self.spriteLayer removeAllAnimations];
+             [self.spriteLayer setNeedsDisplay];
          } else {
-             [weakSelf _invalidateAnimation];
+             [self _invalidateAnimation];
          }
      }]];
     
@@ -81,12 +86,11 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 - (void)viewDidChangeBackingProperties {
     [super viewDidChangeBackingProperties];
     
-    //!TODO: see if this can be done with RAC
     self.layer.contentsScale       = self.window.backingScaleFactor;
     self.spriteLayer.contentsScale = self.window.backingScaleFactor;
     
     // When you set this, the next time the layer displayes it will choose the best representation for the job
-    self.spriteLayer.contents = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
+    self.spriteLayer.image = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
 }
 
 // Tell OSX that our view can accept images to be dragged in
@@ -128,6 +132,10 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     
     [self.spriteLayer addAnimation:anim forKey:@"sampleIndex"]; // start
+}
+
+- (id <CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event {
+    return (id <CAAction>)[NSNull null];
 }
 
 #pragma mark - NSDragDestination

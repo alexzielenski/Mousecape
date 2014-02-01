@@ -19,6 +19,7 @@ NSWindow *MCWindowAtPoint(NSPoint screenPoint) {
 
 @interface MCScaledImageView ()
 @property (readwrite, weak) NSBitmapImageRep *lastRepresentation;
+@property (strong) NSMenu *contextMenu;
 @property (assign) NSRect lastFrame;
 @property (assign) CGFloat lastScaleFactor;
 - (void)_commonInit;
@@ -53,6 +54,18 @@ NSWindow *MCWindowAtPoint(NSPoint screenPoint) {
     self.shouldDrawBezel = YES;
     self.shouldDragToRemove = YES;
 
+    self.contextMenu = [[NSMenu alloc] init];
+    NSMenuItem *copy = [self.contextMenu addItemWithTitle:@"Copy" action:@selector(copyBitmap:) keyEquivalent:@""];
+    NSMenuItem *dele = [self.contextMenu addItemWithTitle:@"Delete" action:@selector(removeBitmap:) keyEquivalent:@""];
+    NSMenuItem *add  = [self.contextMenu addItemWithTitle:@"Add" action:@selector(additmap:) keyEquivalent:@""];
+    copy.target = self;
+    dele.target = self;
+    add.target  = self;
+    
+    [copy rac_bind:NSHiddenBinding toObject:self withNegatedKeyPath:@"image"];
+    [dele rac_bind:NSHiddenBinding toObject:self withNegatedKeyPath:@"image"];
+    [add rac_bind:NSHiddenBinding toObject:self withKeyPath:@"image"];
+    
     @weakify(self);
     RACDisposable *disp = [[RACSignal merge:@[
                                               RACAble(self.scale),
@@ -268,6 +281,14 @@ NSWindow *MCWindowAtPoint(NSPoint screenPoint) {
         NSShowAnimationEffect(NSAnimationEffectPoof, midPoint, poofSize, nil, nil, nil);
     }
 
+}
+
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    NSLog(@"%@", event);
+    if (event.type == NSRightMouseDown) {
+        return self.contextMenu;
+    }
+    return nil;
 }
 
 - (BOOL)isOpaque {

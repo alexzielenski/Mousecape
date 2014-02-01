@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "MCCursorLibrary.h"
 
+@class MCCursorDocument;
 @interface MCCursorDocument : NSDocument
 @property (nonatomic, strong) MCCursorLibrary *library;
 @property (nonatomic, strong) NSWindowController *editWindowController;
