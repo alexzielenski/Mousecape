@@ -38,7 +38,11 @@
 
 - (void)setImage:(NSImage *)image {
     [self willChangeValueForKey:@"image"];
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
     self.contents = image;
+    [CATransaction commit];
     [self didChangeValueForKey:@"image"];
 }
 
@@ -76,12 +80,8 @@
 
 // contentsRect or bounds changes are not animated
 + (id < CAAction >)defaultActionForKey:(NSString *)aKey {
-    if ([aKey isEqualToString:@"contentsRect"] || [aKey isEqualToString:@"bounds"] || [aKey isEqualToString:@"contents"])
-        return (id < CAAction >)[NSNull null];
-    
-    return [super defaultActionForKey:aKey];
+    return (id < CAAction >)[NSNull null];
 }
-
 
 - (NSUInteger)currentSampleIndex {
     return ((MCSpriteLayer *)[self presentationLayer]).sampleIndex;
