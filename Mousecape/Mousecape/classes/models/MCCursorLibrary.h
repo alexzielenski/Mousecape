@@ -14,6 +14,7 @@
 @property (nonatomic, copy)   NSString *author;
 @property (nonatomic, copy)   NSString *identifier;
 @property (nonatomic, copy)   NSNumber *version;
+@property (nonatomic, copy)   NSURL    *fileURL;
 @property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
 @property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
 

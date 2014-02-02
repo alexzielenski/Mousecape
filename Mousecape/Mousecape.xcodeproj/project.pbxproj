@@ -25,6 +25,13 @@
 		FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8F3189EB32700145DF8 /* BTRScrollView.m */; };
 		FAAEF8F7189EB34700145DF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */; };
 		FAAEF8FC189EB41C00145DF8 /* MCCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8FB189EB41C00145DF8 /* MCCursorLibrary.m */; };
+		FAAEF8FF189EB4BC00145DF8 /* MCCapeCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8FE189EB4BC00145DF8 /* MCCapeCellView.m */; };
+		FAAEF906189EE28500145DF8 /* MCLibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF905189EE28500145DF8 /* MCLibraryController.m */; };
+		FAAEF909189EE29100145DF8 /* MCLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF908189EE29100145DF8 /* MCLibraryViewController.m */; };
+		FAAEF94B189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF94A189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m */; };
+		FAAEF94E189EFC9300145DF8 /* create.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF773189D67B100750E51 /* create.m */; };
+		FAAEF94F189EFC9600145DF8 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
+		FAAEF950189EFC9800145DF8 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
 		FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F6D189D603C00BC829D /* InfoPlist.strings */; };
 		FAC69F71189D603C00BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69F70189D603C00BC829D /* main.m */; };
@@ -116,6 +123,14 @@
 		FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FAAEF8FA189EB41C00145DF8 /* MCCursorLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursorLibrary.h; path = classes/models/MCCursorLibrary.h; sourceTree = "<group>"; };
 		FAAEF8FB189EB41C00145DF8 /* MCCursorLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorLibrary.m; path = classes/models/MCCursorLibrary.m; sourceTree = "<group>"; };
+		FAAEF8FD189EB4BC00145DF8 /* MCCapeCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCapeCellView.h; path = views/MCCapeCellView.h; sourceTree = "<group>"; };
+		FAAEF8FE189EB4BC00145DF8 /* MCCapeCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCapeCellView.m; path = views/MCCapeCellView.m; sourceTree = "<group>"; };
+		FAAEF904189EE28500145DF8 /* MCLibraryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLibraryController.h; path = classes/controllers/MCLibraryController.h; sourceTree = "<group>"; };
+		FAAEF905189EE28500145DF8 /* MCLibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryController.m; path = classes/controllers/MCLibraryController.m; sourceTree = "<group>"; };
+		FAAEF907189EE29100145DF8 /* MCLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLibraryViewController.h; path = classes/controllers/MCLibraryViewController.h; sourceTree = "<group>"; };
+		FAAEF908189EE29100145DF8 /* MCLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryViewController.m; path = classes/controllers/MCLibraryViewController.m; sourceTree = "<group>"; };
+		FAAEF949189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
+		FAAEF94A189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
 		FAC69F61189D603C00BC829D /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC69F64189D603C00BC829D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FAC69F67189D603C00BC829D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -225,6 +240,10 @@
 			children = (
 				FAAEF8E9189EB06F00145DF8 /* MCLibraryWindowController.h */,
 				FAAEF8EA189EB06F00145DF8 /* MCLibraryWindowController.m */,
+				FAAEF907189EE29100145DF8 /* MCLibraryViewController.h */,
+				FAAEF908189EE29100145DF8 /* MCLibraryViewController.m */,
+				FAAEF904189EE28500145DF8 /* MCLibraryController.h */,
+				FAAEF905189EE28500145DF8 /* MCLibraryController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -238,6 +257,25 @@
 				FA54F51F189E0893002A765F /* MCCursor.m */,
 			);
 			name = models;
+			sourceTree = "<group>";
+		};
+		FAAEF900189EB4BF00145DF8 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				FAAEF8FD189EB4BC00145DF8 /* MCCapeCellView.h */,
+				FAAEF8FE189EB4BC00145DF8 /* MCCapeCellView.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		FAAEF948189EE3FB00145DF8 /* categories */ = {
+			isa = PBXGroup;
+			children = (
+				FAAEF949189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.h */,
+				FAAEF94A189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m */,
+			);
+			name = categories;
+			path = classes/categories;
 			sourceTree = "<group>";
 		};
 		FAC69F58189D603C00BC829D = {
@@ -290,11 +328,13 @@
 		FAC69F6A189D603C00BC829D /* Mousecape */ = {
 			isa = PBXGroup;
 			children = (
+				FAAEF948189EE3FB00145DF8 /* categories */,
 				FAAEF8EE189EB32700145DF8 /* external */,
 				FAC69F76189D603C00BC829D /* MCAppDelegate.h */,
 				FAC69F77189D603C00BC829D /* MCAppDelegate.m */,
 				FAAEF8F8189EB40200145DF8 /* controllers */,
 				FAAEF8F9189EB40700145DF8 /* models */,
+				FAAEF900189EB4BF00145DF8 /* views */,
 				FAC69FD7189D623C00BC829D /* Mousecape-Prefix.pch */,
 				FAAEF8EB189EB06F00145DF8 /* Library.xib */,
 				FAC69F79189D603C00BC829D /* MainMenu.xib */,
@@ -555,8 +595,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC69F78189D603C00BC829D /* MCAppDelegate.m in Sources */,
+				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,
+				FAAEF94B189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m in Sources */,
+				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
+				FAAEF906189EE28500145DF8 /* MCLibraryController.m in Sources */,
+				FAAEF909189EE29100145DF8 /* MCLibraryViewController.m in Sources */,
 				FAAEF8FC189EB41C00145DF8 /* MCCursorLibrary.m in Sources */,
 				FAAEF8EC189EB06F00145DF8 /* MCLibraryWindowController.m in Sources */,
+				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
+				FAAEF8FF189EB4BC00145DF8 /* MCCapeCellView.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */,
 				FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */,

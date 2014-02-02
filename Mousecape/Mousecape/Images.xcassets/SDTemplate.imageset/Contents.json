@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "HD-alt.png"
+      "filename" : "SDTemplate.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "HD-alt@2x.png"
+      "filename" : "SDTemplate@2x.png"
     }
   ],
   "info" : {

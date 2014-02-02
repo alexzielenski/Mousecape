@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCLibraryViewController.h"
 
 @interface MCLibraryWindowController : NSWindowController
-
+@property (assign) IBOutlet MCLibraryViewController *libraryViewController;
 @end

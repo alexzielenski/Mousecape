@@ -38,7 +38,9 @@
 
 - (instancetype)initWithContentsOfURL:(NSURL *)URL {
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfURL:URL];
-    return [self initWithDictionary:dictionary];
+    if ((self = [self initWithDictionary:dictionary]))
+        self.fileURL = URL;
+    return self;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
