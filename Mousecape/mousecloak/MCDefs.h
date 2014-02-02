@@ -25,6 +25,7 @@
 
 extern const NSArray *defaultCursors;
 extern NSString *MCErrorDomain;
+extern NSDictionary *cursorNameMap;
 
 extern const CGFloat   MCCursorCreatorVersion;
 extern const CGFloat   MCCursorParserVersion;
@@ -47,6 +48,8 @@ extern const NSString *MCCursorDictionaryHotSpotYKey;
 extern const NSString *MCCursorDictionaryPointsWideKey;
 extern const NSString *MCCursorDictionaryPointsHighKey;
 extern const NSString *MCCursorDictionaryRepresentationsKey;
+
+extern NSString *nameForCursorIdentifier(NSString *identifier);
 
 extern NSDictionary *capeWithIdentifier(NSString *identifier);
 extern void CGImageWriteToFile(CGImageRef image, CFStringRef path);
