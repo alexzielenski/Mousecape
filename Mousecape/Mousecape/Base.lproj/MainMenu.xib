@@ -668,6 +668,7 @@
         </window>
         <customObject id="494" customClass="MCAppDelegate">
             <connections>
+                <outlet property="toggleHelperItem" destination="Ui2-VN-tbP" id="31d-Xd-wNX"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>

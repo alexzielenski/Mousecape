@@ -10,7 +10,7 @@
 
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
 @property (assign) IBOutlet NSWindow *window;
-
+@property (assign) IBOutlet NSMenuItem *toggleHelperItem;
 - (IBAction)toggleInstall:(NSMenuItem *)sender;
 
 @end
