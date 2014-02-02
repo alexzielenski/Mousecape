@@ -8,7 +8,20 @@
 
 #include "MCDefs.h"
 #import "CGSCursor.h"
-NSArray *defaultCursors = nil;
+//NSArray *defaultCursors = nil;
+
+NSString *defaultCursors[] = {
+    @"com.apple.coregraphics.Arrow",
+    @"com.apple.coregraphics.IBeam",
+    @"com.apple.coregraphics.IBeamXOR",
+    @"com.apple.coregraphics.Alias",
+    @"com.apple.coregraphics.Copy",
+    @"com.apple.coregraphics.Move",
+    @"com.apple.coregraphics.ArrowCtx",
+    @"com.apple.coregraphics.Wait",
+    @"com.apple.coregraphics.Empty",
+    nil };
+
 NSString *MCErrorDomain = @"com.alexzielenski.mousecape.error";
 
 const CGFloat   MCCursorCreatorVersion               = 2.0;

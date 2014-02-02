@@ -32,8 +32,11 @@ void resetAllCursors() {
     MMLog("Restoring cursors...");
     
     // Backup main cursors first
-    for (NSString *key in defaultCursors) {
+    NSUInteger i = 0;
+    NSString *key = nil;
+    while ((key = defaultCursors[i]) != nil) {
         restoreCursorForIdentifier(backupStringForIdentifier(key));
+        i++;
     }
 
     // Backup auxiliary cursors

@@ -26,7 +26,8 @@
 #define WHITE   "\033[37m"      /* White */
 #define BOLD    "\033[1m"
 
-extern const NSArray *defaultCursors;
+//extern const NSArray *defaultCursors;
+extern NSString *defaultCursors[];
 extern NSString *MCErrorDomain;
 extern NSDictionary *cursorNameMap;
 

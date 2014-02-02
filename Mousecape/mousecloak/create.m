@@ -251,10 +251,12 @@ void dumpCursorsToFile(NSString *path) {
     CGSHideCursor(CGSMainConnectionID());
     
     NSMutableDictionary *cursors = [NSMutableDictionary dictionary];
-    
-    for (NSString *key in defaultCursors) {
+    NSUInteger i = 0;
+    NSString *key = nil;
+    while ((key = defaultCursors[i]) != nil) {
         MMLog("Gathering data for %s", key.UTF8String);
         cursors[key] = processedCapeWithIdentifier(key);
+        i++;
     }
     
     for (int x = 3; x < 50; x++) {

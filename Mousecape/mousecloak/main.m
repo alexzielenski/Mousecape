@@ -21,18 +21,7 @@
 @end
 
 int main(int argc, char * argv[]) {
-    @autoreleasepool {
-        defaultCursors = @[
-                           @"com.apple.coregraphics.Arrow",
-                           @"com.apple.coregraphics.IBeam",
-                           @"com.apple.coregraphics.IBeamXOR",
-                           @"com.apple.coregraphics.Alias",
-                           @"com.apple.coregraphics.Copy",
-                           @"com.apple.coregraphics.Move",
-                           @"com.apple.coregraphics.ArrowCtx",
-                           @"com.apple.coregraphics.Wait",
-                           @"com.apple.coregraphics.Empty"];
-        
+    @autoreleasepool {        
         GBSettings *settings = [GBSettings settingsWithName:@"mousecape" parent:nil];
         
         GBOptionsHelper *options = [[[GBOptionsHelper alloc] init] autorelease];

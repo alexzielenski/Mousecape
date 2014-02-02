@@ -43,10 +43,12 @@ void backupAllCursors() {
         return;
     }
     // Backup main cursors first
-    for (NSString *key in defaultCursors) {
+    NSUInteger i = 0;
+    NSString *key = nil;
+    while ((key = defaultCursors[i]) != nil) {
         backupCursorForIdentifier(key);
+        i++;
     }
-    
     // no need to backup core cursors
     
 }

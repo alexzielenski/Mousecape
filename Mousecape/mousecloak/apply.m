@@ -80,8 +80,8 @@ BOOL applyCape(NSDictionary *dictionary) {
     NSString *name = dictionary[MCCursorDictionaryCapeNameKey];
     NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
     
-    backupAllCursors();
     resetAllCursors();
+    backupAllCursors();
     
     MMLog("Applying cape: %s %.02f", name.UTF8String, version.floatValue);
     
