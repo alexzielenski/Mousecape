@@ -6,4 +6,6 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import "MCDefs.h"
+    #import "MCPrefs.h"
 #endif
