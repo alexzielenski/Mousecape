@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "MCLibraryWindowController.h"
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
-@property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSMenuItem *toggleHelperItem;
+@property (strong) MCLibraryWindowController *libraryWindowController;
 - (IBAction)toggleInstall:(NSMenuItem *)sender;
 
 @end
