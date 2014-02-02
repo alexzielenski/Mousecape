@@ -8,6 +8,7 @@
 
 #import "create.h"
 #import "backup.h"
+#import "restore.h"
 
 BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
     if (frameCount > 24 || frameCount < 1) {
@@ -80,7 +81,7 @@ BOOL applyCape(NSDictionary *dictionary) {
     NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
     
     backupAllCursors();
-    //    resetAllCursors();
+    resetAllCursors();
     
     MMLog("Applying cape: %s %.02f", name.UTF8String, version.floatValue);
     

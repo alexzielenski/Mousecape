@@ -32,6 +32,7 @@
 		FAAEF94E189EFC9300145DF8 /* create.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF773189D67B100750E51 /* create.m */; };
 		FAAEF94F189EFC9600145DF8 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FAAEF950189EFC9800145DF8 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
+		FAAEF951189F0CC300145DF8 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F6D189D603C00BC829D /* InfoPlist.strings */; };
 		FAC69F71189D603C00BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69F70189D603C00BC829D /* main.m */; };
@@ -600,6 +601,7 @@
 				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
 				FAAEF906189EE28500145DF8 /* MCLibraryController.m in Sources */,
 				FAAEF909189EE29100145DF8 /* MCLibraryViewController.m in Sources */,
+				FAAEF951189F0CC300145DF8 /* restore.m in Sources */,
 				FAAEF8FC189EB41C00145DF8 /* MCCursorLibrary.m in Sources */,
 				FAAEF8EC189EB06F00145DF8 /* MCLibraryWindowController.m in Sources */,
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
