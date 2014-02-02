@@ -9,15 +9,6 @@
 #import "create.h"
 #import "backup.h"
 
-NSString *appliedCapePathForUser(NSString *user) {
-    NSString *home = NSHomeDirectoryForUser(user);
-    NSString *pref = [home stringByAppendingPathComponent:@"Library/Preferences/com.alexzielenski.mousecape.plist"];
-    NSDictionary *preferences = [NSDictionary dictionaryWithContentsOfFile:pref];
-    NSString *ident = [preferences objectForKey:@"MCAppliedCursor"];
-    NSString *appSupport = [home stringByAppendingPathComponent:@"Library/Application Support"];
-    return [[[appSupport stringByAppendingPathComponent:@"Mousecape/capes"] stringByAppendingPathComponent:ident] stringByAppendingPathExtension:@"cape"];
-}
-
 BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
     if (frameCount > 24 || frameCount < 1) {
         MMLog(BOLD RED "Frame count of %s out of range [1...24]", ident.UTF8String);
@@ -107,4 +98,12 @@ BOOL applyCape(NSDictionary *dictionary) {
     MMLog(BOLD GREEN "Applied %s successfully!" RESET, name.UTF8String);
     
     return YES;
+}
+
+BOOL applyCapeAtPath(NSString *path) {
+    NSDictionary *cape = [NSDictionary dictionaryWithContentsOfFile:path];
+    if (cape)
+        return applyCape(cape);
+    MMLog(BOLD RED "Could not find valid file at %s to apply" RESET, path.UTF8String);
+    return NO;
 }

@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
-
 @property (assign) IBOutlet NSWindow *window;
+
+- (IBAction)toggleInstall:(NSMenuItem *)sender;
 
 @end

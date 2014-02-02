@@ -10,6 +10,7 @@
 #import "backup.h"
 #import "apply.h"
 #import "create.h"
+#import "listen.h"
 
 #import <GBCli/GBSettings.h>
 #import <GBCli/GBOptionsHelper.h>
@@ -70,6 +71,7 @@ int main(int argc, char * argv[]) {
         [options registerOption:'o' long:@"output" description:@"Use this option to tell where an output file goes. (For convert and create)" flags:GBValueRequired];
         [options registerOption:0 long:@"suppressCopyright" description:@"Suppress Copyright info" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
         [options registerOption:'s' long:@"scale" description:@"Scale the cursor to obscene multipliers or get the current scale" flags:GBValueOptional];
+        [options registerOption:0 long:@"listen" description:@"Keep mousecloak alive to apply the current Cape every user switch" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
         
         options.applicationName = ^{ return @"mousecloak"; };
         options.applicationVersion = ^{ return @"2.0"; };
@@ -120,6 +122,7 @@ int main(int argc, char * argv[]) {
         BOOL create  = [settings isKeyPresentAtThisLevel:@"create"];
         BOOL dump    = [settings isKeyPresentAtThisLevel:@"dump"];
         BOOL scale   = [settings isKeyPresentAtThisLevel:@"scale"];
+        BOOL listen  = [settings isKeyPresentAtThisLevel:@"listen"];
         int amt = 0;
         
         if (convert) amt++;
@@ -127,33 +130,20 @@ int main(int argc, char * argv[]) {
         if (create) amt++;
         if (dump) amt++;
         if (scale) amt++;
+        if (listen) amt++;
         
         if (amt > 1) {
-            printf(BOLD RED "One command at a time, son!" RESET);
+            MMLog(BOLD RED "One command at a time, son!" RESET);
             
             if (!suppressCopyright)
                 [options replacePlaceholdersAndPrintStringFromBlock:options.printHelpFooter];
             return 0;
         }
         
-        NSFileManager *manager = [NSFileManager defaultManager];
-        
         if (apply) {
             // Apply a cape at a given path
-            NSString *path = [settings objectForKey:@"apply"];
-            NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-            
-            BOOL isDir = NO;
-            BOOL fileExists = [manager fileExistsAtPath:path];
-            
-            if (!fileExists || isDir) {
-                MMLog(BOLD RED "Invalid cursor file or bad path given: %s" RESET, path.UTF8String);
-                goto fin;
-            }
-            
-            if (dict)
-                applyCape(dict);
-            
+            applyCapeAtPath([settings objectForKey:@"apply"]);
+            goto fin;
         } else if (create || convert) {
             NSError *error  = nil;
             NSString *input = create ? [settings objectForKey:@"create"] : [settings objectForKey:@"convert"];
@@ -190,6 +180,9 @@ int main(int argc, char * argv[]) {
                     MMLog("Somehow failed to set cursor scale!");
                 }
             }
+            goto fin;
+        } else if (listen) {
+            listener();
             goto fin;
         }
         fin: {

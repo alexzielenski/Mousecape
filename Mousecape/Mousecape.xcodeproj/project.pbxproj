@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA25477A189D85890038E1D9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA254779189D85890038E1D9 /* ApplicationServices.framework */; };
 		FA35983C189D8F5400288163 /* MCCursorLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983B189D8F5400288163 /* MCCursorLibrary.m */; };
 		FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
 		FA359840189DA3C100288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA359849189DC40100288163 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359848189DC40100288163 /* Security.framework */; };
+		FA35984B189DC48800288163 /* mousecloak in Copy Tools */ = {isa = PBXBuildFile; fileRef = FAC69FAD189D608900BC829D /* mousecloak */; };
+		FA35984D189DC55A00288163 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA35984C189DC55A00288163 /* ServiceManagement.framework */; };
+		FA359852189E035900288163 /* listen.m in Sources */ = {isa = PBXBuildFile; fileRef = FA359851189E035900288163 /* listen.m */; };
+		FA359853189E040D00288163 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359844189DBA3800288163 /* SystemConfiguration.framework */; };
+		FA54F520189E0893002A765F /* MCCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = FA54F51F189E0893002A765F /* MCCursor.m */; };
 		FA8FF76B189D664400750E51 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FA8FF771189D66D800750E51 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
@@ -37,6 +42,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FA359846189DBEB700288163 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAC69F59189D603C00BC829D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAC69FAC189D608900BC829D;
+			remoteInfo = mousecloak;
+		};
 		FAC69F86189D603C00BC829D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAC69F59189D603C00BC829D /* Project object */;
@@ -47,6 +59,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		FA35984A189DC47800288163 /* Copy Tools */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				FA35984B189DC48800288163 /* mousecloak in Copy Tools */,
+			);
+			name = "Copy Tools";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAC69FAB189D608900BC829D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -65,6 +88,13 @@
 		FA35983B189D8F5400288163 /* MCCursorLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursorLibrary.m; path = classes/controllers/MCCursorLibrary.m; sourceTree = "<group>"; };
 		FA35983D189DA3BC00288163 /* MCPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPrefs.h; sourceTree = "<group>"; };
 		FA35983E189DA3BC00288163 /* MCPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPrefs.m; sourceTree = "<group>"; };
+		FA359844189DBA3800288163 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FA359848189DC40100288163 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FA35984C189DC55A00288163 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		FA359850189E035200288163 /* listen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = listen.h; sourceTree = "<group>"; };
+		FA359851189E035900288163 /* listen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listen.m; sourceTree = "<group>"; };
+		FA54F51E189E0893002A765F /* MCCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCursor.h; path = classes/models/MCCursor.h; sourceTree = "<group>"; };
+		FA54F51F189E0893002A765F /* MCCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCursor.m; path = classes/models/MCCursor.m; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
 		FA8FF76C189D66C400750E51 /* backup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = backup.h; sourceTree = "<group>"; };
@@ -130,6 +160,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA35984D189DC55A00288163 /* ServiceManagement.framework in Frameworks */,
+				FA359849189DC40100288163 /* Security.framework in Frameworks */,
 				FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA25477A189D85890038E1D9 /* ApplicationServices.framework in Frameworks */,
+				FA359853189E040D00288163 /* SystemConfiguration.framework in Frameworks */,
 				FAC69FDA189D632B00BC829D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +211,9 @@
 		FAC69F63189D603C00BC829D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA35984C189DC55A00288163 /* ServiceManagement.framework */,
+				FA359848189DC40100288163 /* Security.framework */,
+				FA359844189DBA3800288163 /* SystemConfiguration.framework */,
 				FA254779189D85890038E1D9 /* ApplicationServices.framework */,
 				FAC69F64189D603C00BC829D /* Cocoa.framework */,
 				FAC69F83189D603C00BC829D /* XCTest.framework */,
@@ -205,6 +240,8 @@
 				FAC69F77189D603C00BC829D /* MCAppDelegate.m */,
 				FA35983A189D8F5400288163 /* MCCursorLibrary.h */,
 				FA35983B189D8F5400288163 /* MCCursorLibrary.m */,
+				FA54F51E189E0893002A765F /* MCCursor.h */,
+				FA54F51F189E0893002A765F /* MCCursor.m */,
 				FAC69FD7189D623C00BC829D /* Mousecape-Prefix.pch */,
 				FAC69F79189D603C00BC829D /* MainMenu.xib */,
 				FAC69F7C189D603C00BC829D /* Images.xcassets */,
@@ -261,6 +298,8 @@
 				FA8FF770189D66D800750E51 /* apply.m */,
 				FA8FF772189D67AA00750E51 /* create.h */,
 				FA8FF773189D67B100750E51 /* create.m */,
+				FA359850189E035200288163 /* listen.h */,
+				FA359851189E035900288163 /* listen.m */,
 				FAC69FCB189D609B00BC829D /* NSCursor_Private.h */,
 				FAC69FB4189D608900BC829D /* mousecloak.1 */,
 				FAC69FB2189D608900BC829D /* Supporting Files */,
@@ -331,10 +370,12 @@
 				FAC69F5F189D603C00BC829D /* Resources */,
 				FAC69F5E189D603C00BC829D /* Frameworks */,
 				FA359841189DAAF900288163 /* Build Number */,
+				FA35984A189DC47800288163 /* Copy Tools */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FA359847189DBEB700288163 /* PBXTargetDependency */,
 			);
 			name = Mousecape;
 			productName = Mousecape;
@@ -461,6 +502,7 @@
 				FAC69F78189D603C00BC829D /* MCAppDelegate.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
+				FA54F520189E0893002A765F /* MCCursor.m in Sources */,
 				FA35983C189D8F5400288163 /* MCCursorLibrary.m in Sources */,
 				FA359840189DA3C100288163 /* MCPrefs.m in Sources */,
 			);
@@ -481,6 +523,7 @@
 				FAC69FB1189D608900BC829D /* main.m in Sources */,
 				FA8FF76E189D66CB00750E51 /* backup.m in Sources */,
 				FAC69FD6189D609B00BC829D /* GBSettings.m in Sources */,
+				FA359852189E035900288163 /* listen.m in Sources */,
 				FAC69FD5189D609B00BC829D /* GBOptionsHelper.m in Sources */,
 				FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */,
 				FA8FF76B189D664400750E51 /* restore.m in Sources */,
@@ -494,6 +537,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FA359847189DBEB700288163 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAC69FAC189D608900BC829D /* mousecloak */;
+			targetProxy = FA359846189DBEB700288163 /* PBXContainerItemProxy */;
+		};
 		FAC69F87189D603C00BC829D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FAC69F60189D603C00BC829D /* Mousecape */;
@@ -568,7 +616,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx10.8;
 			};
@@ -600,7 +648,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx10.8;
 			};
 			name = Release;
@@ -614,9 +662,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -630,9 +676,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mousecape/Mousecape-Prefix.pch";
 				INFOPLIST_FILE = "Mousecape/Mousecape-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -681,6 +725,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mousecloak/mousecloak-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -700,6 +745,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mousecloak/mousecloak-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
