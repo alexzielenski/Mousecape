@@ -9,8 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "MCCursorLibrary.h"
 
-#define MACRO_NAME(f) #f
-
 @interface MousecapeTests : XCTestCase
 @property (strong) MCCursorLibrary *library;
 @end
@@ -22,7 +20,6 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.library = [MCCursorLibrary cursorLibraryWithContentsOfFile:[@(PROJECT_DIR) stringByAppendingPathComponent: @"com.maxrudberg.svanslosbluehazard.cape"]];
-//    NSLog(@"%s", MACRO_NAME(PROJECT_DIR));
 }
 
 - (void)tearDown
