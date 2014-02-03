@@ -26,6 +26,12 @@ static AuthorizationRef obtainRights();
     [self.libraryWindowController showWindow:self];
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    if (!flag)
+        [self.libraryWindowController showWindow:sender];
+    return !flag;
+}
+
 - (void)configureHelperToolMenuItem {
     NSString *mouseCloakDest = @"/usr/local/bin/mousecloak";
     NSString *agentDest = [@"/Library/LaunchAgents" stringByAppendingPathComponent: @"com.alexzielenski.mousecloak.listener.plist"];
