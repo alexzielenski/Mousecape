@@ -31,6 +31,10 @@
     return self;
 }
 
+- (void)dealloc {
+    [self.libraryController removeObserver:self forKeyPath:@"appliedCape"];
+}
+
 - (void)awakeFromNib {
     self.tableView.doubleAction = @selector(doubleClick:);
 }
@@ -40,8 +44,7 @@
     [self setRepresentedObject:self.libraryController];
     [self.tableView reloadData];
     
-//    [self.libraryController addObserver:self forKeyPath:NSStringFromSelector(@selector(capes)) options:0 context:NULL];
-    [self.libraryController  addObserver:self forKeyPath:NSStringFromSelector(@selector(appliedCape)) options:0 context:NULL];
+    [self.libraryController addObserver:self forKeyPath:NSStringFromSelector(@selector(appliedCape)) options:0 context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -90,7 +93,6 @@
 }
 
 - (void)removeCape:(MCCursorLibrary *)library {
-    //!TODO: Prompt user if he/she is sure
     if (NSRunAlertPanel(@"Warning", @"This operation cannot be undone. Continue?", @"Yeah", @"Nope", nil) == NSOKButton) {
         [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:library]] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
         [self.libraryController removeCape:library];

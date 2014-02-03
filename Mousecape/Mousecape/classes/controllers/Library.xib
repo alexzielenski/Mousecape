@@ -14,9 +14,8 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Mousecape" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
+        <window title="Mousecape" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" frameAutosaveName="LibraryWindow" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="711" height="311"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="502" height="310"/>
@@ -169,8 +168,7 @@ DQ
                         <action selector="editAction:" target="zL4-Ay-t4Q" id="R94-y0-i5l"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Duplicate" tag="2" keyEquivalent="e" id="PhG-Ll-nqz">
-                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                <menuItem title="Duplicate" tag="2" keyEquivalent="S" id="PhG-Ll-nqz">
                     <connections>
                         <action selector="duplicateAction:" target="zL4-Ay-t4Q" id="dYH-lp-gER"/>
                     </connections>
