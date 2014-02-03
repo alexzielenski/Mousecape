@@ -69,7 +69,7 @@ static AuthorizationRef obtainRights();
         SMJobSubmit(kSMDomainSystemLaunchd, (__bridge CFDictionaryRef)copyTool, authRef, NULL);
         SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)copyTool[@"Label"], authRef, true, NULL);
         
-        NSDictionary *launchAgent = @{ @"Label": @"com.alexzielenski.mousecloak.listener", @"ProgramArguments": @[ mouseCloakDest, @"--listen" ], @"LimitLoadToSessionType": @[ @"LoginWindow", @"Aqua" ], @"RunAtLoad": @YES, @"KeepAlive": @YES };
+        NSDictionary *launchAgent = @{ @"Label": @"com.alexzielenski.mousecloak.listener", @"ProgramArguments": @[ mouseCloakDest, @"--listen" ], @"LimitLoadToSessionType": @[ @"Aqua" ], @"RunAtLoad": @YES, @"KeepAlive": @YES };
         [launchAgent writeToFile:agentPath atomically:NO];
         
         NSDictionary *copyJob = @{ @"Label": @"com.alexzielenski.mousecloak.install2", @"ProgramArguments": @[ @"/bin/cp", @"-f", agentPath, agentDest ], @"RunAtLoad": @YES };
