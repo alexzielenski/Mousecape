@@ -113,11 +113,12 @@ static AuthorizationRef obtainRights();
     panel.message = @"Choose a MightyMouse file to import";
     panel.prompt = @"Import";
     if ([panel runModal] == NSFileHandlingPanelOKButton) {
+        NSString *name = panel.URL.lastPathComponent.stringByDeletingPathExtension;
         NSDictionary *metadata = @{
-                                   @"name": panel.URL.lastPathComponent.stringByDeletingPathExtension,
+                                   @"name": name,
                                    @"version": @1.0,
                                    @"author": @"Unknown",
-                                   @"identifier": [NSString stringWithFormat:@"local.import.MightyMouse.%f", [NSDate timeIntervalSinceReferenceDate]]
+                                   @"identifier": [NSString stringWithFormat:@"local.import.%@.%f", name, [NSDate timeIntervalSinceReferenceDate]]
                                    };
         
         NSDictionary *cape = createCapeFromMightyMouse([NSDictionary dictionaryWithContentsOfURL:panel.URL], metadata);
