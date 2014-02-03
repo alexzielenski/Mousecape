@@ -15,6 +15,7 @@
 @interface MCLibraryController ()
 @property (nonatomic, retain) NSMutableOrderedSet *capes;
 @property (readwrite, copy) NSURL *libraryURL;
+@property (readwrite, weak) MCCursorLibrary *appliedCape;
 + (NSArray *)sortDescriptors;
 - (void)loadLibrary;
 @end
@@ -112,8 +113,10 @@
 }
 
 - (void)applyCape:(MCCursorLibrary *)cape {
-    if (applyCapeAtPath(cape.fileURL.path))
+    if (applyCapeAtPath(cape.fileURL.path)) {
         self.appliedCape = cape;
+        [[NSUserDefaults standardUserDefaults] setObject:cape.identifier forKey:MCPreferencesAppliedCursorKey];
+    }
 }
 
 - (void)restoreCape {

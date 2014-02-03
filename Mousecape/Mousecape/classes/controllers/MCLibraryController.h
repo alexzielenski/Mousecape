@@ -22,7 +22,7 @@
 @end
 
 @interface MCLibraryController : NSObject
-@property (weak) MCCursorLibrary *appliedCape;
+@property (readonly, weak) MCCursorLibrary *appliedCape;
 @property (weak) id <MCLibraryDelegate> delegate;
 @property (readonly, copy) NSURL *libraryURL;
 
