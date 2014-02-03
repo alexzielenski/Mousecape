@@ -19,11 +19,12 @@ typedef NS_ENUM(NSUInteger, MCCursorScale) {
 extern MCCursorScale cursorScaleForScale(CGFloat scale);
 
 @interface MCCursor : NSObject <NSCopying>
-@property (nonatomic, copy)   NSString          *name;
-@property (nonatomic, assign) CGFloat           frameDuration;
-@property (nonatomic, assign) NSUInteger        frameCount;
-@property (nonatomic, assign) NSSize            size;
-@property (nonatomic, assign) NSPoint           hotSpot;
+@property (nonatomic, copy)     NSString          *identifier;
+@property (nonatomic, readonly) NSString          *name;
+@property (nonatomic, assign)   CGFloat           frameDuration;
+@property (nonatomic, assign)   NSUInteger        frameCount;
+@property (nonatomic, assign)   NSSize            size;
+@property (nonatomic, assign)   NSPoint           hotSpot;
 //@property (assign) NSUInteger        repeatCount; // v2.01
 
 // creating a cursor from a dictionary

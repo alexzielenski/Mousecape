@@ -9,7 +9,7 @@
 #import "MCCursorLibrary.h"
 
 @interface MCCursorLibrary ()
-@property (nonatomic, readwrite, strong) NSMutableDictionary *cursors;
+@property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
 @end
@@ -28,7 +28,7 @@
     return [[MCCursorLibrary alloc] initWithDictionary:dictionary];
 }
 
-+ (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)cursors {
++ (MCCursorLibrary *)cursorLibraryWithCursors:(NSSet *)cursors {
     return [[MCCursorLibrary alloc] initWithCursors:cursors];
 }
 
@@ -52,7 +52,7 @@
     return self;
 }
 
-- (instancetype)initWithCursors:(NSDictionary *)cursors {
+- (instancetype)initWithCursors:(NSSet *)cursors {
     if ((self = [self init])) {
         self.cursors = cursors.mutableCopy;
     }
@@ -68,18 +68,14 @@
         self.inCloud = NO;
         self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
         self.version = @1.0;
-        self.cursors = [NSMutableDictionary dictionary];
+        self.cursors = [NSMutableSet set];
     }
     
     return self;
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-    MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
-    
-    for (NSString *identifier in self.cursors) {
-        [lib setCursor:[self cursorWithIdentifier:identifier].copy forIdentifier:identifier];
-    }
+    MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] initWithCursors:self.cursors];
     
     lib.name             = self.name;
     lib.author           = self.author;
@@ -134,42 +130,34 @@
     for (NSString *key in cursorDicts.allKeys) {
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
         MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
-        [self setCursor:cursor forIdentifier:key];
+        cursor.identifier = key;
+        [self addCursor: cursor];
     }
 }
 
 
-- (MCCursor *)cursorWithIdentifier:(NSString *)identifier {
-    return self.cursors[identifier];
+- (NSSet *)cursorsWithIdentifier:(NSString *)identifier {
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"identififer == %@", identifier];
+    return [self.cursors filteredSetUsingPredicate:filter];
 }
 
-- (void)setCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier {
-    NSAssert(identifier != nil, @"Cannot set %@ for a NULL identifier", cursor);
-    [self willChangeValueForKey:@"cursors"];
-    MCCursor *original = [self cursorWithIdentifier:identifier];
-    if (original)
-        original.name = @"";
-    
-    if (cursor) {
-        self.cursors[identifier] = cursor;
-        cursor.name = nameForCursorIdentifier(identifier);
-    } else
-        [self.cursors removeObjectForKey:identifier];
-    
-    [self didChangeValueForKey:@"cursors"];
+- (void)addCursor:(MCCursor *)cursor {
+    NSSet *change = [NSSet setWithObject:cursor];
+    [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+    [self.cursors addObject:cursor];
+    [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
 }
 
-- (void)removeCursorForIdentififer:(NSString *)identifier {
-    [self setCursor:nil forIdentifier:identifier];
+- (void)removeCursor:(MCCursor *)cursor {
+    NSSet *change = [NSSet setWithObject:cursor];
+    [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
+    [self.cursors removeObject:cursor];
+    [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
 }
 
-- (void)moveCursorAtIdentifier:(NSString *)from toIdentifier:(NSString *)to {
-    __strong MCCursor *cursor = [self cursorWithIdentifier:from];
-    if (!cursor)
-        return;
-    [self removeCursorForIdentififer:from];
-    [self setCursor:cursor forIdentifier:to];
-    cursor = nil;
+- (void)removeCursorsWithIdentifier:(NSString *)identifier {
+  for (MCCursor *cursor in [self cursorsWithIdentifier:identifier])
+      [self removeCursor: cursor];
 }
 
 - (NSDictionary *)dictionaryRepresentation {
@@ -185,9 +173,8 @@
     drep[MCCursorDictionaryIdentifierKey]     = self.identifier;
     
     NSMutableDictionary *cursors = [NSMutableDictionary dictionary];
-    for (NSString *identifier in self.cursors) {
-        MCCursor *cursor = self.cursors[identifier];
-        cursors[identifier] = [cursor dictionaryRepresentation];
+    for (MCCursor *cursor in self.cursors) {
+        cursors[cursor.identifier] = [cursor dictionaryRepresentation];
     }
     
     drep[MCCursorDictionaryCursorsKey] = cursors;
@@ -210,7 +197,7 @@
             [object.version isEqualToNumber:self.version] &&
             object.inCloud == self.inCloud &&
             object.isHiDPI == self.isHiDPI &&
-            [object.cursors isEqualToDictionary:self.cursors]);
+            [object.cursors isEqualToSet:self.cursors]);
 }
 
 - (BOOL)isEqual:(id)object {

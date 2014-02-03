@@ -21,6 +21,8 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 @end
 
 @implementation MCCursor
+@dynamic name;
+
 + (MCCursor *)cursorWithDictionary:(NSDictionary *)dict ofVersion:(CGFloat)version {
     return [[self alloc] initWithCursorDictionary:dict ofVersion:version];
 }
@@ -55,7 +57,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     cursor.size            = self.size;
     cursor.representations = self.representations.mutableCopy;
     cursor.hotSpot         = self.hotSpot;
-    cursor.name            = self.name;
+    cursor.identifier      = self.identifier;
     
     return cursor;
 }
@@ -66,6 +68,8 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     
     if ([key isEqualToString:@"imageWithAllReps"]) {
         keyPaths = [keyPaths setByAddingObjectsFromArray:@[ @"representations" ]];
+    } else if ([key isEqualToString:@"name"]) {
+        keyPaths =[keyPaths setByAddingObjectsFromArray:@[ @"identifier" ]];
     }
     return keyPaths;
 }
@@ -183,6 +187,10 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     image.matchesOnMultipleResolution  = YES;
     [image addRepresentations:self.representations.allValues];
     return image;
+}
+
+- (NSString *)name {
+    return nameForCursorIdentifier(self.identifier);
 }
 
 - (BOOL)isEqualTo:(MCCursor *)object {

@@ -21,17 +21,17 @@
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path;
 + (MCCursorLibrary *)cursorLibraryWithContentsOfURL:(NSURL *)URL;
 + (MCCursorLibrary *)cursorLibraryWithDictionary:(NSDictionary *)dictionary;
-+ (MCCursorLibrary *)cursorLibraryWithCursors:(NSDictionary *)cursors;
++ (MCCursorLibrary *)cursorLibraryWithCursors:(NSSet *)cursors;
 
 - (instancetype)initWithContentsOfFile:(NSString *)path;
 - (instancetype)initWithContentsOfURL:(NSURL *)URL;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (instancetype)initWithCursors:(NSDictionary *)cursors;
+- (instancetype)initWithCursors:(NSSet *)cursors;
 
-- (MCCursor *)cursorWithIdentifier:(NSString *)identifier;
-- (void)setCursor:(MCCursor *)cursor forIdentifier:(NSString *)identifier;
-- (void)removeCursorForIdentififer:(NSString *)identifier;
-- (void)moveCursorAtIdentifier:(NSString *)from toIdentifier:(NSString *)to;
+- (NSSet *)cursorsWithIdentifier:(NSString *)identifier;
+- (void)addCursor:(MCCursor *)cursor;
+- (void)removeCursor:(MCCursor *)cursor;
+- (void)removeCursorsWithIdentifier:(NSString *)identifier;
 
 - (NSDictionary *)dictionaryRepresentation;
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
@@ -39,5 +39,5 @@
 @end
 
 @interface MCCursorLibrary (Properties)
-@property (nonatomic, readonly, strong) NSDictionary *cursors;
+@property (nonatomic, readonly, strong) NSSet *cursors;
 @end
