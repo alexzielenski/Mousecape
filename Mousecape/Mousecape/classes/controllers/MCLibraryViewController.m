@@ -138,6 +138,7 @@
     // Move the file to the trash
     NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent] isDirectory:NO];
 
+    [[NSFileManager defaultManager] removeItemAtURL:destinationURL error:NULL];
     [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:destinationURL error:NULL];
     
     [self.view.window.undoManager setActionName:[@"Remove " stringByAppendingString:library.name]];
