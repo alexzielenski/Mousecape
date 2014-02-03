@@ -116,18 +116,33 @@
 }
 
 - (BOOL)libraryController:(MCLibraryController *)controller shouldRemoveCape:(MCCursorLibrary *)library {
-    [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]] withAnimation:NSTableViewAnimationEffectFade | NSTableViewAnimationSlideUp];
+    NSUInteger index = [controller.capes indexOfObject:library];
+    [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectFade | NSTableViewAnimationSlideUp];
+    if (index >= controller.capes.count)
+        index = self.tableView.numberOfRows - 1;
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
     return YES;
 }
 
 - (void)libraryController:(MCLibraryController *)controller didAddCape:(MCCursorLibrary *)library {
-    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]] withAnimation: NSTableViewAnimationSlideUp];
+    NSIndexSet *indices = [NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]];
+    [self.tableView insertRowsAtIndexes:indices withAnimation: NSTableViewAnimationSlideUp];
+    
+    [self.tableView selectRowIndexes:indices byExtendingSelection:NO];
+    
+    [self.view.window.undoManager setActionName:[@"Add " stringByAppendingString:library.name]];
+    [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] removeCape:library];
 }
 
 - (void)libraryController:(MCLibraryController *)controller didRemoveCape:(MCCursorLibrary *)library {
     // Move the file to the trash
-    NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent]];
+    NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent] isDirectory:NO];
+
     [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:destinationURL error:NULL];
+    
+    [self.view.window.undoManager setActionName:[@"Remove " stringByAppendingString:library.name]];
+    [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] importCapeAtURL:destinationURL];
+    
 }
 
 #pragma mark - NSTableViewDelegate
