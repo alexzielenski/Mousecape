@@ -42,6 +42,9 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"cursorLibrary"]) {
         [(NSTableView *)self.view reloadData];
+        
+        // make sure the selected object is set
+        [self tableViewSelectionDidChange:nil];
     }
 }
 
@@ -65,6 +68,14 @@
     return 22.0;
 }
 
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    NSView *view;
+    if (row == 0)
+        view = [tableView makeViewWithIdentifier:@"MCCursorLibrary" owner:self];
+    else
+        view = [tableView makeViewWithIdentifier:@"MCCursor" owner:self];
+    return view;
+}
 
 #pragma mark - NSTableViewDataSource
 
@@ -74,8 +85,8 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (row == 0)
-        return self.cursorLibrary.name;
-    return [[[self.arrayController arrangedObjects] objectAtIndex: row - 1] name];
+        return self.cursorLibrary;
+    return [[self.arrayController arrangedObjects] objectAtIndex: row - 1];
 }
 
 @end

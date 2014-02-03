@@ -28,9 +28,7 @@
 }
 
 - (void)windowDidLoad {
-    [super windowDidLoad];
-    NSLog(@"window did load");
-    
+    [super windowDidLoad];    
     [self.editListController addObserver:self forKeyPath:@"selectedObject" options:0 context:nil];
     [self _setCurrentViewController:self.editCapeController];
 }
@@ -63,8 +61,15 @@
         return;
     
     [self.detailView setSubviews:@[]];
-    NSRect frame  = self.detailView.frame;
+    [self.detailView removeConstraints:self.detailView.constraints];
+    
+    NSRect frame  = self.detailView.bounds;
     vc.view.frame = frame;
+    
+    // Fill superview with subview
+    [vc.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [vc.view setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable | NSViewMinYMargin | NSViewMinXMargin];
+    
     [self.detailView addSubview:vc.view];
 }
 
