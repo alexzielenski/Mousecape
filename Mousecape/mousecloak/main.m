@@ -11,6 +11,7 @@
 #import "apply.h"
 #import "create.h"
 #import "listen.h"
+#import "scale.h"
 
 #import <GBCli/GBSettings.h>
 #import <GBCli/GBOptionsHelper.h>
@@ -152,22 +153,10 @@ int main(int argc, char * argv[]) {
             NSNumber *number = [settings objectForKey:@"scale"];
             
             if (argc == 2) {
-                
-                float value;
-                CGSGetCursorScale(CGSMainConnectionID(), &value);
-                
-                MMLog("%f", value);
-                
+                MMLog("%f", cursorScale());
             } else {
                 float dbl = number.floatValue;
-                
-                if (dbl > 32) {
-                    MMLog("Not a good idea...");
-                } else if (CGSSetCursorScale(CGSMainConnectionID(), dbl) == noErr) {
-                    MMLog("Successfully set cursor scale!");
-                } else {
-                    MMLog("Somehow failed to set cursor scale!");
-                }
+                setCursorScale(dbl);
             }
             goto fin;
         } else if (listen) {
