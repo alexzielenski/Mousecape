@@ -81,11 +81,6 @@
     return [[self.tableView viewAtColumn:0 row:self.tableView.clickedRow makeIfNecessary:NO] objectValue];
 }
 
-- (void)newCape:(id)sender {
-    MCCursorLibrary *lib = [[MCCursorLibrary alloc] init];
-    [self.libraryController importCape:lib];
-}
-
 - (void)editCape:(MCCursorLibrary *)library {
     NSLog(@"edit %@", library);
 }

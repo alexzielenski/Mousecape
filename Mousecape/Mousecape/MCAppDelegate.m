@@ -130,11 +130,18 @@ static AuthorizationRef obtainRights();
 // File Menu
 
 - (IBAction)newCape:(id)sender {
-    [self.libraryWindowController.libraryViewController newCape:sender];
+    [self.libraryWindowController.libraryViewController.libraryController importCape:[[MCCursorLibrary alloc] init]];
 }
 
 - (IBAction)importCape:(id)sender {
-    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.allowedFileTypes = @[ @"cape" ];
+    panel.title = @"Import";
+    panel.message = @"Choose a Mousecape to import";
+    panel.prompt = @"Import";
+    if ([panel runModal] == NSFileHandlingPanelOKButton) {
+        [self.libraryWindowController.libraryViewController.libraryController importCapeAtURL:panel.URL];
+    }
 }
 
 - (IBAction)duplicateCape:(id)sender {
