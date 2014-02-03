@@ -9,6 +9,7 @@
 #import "create.h"
 #import "backup.h"
 #import "restore.h"
+#import "MCPrefs.h"
 
 BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
     if (frameCount > 24 || frameCount < 1) {
@@ -95,6 +96,8 @@ BOOL applyCape(NSDictionary *dictionary) {
             return NO;
         }
     }
+    
+    MCSetDefault(dictionary[MCCursorDictionaryIdentifierKey], MCPreferencesAppliedCursorKey);
     
     MMLog(BOLD GREEN "Applied %s successfully!" RESET, name.UTF8String);
     

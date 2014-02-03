@@ -8,6 +8,7 @@
 
 #import "backup.h"
 #import "apply.h"
+#import "MCPrefs.h"
 
 NSString *restoreStringForIdentifier(NSString *identifier) {
     return [identifier substringFromIndex:28];
@@ -42,6 +43,7 @@ void resetAllCursors() {
     // Backup auxiliary cursors
     MMLog("Restoring core cursors...");
     if (CoreCursorUnregisterAll(CGSMainConnectionID()) == 0) {
+        MCSetDefault(NULL, MCPreferencesAppliedCursorKey);
         MMLog(BOLD GREEN "Successfully restored all cursors." RESET);
     } else
         MMLog(BOLD RED "Received an error while restoring core cursors." RESET);

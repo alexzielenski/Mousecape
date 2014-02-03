@@ -17,7 +17,6 @@
 - (MCCursorLibrary *)selectedCape;
 - (MCCursorLibrary *)clickedCape;
 
-- (void)newCape:(id)sender;
 - (void)editCape:(MCCursorLibrary *)library;
 
 - (IBAction)applyAction:(NSMenuItem *)sender;

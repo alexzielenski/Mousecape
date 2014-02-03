@@ -51,7 +51,7 @@
     NSString *capesPath = self.libraryURL.path;
     NSArray  *contents  = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:capesPath error:NULL];
     NSString *applied   = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
-    
+
     for (NSString *filename in contents) {
         NSURL *fileURL = [NSURL fileURLWithPathComponents:@[ capesPath, filename ]];
         MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfURL:fileURL];
@@ -115,7 +115,6 @@
 - (void)applyCape:(MCCursorLibrary *)cape {
     if (applyCapeAtPath(cape.fileURL.path)) {
         self.appliedCape = cape;
-        [[NSUserDefaults standardUserDefaults] setObject:cape.identifier forKey:MCPreferencesAppliedCursorKey];
     }
 }
 
