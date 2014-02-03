@@ -94,8 +94,7 @@
     if (NSRunAlertPanel(@"Warning", @"This operation cannot be undone. Continue?", @"Yeah", @"Nope", nil) == NSOKButton) {
         [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:library]] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
         [self.libraryController removeCape:library];
-        [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:[NSURL fileURLWithPath:[@"~/.Trash" stringByExpandingTildeInPath] isDirectory:YES] error:NULL];
-//        [[NSFileManager defaultManager] removeItemAtURL:library.fileURL error:nil];
+        [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:[NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent] isDirectory:YES] error:NULL];
     }
 }
 
