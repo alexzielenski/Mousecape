@@ -9,8 +9,10 @@
 #import "MCLibraryViewController.h"
 #import "MCCapeCellView.h"
 #import "NSFileManager+DirectoryLocations.h"
+#import "MCEditWindowController.h"
 
 @interface MCLibraryViewController ()
+@property (strong) MCEditWindowController *editWindowController;
 - (void)setupEnvironment;
 - (void)doubleClick:(id)sender;
 + (NSString *)capesPath;
@@ -82,7 +84,15 @@
 }
 
 - (void)editCape:(MCCursorLibrary *)library {
-    NSLog(@"edit %@", library);
+    if (!library)
+        return;
+    
+    if (!self.editWindowController) {
+        self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"Edit"];
+        [self.editWindowController loadWindow];
+    }
+    self.editWindowController.editListController.cursorLibrary = library;
+    [self.editWindowController showWindow:self];
 }
 
 #pragma mark - Context Menu

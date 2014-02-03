@@ -23,14 +23,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="76" horizontalPageScroll="10" verticalLineScroll="76" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
+                    <scrollView canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="29" horizontalPageScroll="10" verticalLineScroll="29" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="VhH-tn-4Sf" customClass="BTRClipView">
                             <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="64" rowSizeStyle="automatic" viewBased="YES" id="dPn-85-uPK">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" id="dPn-85-uPK">
                                     <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="12"/>

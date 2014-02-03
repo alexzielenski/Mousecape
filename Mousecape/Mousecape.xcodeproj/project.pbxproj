@@ -59,6 +59,7 @@
 		FAC69FDA189D632B00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69FDC189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAC69FDD189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
+		FAFD62DB189FE638006AC9DC /* MCEditCapeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFD62DA189FE638006AC9DC /* MCEditCapeController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,8 @@
 		FAC69FD3189D609B00BC829D /* GBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSettings.m; sourceTree = "<group>"; };
 		FAC69FD7189D623C00BC829D /* Mousecape-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mousecape-Prefix.pch"; sourceTree = "<group>"; };
 		FAC69FDB189D636700BC829D /* MCDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCDefs.m; sourceTree = "<group>"; };
+		FAFD62D9189FE638006AC9DC /* MCEditCapeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditCapeController.h; path = classes/controllers/MCEditCapeController.h; sourceTree = "<group>"; };
+		FAFD62DA189FE638006AC9DC /* MCEditCapeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditCapeController.m; path = classes/controllers/MCEditCapeController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +272,8 @@
 				FA04886F189F5954001F3AB5 /* MCEditListController.m */,
 				FA048871189F596C001F3AB5 /* MCEditDetailController.h */,
 				FA048872189F596C001F3AB5 /* MCEditDetailController.m */,
+				FAFD62D9189FE638006AC9DC /* MCEditCapeController.h */,
+				FAFD62DA189FE638006AC9DC /* MCEditCapeController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -629,6 +634,7 @@
 				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,
 				FAAEF954189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m in Sources */,
 				FAAEF94B189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m in Sources */,
+				FAFD62DB189FE638006AC9DC /* MCEditCapeController.m in Sources */,
 				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
 				FAAEF906189EE28500145DF8 /* MCLibraryController.m in Sources */,
 				FAAEF909189EE29100145DF8 /* MCLibraryViewController.m in Sources */,

@@ -7,7 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCEditDetailController.h"
+#import "MCEditListController.h"
+#import "MCEditCapeController.h"
+#import "MCCursorLibrary.h"
 
-@interface MCEditWindowController : NSWindowController
-
+@interface MCEditWindowController : NSWindowController <NSWindowDelegate>
+@property (assign) IBOutlet MCEditListController *editListController;     // List of cursors in the library
+@property (assign) IBOutlet MCEditDetailController *editDetailController; // Detail view of the selected cursor
+@property (assign) IBOutlet MCEditCapeController *editCapeController;     // Detail view of the entire library
+@property (assign) IBOutlet NSView *detailView;
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCCursor.h"
 
 @interface MCEditDetailController : NSViewController
-
+@property (strong) MCCursor *cursor;
 @end
