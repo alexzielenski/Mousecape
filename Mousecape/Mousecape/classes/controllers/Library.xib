@@ -5,8 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MCLbraryWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="MCLibraryWindowController">
             <connections>
+                <outlet property="appliedAccessory" destination="3Ui-b0-Yod" id="2Ik-Bo-djE"/>
+                <outlet property="libraryViewController" destination="zL4-Ay-t4Q" id="DE1-rb-MWQ"/>
                 <outlet property="window" destination="1" id="3"/>
             </connections>
         </customObject>
@@ -22,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="66" horizontalPageScroll="10" verticalLineScroll="66" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
+                    <scrollView canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="76" horizontalPageScroll="10" verticalLineScroll="76" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="VhH-tn-4Sf" customClass="BTRClipView">
@@ -32,7 +34,7 @@
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="64" rowSizeStyle="automatic" viewBased="YES" id="dPn-85-uPK">
                                     <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <size key="intercellSpacing" width="3" height="12"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
@@ -50,7 +52,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="syZ-Eq-Lt2" customClass="MCCapeCellView">
-                                                    <rect key="frame" x="1" y="1" width="708" height="64"/>
+                                                    <rect key="frame" x="1" y="6" width="708" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hfe-RO-hVE">
@@ -116,7 +118,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="zL4-Ay-t4Q" id="Nf4-IA-IQE"/>
+                                        <binding destination="fJN-kY-ThO" name="content" keyPath="arrangedObjects" id="lWw-Sa-Ips"/>
                                         <outlet property="delegate" destination="zL4-Ay-t4Q" id="riV-4x-e3X"/>
                                     </connections>
                                 </tableView>
@@ -146,10 +148,88 @@
         </window>
         <viewController title="Library" id="zL4-Ay-t4Q" customClass="MCLibraryViewController">
             <connections>
+                <outlet property="contextMenu" destination="zpf-M9-Nd1" id="jgh-ez-9dF"/>
                 <outlet property="tableView" destination="dPn-85-uPK" id="Gbg-WA-ju6"/>
                 <outlet property="view" destination="2" id="zf4-7d-uPj"/>
             </connections>
         </viewController>
+        <menu id="zpf-M9-Nd1">
+            <items>
+                <menuItem title="Apply" id="aI1-E0-bnW">
+                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    <connections>
+                        <action selector="applyAction:" target="zL4-Ay-t4Q" id="4KV-AP-8YO"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit" tag="1" keyEquivalent="e" id="HJc-SX-JjZ">
+                    <connections>
+                        <action selector="editAction:" target="zL4-Ay-t4Q" id="R94-y0-i5l"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Duplicate" tag="2" keyEquivalent="e" id="PhG-Ll-nqz">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="duplicateAction:" target="zL4-Ay-t4Q" id="dYH-lp-gER"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove" tag="3" id="Aig-wl-ivn">
+                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                    <connections>
+                        <action selector="removeAction:" target="zL4-Ay-t4Q" id="WYv-bz-sLl"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <customView id="3Ui-b0-Yod" userLabel="Accessory">
+            <rect key="frame" x="0.0" y="0.0" width="251" height="21"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cSP-XN-7we">
+                    <rect key="frame" x="-2" y="3" width="245" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Applied Cursor: None" usesSingleLineMode="YES" id="vZ3-2R-psO">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="backgroundStyle">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="zL4-Ay-t4Q" name="value" keyPath="libraryController.appliedCape.name" id="tSr-qw-vw1">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">MCAppliedCapeValueTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cSP-XN-7we" secondAttribute="trailing" constant="10" id="OsL-1s-qgU"/>
+                <constraint firstItem="cSP-XN-7we" firstAttribute="centerY" secondItem="3Ui-b0-Yod" secondAttribute="centerY" id="U7A-WI-2JG"/>
+                <constraint firstItem="cSP-XN-7we" firstAttribute="leading" secondItem="3Ui-b0-Yod" secondAttribute="leading" id="eoA-bD-pz5"/>
+            </constraints>
+        </customView>
+        <arrayController objectClassName="MCCursorLibrary" editable="NO" automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="fJN-kY-ThO">
+            <declaredKeys>
+                <string>author</string>
+                <string>name</string>
+                <string>hiDPI</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="zL4-Ay-t4Q" name="contentArray" keyPath="libraryController.capes" id="qDU-w0-sho">
+                    <dictionary key="options">
+                        <string key="NSValueTransformerName">MCOrderedSetTransformer</string>
+                    </dictionary>
+                </binding>
+            </connections>
+        </arrayController>
     </objects>
     <resources>
         <image name="HD" width="30" height="18"/>

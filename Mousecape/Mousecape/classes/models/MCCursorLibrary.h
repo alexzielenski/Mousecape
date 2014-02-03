@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MCCursor.h"
 
-@interface MCCursorLibrary : NSObject
+@interface MCCursorLibrary : NSObject <NSCopying>
 @property (nonatomic, copy)   NSString *name;
 @property (nonatomic, copy)   NSString *author;
 @property (nonatomic, copy)   NSString *identifier;

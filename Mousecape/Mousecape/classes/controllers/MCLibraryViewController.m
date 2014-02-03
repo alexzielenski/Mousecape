@@ -32,30 +32,34 @@
 }
 
 - (void)awakeFromNib {
-    self.tableView.dataSource   = self;
     self.tableView.delegate     = self;
     self.tableView.target       = self;
     self.tableView.doubleAction = @selector(doubleClick:);
+    self.tableView.menu         = self.contextMenu;
 }
 
 - (void)loadView {
     [super loadView];
-    self.tableView.dataSource = self;
-    self.tableView.delegate   = self;
+    self.tableView.delegate     = self;
+    self.tableView.target       = self;
+    self.tableView.doubleAction = @selector(doubleClick:);
+    self.tableView.menu         = self.contextMenu;
 }
 
 - (void)setupEnvironment {
-    [self setRepresentedObject:[MCLibraryController sharedLibraryController]];
+    self.libraryController = [MCLibraryController sharedLibraryController];
+    [self setRepresentedObject:self.libraryController];
     [self.tableView reloadData];
     
-    [[MCLibraryController sharedLibraryController]  addObserver:self forKeyPath:NSStringFromSelector(@selector(appliedCape)) options:0 context:NULL];
+//    [self.libraryController addObserver:self forKeyPath:NSStringFromSelector(@selector(capes)) options:0 context:NULL];
+    [self.libraryController  addObserver:self forKeyPath:NSStringFromSelector(@selector(appliedCape)) options:0 context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(appliedCape))]) {
         for (NSUInteger x = 0; x < self.tableView.numberOfRows; x++) {
             MCCapeCellView *cv = [self.tableView viewAtColumn:0 row:x makeIfNecessary:NO];
-            cv.appliedImageView.hidden = !(cv.objectValue == [[MCLibraryController sharedLibraryController] appliedCape]);
+            cv.appliedImageView.hidden = !(cv.objectValue == [self.libraryController appliedCape]);
         }
     } else
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -65,17 +69,36 @@
 - (void)doubleClick:(NSTableView *)sender {
     NSUInteger row = sender.clickedRow;
     MCCursorLibrary *library = [[sender viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
-    [[MCLibraryController sharedLibraryController] applyCape:library];
+    [self.libraryController applyCape:library];
 }
 
-#pragma mark - NSTableViewDataSource
+#pragma mark - Context Menu
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [MCLibraryController.sharedLibraryController.capes count];
+- (IBAction)applyAction:(NSMenuItem *)sender {
+    NSUInteger row = self.tableView.clickedRow;
+    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+    [self.libraryController applyCape:library];
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
-    return [MCLibraryController.sharedLibraryController.capes objectAtIndex:rowIndex];
+- (IBAction)editAction:(NSMenuItem *)sender {
+    NSUInteger row = self.tableView.clickedRow;
+    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+    NSLog(@"edit %@", library);
+}
+
+- (IBAction)duplicateAction:(NSMenuItem *)sender {
+    NSUInteger row = self.tableView.clickedRow;
+    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+    [self.libraryController importCape:library.copy];
+}
+
+- (IBAction)removeAction:(NSMenuItem *)sender {
+    NSUInteger row = self.tableView.clickedRow;
+    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+    
+    //!TODO: Prompt user if he/she is sure
+    [self.libraryController removeCape:library];
+    [[NSFileManager defaultManager] removeItemAtURL:library.fileURL error:nil];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -90,5 +113,25 @@
 //- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
 //    return nil;
 //}
+
+@end
+
+@implementation MCOrderedSetTransformer
+
++ (Class)transformedValueClass {
+    return [NSArray class];
+}
+
++ (BOOL)allowsReverseTransformation {
+    return YES;
+}
+
+- (id)transformedValue:(id)value {
+    return [(NSOrderedSet *)value array];
+}
+
+- (id)reverseTransformedValue:(id)value {
+	return [NSOrderedSet orderedSetWithArray:value];
+}
 
 @end

@@ -74,6 +74,23 @@
     return self;
 }
 
+- (instancetype)copyWithZone:(NSZone *)zone {
+    MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] init];
+    
+    for (NSString *identifier in self.cursors) {
+        [lib setCursor:[self cursorWithIdentifier:identifier].copy forIdentifier:identifier];
+    }
+    
+    lib.name             = self.name;
+    lib.author           = self.author;
+    lib.hiDPI            = self.hiDPI;
+    lib.inCloud          = self.inCloud;
+    lib.version          = self.version;
+    lib.identifier       = [self.identifier stringByAppendingFormat:@".%f", [NSDate timeIntervalSinceReferenceDate]];
+    
+    return lib;
+}
+
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary {
     if (!dictionary || !dictionary.count) {
         NSLog(@"cannot make library from empty dicitonary");

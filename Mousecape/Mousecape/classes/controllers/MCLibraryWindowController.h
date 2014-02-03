@@ -11,4 +11,8 @@
 
 @interface MCLibraryWindowController : NSWindowController
 @property (assign) IBOutlet MCLibraryViewController *libraryViewController;
+@property (assign) IBOutlet NSView *appliedAccessory;
+@end
+
+@interface MCAppliedCapeValueTransformer : NSValueTransformer
 @end

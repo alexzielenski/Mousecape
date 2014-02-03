@@ -12,7 +12,8 @@
 @property (weak) MCCursorLibrary *appliedCape;
 
 + (instancetype)sharedLibraryController;
-- (void)importCursorLibraryAtURL:(NSURL *)url;
+- (void)importCapeAtURL:(NSURL *)url;
+- (void)importCape:(MCCursorLibrary *)cape;
 
 - (void)addCape:(MCCursorLibrary *)cape;
 - (void)removeCape:(MCCursorLibrary *)cape;

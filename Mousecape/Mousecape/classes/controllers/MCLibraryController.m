@@ -41,8 +41,12 @@
     return self;
 }
 
-- (void)importCursorLibraryAtURL:(NSURL *)url {
+- (void)importCapeAtURL:(NSURL *)url {
     MCCursorLibrary *lib = [MCCursorLibrary cursorLibraryWithContentsOfURL:url];
+    [self importCape:lib];
+}
+
+- (void)importCape:(MCCursorLibrary *)lib {
     lib.fileURL = [NSURL fileURLWithPathComponents:@[ self.class.capesPath, [lib.identifier stringByAppendingPathExtension:@"cape"] ]];
     [lib writeToFile:lib.fileURL.path atomically:NO];
     
@@ -81,17 +85,17 @@
         NSLog(@"Cannot add nil cape");
         return;
     }
-        
-    [self willChangeValueForKey:@"capes"];
+    
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
     [self.capes addObject:cape];
-    [self didChangeValueForKey:@"capes"];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
 }
 
 
 - (void)removeCape:(MCCursorLibrary *)cape {
-    [self willChangeValueForKey:@"capes"];
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
     [self.capes removeObject:cape];
-    [self didChangeValueForKey:@"capes"];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
 }
 
 
