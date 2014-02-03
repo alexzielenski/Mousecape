@@ -9,19 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import "MCLibraryController.h"
 
-@interface MCLibraryViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
+@interface MCLibraryViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource, MCLibraryDelegate>
 @property (assign) IBOutlet NSMenu *contextMenu;
 @property (assign) IBOutlet NSTableView *tableView;
-@property (assign) MCLibraryController *libraryController;
+@property (strong) MCLibraryController *libraryController;
 
 - (MCCursorLibrary *)selectedCape;
 - (MCCursorLibrary *)clickedCape;
 
 - (void)newCape:(id)sender;
-- (void)applyCape:(MCCursorLibrary *)library;
 - (void)editCape:(MCCursorLibrary *)library;
-- (void)duplicateCape:(MCCursorLibrary *)library;
-- (void)removeCape:(MCCursorLibrary *)library;
 
 - (IBAction)applyAction:(NSMenuItem *)sender;
 - (IBAction)editAction:(NSMenuItem *)sender;

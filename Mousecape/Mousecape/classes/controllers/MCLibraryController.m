@@ -7,7 +7,6 @@
 //
 
 #import "MCLibraryController.h"
-#import "NSFileManager+DirectoryLocations.h"
 #import "MCCursorLibrary.h"
 #import "NSOrderedSet+AZSortedInsert.h"
 #import "apply.h"
@@ -15,7 +14,7 @@
 
 @interface MCLibraryController ()
 @property (nonatomic, retain) NSMutableOrderedSet *capes;
-+ (NSString *)capesPath;
+@property (readwrite, copy) NSURL *libraryURL;
 + (NSArray *)sortDescriptors;
 - (void)loadLibrary;
 @end
@@ -33,30 +32,22 @@
     return descriptors;
 }
 
-+ (NSString *)capesPath {
-    return [[NSFileManager defaultManager] findOrCreateDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appendPathComponent:@"Mousecape/capes" error:NULL];
+- (NSURL *)URLForCape:(MCCursorLibrary *)cape {
+    return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];
 }
 
-+ (instancetype)sharedLibraryController {
-    static MCLibraryController *lb = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        lb = [[self alloc] init];
-    });
-    
-    return lb;
-}
-
-- (id)init {
-    if ((self = [super init])) {
-        self.capes = [NSMutableOrderedSet orderedSet];
+- (instancetype)initWithURL:(NSURL *)url {
+    if ((self = [self init])) {
+        self.libraryURL = url;
         [self loadLibrary];
     }
+    
     return self;
 }
 
 - (void)loadLibrary {
-    NSString *capesPath = self.class.capesPath;
+    self.capes = [NSMutableOrderedSet orderedSet];
+    NSString *capesPath = self.libraryURL.path;
     NSArray  *contents  = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:capesPath error:NULL];
     NSString *applied   = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
     
@@ -78,7 +69,7 @@
 }
 
 - (void)importCape:(MCCursorLibrary *)lib {
-    lib.fileURL = [NSURL fileURLWithPathComponents:@[ self.class.capesPath, [lib.identifier stringByAppendingPathExtension:@"cape"] ]];
+    lib.fileURL = [self URLForCape:lib];
     [lib writeToFile:lib.fileURL.path atomically:NO];
     
     [self addCape:lib];
@@ -95,18 +86,29 @@
         return;
     }
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:shouldAddCape:)] && ![self.delegate libraryController:self shouldAddCape:cape])
+        return;
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
     [self.capes insertObject:cape sortedUsingDescriptors:self.class.sortDescriptors];
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:didAddCape:)])
+        [self.delegate libraryController:self didAddCape:cape];
+        
 }
 
 
 - (void)removeCape:(MCCursorLibrary *)cape {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:shouldRemoveCape:)] && ![self.delegate libraryController:self shouldRemoveCape:cape])
+        return;
+    
     [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
     if (cape == self.appliedCape)
         [self restoreCape];
     [self.capes removeObject:cape];
     [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:didRemoveCape:)])
+        [self.delegate libraryController:self didRemoveCape:cape];
 }
 
 - (void)applyCape:(MCCursorLibrary *)cape {

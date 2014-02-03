@@ -8,10 +8,12 @@
 
 #import "MCLibraryViewController.h"
 #import "MCCapeCellView.h"
+#import "NSFileManager+DirectoryLocations.h"
 
 @interface MCLibraryViewController ()
 - (void)setupEnvironment;
 - (void)doubleClick:(id)sender;
++ (NSString *)capesPath;
 @end
 
 @implementation MCLibraryViewController
@@ -35,12 +37,19 @@
     [self.libraryController removeObserver:self forKeyPath:@"appliedCape"];
 }
 
++ (NSString *)capesPath {
+    return [[NSFileManager defaultManager] findOrCreateDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appendPathComponent:@"Mousecape/capes" error:NULL];
+}
+
 - (void)awakeFromNib {
     self.tableView.doubleAction = @selector(doubleClick:);
+    self.tableView.target       = self;
 }
 
 - (void)setupEnvironment {
-    self.libraryController = [MCLibraryController sharedLibraryController];
+    self.libraryController = [[MCLibraryController alloc] initWithURL:[NSURL fileURLWithPath:self.class.capesPath]];
+    self.libraryController.delegate = self;
+    
     [self setRepresentedObject:self.libraryController];
     [self.tableView reloadData];
     
@@ -75,35 +84,16 @@
 - (void)newCape:(id)sender {
     MCCursorLibrary *lib = [[MCCursorLibrary alloc] init];
     [self.libraryController importCape:lib];
-    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:lib]] withAnimation:NSTableViewAnimationSlideUp];
-}
-
-- (void)applyCape:(MCCursorLibrary *)library {
-    [self.libraryController applyCape:library];
 }
 
 - (void)editCape:(MCCursorLibrary *)library {
     NSLog(@"edit %@", library);
 }
 
-- (void)duplicateCape:(MCCursorLibrary *)library {
-    MCCursorLibrary *lib = library.copy;
-    [self.libraryController importCape:lib];
-    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:lib]] withAnimation:NSTableViewAnimationSlideUp];
-}
-
-- (void)removeCape:(MCCursorLibrary *)library {
-    if (NSRunAlertPanel(@"Warning", @"This operation cannot be undone. Continue?", @"Yeah", @"Nope", nil) == NSOKButton) {
-        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:library]] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
-        [self.libraryController removeCape:library];
-        [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:[NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent] isDirectory:YES] error:NULL];
-    }
-}
-
 #pragma mark - Context Menu
 
 - (IBAction)applyAction:(NSMenuItem *)sender {
-    [self applyCape:self.clickedCape];
+    [self.libraryController applyCape:self.clickedCape];
 }
 
 - (IBAction)editAction:(NSMenuItem *)sender {
@@ -111,11 +101,33 @@
 }
 
 - (IBAction)duplicateAction:(NSMenuItem *)sender {
-    [self duplicateCape:self.clickedCape];
+    [self.libraryController importCape:self.clickedCape.copy];
 }
 
 - (IBAction)removeAction:(NSMenuItem *)sender {
-    [self removeCape:self.clickedCape];
+    [self.libraryController removeCape:self.clickedCape];
+}
+
+#pragma mark - MCLibraryDelegate
+
+- (BOOL)libraryController:(MCLibraryController *)controller shouldAddCape:(MCCursorLibrary *)library {
+    //!TODO: Make sure the identifier isn't taken
+    return YES;
+}
+
+- (BOOL)libraryController:(MCLibraryController *)controller shouldRemoveCape:(MCCursorLibrary *)library {
+    [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]] withAnimation:NSTableViewAnimationEffectFade | NSTableViewAnimationSlideUp];
+    return YES;
+}
+
+- (void)libraryController:(MCLibraryController *)controller didAddCape:(MCCursorLibrary *)library {
+    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]] withAnimation: NSTableViewAnimationSlideUp];
+}
+
+- (void)libraryController:(MCLibraryController *)controller didRemoveCape:(MCCursorLibrary *)library {
+    // Move the file to the trash
+    NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent]];
+    [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:destinationURL error:NULL];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -132,8 +144,7 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCCapeCellView *cellView = (MCCapeCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    MCLibraryController *libraryController = MCLibraryController.sharedLibraryController;
-    cellView.appliedImageView.hidden = !([libraryController.capes objectAtIndex:row] == libraryController.appliedCape);
+    cellView.appliedImageView.hidden = !([self.libraryController.capes objectAtIndex:row] == self.libraryController.appliedCape);
     return cellView;
 }
 

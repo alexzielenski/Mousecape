@@ -11,7 +11,7 @@
 NSError *createCape(NSString *input, NSString *output, BOOL convert) {
     NSDictionary *cape;
     if (convert)
-        cape = createCapeFromMightyMouse([NSDictionary dictionaryWithContentsOfFile:input]);
+        cape = createCapeFromMightyMouse([NSDictionary dictionaryWithContentsOfFile:input], nil);
     else
         cape = createCapeFromDirectory(input);
     
@@ -131,7 +131,7 @@ NSDictionary *createCapeFromDirectory(NSString *path) {
     return dictionary;
 }
 
-NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse) {
+NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary *metadata) {
     if (!mightyMouse)
         return nil;
     
@@ -211,16 +211,21 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse) {
     CGFloat version = 0.0;
     
     MMLog(BOLD "Enter metadata for cape:" RESET);
-    NSString *author = MMGet(@"Author");
-    NSString *identifier = MMGet(@"Identifier");
-    NSString *name = MMGet(@"Cape Name");
-    MMLog("Cape Version: ");
-    scanf("%lf", &version);
+    NSString *author = metadata[@"author"] ?: MMGet(@"Author");
+    NSString *identifier = metadata[@"identifier"] ?: MMGet(@"Identifier");
+    NSString *name = metadata[@"name"] ?: MMGet(@"Cape Name");
     
-    totalDict[MCCursorDictionaryAuthorKey] = author;
-    totalDict[MCCursorDictionaryCapeNameKey] = name;
+    if (metadata[@"version"])
+        version = [metadata[@"version"] doubleValue];
+    else {
+        MMLog("Cape Version: ");
+        scanf("%lf", &version);
+    }
+    
+    totalDict[MCCursorDictionaryAuthorKey]      = author;
+    totalDict[MCCursorDictionaryCapeNameKey]    = name;
     totalDict[MCCursorDictionaryCapeVersionKey] = @(version);
-    totalDict[MCCursorDictionaryIdentifierKey] = identifier;
+    totalDict[MCCursorDictionaryIdentifierKey]  = identifier;
     
     return totalDict;
 }

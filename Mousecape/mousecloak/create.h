@@ -14,6 +14,6 @@ extern NSDictionary *processedCapeWithIdentifier(NSString *identifier);
 extern void dumpCursorsToFile(NSString *path);
 
 extern NSDictionary *createCapeFromDirectory(NSString *path);
-extern NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse);
+extern NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary *metadata);
 
 #endif

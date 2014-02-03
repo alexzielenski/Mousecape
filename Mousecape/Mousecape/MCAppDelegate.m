@@ -86,7 +86,7 @@ static AuthorizationRef obtainRights();
 
 // Cape Menu
 - (IBAction)applyCape:(id)sender {
-    [self.libraryWindowController.libraryViewController applyCape:self.libraryWindowController.libraryViewController.selectedCape];
+    [self.libraryWindowController.libraryViewController.libraryController applyCape:self.libraryWindowController.libraryViewController.selectedCape];
 }
 
 - (IBAction)editCape:(id)sender {
@@ -94,7 +94,7 @@ static AuthorizationRef obtainRights();
 }
 
 - (IBAction)removeCape:(id)sender {
-    [self.libraryWindowController.libraryViewController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
+    [self.libraryWindowController.libraryViewController.libraryController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
 }
 
 - (IBAction)checkCape:(id)sender {
@@ -120,7 +120,7 @@ static AuthorizationRef obtainRights();
 }
 
 - (IBAction)duplicateCape:(id)sender {
-        [self.libraryWindowController.libraryViewController duplicateCape:self.libraryWindowController.libraryViewController.selectedCape];
+        [self.libraryWindowController.libraryViewController.libraryController importCape:self.libraryWindowController.libraryViewController.selectedCape.copy];
 }
 
 @end
