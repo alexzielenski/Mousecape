@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA048868189F58B1001F3AB5 /* Edit.xib */; };
+		FA04886D189F58B1001F3AB5 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04886A189F58B1001F3AB5 /* Library.xib */; };
+		FA048870189F5954001F3AB5 /* MCEditListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA04886F189F5954001F3AB5 /* MCEditListController.m */; };
+		FA048873189F596C001F3AB5 /* MCEditDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA048872189F596C001F3AB5 /* MCEditDetailController.m */; };
 		FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
 		FA359840189DA3C100288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA359849189DC40100288163 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359848189DC40100288163 /* Security.framework */; };
@@ -20,7 +24,6 @@
 		FA8FF771189D66D800750E51 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
 		FA8FF774189D67B100750E51 /* create.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF773189D67B100750E51 /* create.m */; };
 		FAAEF8EC189EB06F00145DF8 /* MCLibraryWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8EA189EB06F00145DF8 /* MCLibraryWindowController.m */; };
-		FAAEF8ED189EB06F00145DF8 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAAEF8EB189EB06F00145DF8 /* Library.xib */; };
 		FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8F1189EB32700145DF8 /* BTRClipView.m */; };
 		FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8F3189EB32700145DF8 /* BTRScrollView.m */; };
 		FAAEF8F7189EB34700145DF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */; };
@@ -36,6 +39,7 @@
 		FAAEF954189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF953189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAAEF957189F4ED300145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
 		FAAEF958189F4F8200145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
+		FAAEF95C189F584600145DF8 /* MCEditWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF95A189F584600145DF8 /* MCEditWindowController.m */; };
 		FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F6D189D603C00BC829D /* InfoPlist.strings */; };
 		FAC69F71189D603C00BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69F70189D603C00BC829D /* main.m */; };
@@ -99,6 +103,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA048869189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Edit.xib; sourceTree = "<group>"; };
+		FA04886B189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Library.xib; sourceTree = "<group>"; };
+		FA04886E189F5954001F3AB5 /* MCEditListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditListController.h; path = classes/controllers/MCEditListController.h; sourceTree = "<group>"; };
+		FA04886F189F5954001F3AB5 /* MCEditListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditListController.m; path = classes/controllers/MCEditListController.m; sourceTree = "<group>"; };
+		FA048871189F596C001F3AB5 /* MCEditDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditDetailController.h; path = classes/controllers/MCEditDetailController.h; sourceTree = "<group>"; };
+		FA048872189F596C001F3AB5 /* MCEditDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditDetailController.m; path = classes/controllers/MCEditDetailController.m; sourceTree = "<group>"; };
 		FA254779189D85890038E1D9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FA35983D189DA3BC00288163 /* MCPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPrefs.h; sourceTree = "<group>"; };
 		FA35983E189DA3BC00288163 /* MCPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPrefs.m; sourceTree = "<group>"; };
@@ -119,7 +129,6 @@
 		FA8FF773189D67B100750E51 /* create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = create.m; sourceTree = "<group>"; };
 		FAAEF8E9189EB06F00145DF8 /* MCLibraryWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCLibraryWindowController.h; path = classes/controllers/MCLibraryWindowController.h; sourceTree = "<group>"; };
 		FAAEF8EA189EB06F00145DF8 /* MCLibraryWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryWindowController.m; path = classes/controllers/MCLibraryWindowController.m; sourceTree = "<group>"; };
-		FAAEF8EB189EB06F00145DF8 /* Library.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Library.xib; path = classes/controllers/Library.xib; sourceTree = "<group>"; };
 		FAAEF8F0189EB32700145DF8 /* BTRClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRClipView.h; sourceTree = "<group>"; };
 		FAAEF8F1189EB32700145DF8 /* BTRClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTRClipView.m; sourceTree = "<group>"; };
 		FAAEF8F2189EB32700145DF8 /* BTRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTRScrollView.h; sourceTree = "<group>"; };
@@ -139,6 +148,8 @@
 		FAAEF953189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOrderedSet+AZSortedInsert.m"; sourceTree = "<group>"; };
 		FAAEF955189F4ECC00145DF8 /* scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
 		FAAEF956189F4ED300145DF8 /* scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scale.m; sourceTree = "<group>"; };
+		FAAEF959189F584600145DF8 /* MCEditWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCEditWindowController.h; path = classes/controllers/MCEditWindowController.h; sourceTree = "<group>"; };
+		FAAEF95A189F584600145DF8 /* MCEditWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCEditWindowController.m; path = classes/controllers/MCEditWindowController.m; sourceTree = "<group>"; };
 		FAC69F61189D603C00BC829D /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC69F64189D603C00BC829D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FAC69F67189D603C00BC829D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -252,6 +263,12 @@
 				FAAEF908189EE29100145DF8 /* MCLibraryViewController.m */,
 				FAAEF904189EE28500145DF8 /* MCLibraryController.h */,
 				FAAEF905189EE28500145DF8 /* MCLibraryController.m */,
+				FAAEF959189F584600145DF8 /* MCEditWindowController.h */,
+				FAAEF95A189F584600145DF8 /* MCEditWindowController.m */,
+				FA04886E189F5954001F3AB5 /* MCEditListController.h */,
+				FA04886F189F5954001F3AB5 /* MCEditListController.m */,
+				FA048871189F596C001F3AB5 /* MCEditDetailController.h */,
+				FA048872189F596C001F3AB5 /* MCEditDetailController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -346,7 +363,8 @@
 				FAAEF8F9189EB40700145DF8 /* models */,
 				FAAEF900189EB4BF00145DF8 /* views */,
 				FAC69FD7189D623C00BC829D /* Mousecape-Prefix.pch */,
-				FAAEF8EB189EB06F00145DF8 /* Library.xib */,
+				FA048868189F58B1001F3AB5 /* Edit.xib */,
+				FA04886A189F58B1001F3AB5 /* Library.xib */,
 				FAC69F79189D603C00BC829D /* MainMenu.xib */,
 				FAC69F7C189D603C00BC829D /* Images.xcassets */,
 				FAC69F6B189D603C00BC829D /* Supporting Files */,
@@ -567,7 +585,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */,
-				FAAEF8ED189EB06F00145DF8 /* Library.xib in Resources */,
+				FA04886D189F58B1001F3AB5 /* Library.xib in Resources */,
+				FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */,
 				FAC69F7D189D603C00BC829D /* Images.xcassets in Resources */,
 				FAC69F75189D603C00BC829D /* Credits.rtf in Resources */,
 				FAC69F7B189D603C00BC829D /* MainMenu.xib in Resources */,
@@ -615,6 +634,8 @@
 				FAAEF909189EE29100145DF8 /* MCLibraryViewController.m in Sources */,
 				FAAEF951189F0CC300145DF8 /* restore.m in Sources */,
 				FAAEF8FC189EB41C00145DF8 /* MCCursorLibrary.m in Sources */,
+				FAAEF95C189F584600145DF8 /* MCEditWindowController.m in Sources */,
+				FA048873189F596C001F3AB5 /* MCEditDetailController.m in Sources */,
 				FAAEF8EC189EB06F00145DF8 /* MCLibraryWindowController.m in Sources */,
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
 				FAAEF8FF189EB4BC00145DF8 /* MCCapeCellView.m in Sources */,
@@ -624,6 +645,7 @@
 				FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
 				FA54F520189E0893002A765F /* MCCursor.m in Sources */,
+				FA048870189F5954001F3AB5 /* MCEditListController.m in Sources */,
 				FA359840189DA3C100288163 /* MCPrefs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +693,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FA048868189F58B1001F3AB5 /* Edit.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA048869189F58B1001F3AB5 /* Base */,
+			);
+			name = Edit.xib;
+			sourceTree = "<group>";
+		};
+		FA04886A189F58B1001F3AB5 /* Library.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA04886B189F58B1001F3AB5 /* Base */,
+			);
+			name = Library.xib;
+			sourceTree = "<group>";
+		};
 		FAC69F6D189D603C00BC829D /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
