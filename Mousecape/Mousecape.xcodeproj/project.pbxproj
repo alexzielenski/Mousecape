@@ -33,6 +33,9 @@
 		FAAEF94F189EFC9600145DF8 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FAAEF950189EFC9800145DF8 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
 		FAAEF951189F0CC300145DF8 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
+		FAAEF954189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF953189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FAAEF957189F4ED300145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
+		FAAEF958189F4F8200145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
 		FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F6D189D603C00BC829D /* InfoPlist.strings */; };
 		FAC69F71189D603C00BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69F70189D603C00BC829D /* main.m */; };
@@ -132,6 +135,10 @@
 		FAAEF908189EE29100145DF8 /* MCLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCLibraryViewController.m; path = classes/controllers/MCLibraryViewController.m; sourceTree = "<group>"; };
 		FAAEF949189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		FAAEF94A189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		FAAEF952189F457200145DF8 /* NSOrderedSet+AZSortedInsert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOrderedSet+AZSortedInsert.h"; sourceTree = "<group>"; };
+		FAAEF953189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOrderedSet+AZSortedInsert.m"; sourceTree = "<group>"; };
+		FAAEF955189F4ECC00145DF8 /* scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
+		FAAEF956189F4ED300145DF8 /* scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scale.m; sourceTree = "<group>"; };
 		FAC69F61189D603C00BC829D /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC69F64189D603C00BC829D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FAC69F67189D603C00BC829D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -274,6 +281,8 @@
 			children = (
 				FAAEF949189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.h */,
 				FAAEF94A189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m */,
+				FAAEF952189F457200145DF8 /* NSOrderedSet+AZSortedInsert.h */,
+				FAAEF953189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m */,
 			);
 			name = categories;
 			path = classes/categories;
@@ -395,6 +404,8 @@
 				FA8FF773189D67B100750E51 /* create.m */,
 				FA359850189E035200288163 /* listen.h */,
 				FA359851189E035900288163 /* listen.m */,
+				FAAEF955189F4ECC00145DF8 /* scale.h */,
+				FAAEF956189F4ED300145DF8 /* scale.m */,
 				FAC69FCB189D609B00BC829D /* NSCursor_Private.h */,
 				FAC69FB4189D608900BC829D /* mousecloak.1 */,
 				FAC69FB2189D608900BC829D /* Supporting Files */,
@@ -597,6 +608,7 @@
 			files = (
 				FAC69F78189D603C00BC829D /* MCAppDelegate.m in Sources */,
 				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,
+				FAAEF954189F457200145DF8 /* NSOrderedSet+AZSortedInsert.m in Sources */,
 				FAAEF94B189EE3FB00145DF8 /* NSFileManager+DirectoryLocations.m in Sources */,
 				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
 				FAAEF906189EE28500145DF8 /* MCLibraryController.m in Sources */,
@@ -607,6 +619,7 @@
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
 				FAAEF8FF189EB4BC00145DF8 /* MCCapeCellView.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
+				FAAEF958189F4F8200145DF8 /* scale.m in Sources */,
 				FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */,
 				FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
@@ -633,6 +646,7 @@
 				FA359852189E035900288163 /* listen.m in Sources */,
 				FAC69FD5189D609B00BC829D /* GBOptionsHelper.m in Sources */,
 				FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */,
+				FAAEF957189F4ED300145DF8 /* scale.m in Sources */,
 				FA8FF76B189D664400750E51 /* restore.m in Sources */,
 				FA8FF771189D66D800750E51 /* apply.m in Sources */,
 				FAC69FDD189D636700BC829D /* MCDefs.m in Sources */,

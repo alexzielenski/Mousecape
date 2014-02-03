@@ -19,7 +19,7 @@
 - (void)removeCape:(MCCursorLibrary *)cape;
 
 - (void)applyCape:(MCCursorLibrary *)cape;
-
+- (void)restoreCape;
 @end
 
 @interface MCLibraryController (Capes)

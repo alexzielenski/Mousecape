@@ -32,18 +32,7 @@
 }
 
 - (void)awakeFromNib {
-    self.tableView.delegate     = self;
-    self.tableView.target       = self;
     self.tableView.doubleAction = @selector(doubleClick:);
-    self.tableView.menu         = self.contextMenu;
-}
-
-- (void)loadView {
-    [super loadView];
-    self.tableView.delegate     = self;
-    self.tableView.target       = self;
-    self.tableView.doubleAction = @selector(doubleClick:);
-    self.tableView.menu         = self.contextMenu;
 }
 
 - (void)setupEnvironment {
@@ -80,6 +69,12 @@
     return [[self.tableView viewAtColumn:0 row:self.tableView.clickedRow makeIfNecessary:NO] objectValue];
 }
 
+- (void)newCape:(id)sender {
+    MCCursorLibrary *lib = [[MCCursorLibrary alloc] init];
+    [self.libraryController importCape:lib];
+    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:lib]] withAnimation:NSTableViewAnimationSlideUp];
+}
+
 - (void)applyCape:(MCCursorLibrary *)library {
     [self.libraryController applyCape:library];
 }
@@ -89,13 +84,19 @@
 }
 
 - (void)duplicateCape:(MCCursorLibrary *)library {
-    [self.libraryController importCape:library.copy];
+    MCCursorLibrary *lib = library.copy;
+    [self.libraryController importCape:lib];
+    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:lib]] withAnimation:NSTableViewAnimationSlideUp];
 }
 
 - (void)removeCape:(MCCursorLibrary *)library {
     //!TODO: Prompt user if he/she is sure
-    [self.libraryController removeCape:library];
-    [[NSFileManager defaultManager] removeItemAtURL:library.fileURL error:nil];
+    if (NSRunAlertPanel(@"Warning", @"This operation cannot be undone. Continue?", @"Yeah", @"Nope", nil) == NSOKButton) {
+        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:[self.libraryController.capes indexOfObject:library]] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
+        [self.libraryController removeCape:library];
+        [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:[NSURL fileURLWithPath:[@"~/.Trash" stringByExpandingTildeInPath] isDirectory:YES] error:NULL];
+//        [[NSFileManager defaultManager] removeItemAtURL:library.fileURL error:nil];
+    }
 }
 
 #pragma mark - Context Menu
@@ -114,6 +115,16 @@
 
 - (IBAction)removeAction:(NSMenuItem *)sender {
     [self removeCape:self.clickedCape];
+}
+
+#pragma mark - NSTableViewDelegate
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return self.libraryController.capes.count;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    return self.libraryController.capes[row];
 }
 
 #pragma mark - NSTableViewDelegate

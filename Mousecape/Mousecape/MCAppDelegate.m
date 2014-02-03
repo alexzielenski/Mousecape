@@ -88,7 +88,7 @@ static AuthorizationRef obtainRights();
 }
 
 - (IBAction)removeCape:(id)sender {
-        [self.libraryWindowController.libraryViewController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
+    [self.libraryWindowController.libraryViewController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
 }
 
 - (IBAction)checkCape:(id)sender {
@@ -96,7 +96,7 @@ static AuthorizationRef obtainRights();
 }
 
 - (IBAction)restoreCape:(id)sender {
-    
+    [self.libraryWindowController.libraryViewController.libraryController restoreCape];
 }
 
 - (IBAction)convertCape:(id)sender {
@@ -106,7 +106,7 @@ static AuthorizationRef obtainRights();
 // File Menu
 
 - (IBAction)newCape:(id)sender {
-    
+    [self.libraryWindowController.libraryViewController newCape:sender];
 }
 
 - (IBAction)importCape:(id)sender {

@@ -118,9 +118,9 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="fJN-kY-ThO" name="content" keyPath="arrangedObjects" id="lWw-Sa-Ips"/>
-                                        <binding destination="fJN-kY-ThO" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="lWw-Sa-Ips" id="QjP-CT-RFw"/>
+                                        <outlet property="dataSource" destination="zL4-Ay-t4Q" id="0iM-HK-P70"/>
                                         <outlet property="delegate" destination="zL4-Ay-t4Q" id="riV-4x-e3X"/>
+                                        <outlet property="menu" destination="zpf-M9-Nd1" id="lfG-VA-TTS"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -217,20 +217,6 @@ CA
                 <constraint firstItem="cSP-XN-7we" firstAttribute="leading" secondItem="3Ui-b0-Yod" secondAttribute="leading" id="eoA-bD-pz5"/>
             </constraints>
         </customView>
-        <arrayController objectClassName="MCCursorLibrary" editable="NO" automaticallyRearrangesObjects="YES" id="fJN-kY-ThO">
-            <declaredKeys>
-                <string>author</string>
-                <string>name</string>
-                <string>hiDPI</string>
-            </declaredKeys>
-            <connections>
-                <binding destination="zL4-Ay-t4Q" name="contentArray" keyPath="libraryController.capes" id="qDU-w0-sho">
-                    <dictionary key="options">
-                        <string key="NSValueTransformerName">MCOrderedSetTransformer</string>
-                    </dictionary>
-                </binding>
-            </connections>
-        </arrayController>
     </objects>
     <resources>
         <image name="HD" width="30" height="18"/>
