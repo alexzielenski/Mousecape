@@ -122,20 +122,20 @@
 
 - (BOOL)libraryController:(MCLibraryController *)controller shouldRemoveCape:(MCCursorLibrary *)library {
     NSUInteger index = [controller.capes indexOfObject:library];
+    
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index + 1 > 1 ? index + 1 : 1] byExtendingSelection:NO];
     [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectFade | NSTableViewAnimationSlideUp];
-    if (index >= controller.capes.count)
-        index = self.tableView.numberOfRows - 1;
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+    [self.tableView scrollRowToVisible:self.tableView.selectedRow];
     return YES;
 }
 
 - (void)libraryController:(MCLibraryController *)controller didAddCape:(MCCursorLibrary *)library {
     NSIndexSet *indices = [NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]];
     [self.tableView insertRowsAtIndexes:indices withAnimation: NSTableViewAnimationSlideUp];
-    
     [self.tableView selectRowIndexes:indices byExtendingSelection:NO];
-    
+    [self.tableView scrollRowToVisible:self.tableView.selectedRow];
     [self.view.window.undoManager setActionName:[@"Add " stringByAppendingString:library.name]];
+    
     [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] removeCape:library];
 }
 
