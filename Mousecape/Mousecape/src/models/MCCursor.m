@@ -71,6 +71,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     } else if ([key isEqualToString:@"name"]) {
         keyPaths =[keyPaths setByAddingObjectsFromArray:@[ @"identifier" ]];
     }
+    
     return keyPaths;
 }
 
@@ -161,12 +162,54 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     [super setValue:value forKey:key];
 }
 
+- (id)valueForUndefinedKey:(NSString *)key {
+    // Special KVC for observers to be able to watch each scale
+    if ([key hasPrefix:@"cursorRep"] || [key hasPrefix:@"cursorImage"]) {
+        NSString *prefix = [key hasPrefix:@"cursorRep"] ? @"cursorRep" : @"cursorImage";
+
+        NSString *scaleString = [key substringFromIndex:prefix.length];
+        CGFloat scale = [scaleString doubleValue] / 100;
+        
+        if ([key hasPrefix:@"cursorRep"])
+            return [self representationForScale:cursorScaleForScale(scale)];
+        else {
+            NSImage *image = [[NSImage alloc] initWithSize:self.size];
+            [image addRepresentation:[self representationForScale:cursorScaleForScale(scale)]];
+            return image;
+        }
+    }
+    
+    return [super valueForUndefinedKey:key];
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    // Special KVC for observers to be able to watch each scale
+    if ([key hasPrefix:@"cursorRep"] || [key hasPrefix:@"cursorImage"]) {
+        NSString *prefix = [key hasPrefix:@"cursorRep"] ? @"cursorRep" : @"cursorImage";
+        NSString *scaleString = [key substringFromIndex:prefix.length];
+        CGFloat scale = [scaleString doubleValue] / 100;
+        
+        if ([key hasPrefix:@"cursorImage"]) {
+            value = [(NSImage *)value representations][0];
+        }
+        
+        [self setRepresentation:value forScale:cursorScaleForScale(scale)];
+        return;
+    }
+    
+    [super setValue:value forUndefinedKey:key];
+}
+
 - (void)setRepresentation:(NSImageRep *)imageRep forScale:(MCCursorScale)scale {
     [self willChangeValueForKey:@"representations"];
+    
+    NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
+    [self willChangeValueForKey:key];
     if (imageRep)
         [self.representations setObject:imageRep forKey:@(scale)];
     else
         [self.representations removeObjectForKey:@(scale)];
+    [self didChangeValueForKey:key];
     [self didChangeValueForKey:@"representations"];
 }
 

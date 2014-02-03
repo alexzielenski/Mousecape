@@ -26,7 +26,6 @@
 #define WHITE   "\033[37m"      /* White */
 #define BOLD    "\033[1m"
 
-//extern const NSArray *defaultCursors;
 extern NSString *defaultCursors[];
 extern NSString *MCErrorDomain;
 extern NSDictionary *cursorNameMap;
@@ -53,7 +52,9 @@ extern const NSString *MCCursorDictionaryPointsWideKey;
 extern const NSString *MCCursorDictionaryPointsHighKey;
 extern const NSString *MCCursorDictionaryRepresentationsKey;
 
+extern NSDictionary *cursorMap();
 extern NSString *nameForCursorIdentifier(NSString *identifier);
+extern NSString *cursorIdentifierForName(NSString *name);
 
 extern NSDictionary *capeWithIdentifier(NSString *identifier);
 extern void CGImageWriteToFile(CGImageRef image, CFStringRef path);

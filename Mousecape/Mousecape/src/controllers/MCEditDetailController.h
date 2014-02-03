@@ -11,4 +11,8 @@
 
 @interface MCEditDetailController : NSViewController
 @property (strong) MCCursor *cursor;
+@property (assign) IBOutlet NSPopUpButton *typePopUpButton;
+@end
+
+@interface MCCursorTypeValueTransformer : NSValueTransformer
 @end
