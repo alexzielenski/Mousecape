@@ -28,9 +28,8 @@ static AuthorizationRef obtainRights();
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
-    if (!flag)
-        [self.libraryWindowController showWindow:sender];
-    return !flag;
+    [self.libraryWindowController showWindow:sender];
+    return YES;
 }
 
 - (void)configureHelperToolMenuItem {
