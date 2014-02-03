@@ -31,7 +31,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="64" rowSizeStyle="automatic" viewBased="YES" id="dPn-85-uPK">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="64" rowSizeStyle="automatic" viewBased="YES" id="dPn-85-uPK">
                                     <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="12"/>
@@ -119,6 +119,7 @@
                                     </tableColumns>
                                     <connections>
                                         <binding destination="fJN-kY-ThO" name="content" keyPath="arrangedObjects" id="lWw-Sa-Ips"/>
+                                        <binding destination="fJN-kY-ThO" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="lWw-Sa-Ips" id="QjP-CT-RFw"/>
                                         <outlet property="delegate" destination="zL4-Ay-t4Q" id="riV-4x-e3X"/>
                                     </connections>
                                 </tableView>
@@ -216,7 +217,7 @@ CA
                 <constraint firstItem="cSP-XN-7we" firstAttribute="leading" secondItem="3Ui-b0-Yod" secondAttribute="leading" id="eoA-bD-pz5"/>
             </constraints>
         </customView>
-        <arrayController objectClassName="MCCursorLibrary" editable="NO" automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="fJN-kY-ThO">
+        <arrayController objectClassName="MCCursorLibrary" editable="NO" automaticallyRearrangesObjects="YES" id="fJN-kY-ThO">
             <declaredKeys>
                 <string>author</string>
                 <string>name</string>

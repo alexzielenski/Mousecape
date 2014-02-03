@@ -76,6 +76,47 @@ static AuthorizationRef obtainRights();
     [self configureHelperToolMenuItem];
 }
 
+#pragma mark - Interface Actions
+
+// Cape Menu
+- (IBAction)applyCape:(id)sender {
+    [self.libraryWindowController.libraryViewController applyCape:self.libraryWindowController.libraryViewController.selectedCape];
+}
+
+- (IBAction)editCape:(id)sender {
+    [self.libraryWindowController.libraryViewController editCape:self.libraryWindowController.libraryViewController.selectedCape];
+}
+
+- (IBAction)removeCape:(id)sender {
+        [self.libraryWindowController.libraryViewController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
+}
+
+- (IBAction)checkCape:(id)sender {
+    
+}
+
+- (IBAction)restoreCape:(id)sender {
+    
+}
+
+- (IBAction)convertCape:(id)sender {
+    
+}
+
+// File Menu
+
+- (IBAction)newCape:(id)sender {
+    
+}
+
+- (IBAction)importCape:(id)sender {
+    
+}
+
+- (IBAction)duplicateCape:(id)sender {
+        [self.libraryWindowController.libraryViewController duplicateCape:self.libraryWindowController.libraryViewController.selectedCape];
+}
+
 @end
 
 static AuthorizationRef obtainRights() {

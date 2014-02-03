@@ -77,12 +77,12 @@
                         <items>
                             <menuItem title="New Cape" keyEquivalent="n" id="82">
                                 <connections>
-                                    <action selector="newDocument:" target="-1" id="373"/>
+                                    <action selector="newCape:" target="494" id="JhZ-Th-jV2"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Import Cape" keyEquivalent="o" id="kdx-d9-Lek">
                                 <connections>
-                                    <action selector="newDocument:" target="-1" id="u7Z-5b-eWJ"/>
+                                    <action selector="importCape:" target="494" id="ceA-m6-LD2"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="79">
@@ -100,7 +100,7 @@
                             </menuItem>
                             <menuItem title="Duplicate Cape" keyEquivalent="S" id="d9b-6w-ubr">
                                 <connections>
-                                    <action selector="saveDocument:" target="-1" id="e4r-4h-rFn"/>
+                                    <action selector="duplicateCape:" target="494" id="hjf-rU-ZS2"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Revert to Saved" id="112">
@@ -327,17 +327,39 @@
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                                <connections>
+                                    <action selector="applyCape:" target="494" id="6fI-9U-YHg"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Edit Cape" keyEquivalent="e" id="5qb-Dw-38q"/>
+                            <menuItem title="Edit Cape" keyEquivalent="e" id="5qb-Dw-38q">
+                                <connections>
+                                    <action selector="editCape:" target="494" id="jf7-eK-6NY"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Remove Cape" id="LHh-1u-bK8">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
+                                <connections>
+                                    <action selector="removeCape:" target="494" id="tXK-SG-gkF"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Check for Updates" hidden="YES" keyEquivalent="u" id="XTi-86-ese"/>
+                            <menuItem title="Check for Updates" hidden="YES" keyEquivalent="u" id="XTi-86-ese">
+                                <connections>
+                                    <action selector="checkCape:" target="494" id="Ccc-Ls-42A"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="EOT-Rk-oU3"/>
-                            <menuItem title="Restore Defaults" keyEquivalent="r" id="uCE-YB-8VL"/>
-                            <menuItem title="Import MightyMouse" keyEquivalent="i" id="l3B-n8-21Z"/>
+                            <menuItem title="Restore Defaults" keyEquivalent="r" id="uCE-YB-8VL">
+                                <connections>
+                                    <action selector="restoreCape:" target="494" id="2ve-Ez-ktd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Import MightyMouse" keyEquivalent="i" id="l3B-n8-21Z">
+                                <connections>
+                                    <action selector="convertCape:" target="494" id="vs2-8F-92y"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -385,18 +407,5 @@ CA
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <menu title="File" id="E8j-Lt-nh7">
-            <items>
-                <menuItem title="New Cape" keyEquivalent="n" id="dtI-4d-Rhg"/>
-                <menuItem title="Import Cape" keyEquivalent="o" id="cDy-fc-DLI"/>
-                <menuItem isSeparatorItem="YES" id="10a-WX-5w6"/>
-                <menuItem title="Close" keyEquivalent="w" id="YTl-Ba-qfA"/>
-                <menuItem title="Save…" keyEquivalent="s" id="Qkn-zG-5Pm"/>
-                <menuItem title="Duplicate Cape" keyEquivalent="S" id="Oes-7E-lT5"/>
-                <menuItem title="Revert to Saved" id="dCE-U7-Z7D">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-            </items>
-        </menu>
     </objects>
 </document>

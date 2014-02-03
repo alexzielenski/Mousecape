@@ -72,33 +72,48 @@
     [self.libraryController applyCape:library];
 }
 
-#pragma mark - Context Menu
+- (MCCursorLibrary *)selectedCape {
+    return [[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue];
+}
 
-- (IBAction)applyAction:(NSMenuItem *)sender {
-    NSUInteger row = self.tableView.clickedRow;
-    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+- (MCCursorLibrary *)clickedCape {
+    return [[self.tableView viewAtColumn:0 row:self.tableView.clickedRow makeIfNecessary:NO] objectValue];
+}
+
+- (void)applyCape:(MCCursorLibrary *)library {
     [self.libraryController applyCape:library];
 }
 
-- (IBAction)editAction:(NSMenuItem *)sender {
-    NSUInteger row = self.tableView.clickedRow;
-    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+- (void)editCape:(MCCursorLibrary *)library {
     NSLog(@"edit %@", library);
 }
 
-- (IBAction)duplicateAction:(NSMenuItem *)sender {
-    NSUInteger row = self.tableView.clickedRow;
-    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
+- (void)duplicateCape:(MCCursorLibrary *)library {
     [self.libraryController importCape:library.copy];
 }
 
-- (IBAction)removeAction:(NSMenuItem *)sender {
-    NSUInteger row = self.tableView.clickedRow;
-    MCCursorLibrary *library = [[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
-    
+- (void)removeCape:(MCCursorLibrary *)library {
     //!TODO: Prompt user if he/she is sure
     [self.libraryController removeCape:library];
     [[NSFileManager defaultManager] removeItemAtURL:library.fileURL error:nil];
+}
+
+#pragma mark - Context Menu
+
+- (IBAction)applyAction:(NSMenuItem *)sender {
+    [self applyCape:self.clickedCape];
+}
+
+- (IBAction)editAction:(NSMenuItem *)sender {
+    [self editCape:self.clickedCape];
+}
+
+- (IBAction)duplicateAction:(NSMenuItem *)sender {
+    [self duplicateCape:self.clickedCape];
+}
+
+- (IBAction)removeAction:(NSMenuItem *)sender {
+    [self removeCape:self.clickedCape];
 }
 
 #pragma mark - NSTableViewDelegate

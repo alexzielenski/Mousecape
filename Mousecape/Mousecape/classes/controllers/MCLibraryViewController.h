@@ -13,6 +13,15 @@
 @property (assign) IBOutlet NSMenu *contextMenu;
 @property (assign) IBOutlet NSTableView *tableView;
 @property (assign) MCLibraryController *libraryController;
+@property (assign) NSArrayController *arrayController;
+
+- (MCCursorLibrary *)selectedCape;
+- (MCCursorLibrary *)clickedCape;
+
+- (void)applyCape:(MCCursorLibrary *)library;
+- (void)editCape:(MCCursorLibrary *)library;
+- (void)duplicateCape:(MCCursorLibrary *)library;
+- (void)removeCape:(MCCursorLibrary *)library;
 
 - (IBAction)applyAction:(NSMenuItem *)sender;
 - (IBAction)editAction:(NSMenuItem *)sender;
