@@ -10,6 +10,7 @@
 #import <Security/Security.h>
 #import <ServiceManagement/ServiceManagement.h>
 #import "MCCursorLibrary.h"
+#import "create.h"
 
 static AuthorizationRef obtainRights();
 
@@ -106,7 +107,23 @@ static AuthorizationRef obtainRights();
 }
 
 - (IBAction)convertCape:(id)sender {
-    
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.allowedFileTypes = @[ @"MightyMouse" ];
+    panel.title = @"Import";
+    panel.message = @"Choose a MightyMouse file to import";
+    panel.prompt = @"Import";
+    if ([panel runModal] == NSFileHandlingPanelOKButton) {
+        NSDictionary *metadata = @{
+                                   @"name": panel.URL.lastPathComponent.stringByDeletingPathExtension,
+                                   @"version": @1.0,
+                                   @"author": @"Unknown",
+                                   @"identifier": [NSString stringWithFormat:@"local.import.MightyMouse.%f", [NSDate timeIntervalSinceReferenceDate]]
+                                   };
+        
+        NSDictionary *cape = createCapeFromMightyMouse([NSDictionary dictionaryWithContentsOfURL:panel.URL], metadata);
+        MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithDictionary:cape];
+        [self.libraryWindowController.libraryViewController.libraryController importCape:library];
+    }
 }
 
 // File Menu
