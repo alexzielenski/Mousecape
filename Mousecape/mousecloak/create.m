@@ -7,6 +7,7 @@
 //
 
 #import "create.h"
+#import "NSCursor_Private.h"
 
 NSError *createCape(NSString *input, NSString *output, BOOL convert) {
     NSDictionary *cape;
@@ -248,7 +249,7 @@ NSDictionary *processedCapeWithIdentifier(NSString *identifier) {
 
 void dumpCursorsToFile(NSString *path) {
     MMLog("Dumping cursors...");
-    
+        
     float originalScale;
     CGSGetCursorScale(CGSMainConnectionID(), &originalScale);
     
@@ -264,8 +265,10 @@ void dumpCursorsToFile(NSString *path) {
         i++;
     }
     
-    for (int x = 3; x < 50; x++) {
+    for (int x = 0x0; x < 0x100; x++) {
         NSString *key = [@"com.apple.cursor." stringByAppendingFormat:@"%d", x];
+        CoreCursorSet(CGSMainConnectionID(), x);
+
         NSDictionary *cape = processedCapeWithIdentifier(key);
         if (!cape)
             continue;

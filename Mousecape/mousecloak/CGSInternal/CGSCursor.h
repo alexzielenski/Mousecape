@@ -31,7 +31,8 @@ typedef int CGSCursorID;
 #pragma mark - HIServices
 
 CG_EXTERN CGError CoreCursorUnregisterAll(CGSConnectionID cid);
-CG_EXTERN CGError CoreCursorSetAndReturnSeed(CGSConnectionID cid, char *cursorName, int *seed);
+CG_EXTERN CGError CoreCursorSet(CGSConnectionID cid, CGSCursorID cursorID);
+CG_EXTERN CGError CoreCursorSetAndReturnSeed(CGSConnectionID cid, CGSCursorID cursorNum, int *seed);
 CG_EXTERN CGError CoreCursorCopyImages(CGSConnectionID cid, CGSCursorID cursorID, CFArrayRef *images, CGSize *imageSize, CGPoint *hotSpot, NSUInteger *frameCount, CGFloat *frameDuration);
 
 #pragma mark - Cursor APIs reversed by Alex Zielenski on Lion 10.7.3
