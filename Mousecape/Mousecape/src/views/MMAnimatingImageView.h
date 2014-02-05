@@ -33,7 +33,4 @@
 @property (assign) CGFloat                                    scale; // set to 0.0 if you want to inherit window scale
 @property (weak)   IBOutlet id <MMAnimatingImageViewDelegate> delegate;
 @property (assign) BOOL shouldAnimate;
-
-// Don't call this. Registers the valid drag types. Probably should be a private category–but we're all developers here...
-- (void)registerTypes;
 @end

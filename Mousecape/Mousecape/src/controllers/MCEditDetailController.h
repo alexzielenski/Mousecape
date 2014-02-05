@@ -10,7 +10,7 @@
 #import "MCCursor.h"
 #import "MMAnimatingImageView.h"
 
-@interface MCEditDetailController : NSViewController
+@interface MCEditDetailController : NSViewController <MMAnimatingImageViewDelegate>
 @property (strong) MCCursor *cursor;
 @property (assign) IBOutlet NSPopUpButton *typePopUpButton;
 @property (assign) IBOutlet MMAnimatingImageView *rep100View;

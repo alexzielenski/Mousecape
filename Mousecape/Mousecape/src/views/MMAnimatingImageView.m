@@ -16,6 +16,7 @@ const char MCInvalidateContext;
 - (void)_initialize;
 - (void)_invalidateFrame;
 - (void)_invalidateAnimation;
+- (void)registerTypes;
 @end
 
 @implementation MMAnimatingImageView
@@ -44,7 +45,7 @@ const char MCInvalidateContext;
 - (void)_initialize {
     self.shouldAnimate = YES;
     
-//    [self registerTypes];
+    [self registerTypes];
     
     self.layer = [[MCSpriteLayer alloc] init];
     self.wantsLayer = YES;

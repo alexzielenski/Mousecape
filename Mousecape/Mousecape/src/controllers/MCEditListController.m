@@ -7,9 +7,13 @@
 //
 
 #import "MCEditListController.h"
+#import "NSOrderedSet+AZSortedInsert.h"
+
+const char MCEditCursorsContext;
 
 @interface MCEditListController ()
-@property (strong) NSArrayController *arrayController;
+@property (nonatomic, strong) NSMutableOrderedSet *cursors;
++ (NSComparator)sortComparator;
 @end
 
 @implementation MCEditListController
@@ -17,35 +21,81 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.arrayController = [[NSArrayController alloc] init];
         [self addObserver:self forKeyPath:@"cursorLibrary" options:0 context:nil];
+        [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:0 context:NULL];
     }
     return self;
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
     if ((self = [super initWithCoder:coder])) {
-        self.arrayController = [[NSArrayController alloc] init];
-        self.arrayController.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ];
         [self addObserver:self forKeyPath:@"cursorLibrary" options:0 context:nil];
-        [self.arrayController bind:@"contentSet" toObject:self withKeyPath:@"cursorLibrary.cursors" options:nil];
+        [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:(void*)&MCEditCursorsContext];
 
     }
     return self;
 }
 
 - (void)dealloc {
-    [self.arrayController unbind:@"contentSet"];
     [self removeObserver:self forKeyPath:@"cursorLibrary"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"cursorLibrary"]) {
         [(NSTableView *)self.view reloadData];
-        
         // make sure the selected object is set
         [self tableViewSelectionDidChange:nil];
+    } else if (context == &MCEditCursorsContext) {
+        NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] integerValue];
+        
+        if (kind == NSKeyValueChangeSetting) {
+            self.cursors = [NSMutableOrderedSet orderedSetWithSet:change[NSKeyValueChangeNewKey] copyItems:NO];
+            [self.cursors sortUsingComparator:self.class.sortComparator];
+            
+        } else if (kind == NSKeyValueChangeInsertion) {
+            for (MCCursorLibrary *lib in change[NSKeyValueChangeNewKey]) {
+                NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
+                
+                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self.cursors insertObject:lib atIndex:index];
+                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
+            }
+        } else if (kind == NSKeyValueChangeRemoval) {
+            for (MCCursorLibrary *lib in change[NSKeyValueChangeOldKey]) {
+                NSUInteger index = [self.cursors indexOfObject:lib];
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
+                
+                [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
+                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self.cursors removeObjectAtIndex:index];
+                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+            }
+
+        }
     }
+}
+
++ (NSComparator)sortComparator {
+    static NSComparator sortComparator = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sortComparator = ^NSComparisonResult(id obj1, id obj2) {
+            return [[obj1 valueForKey:@"name"] localizedCaseInsensitiveCompare:[obj2 valueForKey:@"name"]];
+        };
+    });
+    
+    return sortComparator;
+}
+
+- (IBAction)addAction:(id)sender {
+    [self.cursorLibrary addCursor:[[MCCursor alloc] init]];
+}
+
+- (IBAction)removeAction:(id)sender {
+    NSUInteger row = self.tableView.selectedRow - 1;
+    [self.cursorLibrary removeCursor:[self.cursors objectAtIndex:row]];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -55,7 +105,7 @@
     if (selectedRow == 0)
         self.selectedObject = self.cursorLibrary;
     else
-        self.selectedObject = [self.arrayController.arrangedObjects objectAtIndex:selectedRow - 1];
+        self.selectedObject = [self.cursors objectAtIndex:selectedRow - 1];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row {
@@ -80,13 +130,13 @@
 #pragma mark - NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [self.arrayController.arrangedObjects count] + 1;
+    return self.cursors.count + 1;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (row == 0)
         return self.cursorLibrary;
-    return [[self.arrayController arrangedObjects] objectAtIndex: row - 1];
+    return [self.cursors objectAtIndex: row - 1];
 }
 
 @end

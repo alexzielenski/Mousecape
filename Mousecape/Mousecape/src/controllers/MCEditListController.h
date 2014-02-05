@@ -11,4 +11,9 @@
 @interface MCEditListController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 @property (strong) MCCursorLibrary *cursorLibrary;
 @property (weak) id selectedObject;
+@property (assign) IBOutlet NSTableView *tableView;
+
+- (IBAction)addAction:(id)sender;
+- (IBAction)removeAction:(id)sender;
+
 @end

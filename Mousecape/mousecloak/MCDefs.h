@@ -56,6 +56,7 @@ extern NSDictionary *cursorMap();
 extern NSString *nameForCursorIdentifier(NSString *identifier);
 extern NSString *cursorIdentifierForName(NSString *name);
 
+extern NSString *UUID(void);
 extern NSDictionary *capeWithIdentifier(NSString *identifier);
 extern void CGImageWriteToFile(CGImageRef image, CFStringRef path);
 extern NSData *pngDataForImage(id image);

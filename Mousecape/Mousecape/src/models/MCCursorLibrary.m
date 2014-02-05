@@ -200,6 +200,9 @@ const char MCCursorPropertiesContext;
         [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
         
         id oldValue = change[NSKeyValueChangeOldKey];
+        if ([oldValue isKindOfClass:[NSNull class]])
+            oldValue = nil;
+        
         [[self.undoManager prepareWithInvocationTarget: object] setValue:oldValue forKeyPath:keyPath];
     }
 }
@@ -208,6 +211,11 @@ const char MCCursorPropertiesContext;
     for (NSString *key in cursorDicts.allKeys) {
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
         MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
+//        if (!cursor)
+//            continue;
+        if ([key isEqualToString:@"com.apple.coregraphics.Wait"] && [self.name isEqualToString:@"Aqua Cursors"]) {
+            NSLog(@"%@", cursor);
+        }
         cursor.identifier = key;
         [self addCursor: cursor];
     }
@@ -221,10 +229,11 @@ const char MCCursorPropertiesContext;
 
 - (void)addCursor:(MCCursor *)cursor {
     NSSet *change = [NSSet setWithObject:cursor];
-    [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+    
+    [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     [self.cursors addObject:cursor];
     [self startObservingCursor:cursor];
-    [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+    [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     
     [self.undoManager setActionName:@"Add Cursor"];
     [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
@@ -232,10 +241,11 @@ const char MCCursorPropertiesContext;
 
 - (void)removeCursor:(MCCursor *)cursor {
     NSSet *change = [NSSet setWithObject:cursor];
-    [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
+    
+    [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     [self.cursors removeObject:cursor];
     [self stopObservingCursor:cursor];
-    [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
+    [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     
     [self.undoManager setActionName:@"Remove Cursor"];
     [[self.undoManager prepareWithInvocationTarget:self] addCursor:cursor];

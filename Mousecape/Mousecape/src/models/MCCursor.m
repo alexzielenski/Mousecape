@@ -33,6 +33,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
         self.frameDuration   = 1.0;
         self.size            = NSZeroSize;
         self.hotSpot         = NSZeroPoint;
+        self.identifier      = [UUID() stringByReplacingOccurrencesOfString:@"-" withString:@""];
         self.representations = [NSMutableDictionary dictionary];
     }
     return self;
@@ -70,7 +71,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     } else if ([key isEqualToString:@"name"]) {
         keyPaths = [keyPaths setByAddingObjectsFromArray:@[ @"identifier" ]];
     } else if ([key hasPrefix:@"cursorImage"]) {
-        keyPaths = [keyPaths setByAddingObjectsFromArray: @[ [key stringByReplacingCharactersInRange:NSMakeRange(6, 5) withString:@"Rep"] ]];
+        keyPaths = [keyPaths setByAddingObjectsFromArray:@[ [key stringByReplacingCharactersInRange:NSMakeRange(6, 5) withString:@"Rep"] ]];
     }
     
     return keyPaths;
@@ -91,7 +92,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     
     // we only take version 2.0 documents.
     if (version >=  2.0) {
-        if (frameCount && frameDuration && hotSpotX && hotSpotY && pointsWide && pointsHigh && reps && reps.count > 0) {
+        if (frameCount && frameDuration && hotSpotX && hotSpotY && pointsWide && pointsHigh) {
             
             self.frameCount    = frameCount.unsignedIntegerValue;
             self.frameDuration = frameDuration.doubleValue;
@@ -99,21 +100,17 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
             self.size          = NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
             //            self.repeatCount   = repeatCount.unsignedIntegerValue;
             
-            
             for (NSData *data in reps) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
                 [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
             }
-            if (self.representations.count == 0)
-                return NO;
             
             return YES;
         }
-        
     }
-    
+
     return NO;
 }
 

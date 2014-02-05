@@ -105,7 +105,7 @@ const char MCLibraryNameContext;
                 [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
                 [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp];
             }
-            [self.capes unionSet:change[NSKeyValueChangeNewKey]];
+
         } else if (kind ==  NSKeyValueChangeRemoval) {
             for (MCCursorLibrary *lib in change[NSKeyValueChangeOldKey]) {
                 NSUInteger index = [self.capes indexOfObject:lib];

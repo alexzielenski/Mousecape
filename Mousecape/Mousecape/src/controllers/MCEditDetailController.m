@@ -25,9 +25,9 @@
     self.rep500View.placeholderImage = dropzone;
     self.rep1000View.placeholderImage = dropzone;
     
-    self.rep100View.scale = 1.0;
-    self.rep200View.scale = 2.0;
-    self.rep500View.scale = 5.0;
+    self.rep100View.scale  = 1.0;
+    self.rep200View.scale  = 2.0;
+    self.rep500View.scale  = 5.0;
     self.rep1000View.scale = 10.0;
     
     [self.rep100View bind:@"image" toObject:self withKeyPath:@"cursor.cursorImage100" options:nil];
@@ -47,6 +47,26 @@
     [self.rep1000View bind:@"frameDuration" toObject:self withKeyPath:@"cursor.frameDuration" options:nil];
 }
 
+#pragma mark - MMAnimatingImageView
+
+- (NSDragOperation)imageView:(MMAnimatingImageView *)imageView draggingEntered:(id <NSDraggingInfo>)drop {
+    return NSDragOperationCopy;
+}
+
+- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPrepareForDragOperation:(id <NSDraggingInfo>)drop {
+    return YES;
+}
+
+- (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPerformDragOperation:(id <NSDraggingInfo>)drop {
+    return YES;
+}
+
+- (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {
+//    NSLog(@"%@", images);
+#warning Only set if its size is a multple of the actual image size
+    CGFloat scale = imageView.scale;
+    [self.cursor setRepresentation:images.lastObject forScale:cursorScaleForScale(scale)];
+}
 
 @end
 

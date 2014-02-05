@@ -46,6 +46,13 @@ const NSString *MCCursorDictionaryPointsWideKey      = @"PointsWide";
 const NSString *MCCursorDictionaryPointsHighKey      = @"PointsHigh";
 const NSString *MCCursorDictionaryRepresentationsKey = @"Representations";
 
+NSString *UUID() {
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return [(NSString *)string autorelease];
+}
+
 NSString *MMGet(NSString *prompt) {
     MMOut("%s: ", prompt.UTF8String);
     
@@ -183,7 +190,8 @@ NSDictionary *cursorMap() {
 }
 
 NSString *nameForCursorIdentifier(NSString *identifier) {
-    return cursorMap()[identifier];
+    NSString *name = cursorMap()[identifier];
+    return name ?: @"Unknown";
 }
 
 NSString *cursorIdentifierForName(NSString *name) {
