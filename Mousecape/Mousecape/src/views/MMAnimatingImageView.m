@@ -8,11 +8,6 @@
 
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
-//#import "NSImage+BestRep.h"
-
-static NSRect centerSizeInRect(NSSize size, NSRect rect) {
-    return NSIntegralRect(NSMakeRect(NSMidX(rect) - size.width / 2, NSMidY(rect) - size.height / 2, size.width, size.height));
-}
 
 const char MCInvalidateContext;
 

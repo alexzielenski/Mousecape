@@ -31,6 +31,15 @@ static AuthorizationRef obtainRights();
     return YES;
 }
 
+- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename {
+    BOOL open = [filename.pathExtension.lowercaseString isEqualToString:@"cape"];
+    NSURL *url = [NSURL fileURLWithPath:filename];
+    if (open) {
+        [self.libraryWindowController.libraryViewController.libraryController importCapeAtURL:url];
+    }
+    return open;
+}
+
 - (void)configureHelperToolMenuItem {
     NSString *mouseCloakDest = @"/usr/local/bin/mousecloak";
     NSString *agentDest = [@"/Library/LaunchAgents" stringByAppendingPathComponent: @"com.alexzielenski.mousecloak.listener.plist"];
