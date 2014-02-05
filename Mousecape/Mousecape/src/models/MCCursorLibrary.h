@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "MCCursor.h"
 
+@class MCLibraryController;
 @interface MCCursorLibrary : NSObject <NSCopying>
 @property (nonatomic, copy)   NSString *name;
 @property (nonatomic, copy)   NSString *author;
 @property (nonatomic, copy)   NSString *identifier;
 @property (nonatomic, copy)   NSNumber *version;
 @property (nonatomic, copy)   NSURL    *fileURL;
+@property (nonatomic, weak)   MCLibraryController *library;
+@property (nonatomic, readonly) NSUndoManager *undoManager;
 @property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
 @property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
 
@@ -35,6 +38,7 @@
 
 - (NSDictionary *)dictionaryRepresentation;
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
+- (BOOL)save;
 
 @end
 

@@ -9,6 +9,7 @@
 #import "MCCursorLibrary.h"
 
 @interface MCCursorLibrary ()
+@property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
@@ -62,6 +63,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
+        self.undoManager = [[NSUndoManager alloc] init];
         self.name = @"Unnamed";
         self.author = NSUserName();
         self.hiDPI = NO;
@@ -184,6 +186,10 @@
 
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically {
     return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
+}
+
+- (BOOL)save {
+    return [self writeToFile:self.fileURL.path atomically:NO];
 }
 
 - (BOOL)isEqualTo:(MCCursorLibrary *)object {
