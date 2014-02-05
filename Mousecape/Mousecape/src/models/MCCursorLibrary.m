@@ -31,7 +31,7 @@
 }
 
 + (NSArray *)cursorUndoProperties {
-    return @[ @"identifier", @"frameDuration", @"frameCount", @"size", @"hotSpot" ];
+    return @[ @"identifier", @"frameDuration", @"frameCount", @"size", @"hotSpot", @"cursorRep100", @"cursorRep200", @"cursorRep500", @"cursorRep1000" ];
 }
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {

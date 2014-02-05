@@ -208,7 +208,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 - (void)setRepresentation:(NSImageRep *)imageRep forScale:(MCCursorScale)scale {
     [self willChangeValueForKey:@"representations"];
     
-    NSString *key      = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
+    NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
     [self willChangeValueForKey:key];
     if (imageRep)
         [self.representations setObject:imageRep forKey:@(scale)];
