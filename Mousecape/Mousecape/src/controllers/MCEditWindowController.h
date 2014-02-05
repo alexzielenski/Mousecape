@@ -12,7 +12,7 @@
 #import "MCEditCapeController.h"
 #import "MCCursorLibrary.h"
 
-@interface MCEditWindowController : NSWindowController <NSWindowDelegate>
+@interface MCEditWindowController : NSWindowController <NSWindowDelegate, NSSplitViewDelegate>
 @property (assign) IBOutlet MCEditListController *editListController;     // List of cursors in the library
 @property (assign) IBOutlet MCEditDetailController *editDetailController; // Detail view of the selected cursor
 @property (assign) IBOutlet MCEditCapeController *editCapeController;     // Detail view of the entire library

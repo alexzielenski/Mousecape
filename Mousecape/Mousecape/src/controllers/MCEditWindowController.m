@@ -82,4 +82,25 @@
     [self.detailView addSubview:vc.view];
 }
 
+#pragma mark - NSSplitViewDelegate
+
+- (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview {
+    return NO;
+}
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)dividerIndex {
+    if (dividerIndex == 0) {
+        return 120.0f;
+    }
+    
+    return proposedMin;
+}
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex {
+    if (dividerIndex == 0) {
+        return splitView.frame.size.width - 380.0;
+    }
+    return proposedMax;
+}
+
 @end
