@@ -28,6 +28,3 @@
 @interface MCLibraryController (Properties)
 @property (readonly, strong) NSOrderedSet *capes;
 @end
-
-@interface MCOrderedSetTransformer : NSValueTransformer
-@end

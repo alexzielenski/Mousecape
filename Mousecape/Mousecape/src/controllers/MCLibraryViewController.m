@@ -182,44 +182,6 @@ const char MCLibraryNameContext;
     [self.libraryController removeCape:self.clickedCape];
 }
 
-#pragma mark - MCLibraryDelegate
-/*
-- (BOOL)libraryController:(MCLibraryController *)controller shouldAddCape:(MCCursorLibrary *)library {
-#warning TODO: Make sure the identifier isn't taken
-    return YES;
-}
-
-- (BOOL)libraryController:(MCLibraryController *)controller shouldRemoveCape:(MCCursorLibrary *)library {
-    NSUInteger index = [controller.capes indexOfObject:library];
-    
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index + 1 > 1 ? index + 1 : 1] byExtendingSelection:NO];
-    [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectFade | NSTableViewAnimationSlideUp];
-    [self.tableView scrollRowToVisible:self.tableView.selectedRow];
-    return YES;
-}
-
-- (void)libraryController:(MCLibraryController *)controller didAddCape:(MCCursorLibrary *)library {
-    NSIndexSet *indices = [NSIndexSet indexSetWithIndex:[controller.capes indexOfObject:library]];
-    [self.tableView insertRowsAtIndexes:indices withAnimation: NSTableViewAnimationSlideUp];
-    [self.tableView selectRowIndexes:indices byExtendingSelection:NO];
-    [self.tableView scrollRowToVisible:self.tableView.selectedRow];
-    [self.view.window.undoManager setActionName:[@"Add " stringByAppendingString:library.name]];
-    
-    [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] removeCape:library];
-}
-
-- (void)libraryController:(MCLibraryController *)controller didRemoveCape:(MCCursorLibrary *)library {
-    // Move the file to the trash
-    NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:library.fileURL.lastPathComponent] isDirectory:NO];
-
-    [[NSFileManager defaultManager] removeItemAtURL:destinationURL error:NULL];
-    [[NSFileManager defaultManager] moveItemAtURL:library.fileURL toURL:destinationURL error:NULL];
-    
-    [self.view.window.undoManager setActionName:[@"Remove " stringByAppendingString:library.name]];
-    [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] importCapeAtURL:destinationURL];
-    
-}
-*/
 #pragma mark - NSTableViewDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -241,25 +203,5 @@ const char MCLibraryNameContext;
 //- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
 //    return nil;
 //}
-
-@end
-
-@implementation MCOrderedSetTransformer
-
-+ (Class)transformedValueClass {
-    return [NSArray class];
-}
-
-+ (BOOL)allowsReverseTransformation {
-    return YES;
-}
-
-- (id)transformedValue:(id)value {
-    return [(NSOrderedSet *)value array];
-}
-
-- (id)reverseTransformedValue:(id)value {
-	return [NSOrderedSet orderedSetWithArray:value];
-}
 
 @end
