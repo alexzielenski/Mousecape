@@ -8,10 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MCCursor.h"
+#import "MMAnimatingImageView.h"
 
 @interface MCEditDetailController : NSViewController
 @property (strong) MCCursor *cursor;
 @property (assign) IBOutlet NSPopUpButton *typePopUpButton;
+@property (assign) IBOutlet MMAnimatingImageView *rep100View;
+@property (assign) IBOutlet MMAnimatingImageView *rep200View;
+@property (assign) IBOutlet MMAnimatingImageView *rep500View;
+@property (assign) IBOutlet MMAnimatingImageView *rep1000View;
 @end
 
 @interface MCCursorTypeValueTransformer : NSValueTransformer

@@ -22,7 +22,6 @@ static AuthorizationRef obtainRights();
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self configureHelperToolMenuItem];
-    
     self.libraryWindowController = [[MCLibraryWindowController alloc] initWithWindowNibName:@"Library"];
     [self.libraryWindowController showWindow:self];
 }

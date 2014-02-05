@@ -62,14 +62,15 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     return cursor;
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
-    
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {    
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
     
     if ([key isEqualToString:@"imageWithAllReps"]) {
         keyPaths = [keyPaths setByAddingObjectsFromArray:@[ @"representations" ]];
     } else if ([key isEqualToString:@"name"]) {
-        keyPaths =[keyPaths setByAddingObjectsFromArray:@[ @"identifier" ]];
+        keyPaths = [keyPaths setByAddingObjectsFromArray:@[ @"identifier" ]];
+    } else if ([key hasPrefix:@"cursorImage"]) {
+        keyPaths = [keyPaths setByAddingObjectsFromArray: @[ [key stringByReplacingCharactersInRange:NSMakeRange(6, 5) withString:@"Rep"] ]];
     }
     
     return keyPaths;
@@ -173,9 +174,13 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
         if ([key hasPrefix:@"cursorRep"])
             return [self representationForScale:cursorScaleForScale(scale)];
         else {
-            NSImage *image = [[NSImage alloc] initWithSize:self.size];
-            [image addRepresentation:[self representationForScale:cursorScaleForScale(scale)]];
-            return image;
+            NSImageRep *rep = [self representationForScale:cursorScaleForScale(scale)];
+            if (rep) {
+                NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(rep.pixelsWide / scale, rep.pixelsHigh / scale)];
+                [image addRepresentation:rep];
+                return image;
+            }
+            return nil;
         }
     }
     
@@ -203,7 +208,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 - (void)setRepresentation:(NSImageRep *)imageRep forScale:(MCCursorScale)scale {
     [self willChangeValueForKey:@"representations"];
     
-    NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
+    NSString *key      = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
     [self willChangeValueForKey:key];
     if (imageRep)
         [self.representations setObject:imageRep forKey:@(scale)];

@@ -49,7 +49,7 @@
 		FAC69FDC189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAC69FDD189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
 		FAEE652918A047E8003AA182 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650A18A047E8003AA182 /* NSFileManager+DirectoryLocations.m */; };
-		FAEE652A18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650C18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m */; };
+		FAEE652A18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650C18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAEE652B18A047E8003AA182 /* MCEditCapeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650F18A047E8003AA182 /* MCEditCapeController.m */; };
 		FAEE652C18A047E8003AA182 /* MCEditDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE651118A047E8003AA182 /* MCEditDetailController.m */; };
 		FAEE652D18A047E8003AA182 /* MCEditListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE651318A047E8003AA182 /* MCEditListController.m */; };
@@ -62,6 +62,7 @@
 		FAEE653418A047E8003AA182 /* MCFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE652318A047E8003AA182 /* MCFormatters.m */; };
 		FAEE653518A047E8003AA182 /* MCCapeCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE652618A047E8003AA182 /* MCCapeCellView.m */; };
 		FAEE653618A047E8003AA182 /* MMAnimatingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE652818A047E8003AA182 /* MMAnimatingImageView.m */; };
+		FAEE653918A048EA003AA182 /* MCSpriteLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE653818A048EA003AA182 /* MCSpriteLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +210,8 @@
 		FAEE652618A047E8003AA182 /* MCCapeCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCapeCellView.m; sourceTree = "<group>"; };
 		FAEE652718A047E8003AA182 /* MMAnimatingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAnimatingImageView.h; sourceTree = "<group>"; };
 		FAEE652818A047E8003AA182 /* MMAnimatingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAnimatingImageView.m; sourceTree = "<group>"; };
+		FAEE653718A048EA003AA182 /* MCSpriteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSpriteLayer.h; sourceTree = "<group>"; };
+		FAEE653818A048EA003AA182 /* MCSpriteLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSpriteLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,6 +508,8 @@
 				FAEE652618A047E8003AA182 /* MCCapeCellView.m */,
 				FAEE652718A047E8003AA182 /* MMAnimatingImageView.h */,
 				FAEE652818A047E8003AA182 /* MMAnimatingImageView.m */,
+				FAEE653718A048EA003AA182 /* MCSpriteLayer.h */,
+				FAEE653818A048EA003AA182 /* MCSpriteLayer.m */,
 			);
 			name = views;
 			path = src/views;
@@ -656,6 +661,7 @@
 				FAEE653618A047E8003AA182 /* MMAnimatingImageView.m in Sources */,
 				FAEE653318A047E8003AA182 /* MCCursorLibrary.m in Sources */,
 				FAC69F78189D603C00BC829D /* MCAppDelegate.m in Sources */,
+				FAEE653918A048EA003AA182 /* MCSpriteLayer.m in Sources */,
 				FAEE652F18A047E8003AA182 /* MCLibraryController.m in Sources */,
 				FAEE653118A047E8003AA182 /* MCLibraryWindowController.m in Sources */,
 				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,

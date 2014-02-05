@@ -8,11 +8,13 @@
 
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
-#import "NSImage+BestRep.h"
+//#import "NSImage+BestRep.h"
 
 static NSRect centerSizeInRect(NSSize size, NSRect rect) {
     return NSIntegralRect(NSMakeRect(NSMidX(rect) - size.width / 2, NSMidY(rect) - size.height / 2, size.width, size.height));
 }
+
+const char MCInvalidateContext;
 
 @interface MMAnimatingImageView ()
 @property (weak) MCSpriteLayer *spriteLayer;
@@ -29,68 +31,67 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 	return self;
 }
 
+- (id)initWithCoder:(NSCoder *)coder {
+    if ((self = [super initWithCoder:coder])) {
+        [self _initialize];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(NSRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        [self _initialize];
+    }
+    
+    return self;
+}
+
 - (void)_initialize {
     self.shouldAnimate = YES;
     
 //    [self registerTypes];
     
-    self.layer = [CALayer layer];
+    self.layer = [[MCSpriteLayer alloc] init];
     self.wantsLayer = YES;
     self.layer.contentsGravity = kCAGravityCenter;
     self.layer.bounds = self.bounds;
     self.layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin;
     self.layer.delegate = self;
     
-    MCSpriteLayer *spriteLayer = [MCSpriteLayer layerWithImage:nil sampleSize:CGSizeZero];
-    spriteLayer.autoresizingMask = kCALayerNotSizable;
-    spriteLayer.position = CGPointZero;//CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
-    spriteLayer.contentsGravity = kCAGravityResize;
-    
-    NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                       [NSNull null], @"contents",
-                                       nil];
-    spriteLayer.actions = newActions;
-    
-    [self.layer addSublayer:spriteLayer];
-    self.spriteLayer = spriteLayer;
-    self.spriteLayer.maximumSize = self.frame.size;
+    self.spriteLayer = (MCSpriteLayer *)self.layer;
 
     self.frameCount    = 1;
     self.frameDuration = 1;
     
-    @weakify(self);
-    
-    [self.spriteLayer rac_bind:@"image" toObject:self withKeyPath:@"image"];
-    
-    [self rac_addDeallocDisposable:[[[RACSignal combineLatest:@[ RACAble(self.frameCount), RACAble(self.frameDuration) ]] distinctUntilChanged]
-     subscribeNext:^(id x) {
-         @strongify(self);
-         [self _invalidateFrame];
-         [self _invalidateAnimation];
-     }]];
-    
-    [self rac_addDeallocDisposable:[[RACAble(self.shouldAnimate) distinctUntilChanged]
-     subscribeNext:^(NSNumber *x) {
-         @strongify(self);
-         if (!x.boolValue) {
-             self.spriteLayer.sampleIndex = self.frameCount + 1;
-             [self.spriteLayer removeAllAnimations];
-             [self.spriteLayer setNeedsDisplay];
-         } else {
-             [self _invalidateAnimation];
-         }
-     }]];
-    
+    [self addObserver:self forKeyPath:@"image" options:0 context:(void *)&MCInvalidateContext];
+    [self addObserver:self forKeyPath:@"placeholderImage" options:0 context:(void *)&MCInvalidateContext];
+    [self addObserver:self forKeyPath:@"frameCount" options:0 context:(void *)&MCInvalidateContext];
+    [self addObserver:self forKeyPath:@"frameDuration" options:0 context:(void *)&MCInvalidateContext];
+    [self addObserver:self forKeyPath:@"shouldAnimate" options:0 context:NULL];
 }
 
-- (void)viewDidChangeBackingProperties {
-    [super viewDidChangeBackingProperties];
-    
-    self.layer.contentsScale       = self.window.backingScaleFactor;
-    self.spriteLayer.contentsScale = self.window.backingScaleFactor;
-    
-    // When you set this, the next time the layer displayes it will choose the best representation for the job
-    self.spriteLayer.image = (__bridge id)[(NSBitmapImageRep *)[self.image bestRepresentationForContentsScale:self.spriteLayer.contentsScale] CGImage];
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"image"];
+    [self removeObserver:self forKeyPath:@"placeholderImage"];
+    [self removeObserver:self forKeyPath:@"frameCount"];
+    [self removeObserver:self forKeyPath:@"frameDuration"];
+    [self removeObserver:self forKeyPath:@"shouldAnimate"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == &MCInvalidateContext) {
+        if ([keyPath isEqualToString:@"image"] || [keyPath isEqualToString:@"placeholderImage"]) {
+            self.spriteLayer.contents = !self.image ? self.placeholderImage : self.image;
+        }
+        [self _invalidateFrame];
+        [self _invalidateAnimation];
+    } else if ([keyPath isEqualToString:@"shouldAnimate"]) {
+        [self _invalidateAnimation];
+    }
+}
+
+- (BOOL)layer:(CALayer *)layer shouldInheritContentsScale:(CGFloat)newScale fromWindow:(NSWindow *)window {
+    return self.scale == 0.0 || !self.image;
 }
 
 // Tell OSX that our view can accept images to be dragged in
@@ -105,32 +106,29 @@ static NSRect centerSizeInRect(NSSize size, NSRect rect) {
 #pragma mark - Invalidators
 
 - (void)_invalidateFrame {
-    self.spriteLayer.maximumSize = self.frame.size;
-    
-    self.spriteLayer.sampleSize = NSMakeSize(self.image.size.width, self.image.size.height / self.frameCount);
-    self.spriteLayer.position = centerSizeInRect(self.spriteLayer.bounds.size, self.layer.bounds).origin;
+    CGFloat scale = self.scale;
+    if (!self.scale || !self.image)
+        scale = self.window.backingScaleFactor;
+    self.layer.contentsScale = scale;
 }
 
 - (void)_invalidateAnimation {
-    if (self.frameCount == 1 || !self.shouldAnimate) {
-        self.spriteLayer.sampleIndex = self.frameCount + 1;
-        [self.spriteLayer removeAllAnimations];
-        return;
-    }
-    
     [self.spriteLayer removeAllAnimations];
     
-    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
     
-    anim.fromValue    = @(self.frameCount + 1);
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
+    BOOL none = (self.frameCount == 1 || !self.shouldAnimate);
+    NSUInteger frameCount = none || !self.image ? 0 : self.frameCount;
+    self.spriteLayer.frameCount = frameCount;
+
+    anim.fromValue    = @(frameCount + 1);
     anim.toValue      = @(1);
     anim.byValue      = @(-1);
-    anim.duration     = self.frameDuration * self.frameCount;
-    anim.repeatCount  = HUGE_VALF; // just keep repeating it
+    anim.duration     = self.frameDuration * frameCount;
+    anim.repeatCount  = none ? 0 : HUGE_VALF; // just keep repeating it
     anim.autoreverses = NO; // do 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
-    anim.removedOnCompletion = NO;
+    anim.removedOnCompletion = none;
     anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    
     [self.spriteLayer addAnimation:anim forKey:@"sampleIndex"]; // start
 }
 
