@@ -12,6 +12,7 @@
 @interface NSOrderedSet (AZSortedInsert)
 
 - (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingfunction:(NSInteger (*)(id, id, void *))compare context:(void *)context;
+- (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingComparator:(NSComparator)comparator;
 - (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingSelector:(SEL)aSelector;
 - (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingDescriptors:(NSArray *)descriptors;
 

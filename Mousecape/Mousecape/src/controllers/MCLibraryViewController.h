@@ -9,10 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "MCLibraryController.h"
 
-@interface MCLibraryViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource, MCLibraryDelegate>
+@interface MCLibraryViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
 @property (assign) IBOutlet NSMenu *contextMenu;
 @property (assign) IBOutlet NSTableView *tableView;
-@property (strong) MCLibraryController *libraryController;
+@property (strong, readonly) MCLibraryController *libraryController;
 
 - (MCCursorLibrary *)selectedCape;
 - (MCCursorLibrary *)clickedCape;
@@ -23,7 +23,10 @@
 - (IBAction)editAction:(NSMenuItem *)sender;
 - (IBAction)duplicateAction:(NSMenuItem *)sender;
 - (IBAction)removeAction:(NSMenuItem *)sender;
+@end
 
+@interface MCLibraryController (Properties)
+@property (readonly, strong) NSOrderedSet *capes;
 @end
 
 @interface MCOrderedSetTransformer : NSValueTransformer

@@ -59,6 +59,10 @@
                                 views:NSDictionaryOfVariableBindings(accessory)]];
 }
 
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return self.libraryViewController.libraryController.undoManager;
+}
+
 @end
 
 @implementation MCAppliedCapeValueTransformer

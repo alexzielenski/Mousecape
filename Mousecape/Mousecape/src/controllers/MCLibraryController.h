@@ -9,21 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "MCCursorLibrary.h"
 
-@class MCLibraryController;
-@protocol MCLibraryDelegate <NSObject>
-
-@optional
-- (BOOL)libraryController:(MCLibraryController *)controller shouldAddCape:(MCCursorLibrary *)library;
-- (BOOL)libraryController:(MCLibraryController *)controller shouldRemoveCape:(MCCursorLibrary *)library;
-
-- (void)libraryController:(MCLibraryController *)controller didAddCape:(MCCursorLibrary *)library;
-- (void)libraryController:(MCLibraryController *)controller didRemoveCape:(MCCursorLibrary *)library;
-
-@end
-
 @interface MCLibraryController : NSObject
 @property (readonly, weak) MCCursorLibrary *appliedCape;
-@property (weak) id <MCLibraryDelegate> delegate;
+@property (nonatomic, readonly) NSUndoManager *undoManager;
 @property (readonly, copy) NSURL *libraryURL;
 
 - (instancetype)initWithURL:(NSURL *)url;
@@ -42,5 +30,5 @@
 @end
 
 @interface MCLibraryController (Capes)
-@property (nonatomic, readonly) NSOrderedSet *capes;
+@property (nonatomic, readonly) NSSet *capes;
 @end

@@ -31,8 +31,16 @@ static NSComparisonResult cw_SelectorCompare(id a, id b, void* aSelector) {
 	return (NSComparisonResult)objc_msgSend(a, (SEL)aSelector, b);
 }
 
+static NSComparisonResult az_comparatorCompare(id a, id b, NSComparator comparator) {
+    return comparator(a, b);
+}
+
 - (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingSelector:(SEL)aSelector; {
 	return [self indexForInsertingObject:anObject sortedUsingfunction:&cw_SelectorCompare context:aSelector];
+}
+
+- (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingComparator:(NSComparator)comparator {
+    return [self indexForInsertingObject:anObject sortedUsingfunction:(NSInteger (*)(id, id, void *))&az_comparatorCompare context:comparator];
 }
 
 static IMP cw_compareObjectToObjectImp = NULL;

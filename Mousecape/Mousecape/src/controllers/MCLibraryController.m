@@ -7,31 +7,21 @@
 //
 
 #import "MCLibraryController.h"
-#import "MCCursorLibrary.h"
 #import "NSOrderedSet+AZSortedInsert.h"
 #import "apply.h"
 #import "restore.h"
 
+const char MCLibraryIdentifierContext;
+
 @interface MCLibraryController ()
-@property (nonatomic, retain) NSMutableOrderedSet *capes;
+@property (nonatomic, readwrite, strong) NSUndoManager *undoManager;
+@property (nonatomic, retain) NSMutableSet *capes;
 @property (readwrite, copy) NSURL *libraryURL;
 @property (readwrite, weak) MCCursorLibrary *appliedCape;
-+ (NSArray *)sortDescriptors;
 - (void)loadLibrary;
 @end
 
 @implementation MCLibraryController
-
-+ (NSArray *)sortDescriptors {
-    static NSArray *descriptors = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        descriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)],
-                         [NSSortDescriptor sortDescriptorWithKey:@"author" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)] ];
-    });
-    
-    return descriptors;
-}
 
 - (NSURL *)URLForCape:(MCCursorLibrary *)cape {
     return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];
@@ -40,6 +30,7 @@
 - (instancetype)initWithURL:(NSURL *)url {
     if ((self = [self init])) {
         self.libraryURL = url;
+        self.undoManager = [[NSUndoManager alloc] init];
         [self loadLibrary];
     }
     
@@ -47,7 +38,9 @@
 }
 
 - (void)loadLibrary {
-    self.capes = [NSMutableOrderedSet orderedSet];
+    [self.undoManager disableUndoRegistration];
+    
+    self.capes = [NSMutableSet set];
     NSString *capesPath = self.libraryURL.path;
     NSArray  *contents  = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:capesPath error:NULL];
     NSString *applied   = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
@@ -62,6 +55,8 @@
         
         [self addCape:library];
     }
+    
+    [self.undoManager enableUndoRegistration];
 }
 
 - (void)importCapeAtURL:(NSURL *)url {
@@ -76,6 +71,7 @@
     [self addCape:lib];
 }
 
+
 - (void)addCape:(MCCursorLibrary *)cape {
     if ([self.capes containsObject:cape]) {
         NSLog(@"Not adding %@ to the library because an object with that identifier already exists", cape.identifier);
@@ -86,30 +82,47 @@
         NSLog(@"Cannot add nil cape");
         return;
     }
+
+    NSSet *change = [NSSet setWithObject:cape];
+    [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:shouldAddCape:)] && ![self.delegate libraryController:self shouldAddCape:cape])
-        return;
-    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
-    [self.capes insertObject:cape sortedUsingDescriptors:self.class.sortDescriptors];
-    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count] forKey:@"capes"];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:didAddCape:)])
-        [self.delegate libraryController:self didAddCape:cape];
-        
+    [cape addObserver:self forKeyPath:@"identifier" options:0 context:(void *)&MCLibraryIdentifierContext];
+    
+    cape.library = self;
+    [self.capes addObject:cape];
+    
+    [self.undoManager setActionName:[@"Add " stringByAppendingString:cape.name]];
+    [[self.undoManager prepareWithInvocationTarget:self] removeCape:cape];
+    
+    [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
 }
 
 
 - (void)removeCape:(MCCursorLibrary *)cape {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:shouldRemoveCape:)] && ![self.delegate libraryController:self shouldRemoveCape:cape])
-        return;
+    NSSet *change = [NSSet setWithObject:cape];
     
-    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
+    [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     if (cape == self.appliedCape)
         [self restoreCape];
-    [self.capes removeObject:cape];
-    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:self.capes.count - 1] forKey:@"capes"];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(libraryController:didRemoveCape:)])
-        [self.delegate libraryController:self didRemoveCape:cape];
+    [cape removeObserver:self forKeyPath:@"identifier" context:(void *)&MCLibraryIdentifierContext];
+    
+    if (cape.library == self)
+        cape.library = nil;
+    
+    [self.capes removeObject:cape];
+    
+    // Move the file to the trash
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSURL *destinationURL = [NSURL fileURLWithPath:[[@"~/.Trash" stringByExpandingTildeInPath] stringByAppendingPathComponent:cape.fileURL.lastPathComponent] isDirectory:NO];
+    
+    [manager removeItemAtURL:destinationURL error:NULL];
+    [manager moveItemAtURL:cape.fileURL toURL:destinationURL error:NULL];
+
+    [self.undoManager setActionName:[@"Remove " stringByAppendingString:cape.name]];
+    [[self.undoManager prepareWithInvocationTarget:self] importCapeAtURL:destinationURL];
+    
+    [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
 }
 
 - (void)applyCape:(MCCursorLibrary *)cape {
@@ -121,6 +134,19 @@
 - (void)restoreCape {
     resetAllCursors();
     self.appliedCape = nil;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == &MCLibraryIdentifierContext) {
+        // change the file url to reflect the new identifier
+        MCCursorLibrary *cape = object;
+        NSURL *oldURL = cape.fileURL;
+        [cape setFileURL:[self URLForCape:cape]];
+        
+#warning TODO: Do something with the error
+        [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:nil];
+        [cape save];
+    }
 }
 
 @end

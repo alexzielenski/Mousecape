@@ -10,15 +10,37 @@
 #import "MCCapeCellView.h"
 #import "NSFileManager+DirectoryLocations.h"
 #import "MCEditWindowController.h"
+#import "NSOrderedSet+AZSortedInsert.h"
+
+const char MCLibraryCapesContext;
+const char MCLibraryNameContext;
 
 @interface MCLibraryViewController ()
 @property (strong) MCEditWindowController *editWindowController;
+@property (readwrite, strong) NSMutableOrderedSet *capes;
+@property (strong, readwrite) MCLibraryController *libraryController;
 - (void)setupEnvironment;
 - (void)doubleClick:(id)sender;
 + (NSString *)capesPath;
++ (NSComparator)sortComparator;
 @end
 
 @implementation MCLibraryViewController
+
++ (NSComparator)sortComparator {
+    static NSComparator sortComparator = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sortComparator = ^NSComparisonResult(id obj1, id obj2) {
+            NSComparisonResult result = [[obj1 valueForKey:@"name"] localizedCaseInsensitiveCompare:[obj2 valueForKey:@"name"]];
+            if (result == NSOrderedSame)
+                result = [[obj1 valueForKey:@"author"] localizedCaseInsensitiveCompare:[obj2 valueForKey:@"author"]];
+            return result;
+        };
+    });
+    
+    return sortComparator;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
@@ -49,12 +71,10 @@
 }
 
 - (void)setupEnvironment {
+    [self addObserver:self forKeyPath:@"libraryController.capes" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:(void *)&MCLibraryCapesContext];
     self.libraryController = [[MCLibraryController alloc] initWithURL:[NSURL fileURLWithPath:self.class.capesPath]];
-    self.libraryController.delegate = self;
-    
+
     [self setRepresentedObject:self.libraryController];
-    [self.tableView reloadData];
-    
     [self.libraryController addObserver:self forKeyPath:NSStringFromSelector(@selector(appliedCape)) options:0 context:NULL];
 }
 
@@ -63,6 +83,55 @@
         for (NSUInteger x = 0; x < self.tableView.numberOfRows; x++) {
             MCCapeCellView *cv = [self.tableView viewAtColumn:0 row:x makeIfNecessary:NO];
             cv.appliedImageView.hidden = !(cv.objectValue == [self.libraryController appliedCape]);
+        }
+        
+    } else if (context == &MCLibraryCapesContext) {
+        NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] integerValue];
+        [self.tableView beginUpdates];
+
+        if (kind ==  NSKeyValueChangeInsertion || kind == NSKeyValueChangeSetting) {
+            
+            if (kind == NSKeyValueChangeSetting) {
+                self.capes = [NSMutableOrderedSet orderedSet];
+            }
+                
+            for (MCCursorLibrary *lib in change[NSKeyValueChangeNewKey]) {
+                NSUInteger index = [self.capes indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
+                
+                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [lib addObserver:self forKeyPath:@"name" options:0 context:(void *)&MCLibraryNameContext];
+                [self.capes insertObject:lib atIndex:index];
+                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self.tableView insertRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp];
+            }
+            [self.capes unionSet:change[NSKeyValueChangeNewKey]];
+        } else if (kind ==  NSKeyValueChangeRemoval) {
+            for (MCCursorLibrary *lib in change[NSKeyValueChangeOldKey]) {
+                NSUInteger index = [self.capes indexOfObject:lib];
+                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
+                [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
+                
+                [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                
+                [lib removeObserver:self forKeyPath:@"name" context:(void *)&MCLibraryNameContext];
+                [self.capes removeObjectAtIndex:index];
+                
+                [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+            }
+        }
+        
+        [self.tableView endUpdates];
+
+    } else if (context == &MCLibraryNameContext) {
+        // Reoder it
+        MCCursorLibrary *cape = object;
+        NSUInteger oldIndex = [self.capes indexOfObject:cape];
+        if (oldIndex != NSNotFound) {
+            [self.capes removeObjectAtIndex:oldIndex];
+            NSUInteger newIndex = [self.capes indexForInsertingObject:cape sortedUsingComparator:self.class.sortComparator];
+            [self.capes insertObject:cape atIndex:newIndex];
+            [self.tableView moveRowAtIndex:oldIndex toIndex:newIndex];
         }
     } else
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -114,9 +183,9 @@
 }
 
 #pragma mark - MCLibraryDelegate
-
+/*
 - (BOOL)libraryController:(MCLibraryController *)controller shouldAddCape:(MCCursorLibrary *)library {
-    //!TODO: Make sure the identifier isn't taken
+#warning TODO: Make sure the identifier isn't taken
     return YES;
 }
 
@@ -150,22 +219,22 @@
     [[self.view.window.undoManager prepareWithInvocationTarget:self.libraryController] importCapeAtURL:destinationURL];
     
 }
-
+*/
 #pragma mark - NSTableViewDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.libraryController.capes.count;
+    return self.capes.count;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    return self.libraryController.capes[row];
+    return self.capes[row];
 }
 
 #pragma mark - NSTableViewDelegate
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     MCCapeCellView *cellView = (MCCapeCellView *)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    cellView.appliedImageView.hidden = !([self.libraryController.capes objectAtIndex:row] == self.libraryController.appliedCape);
+    cellView.appliedImageView.hidden = !([self.capes objectAtIndex:row] == self.libraryController.appliedCape);
     return cellView;
 }
 
