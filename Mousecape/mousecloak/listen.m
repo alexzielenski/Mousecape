@@ -10,12 +10,12 @@
 #import "apply.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "MCPrefs.h"
+#import "CGSCursor.h"
+#import <Cocoa/Cocoa.h>
 
 NSString *appliedCapePathForUser(NSString *user) {
     NSString *home = NSHomeDirectoryForUser(user);
-    NSString *pref = [home stringByAppendingPathComponent:@"Library/Preferences/com.alexzielenski.mousecape.plist"];
-    NSDictionary *preferences = [NSDictionary dictionaryWithContentsOfFile:pref];
-    NSString *ident = [preferences objectForKey:@"MCAppliedCursor"];
+    NSString *ident =     MCDefaultFor(@"MCAppliedCursor", user, (NSString *)kCFPreferencesCurrentHost);
     NSString *appSupport = [home stringByAppendingPathComponent:@"Library/Application Support"];
     return [[[appSupport stringByAppendingPathComponent:@"Mousecape/capes"] stringByAppendingPathComponent:ident] stringByAppendingPathExtension:@"cape"];
 }
@@ -38,6 +38,18 @@ static void UserSpaceChanged(SCDynamicStoreRef	store, CFArrayRef changedKeys, vo
     CFRelease(currentConsoleUser);
 }
 
+void reconfigurationCallback(CGDirectDisplayID display,
+    	CGDisplayChangeSummaryFlags flags,
+    	void *userInfo) {
+    MMLog("Reconfigure user space");
+    applyCapeAtPath(appliedCapePathForUser(NSUserName()));
+    float scale;
+    CGSGetCursorScale(CGSMainConnectionID(), &scale);
+    CGSSetCursorScale(CGSMainConnectionID(), scale + .3);
+    CGSSetCursorScale(CGSMainConnectionID(), scale);
+}
+
+
 void listener(void) {
     SCDynamicStoreRef store = SCDynamicStoreCreate(NULL, CFSTR("com.apple.dts.ConsoleUser"), UserSpaceChanged, NULL);
     assert(store != NULL);
@@ -51,13 +63,17 @@ void listener(void) {
     Boolean success = SCDynamicStoreSetNotificationKeys(store, keys, NULL);
     assert(success);
     
+    NSApplicationLoad();
+    CGDisplayRegisterReconfigurationCallback(reconfigurationCallback, NULL);
+    MMLog(BOLD CYAN "Listening for Display changes" RESET);
+    
     CFRunLoopSourceRef rls = SCDynamicStoreCreateRunLoopSource(NULL, store, 0);
     assert(rls != NULL);
-    
     MMLog(BOLD CYAN "Listening for User changes" RESET);
+    
     CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
     CFRunLoopRun();
-    
+
     // Cleanup
     CFRunLoopSourceInvalidate(rls);
     CFRelease(rls);

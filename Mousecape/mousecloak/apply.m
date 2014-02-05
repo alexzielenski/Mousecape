@@ -69,39 +69,39 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
         images[images.count] = (__bridge id)rep;
         
         CGImageRelease(rep);
-        
     }
     
     return applyCursorForIdentifier(frameCount.unsignedIntegerValue, frameDuration.doubleValue, hotSpot, size, images, identifier, 0);
 }
 
 BOOL applyCape(NSDictionary *dictionary) {
-    
-    NSDictionary *cursors = dictionary[MCCursorDictionaryCursorsKey];
-    NSString *name = dictionary[MCCursorDictionaryCapeNameKey];
-    NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
-    
-    resetAllCursors();
-    backupAllCursors();
-    
-    MMLog("Applying cape: %s %.02f", name.UTF8String, version.floatValue);
-    
-    for (NSString *key in cursors) {
-        NSDictionary *cape = cursors[key];
-        MMLog("Hooking for %s", key.UTF8String);
+    @autoreleasepool {
+        NSDictionary *cursors = dictionary[MCCursorDictionaryCursorsKey];
+        NSString *name = dictionary[MCCursorDictionaryCapeNameKey];
+        NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
         
-        BOOL success = applyCapeForIdentifier(cape, key);
-        if (!success) {
-            MMLog(BOLD RED "Failed to hook identifier %s for some unknown reason. Bailing out..." RESET, key.UTF8String);
-            return NO;
+        resetAllCursors();
+        backupAllCursors();
+        
+        MMLog("Applying cape: %s %.02f", name.UTF8String, version.floatValue);
+        
+        for (NSString *key in cursors) {
+            NSDictionary *cape = cursors[key];
+            MMLog("Hooking for %s", key.UTF8String);
+            
+            BOOL success = applyCapeForIdentifier(cape, key);
+            if (!success) {
+                MMLog(BOLD RED "Failed to hook identifier %s for some unknown reason. Bailing out..." RESET, key.UTF8String);
+                return NO;
+            }
         }
+        
+        MCSetDefault(dictionary[MCCursorDictionaryIdentifierKey], MCPreferencesAppliedCursorKey);
+        
+        MMLog(BOLD GREEN "Applied %s successfully!" RESET, name.UTF8String);
+        
+        return YES;
     }
-    
-    MCSetDefault(dictionary[MCCursorDictionaryIdentifierKey], MCPreferencesAppliedCursorKey);
-    
-    MMLog(BOLD GREEN "Applied %s successfully!" RESET, name.UTF8String);
-    
-    return YES;
 }
 
 BOOL applyCapeAtPath(NSString *path) {
