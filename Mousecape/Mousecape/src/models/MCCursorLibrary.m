@@ -16,6 +16,11 @@
 
 - (void)startObservingProperties;
 - (void)stopObservingProperties;
+
+- (void)startObservingCursor:(MCCursor *)cursor;
+- (void)stopObservingCursor:(MCCursor *)cursor;
+
++ (NSArray *)cursorUndoProperties;
 + (NSArray *)undoProperties;
 @end
 
@@ -23,6 +28,10 @@
 
 + (NSArray *)undoProperties {
     return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
+}
+
++ (NSArray *)cursorUndoProperties {
+    return @[ @"identifier", @"frameDuration", @"frameCount", @"size", @"hotSpot" ];
 }
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {
@@ -149,6 +158,9 @@
 
 - (void)dealloc {
     [self stopObservingProperties];
+    for (MCCursor *cursor in self.cursors) {
+        [self stopObservingCursor:cursor];
+    }
 }
 
 const char MCCursorLibraryPropertiesContext;
@@ -164,12 +176,31 @@ const char MCCursorLibraryPropertiesContext;
     }
 }
 
+const char MCCursorPropertiesContext;
+- (void)startObservingCursor:(MCCursor *)cursor {
+    for (NSString *key in self.class.cursorUndoProperties) {
+        [cursor addObserver:self forKeyPath:key options:NSKeyValueObservingOptionOld context:(void *)&MCCursorPropertiesContext];
+    }
+}
+
+- (void)stopObservingCursor:(MCCursor *)cursor {
+    for (NSString *key in self.class.cursorUndoProperties) {
+        [cursor removeObserver:self forKeyPath:key context:(void *)&MCCursorPropertiesContext];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == &MCCursorLibraryPropertiesContext) {
-        [self.undoManager setActionName:[[@"Change " stringByAppendingString:keyPath] capitalizedString]];
+    if (context == &MCCursorLibraryPropertiesContext || context == &MCCursorPropertiesContext) {
+        NSString *decamelized = [keyPath stringByReplacingOccurrencesOfString:@"([a-z])([A-Z])"
+                                                                   withString:@"$1 $2"
+                                                                      options:NSRegularExpressionSearch
+                                                                        range:NSMakeRange(0, keyPath.length)];
+        
+        
+        [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
         
         id oldValue = change[NSKeyValueChangeOldKey];
-        [[self.undoManager prepareWithInvocationTarget:self] setValue:oldValue forKeyPath:keyPath];
+        [[self.undoManager prepareWithInvocationTarget: object] setValue:oldValue forKeyPath:keyPath];
     }
 }
 
@@ -192,14 +223,22 @@ const char MCCursorLibraryPropertiesContext;
     NSSet *change = [NSSet setWithObject:cursor];
     [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     [self.cursors addObject:cursor];
+    [self startObservingCursor:cursor];
     [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+    
+    [self.undoManager setActionName:@"Add Cursor"];
+    [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
 }
 
 - (void)removeCursor:(MCCursor *)cursor {
     NSSet *change = [NSSet setWithObject:cursor];
     [self willChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     [self.cursors removeObject:cursor];
+    [self stopObservingCursor:cursor];
     [self didChangeValueForKey:@"cursor" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
+    
+    [self.undoManager setActionName:@"Remove Cursor"];
+    [[self.undoManager prepareWithInvocationTarget:self] addCursor:cursor];
 }
 
 - (void)removeCursorsWithIdentifier:(NSString *)identifier {
