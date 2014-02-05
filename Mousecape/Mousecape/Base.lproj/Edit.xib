@@ -21,7 +21,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="525" height="297"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <value key="minSize" type="size" width="485" height="300"/>
+            <value key="minSize" type="size" width="500" height="310"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="525" height="297"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -527,6 +527,7 @@
                 <constraint firstItem="rms-zC-s1M" firstAttribute="leading" secondItem="VbK-WJ-M0L" secondAttribute="leading" id="5dM-sY-h4p"/>
                 <constraint firstItem="zEj-zS-uzh" firstAttribute="leading" secondItem="D5V-CV-BuE" secondAttribute="leading" id="8Cv-6e-Tzx"/>
                 <constraint firstItem="j7v-U4-eMe" firstAttribute="top" secondItem="Qcr-83-Tz0" secondAttribute="bottom" constant="8" id="AhL-tW-TNG"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4hN-Nm-B7Z" secondAttribute="trailing" constant="20" symbolic="YES" id="DIW-Fi-vah"/>
                 <constraint firstItem="D5V-CV-BuE" firstAttribute="top" secondItem="Dm8-Mj-s5f" secondAttribute="bottom" constant="8" symbolic="YES" id="EWh-4Q-i3w"/>
                 <constraint firstItem="ggE-Pd-aWo" firstAttribute="top" secondItem="G3t-wd-E5Y" secondAttribute="top" id="G2D-rz-c4w"/>
                 <constraint firstItem="rms-zC-s1M" firstAttribute="leading" secondItem="D5V-CV-BuE" secondAttribute="trailing" constant="8" symbolic="YES" id="JaG-3Y-FgQ"/>
