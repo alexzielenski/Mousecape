@@ -265,7 +265,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="Bu6-lg-x1j" name="value" keyPath="cursorLibrary.identifier" id="ycV-fu-kDf"/>
+                        <binding destination="Bu6-lg-x1j" name="value" keyPath="cursorLibrary.identifier" id="Vdx-1W-Guz">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="car-it-RsL" id="uaw-jj-8AW"/>
                     </connections>
                 </textField>

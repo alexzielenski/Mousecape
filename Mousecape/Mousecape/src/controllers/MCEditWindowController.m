@@ -43,6 +43,15 @@
     }
 }
 
+- (void)windowWillClose:(NSNotification *)notification {
+    //!TODO: Do saving properly
+    [self.editListController.cursorLibrary save];
+}
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return self.editListController.cursorLibrary.undoManager;
+}
+
 #pragma mark - View Changing
 
 - (void)_changeEditViewsForSelection {

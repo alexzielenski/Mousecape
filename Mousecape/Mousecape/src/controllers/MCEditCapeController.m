@@ -23,4 +23,11 @@
     return self;
 }
 
+- (BOOL)validateValue:(inout __autoreleasing id *)ioValue forKeyPath:(NSString *)inKeyPath error:(out NSError *__autoreleasing *)outError {
+    
+#warning TODO: check if library has this identifier
+    NSLog(@"validate %@", inKeyPath);
+    return YES;
+}
+
 @end

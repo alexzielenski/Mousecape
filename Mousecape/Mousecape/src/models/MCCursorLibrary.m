@@ -13,9 +13,17 @@
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
+
+- (void)startObservingProperties;
+- (void)stopObservingProperties;
++ (NSArray *)undoProperties;
 @end
 
 @implementation MCCursorLibrary
+
++ (NSArray *)undoProperties {
+    return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
+}
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {
     return [[MCCursorLibrary alloc] initWithContentsOfFile:path];
@@ -71,6 +79,8 @@
         self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
         self.version = @1.0;
         self.cursors = [NSMutableSet set];
+        
+        [self startObservingProperties];
     }
     
     return self;
@@ -79,12 +89,14 @@
 - (instancetype)copyWithZone:(NSZone *)zone {
     MCCursorLibrary *lib = [[MCCursorLibrary allocWithZone:zone] initWithCursors:self.cursors];
     
+    [lib.undoManager disableUndoRegistration];
     lib.name             = self.name;
     lib.author           = self.author;
     lib.hiDPI            = self.hiDPI;
     lib.inCloud          = self.inCloud;
     lib.version          = self.version;
     lib.identifier       = [self.identifier stringByAppendingFormat:@".%f", [NSDate timeIntervalSinceReferenceDate]];
+    [lib.undoManager enableUndoRegistration];
     
     return lib;
 }
@@ -94,6 +106,8 @@
         NSLog(@"cannot make library from empty dicitonary");
         return NO;
     }
+    
+    [self.undoManager disableUndoRegistration];
     
     NSNumber *minimumVersion  = dictionary[MCCursorDictionaryMinimumVersionKey];
     NSNumber *version         = dictionary[MCCursorDictionaryVersionKey];
@@ -113,19 +127,50 @@
     self.inCloud    = cloud.boolValue;
     
     if (!self.identifier) {
+        [self.undoManager enableUndoRegistration];
+
         NSLog(@"cannot make library from dictionary with no identifier");
         return NO;
     }
     
     CGFloat doubleVersion = version.doubleValue;
     
-    if (minimumVersion.doubleValue > MCCursorParserVersion)
+    if (minimumVersion.doubleValue > MCCursorParserVersion) {
+        [self.undoManager enableUndoRegistration];
         return NO;
+    }
     
     [self.cursors removeAllObjects];
     [self addCursorsFromDictionary:cursorDicts ofVersion:doubleVersion];
     
+    [self.undoManager enableUndoRegistration];
     return YES;
+}
+
+- (void)dealloc {
+    [self stopObservingProperties];
+}
+
+const char MCCursorLibraryPropertiesContext;
+- (void)startObservingProperties {
+    for (NSString *key in self.class.undoProperties) {
+        [self addObserver:self forKeyPath:key options:NSKeyValueObservingOptionOld context:(void*)&MCCursorLibraryPropertiesContext];
+    }
+}
+
+- (void)stopObservingProperties {
+    for (NSString *key in self.class.undoProperties) {
+        [self removeObserver:self forKeyPath:key context:(void *)&MCCursorLibraryPropertiesContext];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == &MCCursorLibraryPropertiesContext) {
+        [self.undoManager setActionName:[[@"Change " stringByAppendingString:keyPath] capitalizedString]];
+        
+        id oldValue = change[NSKeyValueChangeOldKey];
+        [[self.undoManager prepareWithInvocationTarget:self] setValue:oldValue forKeyPath:keyPath];
+    }
 }
 
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion {
