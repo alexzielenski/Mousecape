@@ -15,8 +15,8 @@
 @implementation MCEditDetailController
 
 - (void)awakeFromNib {
-    [self.typePopUpButton addItemWithTitle:@"Unknown"];
-    [[self.typePopUpButton itemAtIndex:0] setTag:-1];
+//    [self.typePopUpButton addItemWithTitle:@"Unknown"];
+//    [[self.typePopUpButton itemAtIndex:0] setTag:-1];
     [self.typePopUpButton addItemsWithTitles:[cursorMap().allValues sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
     
     NSImage *dropzone = [NSImage imageNamed:@"dropzone"];

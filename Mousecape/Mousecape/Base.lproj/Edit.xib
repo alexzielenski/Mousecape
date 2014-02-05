@@ -440,8 +440,12 @@
                         <menu key="menu" title="OtherViews" id="j3S-Me-3x5"/>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="tMj-cQ-hK0" name="selectedValue" keyPath="cursor.identifier" id="zmE-Yp-PtP">
+                        <binding destination="tMj-cQ-hK0" name="selectedValue" keyPath="cursor.identifier" id="2aq-Lm-1Lm">
                             <dictionary key="options">
+                                <string key="NSMultipleValuesPlaceholder">Unknown</string>
+                                <string key="NSNotApplicablePlaceholder">Unknown</string>
+                                <string key="NSNoSelectionPlaceholder">Unknown</string>
+                                <string key="NSNullPlaceholder">Unknown</string>
                                 <string key="NSValueTransformerName">MCCursorTypeValueTransformer</string>
                             </dictionary>
                         </binding>
