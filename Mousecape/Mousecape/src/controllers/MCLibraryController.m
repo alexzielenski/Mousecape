@@ -61,7 +61,13 @@ const char MCLibraryIdentifierContext;
 
 - (void)importCapeAtURL:(NSURL *)url {
     MCCursorLibrary *lib = [MCCursorLibrary cursorLibraryWithContentsOfURL:url];
-    [self importCape:lib];
+    NSURL *destinationURL = [self URLForCape:lib];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] copyItemAtURL:lib.fileURL toURL:destinationURL error:&error];
+    if (!error) {
+        lib.fileURL = destinationURL;
+        [self addCape:lib];
+    }    
 }
 
 - (void)importCape:(MCCursorLibrary *)lib {

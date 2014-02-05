@@ -211,11 +211,8 @@ const char MCCursorPropertiesContext;
     for (NSString *key in cursorDicts.allKeys) {
         NSDictionary *cursorDictionary = [cursorDicts objectForKey:key];
         MCCursor *cursor = [MCCursor cursorWithDictionary:cursorDictionary ofVersion:doubleVersion];
-//        if (!cursor)
-//            continue;
-        if ([key isEqualToString:@"com.apple.coregraphics.Wait"] && [self.name isEqualToString:@"Aqua Cursors"]) {
-            NSLog(@"%@", cursor);
-        }
+        if (!cursor)
+            continue;
         cursor.identifier = key;
         [self addCursor: cursor];
     }
