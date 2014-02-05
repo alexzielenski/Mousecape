@@ -198,5 +198,5 @@ NSString *cursorIdentifierForName(NSString *name) {
     NSArray *keys = [cursorMap() allKeysForObject:name];
     if (keys.count)
         return keys[0];
-    return nil;
+    return UUID();
 }
