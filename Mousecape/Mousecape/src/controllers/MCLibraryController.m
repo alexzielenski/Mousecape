@@ -83,7 +83,7 @@ const char MCLibraryIdentifierContext;
         NSLog(@"Not adding %@ to the library because an object with that identifier already exists", cape.identifier);
         return;
     }
-    
+        
     if (!cape) {
         NSLog(@"Cannot add nil cape");
         return;
