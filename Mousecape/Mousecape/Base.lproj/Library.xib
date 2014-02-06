@@ -155,30 +155,37 @@
         </viewController>
         <menu id="zpf-M9-Nd1">
             <items>
-                <menuItem title="Apply" id="aI1-E0-bnW">
+                <menuItem title="Apply" tag="-1" id="aI1-E0-bnW">
                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
                     <connections>
-                        <action selector="applyAction:" target="zL4-Ay-t4Q" id="4KV-AP-8YO"/>
+                        <action selector="applyCape:" target="-1" id="KG6-81-DdR"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Edit" tag="1" keyEquivalent="e" id="HJc-SX-JjZ">
+                <menuItem title="Edit" tag="-1" keyEquivalent="e" id="HJc-SX-JjZ">
                     <connections>
-                        <action selector="editAction:" target="zL4-Ay-t4Q" id="R94-y0-i5l"/>
+                        <action selector="editCape:" target="-1" id="6nG-0d-9YV"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Duplicate" tag="2" keyEquivalent="S" id="PhG-Ll-nqz">
+                <menuItem title="Duplicate" tag="-1" keyEquivalent="S" id="PhG-Ll-nqz">
                     <connections>
-                        <action selector="duplicateAction:" target="zL4-Ay-t4Q" id="dYH-lp-gER"/>
+                        <action selector="duplicateCape:" target="-1" id="N0m-Bu-OYJ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Remove" tag="3" id="Aig-wl-ivn">
+                <menuItem title="Remove" tag="-1" id="Aig-wl-ivn">
                     <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
                     <connections>
-                        <action selector="removeAction:" target="zL4-Ay-t4Q" id="WYv-bz-sLl"/>
+                        <action selector="removeCape:" target="-1" id="rSg-Ns-VmO"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="A7P-y0-FBc"/>
+                <menuItem title="Show in Finder" tag="-1" id="2WM-EN-kiI">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showCape:" target="-1" id="Wu1-o2-zZP"/>
                     </connections>
                 </menuItem>
             </items>

@@ -65,24 +65,58 @@
 
 #pragma mark - Menu Actions
 
-- (IBAction)applyCape:(id)sender {
-    [self.libraryViewController.libraryController applyCape:self.libraryViewController.selectedCape];
-}
-
-- (IBAction)editCape:(id)sender {
-    [self.libraryViewController editCape:self.libraryViewController.selectedCape];
-}
-
-- (IBAction)removeCape:(id)sender {
-    [self.libraryViewController.libraryController removeCape:self.libraryViewController.selectedCape];
-}
-
-- (IBAction)duplicateCape:(id)sender {
-    [self.libraryViewController.libraryController importCape:self.libraryViewController.selectedCape.copy];
-}
-
-- (IBAction)checkCape:(id)sender {
+- (IBAction)applyCape:(NSMenuItem *)sender {
+    MCCursorLibrary *cape = nil;
+    if (sender.tag == -1)
+        cape = self.libraryViewController.clickedCape;
+    else
+        cape = self.libraryViewController.selectedCape;
     
+    [self.libraryViewController.libraryController applyCape:cape];
+}
+
+- (IBAction)editCape:(NSMenuItem *)sender {
+    MCCursorLibrary *cape = nil;
+    if (sender.tag == -1)
+        cape = self.libraryViewController.clickedCape;
+    else
+        cape = self.libraryViewController.selectedCape;
+    
+    [self.libraryViewController editCape:cape];
+}
+
+- (IBAction)removeCape:(NSMenuItem *)sender {
+    MCCursorLibrary *cape = nil;
+    if (sender.tag == -1)
+        cape = self.libraryViewController.clickedCape;
+    else
+        cape = self.libraryViewController.selectedCape;
+    
+    [self.libraryViewController.libraryController removeCape:cape];
+}
+
+- (IBAction)duplicateCape:(NSMenuItem *)sender {
+    MCCursorLibrary *cape = nil;
+    if (sender.tag == -1)
+        cape = self.libraryViewController.clickedCape;
+    else
+        cape = self.libraryViewController.selectedCape;
+    
+    [self.libraryViewController.libraryController importCape:cape.copy];
+}
+
+- (IBAction)checkCape:(NSMenuItem *)sender {
+    
+}
+
+- (IBAction)showCape:(NSMenuItem *)sender {
+    MCCursorLibrary *cape = nil;
+    if (sender.tag == -1)
+        cape = self.libraryViewController.clickedCape;
+    else
+        cape = self.libraryViewController.selectedCape;
+    
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[ cape.fileURL ]];
 }
 
 @end

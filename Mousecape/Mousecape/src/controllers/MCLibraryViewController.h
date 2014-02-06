@@ -18,11 +18,6 @@
 - (MCCursorLibrary *)clickedCape;
 
 - (void)editCape:(MCCursorLibrary *)library;
-
-- (IBAction)applyAction:(NSMenuItem *)sender;
-- (IBAction)editAction:(NSMenuItem *)sender;
-- (IBAction)duplicateAction:(NSMenuItem *)sender;
-- (IBAction)removeAction:(NSMenuItem *)sender;
 @end
 
 @interface MCLibraryController (Properties)

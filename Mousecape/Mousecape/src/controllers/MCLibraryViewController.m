@@ -162,24 +162,6 @@ const char MCLibraryNameContext;
     [self.editWindowController showWindow:self];
 }
 
-#pragma mark - Context Menu
-
-- (IBAction)applyAction:(NSMenuItem *)sender {
-    [self.libraryController applyCape:self.clickedCape];
-}
-
-- (IBAction)editAction:(NSMenuItem *)sender {
-    [self editCape:self.clickedCape];
-}
-
-- (IBAction)duplicateAction:(NSMenuItem *)sender {
-    [self.libraryController importCape:self.clickedCape.copy];
-}
-
-- (IBAction)removeAction:(NSMenuItem *)sender {
-    [self.libraryController removeCape:self.clickedCape];
-}
-
 #pragma mark - NSTableViewDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
