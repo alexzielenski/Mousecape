@@ -77,12 +77,12 @@
                         <items>
                             <menuItem title="New Cape" keyEquivalent="n" id="82">
                                 <connections>
-                                    <action selector="newDocument:" target="-1" id="H8K-lv-p8z"/>
+                                    <action selector="newDocument:" target="-1" id="I3c-Gd-Cqc"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Import Cape" keyEquivalent="o" id="kdx-d9-Lek">
                                 <connections>
-                                    <action selector="openDocument:" target="-1" id="52N-ky-62x"/>
+                                    <action selector="openDocument:" target="-1" id="2Qd-t2-zEv"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="79">

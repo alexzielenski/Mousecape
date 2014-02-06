@@ -117,11 +117,11 @@ static AuthorizationRef obtainRights();
     }
 }
 
-- (IBAction)newCape:(id)sender {
+- (IBAction)newDocument:(id)sender {
     [self.libraryWindowController.libraryViewController.libraryController importCape:[[MCCursorLibrary alloc] init]];
 }
 
-- (IBAction)importCape:(id)sender {
+- (IBAction)openDocument:(id)sender {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     panel.allowedFileTypes = @[ @"cape" ];
     panel.title = @"Import";
