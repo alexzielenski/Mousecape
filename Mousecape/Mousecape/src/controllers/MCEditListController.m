@@ -57,7 +57,7 @@ const char MCEditCursorsContext;
                 [self.cursors sortUsingComparator:self.class.sortComparator];
             }
         } else if (kind == NSKeyValueChangeInsertion) {
-            for (MCCursorLibrary *lib in change[NSKeyValueChangeNewKey]) {
+            for (MCCursor *lib in change[NSKeyValueChangeNewKey]) {
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
                 NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
                 
@@ -67,14 +67,15 @@ const char MCEditCursorsContext;
                 [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
             }
         } else if (kind == NSKeyValueChangeRemoval) {
-            for (MCCursorLibrary *lib in change[NSKeyValueChangeOldKey]) {
+            for (MCCursor *lib in change[NSKeyValueChangeOldKey]) {
                 NSUInteger index = [self.cursors indexOfObject:lib];
                 NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
                 
-                [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
                 [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
                 [self.cursors removeObjectAtIndex:index];
                 [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
+                
             }
 
         }
@@ -98,8 +99,8 @@ const char MCEditCursorsContext;
 }
 
 - (IBAction)removeAction:(id)sender {
-    NSUInteger row = self.tableView.selectedRow - 1;
-    [self.cursorLibrary removeCursor:[self.cursors objectAtIndex:row]];
+    if (self.tableView.selectedRow != 0)
+        [self.cursorLibrary removeCursor:[[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue]];
 }
 
 #pragma mark - NSTableViewDelegate

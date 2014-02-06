@@ -134,32 +134,6 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     return drep;
 }
 
-- (id)valueForKey:(NSString *)key {
-    if ([key isEqualToString:@"hotSpot"]) {
-        return [NSValue valueWithPoint:self.hotSpot];
-    }
-    
-    if ([key isEqualToString:@"size"]) {
-        return [NSValue valueWithSize:self.size];
-    }
-    
-    return [super valueForKey:key];
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key {
-    if ([key isEqualToString:@"hotSpot"]) {
-        self.hotSpot = [value pointValue];
-        return;
-    }
-    
-    if ([key isEqualToString:@"size"]) {
-        self.size = [value sizeValue];
-        return;
-    }
-    
-    [super setValue:value forKey:key];
-}
-
 - (id)valueForUndefinedKey:(NSString *)key {
     // Special KVC for observers to be able to watch each scale
     if ([key hasPrefix:@"cursorRep"] || [key hasPrefix:@"cursorImage"]) {

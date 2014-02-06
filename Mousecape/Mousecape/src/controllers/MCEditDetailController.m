@@ -28,21 +28,30 @@
     self.rep500View.scale  = 5.0;
     self.rep1000View.scale = 10.0;
     
+    self.rep100View.shouldShowHotSpot = YES;
+    self.rep200View.shouldShowHotSpot = YES;
+    self.rep500View.shouldShowHotSpot = YES;
+    self.rep1000View.shouldShowHotSpot = YES;
+    
     [self.rep100View bind:@"image" toObject:self withKeyPath:@"cursor.cursorImage100" options:nil];
     [self.rep100View bind:@"frameCount" toObject:self withKeyPath:@"cursor.frameCount" options:nil];
     [self.rep100View bind:@"frameDuration" toObject:self withKeyPath:@"cursor.frameDuration" options:nil];
+    [self.rep100View bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot" options:nil];
     
     [self.rep200View bind:@"image" toObject:self withKeyPath:@"cursor.cursorImage200" options:nil];
     [self.rep200View bind:@"frameCount" toObject:self withKeyPath:@"cursor.frameCount" options:nil];
     [self.rep200View bind:@"frameDuration" toObject:self withKeyPath:@"cursor.frameDuration" options:nil];
+    [self.rep200View bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot" options:nil];
     
     [self.rep500View bind:@"image" toObject:self withKeyPath:@"cursor.cursorImage500" options:nil];
     [self.rep500View bind:@"frameCount" toObject:self withKeyPath:@"cursor.frameCount" options:nil];
     [self.rep500View bind:@"frameDuration" toObject:self withKeyPath:@"cursor.frameDuration" options:nil];
+    [self.rep500View bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot" options:nil];
     
     [self.rep1000View bind:@"image" toObject:self withKeyPath:@"cursor.cursorImage1000" options:nil];
     [self.rep1000View bind:@"frameCount" toObject:self withKeyPath:@"cursor.frameCount" options:nil];
     [self.rep1000View bind:@"frameDuration" toObject:self withKeyPath:@"cursor.frameDuration" options:nil];
+    [self.rep1000View bind:@"hotSpot" toObject:self withKeyPath:@"cursor.hotSpot" options:nil];
 }
 
 #pragma mark - MMAnimatingImageView

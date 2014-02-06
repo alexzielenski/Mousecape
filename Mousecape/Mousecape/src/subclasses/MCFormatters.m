@@ -41,5 +41,33 @@
 
 @implementation MCSizeFormatter
 
+- (NSString *)stringForObjectValue:(NSValue *)anObject {
+    
+    if (![anObject isKindOfClass:[NSValue class]]) {
+        return nil;
+    }
+    return NSStringFromSize(anObject.sizeValue);
+}
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+    *anObject = [NSValue valueWithSize:NSSizeFromString(string)];
+    return YES;
+}
+
+- (BOOL)isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error {
+    NSArray *components = [partialString componentsSeparatedByString:@","];
+    if (components.count == 1) {
+        return YES;
+    } else if (components.count == 2) {
+        NSString *perfect = NSStringFromSize(NSSizeFromString(partialString));
+        *newString = perfect;
+        return YES;
+    }
+    
+    *error = [NSError errorWithDomain:@"com.alexzielenski.mcformatter.errordoman" code:0 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid format. Must follow \"{0.0, 0.0}\"." , @"Invalid format error in edit window")}];
+    return NO;
+}
+
+
 @end
 

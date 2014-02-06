@@ -13,6 +13,7 @@ const char MCInvalidateContext;
 
 @interface MMAnimatingImageView ()
 @property (weak) MCSpriteLayer *spriteLayer;
+@property (weak) CALayer *hotSpotLayer;
 - (void)_initialize;
 - (void)_invalidateFrame;
 - (void)_invalidateAnimation;
@@ -20,6 +21,8 @@ const char MCInvalidateContext;
 @end
 
 @implementation MMAnimatingImageView
+@dynamic shouldShowHotSpot;
+
 - (id)init {
 	if ((self = [super init])) {
 		[self _initialize];
@@ -54,12 +57,21 @@ const char MCInvalidateContext;
     self.layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin;
     self.layer.delegate = self;
     
+    CALayer *hotSpotLayer = [CALayer layer];
+    hotSpotLayer.bounds = CGRectMake(0, 0, 3, 3);
+    hotSpotLayer.backgroundColor = [[NSColor redColor] CGColor];
+    hotSpotLayer.autoresizingMask = kCALayerNotSizable;
+    
+    [self.layer addSublayer:hotSpotLayer];
+    
+    self.hotSpotLayer = hotSpotLayer;
     self.spriteLayer = (MCSpriteLayer *)self.layer;
 
     self.frameCount    = 1;
     self.frameDuration = 1;
     
     [self addObserver:self forKeyPath:@"image" options:0 context:(void *)&MCInvalidateContext];
+    [self addObserver:self forKeyPath:@"hotSpot" options:0 context:(void *)&MCInvalidateContext];
     [self addObserver:self forKeyPath:@"placeholderImage" options:0 context:(void *)&MCInvalidateContext];
     [self addObserver:self forKeyPath:@"frameCount" options:0 context:(void *)&MCInvalidateContext];
     [self addObserver:self forKeyPath:@"frameDuration" options:0 context:(void *)&MCInvalidateContext];
@@ -68,6 +80,7 @@ const char MCInvalidateContext;
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"image"];
+    [self removeObserver:self forKeyPath:@"hotSpot"];
     [self removeObserver:self forKeyPath:@"placeholderImage"];
     [self removeObserver:self forKeyPath:@"frameCount"];
     [self removeObserver:self forKeyPath:@"frameDuration"];
@@ -99,6 +112,18 @@ const char MCInvalidateContext;
     [self _invalidateFrame];
 }
 
++ (NSSet *)keyPathsForValuesAffectingShouldShowHotSpot {
+    return [NSSet setWithObject:@"hotSpotLayer.hidden"];
+}
+
+- (BOOL)shouldShowHotSpot {
+    return !self.hotSpotLayer.isHidden;
+}
+
+- (void)setShouldShowHotSpot:(BOOL)shouldShowHotSpot {
+    self.hotSpotLayer.hidden = !shouldShowHotSpot;
+}
+
 #pragma mark - Invalidators
 
 - (void)_invalidateFrame {
@@ -106,6 +131,19 @@ const char MCInvalidateContext;
     if (!self.scale || !self.image)
         scale = self.window.backingScaleFactor;
     self.layer.contentsScale = scale;
+
+    if (scale == 0.0)
+        scale = 1.0;
+
+    if (self.image) {
+        CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
+        CGRect effectiveRect = CGRectIntegral(CGRectMake(self.layer.frame.size.width / 2.0 - effectiveSize.width / 2.0, self.layer.frame.size.height / 2.0 + effectiveSize.height / 2.0, effectiveSize.width, effectiveSize.height));
+
+        self.hotSpotLayer.position = CGPointMake(CGRectGetMinX(effectiveRect) + self.hotSpot.x, CGRectGetMinY(effectiveRect) - self.hotSpot.y);
+        self.hotSpotLayer.opacity = 1.0;
+    } else {
+        self.hotSpotLayer.opacity = 0.0;
+    }
 }
 
 - (void)_invalidateAnimation {

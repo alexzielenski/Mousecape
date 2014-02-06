@@ -31,6 +31,8 @@
 @property (assign) CGFloat                                    frameDuration;
 @property (assign) NSInteger                                  frameCount;
 @property (assign) CGFloat                                    scale; // set to 0.0 if you want to inherit window scale
+@property (assign) NSPoint                                    hotSpot;
 @property (weak)   IBOutlet id <MMAnimatingImageViewDelegate> delegate;
 @property (assign) BOOL shouldAnimate;
+@property (assign) BOOL shouldShowHotSpot;
 @end
