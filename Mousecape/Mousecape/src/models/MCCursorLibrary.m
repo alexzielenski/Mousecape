@@ -254,6 +254,13 @@ const char MCCursorPropertiesContext;
 }
 
 - (void)addCursor:(MCCursor *)cursor {
+    if ([self.cursors containsObject:cursor]) {
+        // Don't unnecessarily add a cursor/register observers with it because the
+        // observation info will leak when it gets dereferenced since we don't do it here
+        // since NSSet just silently skips items it already has
+        return;
+    }
+    
     NSSet *change = [NSSet setWithObject:cursor];
     
     [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
