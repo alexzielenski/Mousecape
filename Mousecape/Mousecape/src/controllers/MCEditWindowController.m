@@ -62,6 +62,14 @@
     [self.editListController removeObserver:self forKeyPath:@"selectedObject"];
 }
 
+- (IBAction)saveDocument:(id)sender {
+    [self.cursorLibrary save];
+}
+
+- (IBAction)revertDocumentToSaved:(id)sender {
+    [self.cursorLibrary revertToSaved];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"selectedObject"]) {
         [self _changeEditViewsForSelection];
