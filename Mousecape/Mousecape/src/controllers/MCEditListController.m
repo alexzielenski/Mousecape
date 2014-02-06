@@ -49,9 +49,13 @@ const char MCEditCursorsContext;
         NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] integerValue];
         
         if (kind == NSKeyValueChangeSetting) {
-            self.cursors = [NSMutableOrderedSet orderedSetWithSet:change[NSKeyValueChangeNewKey] copyItems:NO];
-            [self.cursors sortUsingComparator:self.class.sortComparator];
-            
+            id nextSet = change[NSKeyValueChangeNewKey];
+            if ([nextSet isKindOfClass:[NSNull class]]) {
+                self.cursors = [NSMutableOrderedSet orderedSet];
+            } else {
+                self.cursors = [NSMutableOrderedSet orderedSetWithSet:nextSet copyItems:NO];
+                [self.cursors sortUsingComparator:self.class.sortComparator];
+            }
         } else if (kind == NSKeyValueChangeInsertion) {
             for (MCCursorLibrary *lib in change[NSKeyValueChangeNewKey]) {
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];

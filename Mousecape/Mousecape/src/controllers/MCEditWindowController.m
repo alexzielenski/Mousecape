@@ -10,9 +10,11 @@
 
 @interface MCEditWindowController ()
 - (void)_setCurrentViewController:(NSViewController *)vc;
+- (BOOL)promptSaveForLibrary:(MCCursorLibrary *)nextLibrary;
 @end
 
 @implementation MCEditWindowController
+@dynamic cursorLibrary;
 
 - (id)initWithWindow:(NSWindow *)window {
     if ((self = [super initWithWindow:window])) {
@@ -21,16 +23,39 @@
     return self;
 }
 
-
 - (void)loadWindow {
     [super loadWindow];
     [self windowDidLoad];
+}
+
++ (NSSet *)keyPathsForValuesAffectingCursorLibrary {
+    return [NSSet setWithObject:@"editListController.cursorLibrary"];
+}
+
+- (MCCursorLibrary *)cursorLibrary {
+    return self.editListController.cursorLibrary;
+}
+
+- (void)setCursorLibrary:(MCCursorLibrary *)cursorLibrary {
+    [self promptSaveForLibrary:cursorLibrary];
+}
+
+- (BOOL)promptSaveForLibrary:(MCCursorLibrary *)nextLibrary {
+    if (!self.window.isDocumentEdited) {
+        self.editListController.cursorLibrary = nextLibrary;
+        return NO;
+    }
+    
+    NSBeginAlertSheet(@"Do you want to save your changes?", @"Save", @"Cancel", @"Discard Changes", self.window, self, NULL, @selector(sheetDidDismiss:returnCode:contextInfo:), (__bridge void *)nextLibrary, @"Your changes will be discarded if you don't save them.");
+    return YES;
 }
 
 - (void)windowDidLoad {
     [super windowDidLoad];    
     [self.editListController addObserver:self forKeyPath:@"selectedObject" options:0 context:nil];
     [self _setCurrentViewController:self.editCapeController];
+    
+    [self.window bind:@"documentEdited" toObject:self withKeyPath:@"cursorLibrary.isDirty" options:nil];
 }
 
 - (void)dealloc {
@@ -43,13 +68,30 @@
     }
 }
 
-- (void)windowWillClose:(NSNotification *)notification {
-    //!TODO: Do saving properly
-    [self.editListController.cursorLibrary save];
+- (BOOL)windowShouldClose:(NSWindow *)window {
+    return ![self promptSaveForLibrary:nil];
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-    return self.editListController.cursorLibrary.undoManager;
+    return self.cursorLibrary.undoManager;
+}
+
+- (void)sheetDidDismiss:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(MCCursorLibrary *)contextInfo {
+    if (returnCode == 0) { // cancel
+       // do nothing
+    } else if (returnCode == 1) { // save
+        [self.cursorLibrary save];
+        self.editListController.cursorLibrary = contextInfo;
+        
+        if (!contextInfo)
+            [self.window close];
+    } else if (returnCode == -1) { // discard changes
+        [self.cursorLibrary revertToSaved];
+        self.editListController.cursorLibrary = contextInfo;
+        
+        if (!contextInfo)
+            [self.window close];
+    }
 }
 
 #pragma mark - View Changing

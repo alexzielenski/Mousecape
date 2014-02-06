@@ -17,4 +17,5 @@
 @property (assign) IBOutlet MCEditDetailController *editDetailController; // Detail view of the selected cursor
 @property (assign) IBOutlet MCEditCapeController *editCapeController;     // Detail view of the entire library
 @property (assign) IBOutlet NSView *detailView;
+@property (assign) MCCursorLibrary *cursorLibrary;
 @end

@@ -11,6 +11,7 @@
 @interface MCCursorLibrary ()
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
+@property (nonatomic, assign) NSUInteger changeCount;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
 
@@ -25,6 +26,7 @@
 @end
 
 @implementation MCCursorLibrary
+@dynamic isDirty;
 
 + (NSArray *)undoProperties {
     return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
@@ -81,6 +83,21 @@
 - (instancetype)init {
     if ((self = [super init])) {
         self.undoManager = [[NSUndoManager alloc] init];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        __weak typeof(self) weakSelf = self;
+        [center addObserverForName:NSUndoManagerDidCloseUndoGroupNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+            [weakSelf updateChangeCount:NSChangeDone];
+        }];
+        
+        [center addObserverForName:NSUndoManagerDidUndoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+            [weakSelf updateChangeCount:NSChangeUndone];
+        }];
+        
+        [center addObserverForName:NSUndoManagerDidRedoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+            [weakSelf updateChangeCount:NSChangeRedone];
+        }];
+        
         self.name = @"Unnamed";
         self.author = NSUserName();
         self.hiDPI = NO;
@@ -108,6 +125,14 @@
     [lib.undoManager enableUndoRegistration];
     
     return lib;
+}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"isDirty"]) {
+        keyPaths = [keyPaths setByAddingObject: @"changeCount"];
+    }
+    return keyPaths;
 }
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary {
@@ -280,7 +305,32 @@ const char MCCursorPropertiesContext;
 }
 
 - (BOOL)save {
+    [self updateChangeCount:NSChangeCleared];
     return [self writeToFile:self.fileURL.path atomically:NO];
+}
+
+- (void)updateChangeCount:(NSDocumentChangeType)change {
+    if (change == NSChangeDone || change == NSChangeRedone) {
+        self.changeCount++;
+    } else if (change == NSChangeUndone) {
+        self.changeCount--;
+    } else if (change == NSChangeCleared || change == NSChangeAutosaved) {
+        self.changeCount = 0;
+    }
+}
+
+- (void)revertToSaved {
+//    [self.undoManager removeAllActions];
+//    [self _readFromDictionary:[NSDictionary dictionaryWithContentsOfURL:self.fileURL]];
+    for (NSUInteger x = 0; x < self.changeCount; x++) {
+        [self.undoManager undo];
+    }
+    
+    [self.undoManager removeAllActions];
+}
+
+- (BOOL)isDirty {
+    return (self.changeCount);
 }
 
 - (BOOL)isEqualTo:(MCCursorLibrary *)object {

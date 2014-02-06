@@ -160,7 +160,7 @@ const char MCLibraryNameContext;
         self.editWindowController = [[MCEditWindowController alloc] initWithWindowNibName:@"Edit"];
         [self.editWindowController loadWindow];
     }
-    self.editWindowController.editListController.cursorLibrary = library;
+    self.editWindowController.cursorLibrary = library;
     [self.editWindowController showWindow:self];
 }
 

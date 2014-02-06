@@ -18,6 +18,7 @@
 @property (nonatomic, copy)   NSURL    *fileURL;
 @property (nonatomic, weak)   MCLibraryController *library;
 @property (nonatomic, readonly) NSUndoManager *undoManager;
+@property (nonatomic, readonly) BOOL isDirty;
 @property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
 @property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
 
@@ -39,6 +40,9 @@
 - (NSDictionary *)dictionaryRepresentation;
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
 - (BOOL)save;
+
+- (void)updateChangeCount:(NSDocumentChangeType)change;
+- (void)revertToSaved;
 
 @end
 

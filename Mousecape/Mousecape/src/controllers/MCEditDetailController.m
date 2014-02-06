@@ -62,7 +62,6 @@
 }
 
 - (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {
-#warning Only set if its size is a multple of the actual image size
     CGFloat scale = imageView.scale;
     [self.cursor setRepresentation:images.lastObject forScale:cursorScaleForScale(scale)];
 }
