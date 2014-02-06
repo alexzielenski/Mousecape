@@ -7,6 +7,7 @@
 //
 
 #import "MCEditWindowController.h"
+#import "MCLibraryController.h"
 
 @interface MCEditWindowController ()
 - (void)_setCurrentViewController:(NSViewController *)vc;
@@ -62,14 +63,6 @@
     [self.editListController removeObserver:self forKeyPath:@"selectedObject"];
 }
 
-- (IBAction)saveDocument:(id)sender {
-    [self.cursorLibrary save];
-}
-
-- (IBAction)revertDocumentToSaved:(id)sender {
-    [self.cursorLibrary revertToSaved];
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"selectedObject"]) {
         [self _changeEditViewsForSelection];
@@ -100,6 +93,32 @@
         if (!contextInfo)
             [self.window close];
     }
+}
+
+#pragma mark - Menu Actions
+
+- (IBAction)applyCape:(id)sender {
+    [self.cursorLibrary.library applyCape:self.cursorLibrary];
+}
+
+- (IBAction)removeCape:(id)sender {
+    [self.cursorLibrary.library removeCape:self.cursorLibrary];
+}
+
+- (IBAction)duplicateCape:(id)sender {
+    [self.cursorLibrary.library importCape:self.cursorLibrary.copy];
+}
+
+- (IBAction)checkCape:(id)sender {
+    
+}
+
+- (IBAction)saveDocument:(id)sender {
+    [self.cursorLibrary save];
+}
+
+- (IBAction)revertDocumentToSaved:(id)sender {
+    [self.cursorLibrary revertToSaved];
 }
 
 #pragma mark - View Changing

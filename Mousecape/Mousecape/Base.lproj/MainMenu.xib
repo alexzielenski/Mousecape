@@ -98,11 +98,6 @@
                                     <action selector="saveDocument:" target="-1" id="362"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Duplicate Cape" keyEquivalent="S" id="d9b-6w-ubr">
-                                <connections>
-                                    <action selector="duplicateCape:" target="494" id="hjf-rU-ZS2"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Revert to Saved" id="112">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -329,12 +324,12 @@
 DQ
 </string>
                                 <connections>
-                                    <action selector="applyCape:" target="494" id="6fI-9U-YHg"/>
+                                    <action selector="applyCape:" target="-1" id="vf2-1W-mzE"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Edit Cape" keyEquivalent="e" id="5qb-Dw-38q">
                                 <connections>
-                                    <action selector="editCape:" target="494" id="jf7-eK-6NY"/>
+                                    <action selector="editCape:" target="-1" id="iz5-Ek-fyU"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Remove Cape" id="LHh-1u-bK8">
@@ -342,12 +337,17 @@ DQ
 CA
 </string>
                                 <connections>
-                                    <action selector="removeCape:" target="494" id="tXK-SG-gkF"/>
+                                    <action selector="removeCape:" target="-1" id="1E1-e1-eeH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Duplicate Cape" keyEquivalent="S" id="d9b-6w-ubr">
+                                <connections>
+                                    <action selector="duplicateCape:" target="-1" id="pOn-FS-ePg"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates" hidden="YES" keyEquivalent="u" id="XTi-86-ese">
                                 <connections>
-                                    <action selector="checkCape:" target="494" id="Ccc-Ls-42A"/>
+                                    <action selector="checkCape:" target="-1" id="yBL-WC-dbi"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="EOT-Rk-oU3"/>

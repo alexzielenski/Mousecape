@@ -92,23 +92,6 @@ static AuthorizationRef obtainRights();
 
 #pragma mark - Interface Actions
 
-// Cape Menu
-- (IBAction)applyCape:(id)sender {
-    [self.libraryWindowController.libraryViewController.libraryController applyCape:self.libraryWindowController.libraryViewController.selectedCape];
-}
-
-- (IBAction)editCape:(id)sender {
-    [self.libraryWindowController.libraryViewController editCape:self.libraryWindowController.libraryViewController.selectedCape];
-}
-
-- (IBAction)removeCape:(id)sender {
-    [self.libraryWindowController.libraryViewController.libraryController removeCape:self.libraryWindowController.libraryViewController.selectedCape];
-}
-
-- (IBAction)checkCape:(id)sender {
-    
-}
-
 - (IBAction)restoreCape:(id)sender {
     [self.libraryWindowController.libraryViewController.libraryController restoreCape];
 }
@@ -134,8 +117,6 @@ static AuthorizationRef obtainRights();
     }
 }
 
-// File Menu
-
 - (IBAction)newCape:(id)sender {
     [self.libraryWindowController.libraryViewController.libraryController importCape:[[MCCursorLibrary alloc] init]];
 }
@@ -149,10 +130,6 @@ static AuthorizationRef obtainRights();
     if ([panel runModal] == NSFileHandlingPanelOKButton) {
         [self.libraryWindowController.libraryViewController.libraryController importCapeAtURL:panel.URL];
     }
-}
-
-- (IBAction)duplicateCape:(id)sender {
-        [self.libraryWindowController.libraryViewController.libraryController importCape:self.libraryWindowController.libraryViewController.selectedCape.copy];
 }
 
 @end

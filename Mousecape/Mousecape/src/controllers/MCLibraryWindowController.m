@@ -63,6 +63,28 @@
     return self.libraryViewController.libraryController.undoManager;
 }
 
+#pragma mark - Menu Actions
+
+- (IBAction)applyCape:(id)sender {
+    [self.libraryViewController.libraryController applyCape:self.libraryViewController.selectedCape];
+}
+
+- (IBAction)editCape:(id)sender {
+    [self.libraryViewController editCape:self.libraryViewController.selectedCape];
+}
+
+- (IBAction)removeCape:(id)sender {
+    [self.libraryViewController.libraryController removeCape:self.libraryViewController.selectedCape];
+}
+
+- (IBAction)duplicateCape:(id)sender {
+    [self.libraryViewController.libraryController importCape:self.libraryViewController.selectedCape.copy];
+}
+
+- (IBAction)checkCape:(id)sender {
+    
+}
+
 @end
 
 @implementation MCAppliedCapeValueTransformer
