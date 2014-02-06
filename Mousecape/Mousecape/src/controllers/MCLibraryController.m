@@ -97,8 +97,10 @@ const char MCLibraryIdentifierContext;
     cape.library = self;
     [self.capes addObject:cape];
     
-    [self.undoManager setActionName:[@"Add " stringByAppendingString:cape.name]];
     [[self.undoManager prepareWithInvocationTarget:self] removeCape:cape];
+    if (!self.undoManager.isUndoing) {
+        [self.undoManager setActionName:[@"Add " stringByAppendingString:cape.name]];
+    }
     
     [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
 }
@@ -125,8 +127,10 @@ const char MCLibraryIdentifierContext;
     [manager removeItemAtURL:destinationURL error:NULL];
     [manager moveItemAtURL:cape.fileURL toURL:destinationURL error:NULL];
 
-    [self.undoManager setActionName:[@"Remove " stringByAppendingString:cape.name]];
     [[self.undoManager prepareWithInvocationTarget:self] importCapeAtURL:destinationURL];
+    if (!self.undoManager.isUndoing) {
+        [self.undoManager setActionName:[@"Remove " stringByAppendingString:cape.name]];
+    }
     
     [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
 }

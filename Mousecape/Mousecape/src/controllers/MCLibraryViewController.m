@@ -110,14 +110,12 @@ const char MCLibraryNameContext;
             for (MCCursorLibrary *lib in change[NSKeyValueChangeOldKey]) {
                 NSUInteger index = [self.capes indexOfObject:lib];
                 NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
-                [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
-                
                 [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
-                
                 [lib removeObserver:self forKeyPath:@"name" context:(void *)&MCLibraryNameContext];
                 [self.capes removeObjectAtIndex:index];
-                
                 [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                
+                [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
             }
         }
         

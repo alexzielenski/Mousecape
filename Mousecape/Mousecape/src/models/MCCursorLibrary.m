@@ -225,14 +225,15 @@ const char MCCursorPropertiesContext;
                                                                       options:NSRegularExpressionSearch
                                                                         range:NSMakeRange(0, keyPath.length)];
         
-        
-        [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
-        
         id oldValue = change[NSKeyValueChangeOldKey];
         if ([oldValue isKindOfClass:[NSNull class]])
             oldValue = nil;
         
         [[self.undoManager prepareWithInvocationTarget: object] setValue:oldValue forKeyPath:keyPath];
+        
+        if (!self.undoManager.isUndoing) {
+            [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
+        }
     }
 }
 
@@ -247,7 +248,6 @@ const char MCCursorPropertiesContext;
     }
 }
 
-
 - (NSSet *)cursorsWithIdentifier:(NSString *)identifier {
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"identififer == %@", identifier];
     return [self.cursors filteredSetUsingPredicate:filter];
@@ -256,25 +256,29 @@ const char MCCursorPropertiesContext;
 - (void)addCursor:(MCCursor *)cursor {
     NSSet *change = [NSSet setWithObject:cursor];
     
+    [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
+    if (!self.undoManager.isUndoing) {
+        [self.undoManager setActionName:@"Add Cursor"];
+    }
+    
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     [self.cursors addObject:cursor];
     [self startObservingCursor:cursor];
     [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
-    
-    [self.undoManager setActionName:@"Add Cursor"];
-    [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
 }
 
 - (void)removeCursor:(MCCursor *)cursor {
     NSSet *change = [NSSet setWithObject:cursor];
     
+    [[self.undoManager prepareWithInvocationTarget:self] addCursor:cursor];
+    if (!self.undoManager.isUndoing) {
+        [self.undoManager setActionName:@"Remove Cursor"];
+    }
+    
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     [self.cursors removeObject:cursor];
     [self stopObservingCursor:cursor];
     [self didChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
-    
-    [self.undoManager setActionName:@"Remove Cursor"];
-    [[self.undoManager prepareWithInvocationTarget:self] addCursor:cursor];
 }
 
 - (void)removeCursorsWithIdentifier:(NSString *)identifier {
@@ -309,9 +313,8 @@ const char MCCursorPropertiesContext;
 }
 
 - (BOOL)save {
-    [self.undoManager removeAllActions];
-    
     [self updateChangeCount:NSChangeCleared];
+    [self.undoManager removeAllActions];
     return [self writeToFile:self.fileURL.path atomically:NO];
 }
 

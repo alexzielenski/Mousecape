@@ -21,7 +21,6 @@ const char MCEditCursorsContext;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self addObserver:self forKeyPath:@"cursorLibrary" options:0 context:nil];
         [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:0 context:NULL];
     }
     return self;
@@ -29,7 +28,6 @@ const char MCEditCursorsContext;
 
 - (id)initWithCoder:(NSCoder *)coder {
     if ((self = [super initWithCoder:coder])) {
-        [self addObserver:self forKeyPath:@"cursorLibrary" options:0 context:nil];
         [self addObserver:self forKeyPath:@"cursorLibrary.cursors" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:(void*)&MCEditCursorsContext];
 
     }
@@ -37,16 +35,13 @@ const char MCEditCursorsContext;
 }
 
 - (void)dealloc {
-    [self removeObserver:self forKeyPath:@"cursorLibrary"];
+    [self removeObserver:self forKeyPath:@"cursorLibrary.cursors" context:(void *)&MCEditCursorsContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"cursorLibrary"]) {
-        [(NSTableView *)self.view reloadData];
-        // make sure the selected object is set
-        [self tableViewSelectionDidChange:nil];
-    } else if (context == &MCEditCursorsContext) {
+    if (context == &MCEditCursorsContext) {
         NSKeyValueChange kind = [change[NSKeyValueChangeKindKey] integerValue];
+        [self.tableView beginUpdates];
         
         if (kind == NSKeyValueChangeSetting) {
             id nextSet = change[NSKeyValueChangeNewKey];
@@ -56,11 +51,14 @@ const char MCEditCursorsContext;
                 self.cursors = [NSMutableOrderedSet orderedSetWithSet:nextSet copyItems:NO];
                 [self.cursors sortUsingComparator:self.class.sortComparator];
             }
+            
+            [self.tableView reloadData];
+            [self tableViewSelectionDidChange:nil];
         } else if (kind == NSKeyValueChangeInsertion) {
             for (MCCursor *lib in change[NSKeyValueChangeNewKey]) {
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
                 NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
-                
+
                 [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
                 [self.cursors insertObject:lib atIndex:index];
                 [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
@@ -69,16 +67,18 @@ const char MCEditCursorsContext;
         } else if (kind == NSKeyValueChangeRemoval) {
             for (MCCursor *lib in change[NSKeyValueChangeOldKey]) {
                 NSUInteger index = [self.cursors indexOfObject:lib];
-                NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
                 
-                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
-                [self.cursors removeObjectAtIndex:index];
-                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
-                [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
-                
+                if (index != NSNotFound) {
+                    NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
+                    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                    [self.cursors removeObjectAtIndex:index];
+                    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                    [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
+                }
             }
-
         }
+        
+        [self.tableView endUpdates];
     }
 }
 
@@ -107,6 +107,9 @@ const char MCEditCursorsContext;
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     NSInteger selectedRow = [(NSTableView *)self.view selectedRow];
+    if (selectedRow == NSNotFound || selectedRow >= self.cursors.count + 1)
+        return;
+    
     if (selectedRow == 0)
         self.selectedObject = self.cursorLibrary;
     else
