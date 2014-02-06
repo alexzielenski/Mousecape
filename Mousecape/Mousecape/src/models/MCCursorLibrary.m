@@ -140,7 +140,11 @@
         NSLog(@"cannot make library from empty dicitonary");
         return NO;
     }
+    for (MCCursor *cursor in self.cursors) {
+        [self stopObservingCursor:cursor];
+    }
     
+    self.cursors = [NSMutableSet set];
     [self.undoManager disableUndoRegistration];
     
     NSNumber *minimumVersion  = dictionary[MCCursorDictionaryMinimumVersionKey];
@@ -305,24 +309,27 @@ const char MCCursorPropertiesContext;
 }
 
 - (BOOL)save {
+    [self.undoManager removeAllActions];
+    
     [self updateChangeCount:NSChangeCleared];
     return [self writeToFile:self.fileURL.path atomically:NO];
 }
 
 - (void)updateChangeCount:(NSDocumentChangeType)change {
     if (change == NSChangeDone || change == NSChangeRedone) {
-        self.changeCount++;
-    } else if (change == NSChangeUndone) {
-        self.changeCount--;
+        self.changeCount = self.changeCount + 1;
+    } else if (change == NSChangeUndone && self.changeCount > 0) {
+        self.changeCount = self.changeCount - 1;
     } else if (change == NSChangeCleared || change == NSChangeAutosaved) {
         self.changeCount = 0;
     }
 }
 
 - (void)revertToSaved {
-//    [self.undoManager removeAllActions];
-//    [self _readFromDictionary:[NSDictionary dictionaryWithContentsOfURL:self.fileURL]];
-    for (NSUInteger x = 0; x < self.changeCount; x++) {
+    NSUInteger changes = self.changeCount;
+    [self updateChangeCount:NSChangeCleared];
+
+    for (NSUInteger x = 0; x < changes; x++) {
         [self.undoManager undo];
     }
     

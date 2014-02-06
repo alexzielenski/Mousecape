@@ -151,7 +151,7 @@ const char MCLibraryIdentifierContext;
         
 #warning TODO: Do something with the error
         [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:nil];
-        [cape save];
+//        [cape save];
     }
 }
 
