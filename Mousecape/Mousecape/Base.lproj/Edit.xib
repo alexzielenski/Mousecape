@@ -456,10 +456,10 @@
                     <connections>
                         <binding destination="tMj-cQ-hK0" name="selectedValue" keyPath="cursor.identifier" id="2aq-Lm-1Lm">
                             <dictionary key="options">
-                                <string key="NSNullPlaceholder">Unknown</string>
+                                <string key="NSMultipleValuesPlaceholder">Unknown</string>
                                 <string key="NSNotApplicablePlaceholder">Unknown</string>
                                 <string key="NSNoSelectionPlaceholder">Unknown</string>
-                                <string key="NSMultipleValuesPlaceholder">Unknown</string>
+                                <string key="NSNullPlaceholder">Unknown</string>
                                 <string key="NSValueTransformerName">MCCursorTypeValueTransformer</string>
                             </dictionary>
                         </binding>
@@ -518,7 +518,7 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.hotSpot" id="aFb-fI-aHw"/>
-                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="Gtw-PH-Eo8"/>
+                        <outlet property="nextKeyView" destination="wdB-yr-r6Y" id="Smn-hK-iP2"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="75v-aw-FbU">
@@ -609,7 +609,7 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.size" id="dXp-5z-YR6"/>
-                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="IBE-mt-pxg"/>
+                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="9Cb-FK-ium"/>
                     </connections>
                 </textField>
             </subviews>
