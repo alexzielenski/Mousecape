@@ -179,7 +179,7 @@ const char MCInvalidateContext;
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
-        [[NSCursor arrowCursor] set];
+        [[NSCursor currentCursor] pop];
         NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, nil, NULL, nil);
         [self.delegate imageView:self didDragOutImage:self.image];
     }
@@ -187,7 +187,9 @@ const char MCInvalidateContext;
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {
     if (!NSPointInRect(screenPoint, self.window.frame)) {
-        [[NSCursor disappearingItemCursor] set];
+        [[NSCursor disappearingItemCursor] push];
+    } else if ([NSCursor currentCursor] == [NSCursor disappearingItemCursor]) {
+        [[NSCursor currentCursor] pop];
     }
 }
 
@@ -207,10 +209,17 @@ const char MCInvalidateContext;
     [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image" ]];
 
     NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
-    CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
-    CGRect effectiveRect = CGRectIntegral(CGRectMake(self.layer.frame.size.width / 2.0 - effectiveSize.width / 2.0, 0, effectiveSize.width, effectiveSize.height));
-
-    [dragItem setDraggingFrame:effectiveRect contents:self.image];
+    
+    __weak typeof (self) weakSelf = self;
+    NSImage *previewImage = [NSImage imageWithSize:self.frame.size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        CGFloat opacity = weakSelf.hotSpotLayer.opacity;
+        weakSelf.hotSpotLayer.opacity = 0.0;
+        [weakSelf displayRectIgnoringOpacity:dstRect inContext:[NSGraphicsContext currentContext]];
+        weakSelf.hotSpotLayer.opacity = opacity;
+        return YES;
+    }];
+    
+    [dragItem setDraggingFrame:self.bounds contents:previewImage];
 
     NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:@[ dragItem ] event:event source:self];
     draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
@@ -246,7 +255,7 @@ const char MCInvalidateContext;
 // Give the delegate some more control
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)]) {
-		return [self.delegate imageView:self shouldPerformDragOperation:sender];
+		return [self.delegate imageView:self shouldPrepareForDragOperation:sender];
 	}
 	return NO;
 }
