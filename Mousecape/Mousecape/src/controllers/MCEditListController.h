@@ -15,5 +15,6 @@
 
 - (IBAction)addAction:(id)sender;
 - (IBAction)removeAction:(id)sender;
+- (IBAction)duplicateAction:(id)sender;
 
 @end

@@ -121,6 +121,10 @@
     [self.cursorLibrary revertToSaved];
 }
 
+- (IBAction)showCape:(id)sender {
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[ self.cursorLibrary.fileURL ]];
+}
+
 #pragma mark - View Changing
 
 - (void)_changeEditViewsForSelection {

@@ -98,9 +98,29 @@ const char MCEditCursorsContext;
     [self.cursorLibrary addCursor:[[MCCursor alloc] init]];
 }
 
-- (IBAction)removeAction:(id)sender {
-    if (self.tableView.selectedRow != 0)
-        [self.cursorLibrary removeCursor:[[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue]];
+- (IBAction)removeAction:(NSMenuItem *)sender {
+    NSUInteger row = NSNotFound;
+    if (sender.tag == -1)
+        row = self.tableView.clickedRow;
+    else
+        row = self.tableView.selectedRow;
+    
+    if (row > 0)
+        [self.cursorLibrary removeCursor:[[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue]];
+}
+
+- (IBAction)duplicateAction:(NSMenuItem *)sender {
+    NSUInteger row = NSNotFound;
+    if (sender.tag == -1)
+        row = self.tableView.clickedRow;
+    else
+        row = self.tableView.selectedRow;
+    
+    if (row > 0) {
+        MCCursor *cursor = [[[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue] copy];
+        cursor.identifier = UUID();
+        [self.cursorLibrary addCursor:cursor];
+    }
 }
 
 #pragma mark - NSTableViewDelegate
