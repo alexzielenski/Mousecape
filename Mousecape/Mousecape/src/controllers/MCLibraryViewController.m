@@ -26,6 +26,7 @@ const char MCLibraryNameContext;
 @end
 
 @implementation MCLibraryViewController
+@dynamic clickedCape, selectedCape, editingCape;
 
 + (NSComparator)sortComparator {
     static NSComparator sortComparator = nil;
@@ -147,12 +148,22 @@ const char MCLibraryNameContext;
     [self.libraryController applyCape:library];
 }
 
+#pragma mark - Editing
+
++ (NSSet *)keyPathsForValuesAffectingEditingCape {
+    return [NSSet setWithObject:@"editWindowController.cursorLibrary"];
+}
+
 - (MCCursorLibrary *)selectedCape {
     return [[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue];
 }
 
 - (MCCursorLibrary *)clickedCape {
     return [[self.tableView viewAtColumn:0 row:self.tableView.clickedRow makeIfNecessary:NO] objectValue];
+}
+
+- (MCCursorLibrary *)editingCape {
+    return self.editWindowController.cursorLibrary;
 }
 
 - (void)editCape:(MCCursorLibrary *)library {

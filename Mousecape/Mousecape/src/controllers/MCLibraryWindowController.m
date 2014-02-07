@@ -92,7 +92,12 @@
     else
         cape = self.libraryViewController.selectedCape;
     
-    [self.libraryViewController.libraryController removeCape:cape];
+    if (cape != self.libraryViewController.editingCape) {
+        [self.libraryViewController.libraryController removeCape:cape];
+    } else {
+        [[NSSound soundNamed:@"Funk"] play];
+        [self.libraryViewController editCape:self.libraryViewController.editingCape];
+    }
 }
 
 - (IBAction)duplicateCape:(NSMenuItem *)sender {

@@ -323,6 +323,35 @@ const char MCCursorPropertiesContext;
     [self updateChangeCount:NSChangeCleared];
     [self.undoManager removeAllActions];
     return [self writeToFile:self.fileURL.path atomically:NO];
+- (NSError *)save {
+    // Check for duplicate capes
+    NSCountedSet *count  = [[NSCountedSet alloc] initWithArray:[self.cursors.allObjects valueForKey:@"identifier"]];
+    NSMutableSet *duplicates = [NSMutableSet set];
+    
+    for (NSString *identifier in count) {
+        if ([duplicates containsObject:identifier])
+            continue;
+        
+        NSUInteger amount = [count countForObject:identifier];
+        if (amount > 1)
+            [duplicates addObject:nameForCursorIdentifier(identifier)];
+    }
+        
+    if (duplicates.count > 0) {
+        return [NSError errorWithDomain:MCErrorDomain code:MCErrorMultipleCursorIdentifiersCode userInfo:@{
+                                                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", nil),
+                                                                                                           NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedString(@"Multiple cursors with the name(s): %@ exist.", nil), duplicates] }];
+    }
+    
+//    [self.undoManager removeAllActions];
+    BOOL success = [self writeToFile:self.fileURL.path atomically:NO];
+    if (success) {
+        [self updateChangeCount:NSChangeCleared];
+        return nil;
+    }
+    return [NSError errorWithDomain:MCErrorDomain code:MCErrorWriteFailCode userInfo:@{
+                                                                                       NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", nil),
+                                                                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error writing cape to disk.", nil) }];
 }
 
 - (void)updateChangeCount:(NSDocumentChangeType)change {
