@@ -179,7 +179,7 @@ const char MCInvalidateContext;
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
-        [NSCursor pop];
+        [[NSCursor arrowCursor] set];
         NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, nil, NULL, nil);
         [self.delegate imageView:self didDragOutImage:self.image];
     }
@@ -187,7 +187,7 @@ const char MCInvalidateContext;
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {
     if (!NSPointInRect(screenPoint, self.window.frame)) {
-        [[NSCursor disappearingItemCursor] push];
+        [[NSCursor disappearingItemCursor] set];
     }
 }
 
@@ -218,17 +218,12 @@ const char MCInvalidateContext;
 }
 
 - (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type {
-    //sender has accepted the drag and now we need to send the data for the type we promised
-    if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
-        
-        //set data for TIFF type on the pasteboard as requested
+    if ([type compare: NSPasteboardTypeTIFF] == NSOrderedSame) {
         [sender setData:[self.image TIFFRepresentation] forType:NSPasteboardTypeTIFF];
         
-    } else if ( [type compare: NSPasteboardTypePNG] == NSOrderedSame ) {
-        
-        //set data for PDF type on the pasteboard as requested
+    } else if ([type compare: NSPasteboardTypePNG] == NSOrderedSame) {
         [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
-    } else {
+    } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];
     }
 }
