@@ -71,6 +71,9 @@ void listener(void) {
     assert(rls != NULL);
     MMLog(BOLD CYAN "Listening for User changes" RESET);
     
+    // Apply the cape for the user on load
+    applyCapeAtPath(appliedCapePathForUser(NSUserName()));
+    
     CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
     CFRunLoopRun();
 
