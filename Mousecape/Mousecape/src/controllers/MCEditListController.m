@@ -53,7 +53,7 @@ const char MCEditCursorsContext;
             }
             
             [self.tableView reloadData];
-            [self tableViewSelectionDidChange:nil];
+            [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
         } else if (kind == NSKeyValueChangeInsertion) {
             for (MCCursor *lib in change[NSKeyValueChangeNewKey]) {
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
