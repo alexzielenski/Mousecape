@@ -12,6 +12,8 @@
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 @property (nonatomic, assign) NSUInteger changeCount;
+@property (nonatomic, assign) NSUInteger lastChangeCount;
+
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
 
@@ -105,7 +107,8 @@
         self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
         self.version = @1.0;
         self.cursors = [NSMutableSet set];
-        
+        self.changeCount = 0;
+        self.lastChangeCount = 0;
         [self startObservingProperties];
     }
     
@@ -130,7 +133,7 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
     if ([key isEqualToString:@"isDirty"]) {
-        keyPaths = [keyPaths setByAddingObject: @"changeCount"];
+        keyPaths = [keyPaths setByAddingObjectsFromArray: @[@"changeCount", @"lastChangeCount"]];
     }
     return keyPaths;
 }
@@ -319,10 +322,6 @@ const char MCCursorPropertiesContext;
     return [self.dictionaryRepresentation writeToFile:file atomically:atomically];
 }
 
-- (BOOL)save {
-    [self updateChangeCount:NSChangeCleared];
-    [self.undoManager removeAllActions];
-    return [self writeToFile:self.fileURL.path atomically:NO];
 - (NSError *)save {
     // Check for duplicate capes
     NSCountedSet *count  = [[NSCountedSet alloc] initWithArray:[self.cursors.allObjects valueForKey:@"identifier"]];
@@ -360,23 +359,21 @@ const char MCCursorPropertiesContext;
     } else if (change == NSChangeUndone && self.changeCount > 0) {
         self.changeCount = self.changeCount - 1;
     } else if (change == NSChangeCleared || change == NSChangeAutosaved) {
-        self.changeCount = 0;
+        self.lastChangeCount = self.changeCount;
     }
 }
 
 - (void)revertToSaved {
-    NSUInteger changes = self.changeCount;
-    [self updateChangeCount:NSChangeCleared];
-
-    for (NSUInteger x = 0; x < changes; x++) {
+    while (self.isDirty) {
         [self.undoManager undo];
     }
     
+    [self updateChangeCount:NSChangeCleared];
     [self.undoManager removeAllActions];
 }
 
 - (BOOL)isDirty {
-    return (self.changeCount);
+    return (self.changeCount != self.lastChangeCount);
 }
 
 - (BOOL)isEqualTo:(MCCursorLibrary *)object {

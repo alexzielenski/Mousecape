@@ -130,7 +130,7 @@ const char MCCursorNameContext;
 }
 
 - (IBAction)removeAction:(NSMenuItem *)sender {
-    NSUInteger row = NSNotFound;
+    NSInteger row = NSNotFound;
     if (sender.tag == -1)
         row = self.tableView.clickedRow;
     else
