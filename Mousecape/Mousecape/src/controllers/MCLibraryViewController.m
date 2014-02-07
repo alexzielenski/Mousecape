@@ -59,6 +59,11 @@ const char MCLibraryNameContext;
 
 - (void)dealloc {
     [self.libraryController removeObserver:self forKeyPath:@"appliedCape"];
+    
+    for (MCCursorLibrary *library in self.capes) {
+        [library removeObserver:self forKeyPath:@"name" context:(void *)&MCLibraryNameContext];
+    }
+    
 }
 
 + (NSString *)capesPath {
