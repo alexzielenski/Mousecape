@@ -148,8 +148,7 @@ const char MCInvalidateContext;
 
 - (void)_invalidateAnimation {
     [self.spriteLayer removeAllAnimations];
-    
-    
+        
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
     BOOL none = (self.frameCount == 1 || !self.shouldAnimate);
     NSUInteger frameCount = none || !self.image ? 0 : self.frameCount;
@@ -170,9 +169,76 @@ const char MCInvalidateContext;
     return (id <CAAction>)[NSNull null];
 }
 
+#pragma mark - NSDraggingSource
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    if (context == NSDraggingContextWithinApplication)
+        return NSDragOperationCopy;
+    return NSDragOperationNone;
+}
+
+- (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
+        [NSCursor pop];
+        NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, nil, NULL, nil);
+        [self.delegate imageView:self didDragOutImage:self.image];
+    }
+}
+
+- (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {
+    if (!NSPointInRect(screenPoint, self.window.frame)) {
+        [[NSCursor disappearingItemCursor] push];
+    }
+}
+
+- (BOOL)ignoreModifierKeysForDraggingSession:(NSDraggingSession *)session {
+    return YES;
+}
+
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+    return YES;
+}
+
+- (void)mouseDown:(NSEvent *)event {
+    if (!self.image)
+        return;
+
+    NSPasteboardItem *pbItem = [NSPasteboardItem new];
+    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image" ]];
+
+    NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+    CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
+    CGRect effectiveRect = CGRectIntegral(CGRectMake(self.layer.frame.size.width / 2.0 - effectiveSize.width / 2.0, 0, effectiveSize.width, effectiveSize.height));
+
+    [dragItem setDraggingFrame:effectiveRect contents:self.image];
+
+    NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:@[ dragItem ] event:event source:self];
+    draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
+    draggingSession.draggingFormation = NSDraggingFormationNone;
+}
+
+- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type {
+    //sender has accepted the drag and now we need to send the data for the type we promised
+    if ( [type compare: NSPasteboardTypeTIFF] == NSOrderedSame ) {
+        
+        //set data for TIFF type on the pasteboard as requested
+        [sender setData:[self.image TIFFRepresentation] forType:NSPasteboardTypeTIFF];
+        
+    } else if ( [type compare: NSPasteboardTypePNG] == NSOrderedSame ) {
+        
+        //set data for PDF type on the pasteboard as requested
+        [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
+    } else {
+        [sender writeObjects:@[ self.image ]];
+    }
+}
+
 #pragma mark - NSDragDestination
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    if (sender.draggingSource == self)
+        return NSDragOperationNone;
+    
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist
 		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images

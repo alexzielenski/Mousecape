@@ -18,6 +18,7 @@
 - (BOOL)imageView:(MMAnimatingImageView *)imageView shouldPerformDragOperation:(id <NSDraggingInfo>)drop;
 - (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images; // I'm making this an array because in the future we mighty allow users
 																							  // to drag multiple frames for a cursor instead of manually stacking them.
+- (void)imageView:(MMAnimatingImageView *)imageView didDragOutImage:(NSImage *)image;
 
 @end
 
@@ -25,7 +26,7 @@
 //!** This is a specialized view class for animating the cursors used in magic mouse. These animated cursors have a height that is their **//
 //!** frame count multiplied by the normal image height so every time the timer fires, it moves the y offset displayed by the image.     **//
 //!****************************************************************************************************************************************//
-@interface MMAnimatingImageView : NSView
+@interface MMAnimatingImageView : NSView <NSDraggingDestination, NSDraggingSource, NSPasteboardItemDataProvider>
 @property (strong) NSImage                                    *image;
 @property (strong) NSImage                                    *placeholderImage;
 @property (assign) CGFloat                                    frameDuration;
