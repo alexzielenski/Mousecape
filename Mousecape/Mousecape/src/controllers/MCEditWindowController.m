@@ -81,11 +81,15 @@
     if (returnCode == 0) { // cancel
        // do nothing
     } else if (returnCode == 1) { // save
-        [self.cursorLibrary save];
-        self.editListController.cursorLibrary = contextInfo;
+        NSError *error = [self.cursorLibrary save];
+        if (!error) {
+            self.editListController.cursorLibrary = contextInfo;
         
-        if (!contextInfo)
-            [self.window close];
+            if (!contextInfo)
+                [self.window close];
+        } else {
+            [NSApp presentError:error modalForWindow:self.window delegate:nil didPresentSelector:NULL contextInfo:nil];
+        }
     } else if (returnCode == -1) { // discard changes
         [self.cursorLibrary revertToSaved];
         self.editListController.cursorLibrary = contextInfo;
@@ -101,10 +105,6 @@
     [self.cursorLibrary.library applyCape:self.cursorLibrary];
 }
 
-- (IBAction)removeCape:(id)sender {
-    [self.cursorLibrary.library removeCape:self.cursorLibrary];
-}
-
 - (IBAction)duplicateCape:(id)sender {
     [self.cursorLibrary.library importCape:self.cursorLibrary.copy];
 }
@@ -114,7 +114,9 @@
 }
 
 - (IBAction)saveDocument:(id)sender {
-    [self.cursorLibrary save];
+    NSError *error = [self.cursorLibrary save];
+    if (error)
+        [self presentError:error modalForWindow:self.window delegate:nil didPresentSelector:NULL contextInfo:NULL];
 }
 
 - (IBAction)revertDocumentToSaved:(id)sender {
@@ -123,6 +125,13 @@
 
 - (IBAction)showCape:(id)sender {
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[ self.cursorLibrary.fileURL ]];
+}
+
+- (NSError *)willPresentError:(NSError *)error {
+    return [NSError errorWithDomain:error.domain code:error.code userInfo:@{
+                                                                            NSLocalizedDescriptionKey: error.localizedDescription,
+                                                                            NSLocalizedRecoverySuggestionErrorKey: error.localizedFailureReason
+                                                                            }];
 }
 
 #pragma mark - View Changing

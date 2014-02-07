@@ -30,6 +30,14 @@ extern NSString *defaultCursors[];
 extern NSString *MCErrorDomain;
 extern NSDictionary *cursorNameMap;
 
+typedef NS_ENUM(NSInteger, MCErrorCode) {
+    MCErrorInvalidCapeCode = -1,
+    MCErrorWriteFailCode   = -2,
+    
+    MCErrorInvalidFormatCode = -100,
+    MCErrorMultipleCursorIdentifiersCode = -101
+};
+
 extern const CGFloat   MCCursorCreatorVersion;
 extern const CGFloat   MCCursorParserVersion;
 extern const NSString *MCCursorDictionaryMinimumVersionKey;
