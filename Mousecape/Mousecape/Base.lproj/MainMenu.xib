@@ -26,14 +26,18 @@
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Preferences…" keyEquivalent="," id="129"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="129">
+                                <connections>
+                                    <action selector="showPreferences:" target="-1" id="lNW-tH-IKS"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Check for Updates..." id="igk-i0-oH0">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Install Helper Tool" id="Ui2-VN-tbP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleInstall:" target="494" id="Rfq-DA-Ni8"/>
+                                    <action selector="toggleInstall:" target="-1" id="Ppc-Jw-bxU"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">

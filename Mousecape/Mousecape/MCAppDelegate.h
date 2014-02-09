@@ -11,5 +11,4 @@
 @interface MCAppDelegate : NSObject <NSApplicationDelegate>
 @property (assign) IBOutlet NSMenuItem *toggleHelperItem;
 @property (strong) MCLibraryWindowController *libraryWindowController;
-- (IBAction)toggleInstall:(NSMenuItem *)sender;
 @end

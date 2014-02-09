@@ -16,6 +16,10 @@
 		FA35984D189DC55A00288163 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA35984C189DC55A00288163 /* ServiceManagement.framework */; };
 		FA359852189E035900288163 /* listen.m in Sources */ = {isa = PBXBuildFile; fileRef = FA359851189E035900288163 /* listen.m */; };
 		FA359853189E040D00288163 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359844189DBA3800288163 /* SystemConfiguration.framework */; };
+		FA5107E718A823BD00917185 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5107E118A823BD00917185 /* MASPreferencesWindow.xib */; };
+		FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */; };
+		FA5107ED18A8253600917185 /* MCGeneralPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */; };
+		FA5107EE18A8253600917185 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5107EC18A8253600917185 /* GeneralPreferences.xib */; };
 		FA8FF76B189D664400750E51 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FA8FF771189D66D800750E51 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
@@ -117,6 +121,13 @@
 		FA35984C189DC55A00288163 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		FA359850189E035200288163 /* listen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = listen.h; sourceTree = "<group>"; };
 		FA359851189E035900288163 /* listen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listen.m; sourceTree = "<group>"; };
+		FA5107E018A823BD00917185 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		FA5107E118A823BD00917185 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		FA5107E218A823BD00917185 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		FA5107EA18A8253600917185 /* MCGeneralPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeneralPreferencesController.h; path = Preferences/MCGeneralPreferencesController.h; sourceTree = "<group>"; };
+		FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGeneralPreferencesController.m; path = Preferences/MCGeneralPreferencesController.m; sourceTree = "<group>"; };
+		FA5107EC18A8253600917185 /* GeneralPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralPreferences.xib; path = Preferences/GeneralPreferences.xib; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
 		FA8FF76C189D66C400750E51 /* backup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = backup.h; sourceTree = "<group>"; };
@@ -247,9 +258,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA5107DD18A823BD00917185 /* MASPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				FA5107E018A823BD00917185 /* MASPreferencesViewController.h */,
+				FA5107E118A823BD00917185 /* MASPreferencesWindow.xib */,
+				FA5107E218A823BD00917185 /* MASPreferencesWindowController.h */,
+				FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */,
+			);
+			path = MASPreferences;
+			sourceTree = "<group>";
+		};
+		FA5107EF18A8253A00917185 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				FA5107EA18A8253600917185 /* MCGeneralPreferencesController.h */,
+				FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */,
+				FA5107EC18A8253600917185 /* GeneralPreferences.xib */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		FAAEF8EE189EB32700145DF8 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				FA5107DD18A823BD00917185 /* MASPreferences */,
 				FAAEF8EF189EB32700145DF8 /* BTRKit */,
 			);
 			path = external;
@@ -474,6 +507,7 @@
 				FAEE651918A047E8003AA182 /* MCLibraryViewController.m */,
 				FAEE651A18A047E8003AA182 /* MCLibraryWindowController.h */,
 				FAEE651B18A047E8003AA182 /* MCLibraryWindowController.m */,
+				FA5107EF18A8253A00917185 /* Preferences */,
 			);
 			name = controllers;
 			path = src/controllers;
@@ -619,8 +653,10 @@
 				FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */,
 				FA04886D189F58B1001F3AB5 /* Library.xib in Resources */,
 				FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */,
+				FA5107EE18A8253600917185 /* GeneralPreferences.xib in Resources */,
 				FAC69F7D189D603C00BC829D /* Images.xcassets in Resources */,
 				FAC69F75189D603C00BC829D /* Credits.rtf in Resources */,
+				FA5107E718A823BD00917185 /* MASPreferencesWindow.xib in Resources */,
 				FAC69F7B189D603C00BC829D /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -667,9 +703,11 @@
 				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,
 				FAEE652C18A047E8003AA182 /* MCEditDetailController.m in Sources */,
 				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
+				FA5107ED18A8253600917185 /* MCGeneralPreferencesController.m in Sources */,
 				FAAEF951189F0CC300145DF8 /* restore.m in Sources */,
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
 				FAEE652918A047E8003AA182 /* NSFileManager+DirectoryLocations.m in Sources */,
+				FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */,
 				FAEE652D18A047E8003AA182 /* MCEditListController.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAEE653218A047E8003AA182 /* MCCursor.m in Sources */,

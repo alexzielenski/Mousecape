@@ -7,11 +7,19 @@
 //
 
 #import "scale.h"
+#import "MCPrefs.h"
 
 float cursorScale() {
     float value;
     CGSGetCursorScale(CGSMainConnectionID(), &value);
     return value;
+}
+
+float defaultCursorScale() {
+    float scale = [MCDefault(MCPreferencesCursorScaleKey) floatValue];
+    if (scale < .5 || scale > 16)
+        scale = 1;
+    return scale;
 }
 
 BOOL setCursorScale(float dbl) {

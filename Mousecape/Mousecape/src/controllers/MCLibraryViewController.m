@@ -145,7 +145,11 @@ const char MCLibraryNameContext;
 - (void)doubleClick:(NSTableView *)sender {
     NSUInteger row = sender.clickedRow;
     MCCursorLibrary *library = [[sender viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
-    [self.libraryController applyCape:library];
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:MCPreferencesDoubleActionKey] == 0)
+        [self.libraryController applyCape:library];
+    else {
+        [self editCape:library];
+    }
 }
 
 #pragma mark - Editing

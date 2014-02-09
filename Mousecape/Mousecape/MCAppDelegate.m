@@ -11,14 +11,20 @@
 #import <ServiceManagement/ServiceManagement.h>
 #import "MCCursorLibrary.h"
 #import "create.h"
+#import "MASPreferencesWindowController.h"
+#import "MCGeneralPreferencesController.h"
 
 static AuthorizationRef obtainRights();
 
-@interface MCAppDelegate ()
+@interface MCAppDelegate () {
+    MASPreferencesWindowController *_preferencesWindowController;
+}
+@property (readonly) MASPreferencesWindowController *preferencesWindowController;
 - (void)configureHelperToolMenuItem;
 @end
 
 @implementation MCAppDelegate
+@dynamic preferencesWindowController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self configureHelperToolMenuItem];
@@ -91,6 +97,16 @@ static AuthorizationRef obtainRights();
     [self configureHelperToolMenuItem];
 }
 
+- (MASPreferencesWindowController *)preferencesWindowController {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSViewController *general = [[MCGeneralPreferencesController alloc] init];
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[ general ] title:NSLocalizedString(@"Preferences", nil)];
+    });
+    
+    return _preferencesWindowController;
+}
+
 #pragma mark - Interface Actions
 
 - (IBAction)restoreCape:(id)sender {
@@ -131,6 +147,10 @@ static AuthorizationRef obtainRights();
     if ([panel runModal] == NSFileHandlingPanelOKButton) {
         [self.libraryWindowController.libraryViewController.libraryController importCapeAtURL:panel.URL];
     }
+}
+
+- (IBAction)showPreferences:(id)sender {
+    [self.preferencesWindowController showWindow:sender];
 }
 
 @end

@@ -10,9 +10,10 @@
 
 NSString *MCPreferencesAppliedCursorKey          = @"MCAppliedCursor";
 NSString *MCPreferencesAppliedClickActionKey     = @"MCLibraryClickAction";
+NSString *MCPreferencesCursorScaleKey            = @"MCCursorScale";
+NSString *MCPreferencesDoubleActionKey           = @"MCDoubleAction";
 NSString *MCSuppressDeleteLibraryConfirmationKey = @"MCSuppressDeleteLibraryConfirmationKey";
 NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfirmationKey";
-
 id MCDefaultFor(NSString *key, NSString *user, NSString *host) {
     NSString *value = (NSString *)CFPreferencesCopyValue((CFStringRef)key, (CFStringRef)kMCDomain, (CFStringRef)user, (CFStringRef)host);
     return [value autorelease];
