@@ -252,7 +252,7 @@ const char MCCursorPropertiesContext;
 }
 
 - (NSSet *)cursorsWithIdentifier:(NSString *)identifier {
-    NSPredicate *filter = [NSPredicate predicateWithFormat:@"identififer == %@", identifier];
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
     return [self.cursors filteredSetUsingPredicate:filter];
 }
 
