@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-YT-ae7">
-                    <rect key="frame" x="18" y="19" width="444" height="27"/>
+                    <rect key="frame" x="18" y="19" width="392" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="16" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="16" sliderType="linear" id="osm-63-Q66"/>
                     <connections>
@@ -63,6 +63,26 @@
                         </binding>
                     </connections>
                 </segmentedControl>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QBy-dj-wZ4">
+                    <rect key="frame" x="416" y="25" width="44" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="nlB-rR-gpk">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2" minimumFractionDigits="2" maximumFractionDigits="2" id="ZjS-1g-txf">
+                            <real key="roundingIncrement" value="0.0"/>
+                            <real key="minimum" value="0.5"/>
+                            <real key="maximum" value="16"/>
+                            <metadata>
+                                <bool key="localizesFormat" value="YES"/>
+                            </metadata>
+                        </numberFormatter>
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="cursorScale" id="ffZ-zU-mYh"/>
+                    </connections>
+                </textField>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="Dw0-Gt-5ak"/>
