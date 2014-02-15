@@ -146,6 +146,11 @@ const char MCLibraryIdentifierContext;
     self.appliedCape = nil;
 }
 
+- (NSSet *)capesWithIdentifier:(NSString *)identifier {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
+    return [self.capes filteredSetUsingPredicate:pred];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == &MCLibraryIdentifierContext) {
         // change the file url to reflect the new identifier

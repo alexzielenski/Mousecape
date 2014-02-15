@@ -129,8 +129,8 @@
 
 - (NSError *)willPresentError:(NSError *)error {
     return [NSError errorWithDomain:error.domain code:error.code userInfo:@{
-                                                                            NSLocalizedDescriptionKey: error.localizedDescription,
-                                                                            NSLocalizedRecoverySuggestionErrorKey: error.localizedFailureReason
+                                                                            NSLocalizedDescriptionKey: error.localizedDescription ?: @"",
+                                                                            NSLocalizedRecoverySuggestionErrorKey: error.localizedFailureReason ?: @""
                                                                             }];
 }
 
