@@ -11,14 +11,20 @@
 #import <ServiceManagement/ServiceManagement.h>
 #import "MCCursorLibrary.h"
 #import "create.h"
+#import "MASPreferencesWindowController.h"
+#import "MCGeneralPreferencesController.h"
 
 static AuthorizationRef obtainRights();
 
-@interface MCAppDelegate ()
+@interface MCAppDelegate () {
+    MASPreferencesWindowController *_preferencesWindowController;
+}
+@property (readonly) MASPreferencesWindowController *preferencesWindowController;
 - (void)configureHelperToolMenuItem;
 @end
 
 @implementation MCAppDelegate
+@dynamic preferencesWindowController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self configureHelperToolMenuItem];
@@ -46,7 +52,7 @@ static AuthorizationRef obtainRights();
 
     NSFileManager *manager = [NSFileManager defaultManager];
     [self.toggleHelperItem setTag: ([manager fileExistsAtPath:mouseCloakDest] && [manager fileExistsAtPath:agentDest])];
-    [self.toggleHelperItem setTitle:self.toggleHelperItem.tag ? @"Uninstall Helper Tool" : @"Ininstall Helper Tool"];
+    [self.toggleHelperItem setTitle:self.toggleHelperItem.tag ? @"Uninstall Helper Tool" : @"Install Helper Tool"];
 }
 
 - (IBAction)toggleInstall:(NSMenuItem *)sender {
@@ -77,8 +83,9 @@ static AuthorizationRef obtainRights();
         SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)copyTool[@"Label"], authRef, true, NULL);
         
         NSDictionary *launchAgent = @{ @"Label": @"com.alexzielenski.mousecloak.listener", @"ProgramArguments": @[ mouseCloakDest, @"--listen" ], @"LimitLoadToSessionType": @[ @"Aqua" ], @"RunAtLoad": @YES, @"KeepAlive": @YES };
+        [[NSFileManager defaultManager] removeItemAtPath:agentPath error:nil];
         [launchAgent writeToFile:agentPath atomically:NO];
-        
+                
         NSDictionary *copyJob = @{ @"Label": @"com.alexzielenski.mousecloak.install2", @"ProgramArguments": @[ @"/bin/cp", @"-f", agentPath, agentDest ], @"RunAtLoad": @YES };
         SMJobSubmit(kSMDomainSystemLaunchd, (__bridge CFDictionaryRef)copyJob, authRef, NULL);
         SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)copyJob[@"Label"], authRef, true, NULL);
@@ -88,6 +95,16 @@ static AuthorizationRef obtainRights();
     
     AuthorizationFree(authRef, kAuthorizationFlagDestroyRights);
     [self configureHelperToolMenuItem];
+}
+
+- (MASPreferencesWindowController *)preferencesWindowController {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSViewController *general = [[MCGeneralPreferencesController alloc] init];
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:@[ general ] title:NSLocalizedString(@"Preferences", nil)];
+    });
+    
+    return _preferencesWindowController;
 }
 
 #pragma mark - Interface Actions
@@ -130,6 +147,10 @@ static AuthorizationRef obtainRights();
     if ([panel runModal] == NSFileHandlingPanelOKButton) {
         [self.libraryWindowController.libraryViewController.libraryController importCapeAtURL:panel.URL];
     }
+}
+
+- (IBAction)showPreferences:(id)sender {
+    [self.preferencesWindowController showWindow:sender];
 }
 
 @end

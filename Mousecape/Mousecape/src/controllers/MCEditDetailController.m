@@ -73,6 +73,11 @@
     [self.cursor setRepresentation:images.lastObject forScale:cursorScaleForScale(scale)];
 }
 
+- (void)imageView:(MMAnimatingImageView *)imageView didDragOutImage:(NSImage *)image {
+    CGFloat scale = imageView.scale;
+    [self.cursor setRepresentation:nil forScale:cursorScaleForScale(scale)];
+}
+
 @end
 
 @implementation MCCursorTypeValueTransformer

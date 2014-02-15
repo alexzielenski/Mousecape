@@ -18,13 +18,19 @@ NSError *createCape(NSString *input, NSString *output, BOOL convert) {
     
     if (!cape) {
         if (convert)
-            return [NSError errorWithDomain:MCErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey: @"Unabled to create a cape from the file specified." }];
+            return [NSError errorWithDomain:MCErrorDomain code:MCErrorInvalidCapeCode userInfo:@{
+                                                                                                 NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to create cape file", nil),
+                                                                                                 NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unabled to create a cape from the file specified.", nil) }];
         else
-            return [NSError errorWithDomain:MCErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey: @"Unabled to create a cape from the directory specified." }];
+            return [NSError errorWithDomain:MCErrorDomain code:MCErrorInvalidCapeCode userInfo:@{
+                                                                                                 NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to create cape file", nil),
+                                                                                                 NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unabled to create a cape from the directory specified.", nil) }];
     }
     
     if (![cape writeToFile:output atomically:NO]) {
-        return [NSError errorWithDomain:MCErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat: @"Failed to write to %@", output] }];
+        return [NSError errorWithDomain:MCErrorDomain code:MCErrorWriteFailCode userInfo:@{
+                                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to create cape file", nil),
+                                                                                           NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat: NSLocalizedString(@"The destination, %@, is not writable.", nil), output] }];
     }
 
     return nil;

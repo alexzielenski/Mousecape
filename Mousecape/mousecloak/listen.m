@@ -12,6 +12,7 @@
 #import "MCPrefs.h"
 #import "CGSCursor.h"
 #import <Cocoa/Cocoa.h>
+#import "scale.h"
 
 NSString *appliedCapePathForUser(NSString *user) {
     NSString *home = NSHomeDirectoryForUser(user);
@@ -34,6 +35,8 @@ static void UserSpaceChanged(SCDynamicStoreRef	store, CFArrayRef changedKeys, vo
     if (!applyCapeAtPath(appliedPath)) {
         MMLog(BOLD RED "Application of cape failed" RESET);
     }
+    
+    setCursorScale(defaultCursorScale());
     
     CFRelease(currentConsoleUser);
 }
@@ -70,6 +73,10 @@ void listener(void) {
     CFRunLoopSourceRef rls = SCDynamicStoreCreateRunLoopSource(NULL, store, 0);
     assert(rls != NULL);
     MMLog(BOLD CYAN "Listening for User changes" RESET);
+    
+    // Apply the cape for the user on load
+    applyCapeAtPath(appliedCapePathForUser(NSUserName()));
+    setCursorScale(defaultCursorScale());
     
     CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
     CFRunLoopRun();

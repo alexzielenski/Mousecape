@@ -26,6 +26,7 @@ const char MCLibraryNameContext;
 @end
 
 @implementation MCLibraryViewController
+@dynamic clickedCape, selectedCape, editingCape;
 
 + (NSComparator)sortComparator {
     static NSComparator sortComparator = nil;
@@ -59,6 +60,11 @@ const char MCLibraryNameContext;
 
 - (void)dealloc {
     [self.libraryController removeObserver:self forKeyPath:@"appliedCape"];
+    
+    for (MCCursorLibrary *library in self.capes) {
+        [library removeObserver:self forKeyPath:@"name" context:(void *)&MCLibraryNameContext];
+    }
+    
 }
 
 + (NSString *)capesPath {
@@ -139,7 +145,17 @@ const char MCLibraryNameContext;
 - (void)doubleClick:(NSTableView *)sender {
     NSUInteger row = sender.clickedRow;
     MCCursorLibrary *library = [[sender viewAtColumn:0 row:row makeIfNecessary:NO] objectValue];
-    [self.libraryController applyCape:library];
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:MCPreferencesDoubleActionKey] == 0)
+        [self.libraryController applyCape:library];
+    else {
+        [self editCape:library];
+    }
+}
+
+#pragma mark - Editing
+
++ (NSSet *)keyPathsForValuesAffectingEditingCape {
+    return [NSSet setWithObject:@"editWindowController.cursorLibrary"];
 }
 
 - (MCCursorLibrary *)selectedCape {
@@ -148,6 +164,10 @@ const char MCLibraryNameContext;
 
 - (MCCursorLibrary *)clickedCape {
     return [[self.tableView viewAtColumn:0 row:self.tableView.clickedRow makeIfNecessary:NO] objectValue];
+}
+
+- (MCCursorLibrary *)editingCape {
+    return self.editWindowController.cursorLibrary;
 }
 
 - (void)editCape:(MCCursorLibrary *)library {
@@ -160,24 +180,6 @@ const char MCLibraryNameContext;
     }
     self.editWindowController.cursorLibrary = library;
     [self.editWindowController showWindow:self];
-}
-
-#pragma mark - Context Menu
-
-- (IBAction)applyAction:(NSMenuItem *)sender {
-    [self.libraryController applyCape:self.clickedCape];
-}
-
-- (IBAction)editAction:(NSMenuItem *)sender {
-    [self editCape:self.clickedCape];
-}
-
-- (IBAction)duplicateAction:(NSMenuItem *)sender {
-    [self.libraryController importCape:self.clickedCape.copy];
-}
-
-- (IBAction)removeAction:(NSMenuItem *)sender {
-    [self.libraryController removeCape:self.clickedCape];
 }
 
 #pragma mark - NSTableViewDelegate

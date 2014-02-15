@@ -221,7 +221,6 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                    object.frameDuration == self.frameDuration &&
                    NSEqualSizes(object.size, self.size) &&
                    NSEqualPoints(object.hotSpot, self.hotSpot) &&
-                   [object.name isEqualToString:self.name] &&
                    [object.identifier isEqualToString:self.identifier]);
 
 //    props = (props && [self.representations isEqualToDictionary:object.representations]);

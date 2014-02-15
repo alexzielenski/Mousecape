@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C48" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -18,7 +18,6 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="525" height="297"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="500" height="310"/>
@@ -124,6 +123,7 @@
                                                     <connections>
                                                         <outlet property="dataSource" destination="oUs-Nv-PHw" id="ur0-Pm-oqJ"/>
                                                         <outlet property="delegate" destination="oUs-Nv-PHw" id="GMA-yd-uCn"/>
+                                                        <outlet property="menu" destination="vy8-Pj-2Jg" id="4S4-YC-adi"/>
                                                         <outlet property="nextKeyView" destination="fzz-Li-KC6" id="Mg7-QD-IZj"/>
                                                     </connections>
                                                 </tableView>
@@ -517,7 +517,7 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.hotSpot" id="aFb-fI-aHw"/>
-                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="Gtw-PH-Eo8"/>
+                        <outlet property="nextKeyView" destination="wdB-yr-r6Y" id="Smn-hK-iP2"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="75v-aw-FbU">
@@ -608,7 +608,7 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.size" id="dXp-5z-YR6"/>
-                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="IBE-mt-pxg"/>
+                        <outlet property="nextKeyView" destination="yz7-y5-TxE" id="9Cb-FK-ium"/>
                     </connections>
                 </textField>
             </subviews>
@@ -671,6 +671,38 @@
                 <outlet property="nextKeyView" destination="yz7-y5-TxE" id="WHy-Vl-LGY"/>
             </connections>
         </customView>
+        <menu id="vy8-Pj-2Jg">
+            <items>
+                <menuItem title="New Cursor" tag="-1" id="KQs-oD-CRg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addAction:" target="oUs-Nv-PHw" id="Vbo-8k-sGO"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove Cursor" tag="-1" id="gnE-s8-eO8">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="removeAction:" target="oUs-Nv-PHw" id="QmX-eg-rb3"/>
+                        <binding destination="oUs-Nv-PHw" name="enabled" keyPath="selectedObject" id="v5P-WH-Wea">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Duplicate" tag="-1" id="swO-bv-qRE">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="duplicateAction:" target="oUs-Nv-PHw" id="z4d-84-N6g"/>
+                        <binding destination="oUs-Nv-PHw" name="enabled" keyPath="selectedObject" id="Q5o-HW-cMv">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>

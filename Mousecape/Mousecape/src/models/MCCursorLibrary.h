@@ -39,7 +39,7 @@
 
 - (NSDictionary *)dictionaryRepresentation;
 - (BOOL)writeToFile:(NSString *)file atomically:(BOOL)atomically;
-- (BOOL)save;
+- (NSError *)save;
 
 - (void)updateChangeCount:(NSDocumentChangeType)change;
 - (void)revertToSaved;

@@ -32,11 +32,11 @@
     XCTAssertTrue(self.library != nil, @"Library must not be nil");
     XCTAssertEqualObjects(self.library.author, @"Max Rudberg", @"Author must be taken from cape");
     XCTAssertEqualObjects(self.library.identifier, @"com.maxrudberg.svanslosbluehazard", @"Identifier must be taken from cape");
-    XCTAssertNotNil([self.library cursorWithIdentifier:@"com.apple.coregraphics.Arrow"], @"Must retrieve cursor correctly");
+    XCTAssert([self.library cursorsWithIdentifier:@"com.apple.coregraphics.Arrow"].count > 0, @"Must retrieve cursor correctly");
 }
 
 - (void)testCursorCreation {
-    MCCursor *cursor = [self.library cursorWithIdentifier:@"com.apple.coregraphics.Arrow"];
+    MCCursor *cursor = [self.library cursorsWithIdentifier:@"com.apple.coregraphics.Arrow"].anyObject;
     XCTAssertTrue(cursor.representations.count == 4, @"Must have correct cursor count");
     XCTAssertTrue(cursor.frameCount == 1, @"Must have correct frame count");
     XCTAssertTrue(cursor.frameDuration == 1, @"Must have current frame duration");
@@ -47,17 +47,18 @@
 }
 
 - (void)testCursorOperations {
-    MCCursor *cursor = [self.library cursorWithIdentifier:@"com.apple.coregraphics.Arrow"];
-    [self.library moveCursorAtIdentifier:@"com.apple.coregraphics.Arrow" toIdentifier:@"com.apple.cursor.2"];
+    MCCursor *cursor = [[self.library cursorsWithIdentifier:@"com.apple.coregraphics.Arrow"] anyObject];
+    cursor.identifier = @"com.apple.cursor.2";
     XCTAssertEqualObjects(cursor.name, nameForCursorIdentifier(@"com.apple.cursor.2"), @"Name must be correctly set");
-    XCTAssertEqual(cursor, [self.library cursorWithIdentifier:@"com.apple.cursor.2"], @"Object must not be copied");
+    XCTAssertEqual(cursor, [self.library cursorsWithIdentifier:@"com.apple.cursor.2"].anyObject, @"Object must not be copied");
     XCTAssertEqualObjects(cursor, cursor, @"isEqualTo: must work");
-    XCTAssertNil([self.library cursorWithIdentifier:@"com.apple.coregraphics.Arrow"], @"Old cursor spot must not be occupied");
+    XCTAssert([self.library cursorsWithIdentifier:@"com.apple.coregraphics.Arrow"].count == 0, @"Old cursor spot must not be occupied");
 
     MCCursor *replacement = [[MCCursor alloc] init];
-    [self.library setCursor:replacement forIdentifier:@"com.apple.cursor.2"];
-    XCTAssertEqualObjects(cursor.name, @"", @"Name of old cursor must be set to an empty string");
-    XCTAssertEqual(replacement, [self.library cursorWithIdentifier:@"com.apple.cursor.2"], @"Replacement cursor must be retrievable");
+    replacement.identifier = @"com.apple.cursor.2";
+    [self.library addCursor:replacement];
+
+    XCTAssertEqual(replacement, [self.library cursorsWithIdentifier:@"com.apple.cursor.2"].anyObject, @"Replacement cursor must be retrievable");
 }
 
 - (void)testSavingAndReading {

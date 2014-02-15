@@ -13,9 +13,10 @@
 
 extern NSString *MCPreferencesAppliedCursorKey;
 extern NSString *MCPreferencesAppliedClickActionKey;
+extern NSString *MCPreferencesCursorScaleKey;
+extern NSString *MCPreferencesDoubleActionKey;
 extern NSString *MCSuppressDeleteLibraryConfirmationKey;
 extern NSString *MCSuppressDeleteCursorConfirmationKey;
-
 extern id MCDefaultFor(NSString *key, NSString *user, NSString *host);
 #define MCDefault(key) MCDefaultFor(key, (__bridge NSString *)kCFPreferencesCurrentUser, (__bridge NSString *)kCFPreferencesCurrentHost)
 #define MCFlag(key) [MCDefault(key) boolValue]

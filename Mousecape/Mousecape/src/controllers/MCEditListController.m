@@ -10,10 +10,13 @@
 #import "NSOrderedSet+AZSortedInsert.h"
 
 const char MCEditCursorsContext;
+const char MCCursorNameContext;
 
 @interface MCEditListController ()
 @property (nonatomic, strong) NSMutableOrderedSet *cursors;
 + (NSComparator)sortComparator;
+- (void)startObservingCursor:(MCCursor *)cursor;
+- (void)stopObservingCursor:(MCCursor *)cursor;
 @end
 
 @implementation MCEditListController
@@ -36,6 +39,19 @@ const char MCEditCursorsContext;
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"cursorLibrary.cursors" context:(void *)&MCEditCursorsContext];
+    
+    for (MCCursor *cursor in self.cursors) {
+        [self stopObservingCursor:cursor];
+    }
+    
+}
+
+- (void)startObservingCursor:(MCCursor *)cursor {
+    [cursor addObserver:self forKeyPath:@"name" options:0 context:(void *)&MCCursorNameContext];
+}
+
+- (void)stopObservingCursor:(MCCursor *)cursor {
+    [cursor removeObserver:self forKeyPath:@"name" context:(void *)&MCCursorNameContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -50,10 +66,13 @@ const char MCEditCursorsContext;
             } else {
                 self.cursors = [NSMutableOrderedSet orderedSetWithSet:nextSet copyItems:NO];
                 [self.cursors sortUsingComparator:self.class.sortComparator];
+                for (MCCursor *cursor in self.cursors) {
+                    [self startObservingCursor:cursor];
+                }
             }
             
             [self.tableView reloadData];
-            [self tableViewSelectionDidChange:nil];
+            [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
         } else if (kind == NSKeyValueChangeInsertion) {
             for (MCCursor *lib in change[NSKeyValueChangeNewKey]) {
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
@@ -61,6 +80,7 @@ const char MCEditCursorsContext;
 
                 [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
                 [self.cursors insertObject:lib atIndex:index];
+                [self startObservingCursor:lib];
                 [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
                 [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
             }
@@ -71,14 +91,25 @@ const char MCEditCursorsContext;
                 if (index != NSNotFound) {
                     NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
                     [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                    [self stopObservingCursor:lib];
                     [self.cursors removeObjectAtIndex:index];
                     [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
                     [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
                 }
             }
         }
-        
         [self.tableView endUpdates];
+    } else if (context == &MCCursorNameContext) {
+        // Reorder it
+        MCCursorLibrary *cape = object;
+        NSUInteger oldIndex = [self.cursors indexOfObject:cape];
+        if (oldIndex != NSNotFound) {
+            [self.cursors removeObjectAtIndex:oldIndex];
+            NSUInteger newIndex = [self.cursors indexForInsertingObject:cape sortedUsingComparator:self.class.sortComparator];
+            
+            [self.cursors insertObject:cape atIndex:newIndex];
+            [self.tableView moveRowAtIndex:oldIndex + 1 toIndex:newIndex + 1];
+        }
     }
 }
 
@@ -98,9 +129,29 @@ const char MCEditCursorsContext;
     [self.cursorLibrary addCursor:[[MCCursor alloc] init]];
 }
 
-- (IBAction)removeAction:(id)sender {
-    if (self.tableView.selectedRow != 0)
-        [self.cursorLibrary removeCursor:[[self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO] objectValue]];
+- (IBAction)removeAction:(NSMenuItem *)sender {
+    NSInteger row = NSNotFound;
+    if (sender.tag == -1)
+        row = self.tableView.clickedRow;
+    else
+        row = self.tableView.selectedRow;
+    
+    if (row > 0)
+        [self.cursorLibrary removeCursor:[[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue]];
+}
+
+- (IBAction)duplicateAction:(NSMenuItem *)sender {
+    NSUInteger row = NSNotFound;
+    if (sender.tag == -1)
+        row = self.tableView.clickedRow;
+    else
+        row = self.tableView.selectedRow;
+    
+    if (row > 0) {
+        MCCursor *cursor = [[[self.tableView viewAtColumn:0 row:row makeIfNecessary:NO] objectValue] copy];
+        cursor.identifier = UUID();
+        [self.cursorLibrary addCursor:cursor];
+    }
 }
 
 #pragma mark - NSTableViewDelegate

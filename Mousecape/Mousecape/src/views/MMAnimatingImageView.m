@@ -58,10 +58,10 @@ const char MCInvalidateContext;
     self.layer.delegate = self;
     
     CALayer *hotSpotLayer = [CALayer layer];
-    hotSpotLayer.bounds = CGRectMake(0, 0, 3, 3);
+    hotSpotLayer.bounds = CGRectMake(0, 0, 4, 4);
     hotSpotLayer.backgroundColor = [[NSColor redColor] CGColor];
     hotSpotLayer.autoresizingMask = kCALayerNotSizable;
-    
+    hotSpotLayer.anchorPoint = CGPointMake(0, 0);
     [self.layer addSublayer:hotSpotLayer];
     
     self.hotSpotLayer = hotSpotLayer;
@@ -139,7 +139,7 @@ const char MCInvalidateContext;
         CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
         CGRect effectiveRect = CGRectIntegral(CGRectMake(self.layer.frame.size.width / 2.0 - effectiveSize.width / 2.0, self.layer.frame.size.height / 2.0 + effectiveSize.height / 2.0, effectiveSize.width, effectiveSize.height));
 
-        self.hotSpotLayer.position = CGPointMake(CGRectGetMinX(effectiveRect) + self.hotSpot.x, CGRectGetMinY(effectiveRect) - self.hotSpot.y);
+        self.hotSpotLayer.position = CGPointMake(ceil(CGRectGetMinX(effectiveRect) + self.hotSpot.x - self.hotSpotLayer.frame.size.width / 2), ceil(CGRectGetMinY(effectiveRect) - self.hotSpot.y - self.hotSpotLayer.frame.size.height / 2));
         self.hotSpotLayer.opacity = 1.0;
     } else {
         self.hotSpotLayer.opacity = 0.0;
@@ -148,8 +148,7 @@ const char MCInvalidateContext;
 
 - (void)_invalidateAnimation {
     [self.spriteLayer removeAllAnimations];
-    
-    
+        
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"sampleIndex"];
     BOOL none = (self.frameCount == 1 || !self.shouldAnimate);
     NSUInteger frameCount = none || !self.image ? 0 : self.frameCount;
@@ -170,9 +169,80 @@ const char MCInvalidateContext;
     return (id <CAAction>)[NSNull null];
 }
 
+#pragma mark - NSDraggingSource
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    if (context == NSDraggingContextWithinApplication)
+        return NSDragOperationCopy;
+    return NSDragOperationNone;
+}
+
+- (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
+        [[NSCursor currentCursor] pop];
+        NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, nil, NULL, nil);
+        [self.delegate imageView:self didDragOutImage:self.image];
+    }
+}
+
+- (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {
+    if (!NSPointInRect(screenPoint, self.window.frame)) {
+        [[NSCursor disappearingItemCursor] push];
+    } else if ([NSCursor currentCursor] == [NSCursor disappearingItemCursor]) {
+        [[NSCursor currentCursor] pop];
+    }
+}
+
+- (BOOL)ignoreModifierKeysForDraggingSession:(NSDraggingSession *)session {
+    return YES;
+}
+
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+    return YES;
+}
+
+- (void)mouseDown:(NSEvent *)event {
+    if (!self.image)
+        return;
+
+    NSPasteboardItem *pbItem = [NSPasteboardItem new];
+    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image" ]];
+
+    NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+    
+    __weak typeof (self) weakSelf = self;
+    NSImage *previewImage = [NSImage imageWithSize:self.frame.size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        CGFloat opacity = weakSelf.hotSpotLayer.opacity;
+        weakSelf.hotSpotLayer.opacity = 0.0;
+        [weakSelf displayRectIgnoringOpacity:dstRect inContext:[NSGraphicsContext currentContext]];
+        weakSelf.hotSpotLayer.opacity = opacity;
+        return YES;
+    }];
+    
+    [dragItem setDraggingFrame:self.bounds contents:previewImage];
+
+    NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:@[ dragItem ] event:event source:self];
+    draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
+    draggingSession.draggingFormation = NSDraggingFormationNone;
+}
+
+- (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type {
+    if ([type compare: NSPasteboardTypeTIFF] == NSOrderedSame) {
+        [sender setData:[self.image TIFFRepresentation] forType:NSPasteboardTypeTIFF];
+        
+    } else if ([type compare: NSPasteboardTypePNG] == NSOrderedSame) {
+        [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
+    } else if ([type compare:@"public.image"] == NSOrderedSame) {
+        [sender writeObjects:@[ self.image ]];
+    }
+}
+
 #pragma mark - NSDragDestination
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    if (sender.draggingSource == self)
+        return NSDragOperationNone;
+    
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist
 		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images
@@ -185,7 +255,7 @@ const char MCInvalidateContext;
 // Give the delegate some more control
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)]) {
-		return [self.delegate imageView:self shouldPerformDragOperation:sender];
+		return [self.delegate imageView:self shouldPrepareForDragOperation:sender];
 	}
 	return NO;
 }

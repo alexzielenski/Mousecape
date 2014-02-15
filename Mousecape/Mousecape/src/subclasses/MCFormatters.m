@@ -33,7 +33,9 @@
         return YES;
     }
     
-    *error = [NSError errorWithDomain:@"com.alexzielenski.mcformatter.errordoman" code:0 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid format. Must follow \"{0.0, 0.0}\"." , @"Invalid format error in edit window")}];
+    *error = [NSError errorWithDomain:MCErrorDomain code:MCErrorInvalidFormatCode userInfo:@{
+                                                                                             NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid format", @"Invalid format error description in edit window"),
+                                                                                             NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Must follow format of: \"{0.0, 0.0}\"." , @"Invalid format error reason in edit window")}];
     return NO;
 }
 
@@ -64,7 +66,9 @@
         return YES;
     }
     
-    *error = [NSError errorWithDomain:@"com.alexzielenski.mcformatter.errordoman" code:0 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid format. Must follow \"{0.0, 0.0}\"." , @"Invalid format error in edit window")}];
+    *error = [NSError errorWithDomain:MCErrorDomain code:MCErrorInvalidFormatCode userInfo:@{
+                                                                                             NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid format", @"Invalid format error description in edit window"),
+                                                                                             NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Must follow format of: \"{0.0, 0.0}\"." , @"Invalid format error reason in edit window")}];
     return NO;
 }
 

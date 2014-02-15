@@ -10,6 +10,7 @@
 #define Mousecape_scale_h
 
 extern float cursorScale();
+extern float defaultCursorScale();
 extern BOOL setCursorScale(float scale);
 
 #endif
