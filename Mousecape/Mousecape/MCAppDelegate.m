@@ -52,7 +52,7 @@ static AuthorizationRef obtainRights();
 
     NSFileManager *manager = [NSFileManager defaultManager];
     [self.toggleHelperItem setTag: ([manager fileExistsAtPath:mouseCloakDest] && [manager fileExistsAtPath:agentDest])];
-    [self.toggleHelperItem setTitle:self.toggleHelperItem.tag ? @"Uninstall Helper Tool" : @"Ininstall Helper Tool"];
+    [self.toggleHelperItem setTitle:self.toggleHelperItem.tag ? @"Uninstall Helper Tool" : @"Install Helper Tool"];
 }
 
 - (IBAction)toggleInstall:(NSMenuItem *)sender {
