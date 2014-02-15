@@ -92,7 +92,7 @@ const char MCLibraryIdentifierContext;
     NSSet *change = [NSSet setWithObject:cape];
     [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
     
-    [cape addObserver:self forKeyPath:@"identifier" options:0 context:(void *)&MCLibraryIdentifierContext];
+    [cape addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:(void *)&MCLibraryIdentifierContext];
     
     cape.library = self;
     [self.capes addObject:cape];
@@ -153,9 +153,13 @@ const char MCLibraryIdentifierContext;
         NSURL *oldURL = cape.fileURL;
         [cape setFileURL:[self URLForCape:cape]];
         
-#warning TODO: Do something with the error
-        [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:nil];
-//        [cape save];
+        NSError *error = nil;
+        [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:&error];
+        if (error) {
+            NSLog(@"Failed to rename the identifier of the cape %@. Reverting to %@...", cape.identifier, change[NSKeyValueChangeOldKey]);
+            cape.identifier = change[NSKeyValueChangeOldKey];
+            cape.fileURL = [self URLForCape:cape];
+        }
     }
 }
 
