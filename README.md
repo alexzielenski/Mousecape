@@ -23,6 +23,9 @@ You can create a new cape document in the Mousecape app by hitting &#8984;N (Com
 
 Tell your friends.
 
+## Where can I get a copy of this sweet tool?
+
+In the [releases section](https://github.com/alexzielenski/Mousecape/releases) of this GitHub page. There are stable reases there. **The current version is 0.0.2**.
 
 ## LICENSE
 
