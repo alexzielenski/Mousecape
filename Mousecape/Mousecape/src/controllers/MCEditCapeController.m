@@ -7,6 +7,7 @@
 //
 
 #import "MCEditCapeController.h"
+#import "MCLibraryController.h"
 
 @interface MCEditCapeController ()
 
@@ -22,10 +23,16 @@
 }
 
 - (BOOL)validateValue:(inout __autoreleasing id *)ioValue forKeyPath:(NSString *)inKeyPath error:(out NSError *__autoreleasing *)outError {
+    if ([inKeyPath isEqualToString:@"cursorLibrary.identifier"]) {
+        BOOL valid = [self.cursorLibrary.library capesWithIdentifier:*ioValue].count == 0;
+        if (!valid) {
+            *outError = [NSError errorWithDomain:MCErrorDomain code:MCErrorMultipleCursorIdentifiersCode userInfo:@{ NSLocalizedDescriptionKey: @"A cape with this identifier already exists" }];
+        }
+        return valid;
+    }
     
-#warning TODO: check if library has this identifier
-    NSLog(@"validate %@", inKeyPath);
     return YES;
 }
+
 
 @end

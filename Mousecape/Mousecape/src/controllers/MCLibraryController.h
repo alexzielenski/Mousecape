@@ -27,6 +27,8 @@
 
 - (NSURL *)URLForCape:(MCCursorLibrary *)cape;
 
+- (NSSet *)capesWithIdentifier:(NSString *)identifier;
+
 @end
 
 @interface MCLibraryController (Capes)
