@@ -47,7 +47,7 @@ const char MCInvalidateContext;
 
 - (void)_initialize {
     self.shouldAnimate = YES;
-    
+
     [self registerTypes];
     
     self.layer = [[MCSpriteLayer alloc] init];
@@ -62,11 +62,16 @@ const char MCInvalidateContext;
     hotSpotLayer.backgroundColor = [[NSColor redColor] CGColor];
     hotSpotLayer.autoresizingMask = kCALayerNotSizable;
     hotSpotLayer.anchorPoint = CGPointMake(0, 0);
+    hotSpotLayer.borderColor = [[NSColor blackColor] CGColor];
+    hotSpotLayer.borderWidth = 0.5;
     [self.layer addSublayer:hotSpotLayer];
     
     self.hotSpotLayer = hotSpotLayer;
     self.spriteLayer = (MCSpriteLayer *)self.layer;
 
+    self.shouldShowHotSpot = NO;
+    self.shouldAllowDragging = NO;
+    
     self.frameCount    = 1;
     self.frameDuration = 1;
     
@@ -90,7 +95,7 @@ const char MCInvalidateContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == &MCInvalidateContext) {
         if ([keyPath isEqualToString:@"image"] || [keyPath isEqualToString:@"placeholderImage"]) {
-            self.spriteLayer.contents = !self.image ? self.placeholderImage : self.image;
+            self.spriteLayer.contents = self.image ?: self.placeholderImage;
         }
         [self _invalidateFrame];
         [self _invalidateAnimation];
@@ -100,7 +105,7 @@ const char MCInvalidateContext;
 }
 
 - (BOOL)layer:(CALayer *)layer shouldInheritContentsScale:(CGFloat)newScale fromWindow:(NSWindow *)window {
-    return self.scale == 0.0 || !self.image;
+    return NO;
 }
 
 // Tell OSX that our view can accept images to be dragged in
@@ -128,12 +133,22 @@ const char MCInvalidateContext;
 
 - (void)_invalidateFrame {
     CGFloat scale = self.scale;
-    if (!self.scale || !self.image)
+    if (!self.scale || !self.image) {
         scale = self.window.backingScaleFactor;
-    self.layer.contentsScale = scale;
+    }
 
     if (scale == 0.0)
         scale = 1.0;
+
+    if (self.scale && self.image)
+        scale = self.scale;
+    else if (!self.scale && self.image)
+        scale = [self.image recommendedLayerContentsScale:self.window.backingScaleFactor];
+    else
+        scale = [self.placeholderImage recommendedLayerContentsScale:self.window.backingScaleFactor];
+
+    self.layer.contentsScale       = scale;
+    self.spriteLayer.contentsScale = self.layer.contentsScale;
 
     if (self.image) {
         CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
@@ -172,7 +187,7 @@ const char MCInvalidateContext;
 #pragma mark - NSDraggingSource
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
-    if (context == NSDraggingContextWithinApplication)
+    if (context == NSDraggingContextWithinApplication && self.shouldAllowDragging)
         return NSDragOperationCopy;
     return NSDragOperationNone;
 }
@@ -198,11 +213,11 @@ const char MCInvalidateContext;
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
-    return YES;
+    return self.shouldAllowDragging;
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    if (!self.image)
+    if (!self.image || !self.shouldAllowDragging)
         return;
 
     NSPasteboardItem *pbItem = [NSPasteboardItem new];
@@ -246,7 +261,8 @@ const char MCInvalidateContext;
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist
 		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images
-		sender.draggingPasteboard.pasteboardItems.count == 1) {                        // Only accept one item
+		sender.draggingPasteboard.pasteboardItems.count == 1 &&
+        self.shouldAllowDragging) {                        // Only accept one item
 		return [self.delegate imageView:self draggingEntered:sender];
 	}
 	return NSDragOperationNone;
@@ -254,7 +270,7 @@ const char MCInvalidateContext;
 
 // Give the delegate some more control
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender {
-	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)]) {
+	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] && self.shouldAllowDragging) {
 		return [self.delegate imageView:self shouldPrepareForDragOperation:sender];
 	}
 	return NO;

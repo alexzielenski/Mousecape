@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA048868189F58B1001F3AB5 /* Edit.xib */; };
 		FA04886D189F58B1001F3AB5 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04886A189F58B1001F3AB5 /* Library.xib */; };
+		FA14DE8D18CE596B00A73BF4 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA14DE8E18CE596B00A73BF4 /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */; };
+		FA14DE9118CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
 		FA359840189DA3C100288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA359849189DC40100288163 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359848189DC40100288163 /* Security.framework */; };
@@ -52,6 +55,8 @@
 		FAC69FDA189D632B00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69FDC189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAC69FDD189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
+		FADBC15118CE51C000B9510F /* DTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FADBC15018CE51C000B9510F /* DTScrollView.m */; };
+		FADBC15418CE535200B9510F /* MCCapePreviewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FADBC15318CE535200B9510F /* MCCapePreviewItem.m */; };
 		FAEE652918A047E8003AA182 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650A18A047E8003AA182 /* NSFileManager+DirectoryLocations.m */; };
 		FAEE652A18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650C18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAEE652B18A047E8003AA182 /* MCEditCapeController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEE650F18A047E8003AA182 /* MCEditCapeController.m */; };
@@ -113,6 +118,12 @@
 /* Begin PBXFileReference section */
 		FA048869189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Edit.xib; sourceTree = "<group>"; };
 		FA04886B189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Library.xib; sourceTree = "<group>"; };
+		FA14DE8918CE596B00A73BF4 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
+		FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLClipView.m; sourceTree = "<group>"; };
+		FA14DE8B18CE596B00A73BF4 /* RBLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLScrollView.h; sourceTree = "<group>"; };
+		FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLScrollView.m; sourceTree = "<group>"; };
+		FA14DE8F18CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
+		FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RBLCGColorAdditions.m"; sourceTree = "<group>"; };
 		FA254779189D85890038E1D9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FA35983D189DA3BC00288163 /* MCPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPrefs.h; sourceTree = "<group>"; };
 		FA35983E189DA3BC00288163 /* MCPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPrefs.m; sourceTree = "<group>"; };
@@ -193,6 +204,10 @@
 		FAC69FD3189D609B00BC829D /* GBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSettings.m; sourceTree = "<group>"; };
 		FAC69FD7189D623C00BC829D /* Mousecape-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mousecape-Prefix.pch"; sourceTree = "<group>"; };
 		FAC69FDB189D636700BC829D /* MCDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCDefs.m; sourceTree = "<group>"; };
+		FADBC14F18CE51C000B9510F /* DTScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTScrollView.h; sourceTree = "<group>"; };
+		FADBC15018CE51C000B9510F /* DTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTScrollView.m; sourceTree = "<group>"; };
+		FADBC15218CE535200B9510F /* MCCapePreviewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCapePreviewItem.h; sourceTree = "<group>"; };
+		FADBC15318CE535200B9510F /* MCCapePreviewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCapePreviewItem.m; sourceTree = "<group>"; };
 		FAEE650918A047E8003AA182 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
 		FAEE650A18A047E8003AA182 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
 		FAEE650B18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOrderedSet+AZSortedInsert.h"; sourceTree = "<group>"; };
@@ -258,6 +273,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA14DE8818CE596B00A73BF4 /* Rebel */ = {
+			isa = PBXGroup;
+			children = (
+				FA14DE8918CE596B00A73BF4 /* RBLClipView.h */,
+				FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */,
+				FA14DE8B18CE596B00A73BF4 /* RBLScrollView.h */,
+				FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */,
+				FA14DE8F18CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.h */,
+				FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */,
+			);
+			path = Rebel;
+			sourceTree = "<group>";
+		};
 		FA5107DD18A823BD00917185 /* MASPreferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +310,8 @@
 		FAAEF8EE189EB32700145DF8 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				FA14DE8818CE596B00A73BF4 /* Rebel */,
+				FADBC14E18CE51C000B9510F /* DTScrollView */,
 				FA5107DD18A823BD00917185 /* MASPreferences */,
 				FAAEF8EF189EB32700145DF8 /* BTRKit */,
 			);
@@ -478,6 +508,15 @@
 			path = GBCli;
 			sourceTree = "<group>";
 		};
+		FADBC14E18CE51C000B9510F /* DTScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				FADBC14F18CE51C000B9510F /* DTScrollView.h */,
+				FADBC15018CE51C000B9510F /* DTScrollView.m */,
+			);
+			path = DTScrollView;
+			sourceTree = "<group>";
+		};
 		FAEE650818A047E8003AA182 /* categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,6 +583,8 @@
 				FAEE652818A047E8003AA182 /* MMAnimatingImageView.m */,
 				FAEE653718A048EA003AA182 /* MCSpriteLayer.h */,
 				FAEE653818A048EA003AA182 /* MCSpriteLayer.m */,
+				FADBC15218CE535200B9510F /* MCCapePreviewItem.h */,
+				FADBC15318CE535200B9510F /* MCCapePreviewItem.m */,
 			);
 			name = views;
 			path = src/views;
@@ -707,19 +748,24 @@
 				FAAEF951189F0CC300145DF8 /* restore.m in Sources */,
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
 				FAEE652918A047E8003AA182 /* NSFileManager+DirectoryLocations.m in Sources */,
+				FA14DE9118CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m in Sources */,
 				FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */,
 				FAEE652D18A047E8003AA182 /* MCEditListController.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAEE653218A047E8003AA182 /* MCCursor.m in Sources */,
 				FAAEF958189F4F8200145DF8 /* scale.m in Sources */,
 				FAEE653418A047E8003AA182 /* MCFormatters.m in Sources */,
+				FA14DE8E18CE596B00A73BF4 /* RBLScrollView.m in Sources */,
 				FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */,
 				FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
 				FAEE652E18A047E8003AA182 /* MCEditWindowController.m in Sources */,
 				FA359840189DA3C100288163 /* MCPrefs.m in Sources */,
 				FAEE652B18A047E8003AA182 /* MCEditCapeController.m in Sources */,
+				FADBC15418CE535200B9510F /* MCCapePreviewItem.m in Sources */,
 				FAEE652A18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m in Sources */,
+				FADBC15118CE51C000B9510F /* DTScrollView.m in Sources */,
+				FA14DE8D18CE596B00A73BF4 /* RBLClipView.m in Sources */,
 				FAEE653518A047E8003AA182 /* MCCapeCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

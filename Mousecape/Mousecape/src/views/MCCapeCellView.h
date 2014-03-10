@@ -7,12 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MMAnimatingImageView.h"
 
 @interface MCCapeCellView : NSTableCellView
 @property (assign) IBOutlet NSTextField *titleField;
 @property (assign) IBOutlet NSTextField *subtitleField;
 @property (assign) IBOutlet NSImageView *appliedImageView;
+@property (assign) IBOutlet NSCollectionView *collectionView;
 @end
 
 @interface MCHDValueTransformer : NSValueTransformer
 @end
+

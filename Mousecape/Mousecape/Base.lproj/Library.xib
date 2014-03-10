@@ -17,7 +17,7 @@
         <window title="Mousecape" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" frameAutosaveName="LibraryWindow" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="196" y="240" width="711" height="311"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="502" height="310"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
@@ -51,11 +51,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="syZ-Eq-Lt2" customClass="MCCapeCellView">
-                                                    <rect key="frame" x="1" y="6" width="708" height="64"/>
+                                                    <rect key="frame" x="1" y="6" width="708" height="72"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hfe-RO-hVE">
-                                                            <rect key="frame" x="18" y="47" width="99" height="17"/>
+                                                            <rect key="frame" x="18" y="55" width="99" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="0kt-g0-cQb">
                                                                 <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@
                                                             </connections>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-BS-ghQ">
-                                                            <rect key="frame" x="117" y="47" width="48" height="14"/>
+                                                            <rect key="frame" x="117" y="55" width="48" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Subtitle" id="NXa-Ze-OX2">
                                                                 <font key="font" metaFont="smallSystemBold"/>
@@ -79,12 +79,12 @@
                                                             </connections>
                                                         </textField>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jdV-zx-iTs">
-                                                            <rect key="frame" x="634" y="44" width="16" height="16"/>
+                                                            <rect key="frame" x="634" y="52" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applied" id="bwh-k2-aAS"/>
                                                         </imageView>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QMa-EX-Son">
-                                                            <rect key="frame" x="658" y="43" width="30" height="18"/>
+                                                            <rect key="frame" x="658" y="51" width="30" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="HD" id="LsJ-S8-jwy"/>
                                                             <connections>
@@ -95,6 +95,35 @@
                                                                 </binding>
                                                             </connections>
                                                         </imageView>
+                                                        <scrollView canDrawConcurrently="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="odP-lr-hJH" customClass="DTScrollView">
+                                                            <rect key="frame" x="20" y="3" width="668" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <clipView key="contentView" copiesOnScroll="NO" id="pc3-Zb-Oqk">
+                                                                <rect key="frame" x="1" y="1" width="666" height="42"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <subviews>
+                                                                    <collectionView id="dyM-T9-60O">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="666" height="42"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                        <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        <connections>
+                                                                            <outlet property="itemPrototype" destination="DHf-Gl-sxG" id="pfs-5Z-RIJ"/>
+                                                                        </connections>
+                                                                    </collectionView>
+                                                                </subviews>
+                                                            </clipView>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="KzC-9x-FvO"/>
+                                                            </constraints>
+                                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mwj-HT-8PV">
+                                                                <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </scroller>
+                                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cCy-Hj-b5W">
+                                                                <rect key="frame" x="-100" y="-100" width="15" height="143"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </scroller>
+                                                        </scrollView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="Hfe-RO-hVE" firstAttribute="leading" secondItem="syZ-Eq-Lt2" secondAttribute="leading" constant="20" symbolic="YES" id="OHp-3c-ujO"/>
@@ -102,12 +131,16 @@
                                                         <constraint firstItem="bEa-BS-ghQ" firstAttribute="leading" secondItem="Hfe-RO-hVE" secondAttribute="trailing" constant="4" id="WVM-Wd-XXI"/>
                                                         <constraint firstItem="jdV-zx-iTs" firstAttribute="centerY" secondItem="QMa-EX-Son" secondAttribute="centerY" id="YLI-IS-v1N"/>
                                                         <constraint firstItem="bEa-BS-ghQ" firstAttribute="baseline" secondItem="Hfe-RO-hVE" secondAttribute="baseline" id="bCc-gQ-FVG"/>
+                                                        <constraint firstAttribute="trailing" secondItem="odP-lr-hJH" secondAttribute="trailing" constant="20" symbolic="YES" id="fnI-G1-FZh"/>
+                                                        <constraint firstItem="odP-lr-hJH" firstAttribute="leading" secondItem="syZ-Eq-Lt2" secondAttribute="leading" constant="20" symbolic="YES" id="joq-b0-pEr"/>
                                                         <constraint firstAttribute="trailing" secondItem="QMa-EX-Son" secondAttribute="trailing" constant="20" symbolic="YES" id="oL8-Zy-vvE"/>
                                                         <constraint firstItem="QMa-EX-Son" firstAttribute="top" secondItem="syZ-Eq-Lt2" secondAttribute="top" constant="3" id="oPR-SR-Gh8"/>
+                                                        <constraint firstItem="odP-lr-hJH" firstAttribute="top" secondItem="Hfe-RO-hVE" secondAttribute="bottom" constant="8" symbolic="YES" id="r5F-n8-O3W"/>
                                                         <constraint firstItem="Hfe-RO-hVE" firstAttribute="top" secondItem="syZ-Eq-Lt2" secondAttribute="top" id="wWd-7q-n1a"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="appliedImageView" destination="jdV-zx-iTs" id="4DM-pV-X1T"/>
+                                                        <outlet property="collectionView" destination="dyM-T9-60O" id="eOd-8D-OEK"/>
                                                         <outlet property="subtitleField" destination="bEa-BS-ghQ" id="yeA-RV-Aoi"/>
                                                         <outlet property="textField" destination="Hfe-RO-hVE" id="LWw-Ls-hnr"/>
                                                         <outlet property="titleField" destination="Hfe-RO-hVE" id="y7O-VO-62y"/>
@@ -222,6 +255,15 @@ CA
                 <constraint firstItem="cSP-XN-7we" firstAttribute="leading" secondItem="3Ui-b0-Yod" secondAttribute="leading" id="eoA-bD-pz5"/>
             </constraints>
         </customView>
+        <collectionViewItem id="DHf-Gl-sxG">
+            <connections>
+                <outlet property="view" destination="smV-Cs-4aH" id="6fi-5C-qJa"/>
+            </connections>
+        </collectionViewItem>
+        <view id="smV-Cs-4aH">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+        </view>
     </objects>
     <resources>
         <image name="HD" width="30" height="18"/>
