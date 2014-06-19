@@ -89,17 +89,19 @@
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         __weak typeof(self) weakSelf = self;
-        [center addObserverForName:NSUndoManagerDidCloseUndoGroupNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob1 = [center addObserverForName:NSUndoManagerDidCloseUndoGroupNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeDone];
         }];
         
-        [center addObserverForName:NSUndoManagerDidUndoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob2 = [center addObserverForName:NSUndoManagerDidUndoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeUndone];
         }];
         
-        [center addObserverForName:NSUndoManagerDidRedoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob3 = [center addObserverForName:NSUndoManagerDidRedoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeRedone];
         }];
+        
+        self.observers = @[ob1, ob2, ob3];
         
         self.name = @"Unnamed";
         self.author = NSUserName();
@@ -193,6 +195,10 @@
     [self stopObservingProperties];
     for (MCCursor *cursor in self.cursors) {
         [self stopObservingCursor:cursor];
+    }
+    
+    for (id observer in self.observers) {
+        [NSNotificationCenter.defaultCenter removeObserver:observer];
     }
 }
 
