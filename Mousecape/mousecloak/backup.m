@@ -15,16 +15,16 @@ NSString *backupStringForIdentifier(NSString *identifier) {
 
 void backupCursorForIdentifier(NSString *ident) {
     bool registered = false;
-    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)ident.UTF8String, &registered);
+    MCIsCursorRegistered(CGSMainConnectionID(), (char *)ident.UTF8String, &registered);
     
-    // dont try to backup a nonexistant cursor
+//     dont try to backup a nonexistant cursor
     if (!registered)
         return;
     
     NSString *backupIdent = backupStringForIdentifier(ident);
-    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)backupIdent.UTF8String, &registered);
+    MCIsCursorRegistered(CGSMainConnectionID(), (char *)backupIdent.UTF8String, &registered);
     
-    // don't re-back it up
+//     don't re-back it up
     if (registered)
         return;
     
@@ -35,11 +35,11 @@ void backupCursorForIdentifier(NSString *ident) {
 
 void backupAllCursors() {
     bool arrowRegistered = false;
-    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)backupStringForIdentifier(@"com.apple.coregraphics.Arrow").UTF8String, &arrowRegistered);
+    MCIsCursorRegistered(CGSMainConnectionID(), (char *)backupStringForIdentifier(@"com.apple.coregraphics.Arrow").UTF8String, &arrowRegistered);
     
     if (arrowRegistered) {
         MMLog("Skipping backup, backup already exists");
-        // we are already backed up
+//         we are already backed up
         return;
     }
     // Backup main cursors first

@@ -16,8 +16,8 @@ NSString *restoreStringForIdentifier(NSString *identifier) {
 
 void restoreCursorForIdentifier(NSString *ident) {
     bool registered = false;
-    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)ident.UTF8String, &registered);
-    
+    MCIsCursorRegistered(CGSMainConnectionID(), (char *)ident.UTF8String, &registered);
+
     NSString *restoreIdent = restoreStringForIdentifier(ident);
     NSDictionary *cape = capeWithIdentifier(ident);
     
@@ -25,7 +25,7 @@ void restoreCursorForIdentifier(NSString *ident) {
     if (cape && registered) {
         applyCapeForIdentifier(cape, restoreIdent);
     }
-    
+
     CGSRemoveRegisteredCursor(CGSMainConnectionID(), (char *)ident.UTF8String, false);
 }
 

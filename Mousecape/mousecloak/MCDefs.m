@@ -109,17 +109,18 @@ NSDictionary *capeWithIdentifier(NSString *identifier) {
     CFArrayRef representations;
     bool registered = false;
     
-    CGSIsCursorRegistered(CGSMainConnectionID(), (char *)identifier.UTF8String, &registered);
+    MCIsCursorRegistered(CGSMainConnectionID(), (char *)identifier.UTF8String, &registered);
     if (!registered)
         return nil;
-    
+
+    CGError error = 0;
     if (![identifier hasPrefix:@"com.apple.cursor"]) {
-        CGSCopyRegisteredCursorImages(CGSMainConnectionID(), (char*)identifier.UTF8String, &size, &hotSpot, &frameCount, &frameDuration, &representations);
+        error = CGSCopyRegisteredCursorImages(CGSMainConnectionID(), (char*)identifier.UTF8String, &size, &hotSpot, &frameCount, &frameDuration, &representations);
     } else {
-        CoreCursorCopyImages(CGSMainConnectionID(), [[identifier pathExtension] intValue], &representations, &size, &hotSpot, &frameCount, &frameDuration);
+        error = CoreCursorCopyImages(CGSMainConnectionID(), [[identifier pathExtension] intValue], &representations, &size, &hotSpot, &frameCount, &frameDuration);
     }
     
-    if (!representations)
+    if (error || !representations || !CFArrayGetCount(representations))
         return nil;
     
     NSDictionary *dict = @{MCCursorDictionaryFrameCountKey: @(frameCount), MCCursorDictionaryFrameDuratiomKey: @(frameDuration), MCCursorDictionaryHotSpotXKey: @(hotSpot.x), MCCursorDictionaryHotSpotYKey: @(hotSpot.y), MCCursorDictionaryPointsWideKey: @(size.width), MCCursorDictionaryPointsHighKey: @(size.height), MCCursorDictionaryRepresentationsKey: (__bridge NSArray *)representations};
@@ -199,4 +200,18 @@ NSString *cursorIdentifierForName(NSString *name) {
     if (keys.count)
         return keys[0];
     return UUID();
+}
+
+extern CGError MCIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered) {
+    if (CGSIsCursorRegistered != NULL) {
+        return CGSIsCursorRegistered(cid, cursorName, registered);
+    }
+    
+    size_t size = 0;
+    CGError err = 0;
+    err = CGSGetRegisteredCursorDataSize(cid, cursorName, &size);
+    
+    *registered = !((BOOL)err) && size > 0;
+    
+    return err;
 }
