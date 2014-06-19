@@ -28,13 +28,16 @@
 @implementation MCHDValueTransformer
 
 + (Class)transformedValueClass {
-    return [NSString class];
+    return [NSImage class];
 }
 
-- (NSString *)transformedValue:(NSNumber *)value {
+- (NSImage *)transformedValue:(NSNumber *)value {
     BOOL isHiDPI = value.boolValue;
-    return isHiDPI ? [NSImage imageNamed:@"HDTemplate"] : [NSImage imageNamed:@"SDTemplate"];
+    
+    NSImage *image = isHiDPI ? [NSImage imageNamed:@"HDTemplate"] : [NSImage imageNamed:@"SDTemplate"];
+    image.template = YES;
+    
+    return image;
 }
-
 
 @end
