@@ -12,8 +12,11 @@ extern NSError *createCape(NSString *input, NSString *output, BOOL convert);
 
 extern NSDictionary *processedCapeWithIdentifier(NSString *identifier);
 extern void dumpCursorsToFile(NSString *path);
+extern void dumpCursorsToFolder(NSString *path);
 
 extern NSDictionary *createCapeFromDirectory(NSString *path);
 extern NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary *metadata);
+
+extern void exportCape(NSDictionary *cape, NSString *destination);
 
 #endif

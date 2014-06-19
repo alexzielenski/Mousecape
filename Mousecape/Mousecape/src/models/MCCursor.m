@@ -190,7 +190,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 }
 
 - (void)removeRepresentationForScale:(MCCursorScale)scale {
-    [self setRepresentation:Nil forScale:scale];
+    [self setRepresentation:nil forScale:scale];
 }
 
 - (NSImageRep *)representationForScale:(MCCursorScale)scale {
@@ -203,7 +203,6 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
 - (NSImage *)imageWithAllReps {
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(self.size.width, self.size.height * self.frameCount)];
-    image.matchesOnMultipleResolution  = YES;
     [image addRepresentations:self.representations.allValues];
     return image;
 }

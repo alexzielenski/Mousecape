@@ -14,8 +14,6 @@
 #import "MASPreferencesWindowController.h"
 #import "MCGeneralPreferencesController.h"
 
-static AuthorizationRef obtainRights();
-
 @interface MCAppDelegate () {
     MASPreferencesWindowController *_preferencesWindowController;
 }
@@ -32,8 +30,7 @@ static AuthorizationRef obtainRights();
     [self.libraryWindowController showWindow:self];
 }
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
-    [self.libraryWindowController showWindow:sender];
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return YES;
 }
 
@@ -47,54 +44,42 @@ static AuthorizationRef obtainRights();
 }
 
 - (void)configureHelperToolMenuItem {
-    NSString *mouseCloakDest = @"/usr/local/bin/mousecloak";
-    NSString *agentDest = [@"/Library/LaunchAgents" stringByAppendingPathComponent: @"com.alexzielenski.mousecloak.listener.plist"];
-
-    NSFileManager *manager = [NSFileManager defaultManager];
-    [self.toggleHelperItem setTag: ([manager fileExistsAtPath:mouseCloakDest] && [manager fileExistsAtPath:agentDest])];
+    CFDictionaryRef dict = SMJobCopyDictionary(kSMDomainUserLaunchd, CFSTR("com.alexzielenski.mousecloakhelper"));
+    
+    [self.toggleHelperItem setTag: dict ? 1 : 0];
     [self.toggleHelperItem setTitle:self.toggleHelperItem.tag ? @"Uninstall Helper Tool" : @"Install Helper Tool"];
+    
+    if (dict)
+        CFRelease(dict);
 }
 
 - (IBAction)toggleInstall:(NSMenuItem *)sender {
-    AuthorizationRef authRef = obtainRights();
+    BOOL success = NO;
     
-    if (authRef == NULL) {
-        NSLog(@"Failed to obtain authorization right.");
-        return;
-    }
-    
-    NSString *mouseCloakDest = @"/usr/local/bin/mousecloak";
-    NSString *mouseCloakPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"mousecloak"];
-    NSString *agentDest = [@"/Library/LaunchAgents" stringByAppendingPathComponent: @"com.alexzielenski.mousecloak.listener.plist"];
-    NSString *agentPath = [NSTemporaryDirectory() stringByAppendingPathComponent: agentDest.lastPathComponent];
-    
-    NSString *loadCommand   = [NSString stringWithFormat:@"launchctl load %s", agentDest.UTF8String];
-    NSString *unloadCommand = [NSString stringWithFormat:@"launchctl unload %s", agentDest.UTF8String];
-    
-    if (self.toggleHelperItem.tag) { // Uninstall
-        system(unloadCommand.UTF8String);
-
-        NSDictionary *removeTools = @{ @"Label": @"com.alexzielenski.mousecloak.remove", @"ProgramArguments": @[ @"/bin/rm", mouseCloakDest, agentDest ], @"RunAtLoad": @YES };
-        SMJobSubmit(kSMDomainSystemLaunchd, (__bridge CFDictionaryRef)removeTools, authRef, NULL);
-        SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)removeTools[@"Label"], authRef, true, NULL);
+    if (self.toggleHelperItem.tag != 0) { // Uninstall
+        success = SMLoginItemSetEnabled(CFSTR("com.alexzielenski.mousecloakhelper"), false);
     } else {
-        NSDictionary *copyTool = @{ @"Label": @"com.alexzielenski.mousecloak.install", @"ProgramArguments": @[ @"/bin/ln", @"-f", @"-s", mouseCloakPath, mouseCloakDest ], @"RunAtLoad": @YES };
-        SMJobSubmit(kSMDomainSystemLaunchd, (__bridge CFDictionaryRef)copyTool, authRef, NULL);
-        SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)copyTool[@"Label"], authRef, true, NULL);
-        
-        NSDictionary *launchAgent = @{ @"Label": @"com.alexzielenski.mousecloak.listener", @"ProgramArguments": @[ mouseCloakDest, @"--listen" ], @"LimitLoadToSessionType": @[ @"Aqua" ], @"RunAtLoad": @YES, @"KeepAlive": @YES };
-        [[NSFileManager defaultManager] removeItemAtPath:agentPath error:nil];
-        [launchAgent writeToFile:agentPath atomically:NO];
-                
-        NSDictionary *copyJob = @{ @"Label": @"com.alexzielenski.mousecloak.install2", @"ProgramArguments": @[ @"/bin/cp", @"-f", agentPath, agentDest ], @"RunAtLoad": @YES };
-        SMJobSubmit(kSMDomainSystemLaunchd, (__bridge CFDictionaryRef)copyJob, authRef, NULL);
-        SMJobRemove(kSMDomainSystemLaunchd, (__bridge CFStringRef)copyJob[@"Label"], authRef, true, NULL);
-
-        system(loadCommand.UTF8String);
+        success = SMLoginItemSetEnabled(CFSTR("com.alexzielenski.mousecloakhelper"), true);
     }
     
-    AuthorizationFree(authRef, kAuthorizationFlagDestroyRights);
-    [self configureHelperToolMenuItem];
+    // ServiceManagement.framework takes a while to actually register the job dictionary so if the return value is all good we
+    // can be on our merry way
+    if (success && self.toggleHelperItem.tag == 0) {
+        // Successfully Installed
+        [self.toggleHelperItem setTag: 1];
+        [self.toggleHelperItem setTitle:@"Uninstall Helper Tool"];
+    
+        NSRunAlertPanel(@"Sucess", @"The Mousecape helper was successfully installed", @"Sweet", @"Thanks", nil);
+    } else if (success) {
+        // Successfully Uninstalled
+        [self.toggleHelperItem setTag: 0];
+        [self.toggleHelperItem setTitle:@"Install Helper Tool"];
+        
+        NSRunAlertPanel(@"Sucess", @"The Mousecape helper was successfully uninstalled", @"Sweet", @"Thanks", nil);
+    } else {
+        NSRunAlertPanel(@"Failure", @"The action did not complete successfully", @"Fuck", nil, nil);
+    }
+    
 }
 
 - (MASPreferencesWindowController *)preferencesWindowController {
@@ -154,26 +139,3 @@ static AuthorizationRef obtainRights();
 }
 
 @end
-
-static AuthorizationRef obtainRights() {
-    AuthorizationRef authRef = NULL;
-    
-    // Creating auth item to bless helper tool and install framework
-    
-    AuthorizationItem authItem = {kSMRightBlessPrivilegedHelper, 0, NULL, 0};
-    AuthorizationItem modify   = {kSMRightModifySystemDaemons, 0, NULL, 0};
-    
-    AuthorizationItem items[2] = { authItem, modify };
-    
-    // Creating a set of authorization rights
-	AuthorizationRights authRights = {2, items};
-    
-    // Specifying authorization options for authorization
-	AuthorizationFlags flags = kAuthorizationFlagDefaults | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagExtendRights;
-    
-    // Open dialog and prompt user for password
-	OSStatus status = AuthorizationCreate(&authRights, kAuthorizationEmptyEnvironment, flags, &authRef);
-    if (status == errAuthorizationSuccess)
-        return authRef;
-    return NULL;
-}

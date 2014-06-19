@@ -7,13 +7,20 @@
 //
 
 #import "MCCapeCellView.h"
+#import "MCCapePreviewItem.h"
 
 @implementation MCCapeCellView
 
-- (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle {
-    [super setBackgroundStyle:backgroundStyle];
-    
-    // 
+- (void)viewDidMoveToWindow {
+    self.collectionView.itemPrototype = [MCCapePreviewItem new];
+    [self.collectionView bind:NSContentBinding toObject:self withKeyPath:@"objectValue.cursors" options:nil];
+
+    self.collectionView.minItemSize = self.collectionView.itemPrototype.view.frame.size;
+    self.collectionView.maxItemSize = self.collectionView.minItemSize;
+}
+
+- (void)dealloc {
+    [self.collectionView unbind:NSContentBinding];
 }
 
 @end
@@ -21,13 +28,16 @@
 @implementation MCHDValueTransformer
 
 + (Class)transformedValueClass {
-    return [NSString class];
+    return [NSImage class];
 }
 
-- (NSString *)transformedValue:(NSNumber *)value {
+- (NSImage *)transformedValue:(NSNumber *)value {
     BOOL isHiDPI = value.boolValue;
-    return isHiDPI ? [NSImage imageNamed:@"HDTemplate"] : [NSImage imageNamed:@"SDTemplate"];
+    
+    NSImage *image = isHiDPI ? [NSImage imageNamed:@"HDTemplate"] : [NSImage imageNamed:@"SDTemplate"];
+    image.template = YES;
+    
+    return image;
 }
-
 
 @end

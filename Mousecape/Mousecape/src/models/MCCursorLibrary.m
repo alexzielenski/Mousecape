@@ -13,6 +13,7 @@
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 @property (nonatomic, assign) NSUInteger changeCount;
 @property (nonatomic, assign) NSUInteger lastChangeCount;
+@property (nonatomic, strong) NSArray *observers;
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
@@ -28,7 +29,7 @@
 @end
 
 @implementation MCCursorLibrary
-@dynamic isDirty;
+@dynamic dirty;
 
 + (NSArray *)undoProperties {
     return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
@@ -88,17 +89,19 @@
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         __weak typeof(self) weakSelf = self;
-        [center addObserverForName:NSUndoManagerDidCloseUndoGroupNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob1 = [center addObserverForName:NSUndoManagerDidCloseUndoGroupNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeDone];
         }];
         
-        [center addObserverForName:NSUndoManagerDidUndoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob2 = [center addObserverForName:NSUndoManagerDidUndoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeUndone];
         }];
         
-        [center addObserverForName:NSUndoManagerDidRedoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
+        id ob3 = [center addObserverForName:NSUndoManagerDidRedoChangeNotification object:self.undoManager queue:nil usingBlock:^(NSNotification *note) {
             [weakSelf updateChangeCount:NSChangeRedone];
         }];
+        
+        self.observers = @[ob1, ob2, ob3];
         
         self.name = @"Unnamed";
         self.author = NSUserName();
@@ -132,7 +135,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-    if ([key isEqualToString:@"isDirty"]) {
+    if ([key isEqualToString:@"dirty"]) {
         keyPaths = [keyPaths setByAddingObjectsFromArray: @[@"changeCount", @"lastChangeCount"]];
     }
     return keyPaths;
@@ -192,6 +195,10 @@
     [self stopObservingProperties];
     for (MCCursor *cursor in self.cursors) {
         [self stopObservingCursor:cursor];
+    }
+    
+    for (id observer in self.observers) {
+        [NSNotificationCenter.defaultCenter removeObserver:observer];
     }
 }
 

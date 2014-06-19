@@ -300,3 +300,58 @@ void dumpCursorsToFile(NSString *path) {
     
     [cape writeToFile:path atomically:NO];
 }
+
+extern void dumpCursorsToFolder(NSString *path) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    MMLog("Dumping cursors...");
+    
+    float originalScale;
+    CGSGetCursorScale(CGSMainConnectionID(), &originalScale);
+    
+    CGSSetCursorScale(CGSMainConnectionID(), 16.0);
+    CGSHideCursor(CGSMainConnectionID());
+    
+
+    NSUInteger i = 0;
+    NSString *key = nil;
+    while ((key = defaultCursors[i]) != nil) {
+        MMLog("Gathering data for %s", key.UTF8String);
+        NSDictionary *cape = processedCapeWithIdentifier(key);
+        
+        [[cape[MCCursorDictionaryRepresentationsKey] lastObject] writeToFile:[[path stringByAppendingPathComponent:key] stringByAppendingPathExtension:@"png"] atomically: NO];
+        i++;
+    }
+    
+    for (int x = 0x0; x < 0x100; x++) {
+        NSString *key = [@"com.apple.cursor." stringByAppendingFormat:@"%d", x];
+        CoreCursorSet(CGSMainConnectionID(), x);
+        
+        NSDictionary *cape = processedCapeWithIdentifier(key);
+        if (!cape)
+            continue;
+        
+        MMLog("Gathering data for %s", key.UTF8String);
+        
+        [[cape[MCCursorDictionaryRepresentationsKey] lastObject] writeToFile:[[path stringByAppendingPathComponent:key] stringByAppendingPathExtension:@"png"] atomically:NO];
+    }
+    
+    
+    CGSSetCursorScale(CGSMainConnectionID(), originalScale);
+    CGSShowCursor(CGSMainConnectionID());
+    
+}
+
+extern void exportCape(NSDictionary *cape, NSString *destination) {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager createDirectoryAtPath:destination withIntermediateDirectories:YES attributes:nil error:nil];
+
+    NSDictionary *cursors = cape[MCCursorDictionaryCursorsKey];
+    for (NSString *key in cursors) {
+        NSArray *reps = cursors[key][MCCursorDictionaryRepresentationsKey];
+        for (NSUInteger idx = 0; idx < reps.count; idx++) {
+            NSData *data = reps[idx];
+            [data writeToFile:[destination stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%lu.png", key, (unsigned long)idx]] atomically:NO];
+        }
+    }
+}

@@ -56,7 +56,7 @@
     [self.editListController addObserver:self forKeyPath:@"selectedObject" options:0 context:nil];
     [self _setCurrentViewController:self.editCapeController];
     
-    [self.window bind:@"documentEdited" toObject:self withKeyPath:@"cursorLibrary.isDirty" options:nil];
+    [self.window bind:@"documentEdited" toObject:self withKeyPath:@"cursorLibrary.dirty" options:nil];
 }
 
 - (void)dealloc {

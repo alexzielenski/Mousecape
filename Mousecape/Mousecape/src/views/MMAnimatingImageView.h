@@ -36,4 +36,5 @@
 @property (weak)   IBOutlet id <MMAnimatingImageViewDelegate> delegate;
 @property (assign) BOOL shouldAnimate;
 @property (assign) BOOL shouldShowHotSpot;
+@property (assign) BOOL shouldAllowDragging;
 @end

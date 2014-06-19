@@ -69,4 +69,7 @@ extern NSDictionary *capeWithIdentifier(NSString *identifier);
 extern void CGImageWriteToFile(CGImageRef image, CFStringRef path);
 extern NSData *pngDataForImage(id image);
 extern NSString *MMGet();
+
+extern CGError MCIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered);
+
 #endif
