@@ -22,7 +22,7 @@
 @end
 
 int main(int argc, char * argv[]) {
-    @autoreleasepool {        
+    @autoreleasepool {
         GBSettings *settings = [GBSettings settingsWithName:@"mousecape" parent:nil];
         
         GBOptionsHelper *options = [[[GBOptionsHelper alloc] init] autorelease];
@@ -57,8 +57,9 @@ int main(int argc, char * argv[]) {
         [options registerSeparator:@(BOLD "CONVERTING MIGHTYMOUSE TO CAPE" RESET)];
         [options registerOption:'x' long:@"convert" description:@"Convert a .MightyMouse file to cape. Default output is to a new file of the same name" flags:GBValueRequired];
         [options registerSeparator:@(BOLD "MISCELLANEOUS" RESET)];
+        [options registerOption:'e' long:@"export" description:@"Export a cape to a directory" flags:GBValueRequired];
         [options registerOption:'?' long:@"help" description:@"Display this help and exit" flags:GBValueNone];
-        [options registerOption:'o' long:@"output" description:@"Use this option to tell where an output file goes. (For convert and create)" flags:GBValueRequired];
+        [options registerOption:'o' long:@"output" description:@"Use this option to tell where an output file goes. (For convert, create, and export)" flags:GBValueRequired];
         [options registerOption:0 long:@"suppressCopyright" description:@"Suppress Copyright info" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
         [options registerOption:'s' long:@"scale" description:@"Scale the cursor to obscene multipliers or get the current scale" flags:GBValueOptional];
         [options registerOption:0 long:@"listen" description:@"Keep mousecloak alive to apply the current Cape every user switch" flags:GBValueNone | GBOptionNoHelp | GBOptionNoPrint];
@@ -113,6 +114,7 @@ int main(int argc, char * argv[]) {
         BOOL dump    = [settings isKeyPresentAtThisLevel:@"dump"];
         BOOL scale   = [settings isKeyPresentAtThisLevel:@"scale"];
         BOOL listen  = [settings isKeyPresentAtThisLevel:@"listen"];
+        BOOL export  = [settings isKeyPresentAtThisLevel:@"export"];
         int amt = 0;
         
         if (convert) amt++;
@@ -121,6 +123,7 @@ int main(int argc, char * argv[]) {
         if (dump) amt++;
         if (scale) amt++;
         if (listen) amt++;
+        if (export) amt++;
         
         if (amt > 1) {
             MMLog(BOLD RED "One command at a time, son!" RESET);
@@ -144,6 +147,16 @@ int main(int argc, char * argv[]) {
                 MMLog(BOLD RED "%s" RESET, error.localizedDescription.UTF8String);
             } else {
                 MMLog(BOLD GREEN "Cape successfully written to %s" RESET, output.UTF8String);
+            }
+            goto fin;
+
+        } else if (export) {
+            NSString *input = [settings objectForKey:@"export"];
+            NSString *output = [settings isKeyPresentAtThisLevel:@"output"] ? [settings objectForKey:@"output"] : nil;
+            if (!output) {
+                MMLog(BOLD RED "You must specify an output directory with -o!" RESET);
+            } else {
+                exportCape([NSDictionary dictionaryWithContentsOfFile:input], output);
             }
             goto fin;
 
