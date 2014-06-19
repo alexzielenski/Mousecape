@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C48" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -333,12 +332,12 @@
 DQ
 </string>
                                 <connections>
-                                    <action selector="applyCape:" target="-1" id="vf2-1W-mzE"/>
+                                    <action selector="applyCapeAction:" target="-1" id="RAI-pM-j7M"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Edit Cape" keyEquivalent="e" id="5qb-Dw-38q">
                                 <connections>
-                                    <action selector="editCape:" target="-1" id="iz5-Ek-fyU"/>
+                                    <action selector="editCapeAction:" target="-1" id="E2d-D2-Hj9"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Remove Cape" id="LHh-1u-bK8">
@@ -346,24 +345,24 @@ DQ
 CA
 </string>
                                 <connections>
-                                    <action selector="removeCape:" target="-1" id="1E1-e1-eeH"/>
+                                    <action selector="removeCapeAction:" target="-1" id="RE5-YE-iAt"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Duplicate Cape" keyEquivalent="S" id="d9b-6w-ubr">
                                 <connections>
-                                    <action selector="duplicateCape:" target="-1" id="pOn-FS-ePg"/>
+                                    <action selector="duplicateCapeAction:" target="-1" id="Nj7-Uf-gOO"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for Updates" hidden="YES" keyEquivalent="u" id="XTi-86-ese">
                                 <connections>
-                                    <action selector="checkCape:" target="-1" id="yBL-WC-dbi"/>
+                                    <action selector="checkCapeAction:" target="-1" id="q4O-FG-Rle"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="EOT-Rk-oU3"/>
                             <menuItem title="Show in Finder" id="PAd-kz-Eoi">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showCape:" target="-1" id="lep-7W-NSD"/>
+                                    <action selector="showCapeAction:" target="-1" id="9mC-pd-eiq"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Restore Defaults" keyEquivalent="r" id="uCE-YB-8VL">

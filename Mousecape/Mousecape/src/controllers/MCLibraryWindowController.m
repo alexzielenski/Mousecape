@@ -65,7 +65,7 @@
 
 #pragma mark - Menu Actions
 
-- (IBAction)applyCape:(NSMenuItem *)sender {
+- (IBAction)applyCapeAction:(NSMenuItem *)sender {
     MCCursorLibrary *cape = nil;
     if (sender.tag == -1)
         cape = self.libraryViewController.clickedCape;
@@ -75,7 +75,7 @@
     [self.libraryViewController.libraryController applyCape:cape];
 }
 
-- (IBAction)editCape:(NSMenuItem *)sender {
+- (IBAction)editCapeAction:(NSMenuItem *)sender {
     MCCursorLibrary *cape = nil;
     if (sender.tag == -1)
         cape = self.libraryViewController.clickedCape;
@@ -85,7 +85,7 @@
     [self.libraryViewController editCape:cape];
 }
 
-- (IBAction)removeCape:(NSMenuItem *)sender {
+- (IBAction)removeCapeAction:(NSMenuItem *)sender {
     MCCursorLibrary *cape = nil;
     if (sender.tag == -1)
         cape = self.libraryViewController.clickedCape;
@@ -100,7 +100,7 @@
     }
 }
 
-- (IBAction)duplicateCape:(NSMenuItem *)sender {
+- (IBAction)duplicateCapeAction:(NSMenuItem *)sender {
     MCCursorLibrary *cape = nil;
     if (sender.tag == -1)
         cape = self.libraryViewController.clickedCape;
@@ -110,11 +110,11 @@
     [self.libraryViewController.libraryController importCape:cape.copy];
 }
 
-- (IBAction)checkCape:(NSMenuItem *)sender {
+- (IBAction)checkCapeAction:(NSMenuItem *)sender {
     
 }
 
-- (IBAction)showCape:(NSMenuItem *)sender {
+- (IBAction)showCapeAction:(NSMenuItem *)sender {
     MCCursorLibrary *cape = nil;
     if (sender.tag == -1)
         cape = self.libraryViewController.clickedCape;
