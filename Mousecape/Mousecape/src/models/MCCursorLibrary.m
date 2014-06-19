@@ -13,6 +13,7 @@
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 @property (nonatomic, assign) NSUInteger changeCount;
 @property (nonatomic, assign) NSUInteger lastChangeCount;
+@property (nonatomic, strong) NSArray *observers;
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
@@ -28,7 +29,7 @@
 @end
 
 @implementation MCCursorLibrary
-@dynamic isDirty;
+@dynamic dirty;
 
 + (NSArray *)undoProperties {
     return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
@@ -132,7 +133,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
-    if ([key isEqualToString:@"isDirty"]) {
+    if ([key isEqualToString:@"dirty"]) {
         keyPaths = [keyPaths setByAddingObjectsFromArray: @[@"changeCount", @"lastChangeCount"]];
     }
     return keyPaths;

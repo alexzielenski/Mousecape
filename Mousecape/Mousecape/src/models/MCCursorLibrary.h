@@ -18,7 +18,7 @@
 @property (nonatomic, copy)   NSURL    *fileURL;
 @property (nonatomic, weak)   MCLibraryController *library;
 @property (nonatomic, readonly) NSUndoManager *undoManager;
-@property (nonatomic, readonly) BOOL isDirty;
+@property (nonatomic, readonly, getter=isDirty) BOOL dirty;
 @property (nonatomic, assign, getter = isInCloud) BOOL inCloud;
 @property (nonatomic, assign, getter = isHiDPI)   BOOL hiDPI;
 
