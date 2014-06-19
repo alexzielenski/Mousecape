@@ -30,8 +30,7 @@
     [self.libraryWindowController showWindow:self];
 }
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
-    [self.libraryWindowController showWindow:sender];
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return YES;
 }
 
