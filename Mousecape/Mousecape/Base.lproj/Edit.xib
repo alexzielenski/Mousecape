@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MCEditWindowController">
@@ -518,18 +518,30 @@
                 </textField>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggE-Pd-aWo" customClass="MMAnimatingImageView">
                     <rect key="frame" x="183" y="123" width="49" height="48"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowHotSpot" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAllowDragging" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="delegate" destination="tMj-cQ-hK0" id="Q6h-vm-kaw"/>
                     </connections>
                 </customView>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3t-wd-E5Y" customClass="MMAnimatingImageView">
                     <rect key="frame" x="240" y="123" width="49" height="48"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowHotSpot" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAllowDragging" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="delegate" destination="tMj-cQ-hK0" id="VPL-GA-4fS"/>
                     </connections>
                 </customView>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4hN-Nm-B7Z" customClass="MMAnimatingImageView">
                     <rect key="frame" x="297" y="123" width="49" height="48"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowHotSpot" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAllowDragging" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="delegate" destination="tMj-cQ-hK0" id="fp1-eX-JUN"/>
                     </connections>
@@ -561,6 +573,10 @@
                         <constraint firstAttribute="width" constant="48" id="MeC-cf-abQ"/>
                         <constraint firstAttribute="height" constant="48" id="VAO-nl-ZmQ"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowHotSpot" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAllowDragging" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="delegate" destination="tMj-cQ-hK0" id="YBU-cQ-gUX"/>
                     </connections>
