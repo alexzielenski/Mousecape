@@ -18,6 +18,7 @@ const char MCInvalidateContext;
 - (void)_invalidateFrame;
 - (void)_invalidateAnimation;
 - (void)registerTypes;
+- (void)_dragAnimationEnded:(id)sender;
 @end
 
 @implementation MMAnimatingImageView
@@ -195,9 +196,13 @@ const char MCInvalidateContext;
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
         [[NSCursor currentCursor] pop];
-        NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, nil, NULL, nil);
+        NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, self, @selector(_dragAnimationEnded:), nil);
         [self.delegate imageView:self didDragOutImage:self.image];
     }
+}
+
+- (void)_dragAnimationEnded:(id)sender {
+    [[NSCursor arrowCursor] push];
 }
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {

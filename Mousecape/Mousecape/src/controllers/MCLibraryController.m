@@ -46,6 +46,10 @@ const char MCLibraryIdentifierContext;
     NSString *applied   = [NSUserDefaults.standardUserDefaults stringForKey:MCPreferencesAppliedCursorKey];
 
     for (NSString *filename in contents) {
+        // Ignore hidden files like .DS_Store
+        if ([filename hasPrefix:@"."])
+            continue;
+
         NSURL *fileURL = [NSURL fileURLWithPathComponents:@[ capesPath, filename ]];
         MCCursorLibrary *library = [MCCursorLibrary cursorLibraryWithContentsOfURL:fileURL];
         
