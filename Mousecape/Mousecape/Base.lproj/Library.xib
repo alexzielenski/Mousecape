@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MCLibraryWindowController">
@@ -182,17 +182,17 @@
 DQ
 </string>
                     <connections>
-                        <action selector="applyCape:" target="-1" id="KG6-81-DdR"/>
+                        <action selector="applyCapeAction:" target="-1" id="KHK-0n-gS3"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Edit" tag="-1" keyEquivalent="e" id="HJc-SX-JjZ">
                     <connections>
-                        <action selector="editCape:" target="-1" id="6nG-0d-9YV"/>
+                        <action selector="editCapeAction:" target="-1" id="xUA-Zj-ToX"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Duplicate" tag="-1" keyEquivalent="S" id="PhG-Ll-nqz">
                     <connections>
-                        <action selector="duplicateCape:" target="-1" id="N0m-Bu-OYJ"/>
+                        <action selector="duplicateCapeAction:" target="-1" id="3xf-LP-P1p"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Remove" tag="-1" id="Aig-wl-ivn">
@@ -200,14 +200,14 @@ DQ
 CA
 </string>
                     <connections>
-                        <action selector="removeCape:" target="-1" id="rSg-Ns-VmO"/>
+                        <action selector="removeCapeAction:" target="-1" id="Psf-74-zsG"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="A7P-y0-FBc"/>
                 <menuItem title="Show in Finder" tag="-1" id="2WM-EN-kiI">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showCape:" target="-1" id="Wu1-o2-zZP"/>
+                        <action selector="showCapeAction:" target="-1" id="iF0-eu-Du4"/>
                     </connections>
                 </menuItem>
             </items>

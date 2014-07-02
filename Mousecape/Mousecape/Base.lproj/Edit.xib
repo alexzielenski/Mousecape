@@ -210,7 +210,7 @@
                 <binding destination="oUs-Nv-PHw" name="title" keyPath="cursorLibrary.name" id="RKE-nQ-CzI"/>
                 <outlet property="delegate" destination="-2" id="4"/>
             </connections>
-            <point key="canvasLocation" x="233.5" y="306.5"/>
+            <point key="canvasLocation" x="399.5" y="275.5"/>
         </window>
         <viewController title="List" id="oUs-Nv-PHw" customClass="MCEditListController">
             <connections>
