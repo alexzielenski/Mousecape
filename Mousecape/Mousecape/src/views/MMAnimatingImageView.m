@@ -9,6 +9,8 @@
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
 
+#define SHOULDCOPY NSEvent.modifierFlags & NSAlternateKeyMask
+
 const char MCInvalidateContext;
 
 @interface MMAnimatingImageView ()
@@ -187,34 +189,46 @@ const char MCInvalidateContext;
 
 #pragma mark - NSDraggingSource
 
+- (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint {
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Mousecape Image (%f).png", NSDate.date.timeIntervalSince1970]];
+    [[self.image.representations.firstObject representationUsingType:NSPNGFileType properties:nil] writeToFile:path atomically:NO];
+    [[NSURL fileURLWithPath:path] writeToPasteboard:session.draggingPasteboard];
+}
+
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
     if (context == NSDraggingContextWithinApplication && self.shouldAllowDragging)
         return NSDragOperationCopy;
-    return NSDragOperationNone;
+    return NSDragOperationEvery;
 }
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)] && operation == NSDragOperationNone && !NSPointInRect(screenPoint, self.window.frame)) {
-        [[NSCursor currentCursor] pop];
-        NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, self, @selector(_dragAnimationEnded:), nil);
-        [self.delegate imageView:self didDragOutImage:self.image];
+    if (!NSPointInRect(screenPoint, self.window.frame)) {
+        if (SHOULDCOPY) {
+            [self _dragAnimationEnded:self];
+        } else if (self.delegate && [self.delegate respondsToSelector:@selector(imageView:didDragOutImage:)]) {
+            NSShowAnimationEffect(NSAnimationEffectPoof, screenPoint, NSZeroSize, self, @selector(_dragAnimationEnded:), nil);
+            [self.delegate imageView:self didDragOutImage:self.image];
+        }
     }
 }
 
 - (void)_dragAnimationEnded:(id)sender {
-    [[NSCursor arrowCursor] push];
+    [[NSCursor arrowCursor] set];
 }
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint {
     if (!NSPointInRect(screenPoint, self.window.frame)) {
-        [[NSCursor disappearingItemCursor] push];
+        if (SHOULDCOPY)
+            [[NSCursor dragCopyCursor] set];
+        else
+            [[NSCursor disappearingItemCursor] push];
     } else if ([NSCursor currentCursor] == [NSCursor disappearingItemCursor]) {
-        [[NSCursor currentCursor] pop];
+        [self _dragAnimationEnded:self];
     }
 }
 
 - (BOOL)ignoreModifierKeysForDraggingSession:(NSDraggingSession *)session {
-    return YES;
+    return NO;
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
@@ -226,7 +240,7 @@ const char MCInvalidateContext;
         return;
 
     NSPasteboardItem *pbItem = [NSPasteboardItem new];
-    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image" ]];
+    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image", @"public.file-url" ]];
 
     NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
     
@@ -242,19 +256,19 @@ const char MCInvalidateContext;
     [dragItem setDraggingFrame:self.bounds contents:previewImage];
 
     NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:@[ dragItem ] event:event source:self];
-    draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
+    draggingSession.animatesToStartingPositionsOnCancelOrFail = YES;
     draggingSession.draggingFormation = NSDraggingFormationNone;
 }
 
 - (void)pasteboard:(NSPasteboard *)sender item:(NSPasteboardItem *)item provideDataForType:(NSString *)type {
     if ([type compare: NSPasteboardTypeTIFF] == NSOrderedSame) {
         [sender setData:[self.image TIFFRepresentation] forType:NSPasteboardTypeTIFF];
-        
     } else if ([type compare: NSPasteboardTypePNG] == NSOrderedSame) {
         [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
     } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];
     }
+
 }
 
 #pragma mark - NSDragDestination
@@ -268,7 +282,7 @@ const char MCInvalidateContext;
 		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images
 		sender.draggingPasteboard.pasteboardItems.count == 1 &&
         self.shouldAllowDragging) {                        // Only accept one item
-		return [self.delegate imageView:self draggingEntered:sender];
+        return [self.delegate imageView:self draggingEntered:sender];
 	}
 	return NSDragOperationNone;
 }
