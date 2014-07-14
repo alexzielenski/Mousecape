@@ -78,10 +78,10 @@ const char MCCursorNameContext;
                 NSUInteger index = [self.cursors indexForInsertingObject:lib sortedUsingComparator:self.class.sortComparator];
                 NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
 
-                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"cursors"];
                 [self.cursors insertObject:lib atIndex:index];
                 [self startObservingCursor:lib];
-                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"capes"];
+                [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indices forKey:@"cursors"];
                 [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp];
             }
         } else if (kind == NSKeyValueChangeRemoval) {
@@ -90,10 +90,10 @@ const char MCCursorNameContext;
                 
                 if (index != NSNotFound) {
                     NSIndexSet *indices = [NSIndexSet indexSetWithIndex:index];
-                    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"cursors"];
                     [self stopObservingCursor:lib];
                     [self.cursors removeObjectAtIndex:index];
-                    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
+                    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"cursors"];
                     [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index + 1] withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
                 }
             }

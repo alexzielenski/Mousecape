@@ -61,10 +61,10 @@ const char MCInvalidateContext;
     self.layer.delegate = self;
     
     CALayer *hotSpotLayer = [CALayer layer];
-    hotSpotLayer.bounds = CGRectMake(0, 0, 4, 4);
+    hotSpotLayer.bounds = CGRectMake(0, 0, 3, 3);
     hotSpotLayer.backgroundColor = [[NSColor redColor] CGColor];
     hotSpotLayer.autoresizingMask = kCALayerNotSizable;
-    hotSpotLayer.anchorPoint = CGPointMake(0, 0);
+    hotSpotLayer.anchorPoint = CGPointMake(0.5, 0.5);
     hotSpotLayer.borderColor = [[NSColor blackColor] CGColor];
     hotSpotLayer.borderWidth = 0.5;
     [self.layer addSublayer:hotSpotLayer];
@@ -157,7 +157,7 @@ const char MCInvalidateContext;
         CGSize effectiveSize = CGSizeMake(self.image.size.width, self.image.size.height / self.frameCount);
         CGRect effectiveRect = CGRectIntegral(CGRectMake(self.layer.frame.size.width / 2.0 - effectiveSize.width / 2.0, self.layer.frame.size.height / 2.0 + effectiveSize.height / 2.0, effectiveSize.width, effectiveSize.height));
 
-        self.hotSpotLayer.position = CGPointMake(ceil(CGRectGetMinX(effectiveRect) + self.hotSpot.x - self.hotSpotLayer.frame.size.width / 2), ceil(CGRectGetMinY(effectiveRect) - self.hotSpot.y - self.hotSpotLayer.frame.size.height / 2));
+        self.hotSpotLayer.position = CGPointMake(CGRectGetMinX(effectiveRect) + self.hotSpot.x, CGRectGetMinY(effectiveRect) - self.hotSpot.y);
         self.hotSpotLayer.opacity = 1.0;
     } else {
         self.hotSpotLayer.opacity = 0.0;

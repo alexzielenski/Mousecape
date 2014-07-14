@@ -480,7 +480,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.hotSpot" id="aFb-fI-aHw"/>
+                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.hotSpot" id="7E7-XS-E4D">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="wdB-yr-r6Y" id="Smn-hK-iP2"/>
                     </connections>
                 </textField>

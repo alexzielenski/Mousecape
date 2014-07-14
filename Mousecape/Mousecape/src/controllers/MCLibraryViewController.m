@@ -122,6 +122,11 @@ const char MCLibraryNameContext;
                 [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indices forKey:@"capes"];
                 
                 [self.tableView removeRowsAtIndexes:indices withAnimation:NSTableViewAnimationSlideUp | NSTableViewAnimationEffectFade];
+
+                if (self.editWindowController.cursorLibrary == lib) {
+                    self.editWindowController.cursorLibrary = nil;
+                    [self.editWindowController close];
+                }
             }
         }
         
