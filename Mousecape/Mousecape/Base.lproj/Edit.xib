@@ -452,7 +452,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.frameCount" id="E0q-ga-ftR"/>
+                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.frameCount" id="05V-RH-y2o">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="VbK-WJ-M0L" id="y5I-kM-hNq"/>
                     </connections>
                 </textField>
@@ -467,7 +471,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.frameDuration" id="I6z-BZ-xhp"/>
+                        <binding destination="tMj-cQ-hK0" name="value" keyPath="cursor.frameDuration" id="pBC-y0-ehq">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <outlet property="nextKeyView" destination="Qcr-83-Tz0" id="gYj-Hj-Txi"/>
                     </connections>
                 </textField>

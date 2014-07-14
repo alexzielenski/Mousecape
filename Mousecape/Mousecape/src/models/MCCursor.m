@@ -185,6 +185,15 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
         [self.representations setObject:imageRep forKey:@(scale)];
     else
         [self.representations removeObjectForKey:@(scale)];
+
+    if (self.representations.count == 1) {
+        // This is the first object, set the image size to this
+        NSSize size = NSMakeSize((double)imageRep.pixelsWide / (scale / 100.0), (double)imageRep.pixelsHigh / self.frameCount / (scale / 100.0));
+        if (!NSEqualSizes(size, NSZeroSize)) {
+            self.size = size;
+        }
+    }
+
     [self didChangeValueForKey:key];
     [self didChangeValueForKey:@"representations"];
 }

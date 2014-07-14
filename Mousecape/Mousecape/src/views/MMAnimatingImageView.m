@@ -256,7 +256,7 @@ const char MCInvalidateContext;
     [dragItem setDraggingFrame:self.bounds contents:previewImage];
 
     NSDraggingSession *draggingSession = [self beginDraggingSessionWithItems:@[ dragItem ] event:event source:self];
-    draggingSession.animatesToStartingPositionsOnCancelOrFail = YES;
+    draggingSession.animatesToStartingPositionsOnCancelOrFail = NO;
     draggingSession.draggingFormation = NSDraggingFormationNone;
 }
 
