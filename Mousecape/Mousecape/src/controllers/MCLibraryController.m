@@ -81,7 +81,7 @@ const char MCLibraryIdentifierContext;
 
 
 - (void)addCape:(MCCursorLibrary *)cape {
-    if ([self.capes containsObject:cape]) {
+    if ([self.capes containsObject:cape] || [[self.capes valueForKeyPath:@"identifier"] containsObject:cape.identifier]) {
         NSLog(@"Not adding %@ to the library because an object with that identifier already exists", cape.identifier);
         return;
     }
@@ -164,6 +164,7 @@ const char MCLibraryIdentifierContext;
         
         NSError *error = nil;
         [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:&error];
+
         if (error) {
             NSLog(@"Failed to rename the identifier of the cape %@. Reverting to %@...", cape.identifier, change[NSKeyValueChangeOldKey]);
             cape.identifier = change[NSKeyValueChangeOldKey];
