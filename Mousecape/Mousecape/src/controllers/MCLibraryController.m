@@ -10,6 +10,7 @@
 #import "NSOrderedSet+AZSortedInsert.h"
 #import "apply.h"
 #import "restore.h"
+#import "create.h"
 
 const char MCLibraryIdentifierContext;
 
@@ -24,7 +25,7 @@ const char MCLibraryIdentifierContext;
 @implementation MCLibraryController
 
 - (NSURL *)URLForCape:(MCCursorLibrary *)cape {
-    return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];
+    return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];;
 }
 
 - (instancetype)initWithURL:(NSURL *)url {
@@ -64,17 +65,14 @@ const char MCLibraryIdentifierContext;
 }
 
 - (void)importCapeAtURL:(NSURL *)url {
-    MCCursorLibrary *lib = [MCCursorLibrary cursorLibraryWithContentsOfURL:url];
-    NSURL *destinationURL = [self URLForCape:lib];
-    NSError *error = nil;
-    [[NSFileManager defaultManager] copyItemAtURL:lib.fileURL toURL:destinationURL error:&error];
-    if (!error) {
-        lib.fileURL = destinationURL;
-        [self addCape:lib];
-    }    
+    [self importCape:[MCCursorLibrary cursorLibraryWithContentsOfURL:url]];
 }
 
 - (void)importCape:(MCCursorLibrary *)lib {
+    if ([[self.capes valueForKeyPath:@"identifier"] containsObject:lib.identifier]) {
+        lib.identifier = [lib.identifier stringByAppendingFormat:@".%@", UUID()];
+    }
+
     lib.fileURL = [self URLForCape:lib];
     [lib writeToFile:lib.fileURL.path atomically:NO];
     
@@ -100,13 +98,15 @@ const char MCLibraryIdentifierContext;
     
     cape.library = self;
     [self.capes addObject:cape];
-    
+
     [[self.undoManager prepareWithInvocationTarget:self] removeCape:cape];
     if (!self.undoManager.isUndoing) {
         [self.undoManager setActionName:[@"Add " stringByAppendingString:cape.name]];
     }
     
     [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+
+    [cape.undoManager removeAllActions];
 }
 
 
@@ -170,6 +170,20 @@ const char MCLibraryIdentifierContext;
             cape.fileURL = [self URLForCape:cape];
         }
     }
+}
+
+- (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block {
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat: @"Mousecape Dump (%f).cape", NSDate.date.timeIntervalSince1970]];
+    if (dumpCursorsToFile(path, block)) {
+        NSLog(@"%@", path);
+        __weak MCLibraryController *weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf importCapeAtURL:[NSURL fileURLWithPath:path]];
+        });
+        return YES;
+    }
+
+    return NO;
 }
 
 @end

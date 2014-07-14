@@ -253,7 +253,7 @@ NSDictionary *processedCapeWithIdentifier(NSString *identifier) {
     return dict;
 }
 
-void dumpCursorsToFile(NSString *path) {
+BOOL dumpCursorsToFile(NSString *path, BOOL (^progress)(NSUInteger current, NSUInteger total)) {
     MMLog("Dumping cursors...");
         
     float originalScale;
@@ -261,17 +261,34 @@ void dumpCursorsToFile(NSString *path) {
     
     CGSSetCursorScale(CGSMainConnectionID(), 16.0);
     CGSHideCursor(CGSMainConnectionID());
-    
+
+    NSInteger total = 9 + 45;
+    NSInteger current = 0;
+
     NSMutableDictionary *cursors = [NSMutableDictionary dictionary];
     NSUInteger i = 0;
     NSString *key = nil;
     while ((key = defaultCursors[i]) != nil) {
+        if (progress) {
+            current = i;
+
+            if (!progress(current, total)) {
+                return NO;
+            }
+        }
         MMLog("Gathering data for %s", key.UTF8String);
         cursors[key] = processedCapeWithIdentifier(key);
         i++;
     }
     
-    for (int x = 0x0; x < 0x100; x++) {
+    for (int x = 0; x < 45; x++) {
+        if (progress) {
+            current = i + x;
+
+            if (!progress(current, total)) {
+                return NO;
+            }
+        }
         NSString *key = [@"com.apple.cursor." stringByAppendingFormat:@"%d", x];
         CoreCursorSet(CGSMainConnectionID(), x);
 
@@ -283,7 +300,11 @@ void dumpCursorsToFile(NSString *path) {
         
         cursors[key] = cape;
     }
-    
+
+    if (progress) {
+        progress(total, total);
+    }
+
     NSMutableDictionary *cape = [NSMutableDictionary dictionary];
     cape[MCCursorDictionaryAuthorKey] = @"Apple, Inc.";
     cape[MCCursorDictionaryCapeNameKey] = @"Cursor Dump";
@@ -298,10 +319,10 @@ void dumpCursorsToFile(NSString *path) {
     CGSSetCursorScale(CGSMainConnectionID(), originalScale);
     CGSShowCursor(CGSMainConnectionID());
     
-    [cape writeToFile:path atomically:NO];
+    return [cape writeToFile:path atomically:NO];
 }
 
-extern void dumpCursorsToFolder(NSString *path) {
+BOOL dumpCursorsToFolder(NSString *path, BOOL (^progress)(NSUInteger current, NSUInteger total)) {
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
     MMLog("Dumping cursors...");
@@ -311,11 +332,19 @@ extern void dumpCursorsToFolder(NSString *path) {
     
     CGSSetCursorScale(CGSMainConnectionID(), 16.0);
     CGSHideCursor(CGSMainConnectionID());
-    
+
+    NSInteger total = 9 + 45;
+    NSInteger current = 0;
 
     NSUInteger i = 0;
     NSString *key = nil;
     while ((key = defaultCursors[i]) != nil) {
+        current = i;
+        if (progress) {
+            if (!progress(current, total)) {
+                return NO;
+            }
+        }
         MMLog("Gathering data for %s", key.UTF8String);
         NSDictionary *cape = processedCapeWithIdentifier(key);
         
@@ -323,7 +352,13 @@ extern void dumpCursorsToFolder(NSString *path) {
         i++;
     }
     
-    for (int x = 0x0; x < 0x100; x++) {
+    for (int x = 0; x < 45; x++) {
+        current = i + x;
+        if (progress) {
+            if (!progress(current, total)) {
+                return NO;
+            }
+        }
         NSString *key = [@"com.apple.cursor." stringByAppendingFormat:@"%d", x];
         CoreCursorSet(CGSMainConnectionID(), x);
         
@@ -336,10 +371,14 @@ extern void dumpCursorsToFolder(NSString *path) {
         [[cape[MCCursorDictionaryRepresentationsKey] lastObject] writeToFile:[[path stringByAppendingPathComponent:key] stringByAppendingPathExtension:@"png"] atomically:NO];
     }
     
-    
+    if (progress) {
+        progress(total, total);
+    }
+
     CGSSetCursorScale(CGSMainConnectionID(), originalScale);
     CGSShowCursor(CGSMainConnectionID());
-    
+
+    return YES;
 }
 
 extern void exportCape(NSDictionary *cape, NSString *destination) {

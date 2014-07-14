@@ -11,8 +11,8 @@
 extern NSError *createCape(NSString *input, NSString *output, BOOL convert);
 
 extern NSDictionary *processedCapeWithIdentifier(NSString *identifier);
-extern void dumpCursorsToFile(NSString *path);
-extern void dumpCursorsToFolder(NSString *path);
+extern BOOL dumpCursorsToFile(NSString *path, BOOL (^progress)(NSUInteger current, NSUInteger total));
+extern BOOL dumpCursorsToFolder(NSString *path, BOOL (^progress)(NSUInteger current, NSUInteger total));
 
 extern NSDictionary *createCapeFromDirectory(NSString *path);
 extern NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary *metadata);

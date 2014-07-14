@@ -161,7 +161,10 @@ int main(int argc, char * argv[]) {
             goto fin;
 
         } else if (dump) {
-            dumpCursorsToFile([settings objectForKey:@"dump"]);
+            dumpCursorsToFile([settings objectForKey:@"dump"], ^BOOL (NSUInteger progress, NSUInteger total) {
+                MMLog("Dumped %lu of %lu", (unsigned long)progress, (unsigned long)total);
+                return YES;
+            });
         } else if (scale) {
             NSNumber *number = [settings objectForKey:@"scale"];
             

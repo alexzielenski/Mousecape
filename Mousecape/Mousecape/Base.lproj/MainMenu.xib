@@ -370,6 +370,12 @@ CA
                                     <action selector="restoreCape:" target="494" id="2ve-Ez-ktd"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Dump Cursors…" id="CYY-iE-0bP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="dumpCapeAction:" target="-1" id="B89-Hc-T1C"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
