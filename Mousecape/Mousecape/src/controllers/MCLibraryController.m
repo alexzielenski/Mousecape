@@ -175,7 +175,6 @@ const char MCLibraryIdentifierContext;
 - (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block {
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat: @"Mousecape Dump (%f).cape", NSDate.date.timeIntervalSince1970]];
     if (dumpCursorsToFile(path, block)) {
-        NSLog(@"%@", path);
         __weak MCLibraryController *weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf importCapeAtURL:[NSURL fileURLWithPath:path]];
