@@ -190,15 +190,14 @@ const char MCInvalidateContext;
 #pragma mark - NSDraggingSource
 
 - (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint {
-    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Mousecape Image (%f).png", NSDate.date.timeIntervalSince1970]];
-    [[self.image.representations.firstObject representationUsingType:NSPNGFileType properties:nil] writeToFile:path atomically:NO];
-    [[NSURL fileURLWithPath:path] writeToPasteboard:session.draggingPasteboard];
 }
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
     if (context == NSDraggingContextWithinApplication && self.shouldAllowDragging)
         return NSDragOperationCopy;
-    return NSDragOperationEvery;
+    if (self.shouldAllowDragging)
+        return NSDragOperationEvery;
+    return NSDragOperationNone;
 }
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
@@ -221,7 +220,7 @@ const char MCInvalidateContext;
         if (SHOULDCOPY)
             [[NSCursor dragCopyCursor] set];
         else
-            [[NSCursor disappearingItemCursor] push];
+            [[NSCursor disappearingItemCursor] set];
     } else if ([NSCursor currentCursor] == [NSCursor disappearingItemCursor]) {
         [self _dragAnimationEnded:self];
     }
@@ -240,7 +239,7 @@ const char MCInvalidateContext;
         return;
 
     NSPasteboardItem *pbItem = [NSPasteboardItem new];
-    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image", @"public.file-url" ]];
+    [pbItem setDataProvider:self forTypes:@[ NSPasteboardTypePNG, NSPasteboardTypeTIFF, @"public.image", (__bridge NSString *)kPasteboardTypeFileURLPromise ]];
 
     NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
     
@@ -267,6 +266,9 @@ const char MCInvalidateContext;
         [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
     } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];
+    } else if ([type compare:(__bridge NSString *)kPasteboardTypeFileURLPromise] == NSOrderedSame && NSEvent.modifierFlags == NSAlternateKeyMask) {
+        NSURL *url = [[NSURL URLWithString:[item stringForType:@"com.apple.pastelocation"]] URLByAppendingPathComponent:[NSString stringWithFormat:@"Mousecape Image (%f).png", NSDate.date.timeIntervalSince1970]];
+        [[self.image.representations.firstObject representationUsingType:NSPNGFileType properties:nil] writeToFile:url.path atomically:NO];
     }
 
 }
