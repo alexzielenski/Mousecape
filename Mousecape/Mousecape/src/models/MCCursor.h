@@ -33,11 +33,13 @@ extern MCCursorScale cursorScaleForScale(CGFloat scale);
 
 - (void)setRepresentation:(NSImageRep *)imageRep forScale:(MCCursorScale)scale;
 - (void)removeRepresentationForScale:(MCCursorScale)scale;
+- (void)addFrame:(NSImageRep *)frame forScale:(MCCursorScale)scale;
 
 - (NSImageRep *)representationForScale:(MCCursorScale)scale;
 - (NSImageRep *)representationWithScale:(CGFloat)scale;
 
 - (NSDictionary *)dictionaryRepresentation;
++ (NSImageRep *)composeRepresentationWithFrames:(NSArray *)frames;
 
 // Derived Properties
 - (NSImage *)imageWithAllReps;

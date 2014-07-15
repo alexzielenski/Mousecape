@@ -17,6 +17,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
 @interface MCCursor ()
 @property (readwrite, strong) NSMutableDictionary *representations;
+- (NSInteger)framesForScale:(MCCursorScale)scale;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
 
@@ -196,6 +197,69 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
     [self didChangeValueForKey:key];
     [self didChangeValueForKey:@"representations"];
+}
+
+- (void)addFrame:(NSImageRep *)frame forScale:(MCCursorScale)scale {
+    NSImageRep *rep = [self representationForScale:scale];
+    NSImageRep *newRep = [self.class composeRepresentationWithFrames:@[ rep, frame ]];
+
+    NSInteger frames = newRep.pixelsHigh / self.size.height;
+
+    if (self.frameCount < frames) {
+        self.frameCount = frames;
+    }
+
+    [self setRepresentation:newRep forScale:scale];
+}
+
++ (NSImageRep *)composeRepresentationWithFrames:(NSArray *)frames {
+    if (frames.count == 0)
+        return nil;
+    if (frames.count == 1)
+        return frames.firstObject;
+
+    NSUInteger height = [[frames valueForKeyPath:@"@sum.pixelsHigh"] unsignedIntegerValue];
+    NSUInteger width = [(NSImageRep *)frames[0] pixelsWide];
+
+    NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+                                                                       pixelsWide:width
+                                                                       pixelsHigh:height
+                                                                    bitsPerSample:8
+                                                                  samplesPerPixel:4
+                                                                         hasAlpha:YES
+                                                                         isPlanar:NO
+                                                                   colorSpaceName:NSDeviceRGBColorSpace
+                                                                      bytesPerRow:4 * width
+                                                                     bitsPerPixel:32];
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:newRep];
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:ctx];
+
+    NSUInteger currentY = 0;
+    for (NSInteger idx = frames.count - 1; idx >= 0; idx--) {
+        NSImageRep *rep = frames[idx];
+        if (rep.pixelsWide != width) {
+            NSLog(@"Can't create representation from images of different widths");
+            return nil;
+        }
+
+        [rep drawInRect:NSMakeRect(0, currentY, rep.pixelsWide, rep.pixelsHigh)
+               fromRect:NSZeroRect
+              operation:NSCompositeSourceOver
+               fraction:1.0
+         respectFlipped:YES
+                  hints:nil];
+
+        currentY += rep.pixelsHigh;
+    }
+
+    [NSGraphicsContext restoreGraphicsState];
+
+    return newRep;
+}
+
+- (NSInteger)framesForScale:(MCCursorScale)scale {
+    return [self representationForScale:scale].pixelsHigh / self.size.height;
 }
 
 - (void)removeRepresentationForScale:(MCCursorScale)scale {

@@ -280,10 +280,10 @@ const char MCInvalidateContext;
 	// Only thing we have to do here is confirm that the dragged file is an image. We use NSImage's +canInitWithPasteboard: and we also check to see there is only one item being dragged
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // No point in accepting the drop if the delegate doesn't support it/exist
 		[NSImage canInitWithPasteboard:sender.draggingPasteboard] &&                   // Only Accept Images
-		sender.draggingPasteboard.pasteboardItems.count == 1 &&
-        self.shouldAllowDragging) {                        // Only accept one item
+        self.shouldAllowDragging) {
         return [self.delegate imageView:self draggingEntered:sender];
 	}
+
 	return NSDragOperationNone;
 }
 
@@ -298,19 +298,19 @@ const char MCInvalidateContext;
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
 	if ([self.delegate conformsToProtocol:@protocol(MMAnimatingImageViewDelegate)] &&  // Only do the operation if a delegate exists to actually set the image.
 		[self.delegate imageView:self shouldPerformDragOperation:sender]) {            // Only do the operation if a delegate wants us to do the operation.
-		
+
 		// Get the image from the pasteboard
-		NSImage *im = [[NSImage alloc] initWithPasteboard:sender.draggingPasteboard];
-		
-		// Make an array of the valid drops (NSBitmapImageRep)
-		NSMutableArray *acceptedDrops = [NSMutableArray arrayWithCapacity:im.representations.count];
-		for (NSImageRep *rep in im.representations) {
-			if (![rep isKindOfClass:[NSBitmapImageRep class]]) // We don't want PDFs
-				continue;
-			
-			[acceptedDrops addObject:rep];
-			
-		}
+        NSArray *imageArray = [sender.draggingPasteboard readObjectsForClasses:@[[NSImage class], [NSURL class]] options:nil];
+        NSMutableArray *acceptedDrops = [NSMutableArray arrayWithCapacity:imageArray.count];
+        for (NSInteger idx = 0; idx < imageArray.count; idx++) {
+            id obj = imageArray[idx];
+            if ([obj isKindOfClass:[NSImage class]]) {
+                [acceptedDrops addObject:[[obj representations] firstObject]];
+            } else {
+                // NSURL
+                [acceptedDrops addObject:[NSImageRep imageRepWithContentsOfURL:obj]];
+            }
+        }
 		
 		if (acceptedDrops.count > 0) {
 			// We already confirmed that the delegate conforms to the protocol above. Now we can let the delegate
