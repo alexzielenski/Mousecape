@@ -12,14 +12,13 @@
 #import "restore.h"
 #import "create.h"
 
-const char MCLibraryIdentifierContext;
-
 @interface MCLibraryController ()
 @property (nonatomic, readwrite, strong) NSUndoManager *undoManager;
 @property (nonatomic, retain) NSMutableSet *capes;
 @property (readwrite, copy) NSURL *libraryURL;
 @property (readwrite, weak) MCCursorLibrary *appliedCape;
 - (void)loadLibrary;
+- (void)willSaveNotification:(NSNotification *)note;
 @end
 
 @implementation MCLibraryController
@@ -32,6 +31,8 @@ const char MCLibraryIdentifierContext;
     if ((self = [self init])) {
         self.libraryURL = url;
         self.undoManager = [[NSUndoManager alloc] init];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willSaveNotification:) name:MCLibraryWillSaveNotificationName object:nil];
         [self loadLibrary];
     }
     
@@ -93,9 +94,7 @@ const char MCLibraryIdentifierContext;
 
     NSSet *change = [NSSet setWithObject:cape];
     [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
-    
-    [cape addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:(void *)&MCLibraryIdentifierContext];
-    
+
     cape.library = self;
     [self.capes addObject:cape];
 
@@ -116,9 +115,7 @@ const char MCLibraryIdentifierContext;
     [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     if (cape == self.appliedCape)
         [self restoreCape];
-    
-    [cape removeObserver:self forKeyPath:@"identifier" context:(void *)&MCLibraryIdentifierContext];
-    
+
     if (cape.library == self)
         cape.library = nil;
     
@@ -155,22 +152,17 @@ const char MCLibraryIdentifierContext;
     return [self.capes filteredSetUsingPredicate:pred];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == &MCLibraryIdentifierContext) {
-        // change the file url to reflect the new identifier
-        MCCursorLibrary *cape = object;
-        NSURL *oldURL = cape.fileURL;
-        [cape setFileURL:[self URLForCape:cape]];
-        
-        NSError *error = nil;
-        [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:&error];
+- (void)willSaveNotification:(NSNotification *)note {
+    MCCursorLibrary *cape = note.object;
+    NSURL *oldURL = cape.fileURL;
+    [cape setFileURL:[self URLForCape:cape]];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtURL:oldURL error:&error];
 
-        if (error) {
-            NSLog(@"Failed to rename the identifier of the cape %@. Reverting to %@...", cape.identifier, change[NSKeyValueChangeOldKey]);
-            cape.identifier = change[NSKeyValueChangeOldKey];
-            cape.fileURL = [self URLForCape:cape];
-        }
+    if (error) {
+        NSLog(@"error removing cape after rename: %@", error);
     }
+
 }
 
 - (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block {
