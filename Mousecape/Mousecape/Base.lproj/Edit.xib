@@ -146,10 +146,10 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="w4h-lB-jLi">
-                                        <rect key="frame" x="22" y="0.0" width="22" height="22"/>
+                                        <rect key="frame" x="22" y="0.0" width="22" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="L21-Ci-myo"/>
-                                            <constraint firstAttribute="height" constant="22" id="M80-94-gpJ"/>
+                                            <constraint firstAttribute="height" constant="20" id="M80-94-gpJ"/>
                                         </constraints>
                                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="HjH-hq-TxT">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -181,7 +181,7 @@
                                     <constraint firstItem="w4h-lB-jLi" firstAttribute="leading" secondItem="0ps-WH-ASN" secondAttribute="trailing" id="oqH-vB-hO8"/>
                                     <constraint firstItem="0ps-WH-ASN" firstAttribute="bottom" secondItem="w4h-lB-jLi" secondAttribute="bottom" id="sWe-gf-GX0"/>
                                     <constraint firstItem="2UQ-R4-qJn" firstAttribute="leading" secondItem="IHY-vi-Wpr" secondAttribute="leading" id="thB-tX-fKx"/>
-                                    <constraint firstItem="0ps-WH-ASN" firstAttribute="height" secondItem="w4h-lB-jLi" secondAttribute="height" id="uJj-nv-0fc"/>
+                                    <constraint firstItem="0ps-WH-ASN" firstAttribute="height" secondItem="w4h-lB-jLi" secondAttribute="height" constant="2" id="uJj-nv-0fc"/>
                                     <constraint firstAttribute="bottom" secondItem="2UQ-R4-qJn" secondAttribute="bottom" constant="22" id="vLX-hs-yVP"/>
                                 </constraints>
                             </customView>
@@ -210,7 +210,7 @@
                 <binding destination="oUs-Nv-PHw" name="title" keyPath="cursorLibrary.name" id="RKE-nQ-CzI"/>
                 <outlet property="delegate" destination="-2" id="4"/>
             </connections>
-            <point key="canvasLocation" x="399.5" y="275.5"/>
+            <point key="canvasLocation" x="139.5" y="555.5"/>
         </window>
         <viewController title="List" id="oUs-Nv-PHw" customClass="MCEditListController">
             <connections>

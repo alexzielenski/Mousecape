@@ -24,9 +24,13 @@
 @implementation MCAppDelegate
 @dynamic preferencesWindowController;
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    self.libraryWindowController = [[MCLibraryWindowController alloc] initWithWindowNibName:@"Library"];
+    [self.libraryWindowController loadWindow];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self configureHelperToolMenuItem];
-    self.libraryWindowController = [[MCLibraryWindowController alloc] initWithWindowNibName:@"Library"];
     [self.libraryWindowController showWindow:self];
 }
 
