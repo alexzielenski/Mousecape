@@ -266,7 +266,7 @@ const char MCInvalidateContext;
         [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
     } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];
-    } else if ([type compare:(__bridge NSString *)kPasteboardTypeFileURLPromise] == NSOrderedSame && NSEvent.modifierFlags == NSAlternateKeyMask) {
+    } else if ([type compare:(__bridge NSString *)kPasteboardTypeFileURLPromise] == NSOrderedSame && SHOULDCOPY) {
         NSURL *url = [[NSURL URLWithString:[item stringForType:@"com.apple.pastelocation"]] URLByAppendingPathComponent:[NSString stringWithFormat:@"Mousecape Image (%f).png", NSDate.date.timeIntervalSince1970]];
         [[self.image.representations.firstObject representationUsingType:NSPNGFileType properties:nil] writeToFile:url.path atomically:NO];
     }
@@ -318,9 +318,10 @@ const char MCInvalidateContext;
 			// We already confirmed that the delegate conforms to the protocol above. Now we can let the delegate
 			// decide what to do with the dropped images.
 			[self.delegate imageView:self didAcceptDroppedImages:acceptedDrops];
+
+            return YES;
 		}
 		
-		return YES;
 	}
 	
 	return NO;
