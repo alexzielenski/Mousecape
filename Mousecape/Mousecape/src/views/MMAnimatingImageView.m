@@ -95,6 +95,7 @@ const char MCInvalidateContext;
     [self removeObserver:self forKeyPath:@"frameCount"];
     [self removeObserver:self forKeyPath:@"frameDuration"];
     [self removeObserver:self forKeyPath:@"shouldAnimate"];
+    [self removeObserver:self forKeyPath:@"shouldFlipHorizontally"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
