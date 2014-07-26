@@ -15,13 +15,17 @@ NSString *MCPreferencesDoubleActionKey           = @"MCDoubleAction";
 NSString *MCPreferencesHandednessKey             = @"MCHandedness";
 NSString *MCSuppressDeleteLibraryConfirmationKey = @"MCSuppressDeleteLibraryConfirmationKey";
 NSString *MCSuppressDeleteCursorConfirmationKey  = @"MCSuppressDeleteCursorConfirmationKey";
-id MCDefaultFor(NSString *key) {
-    NSString *value = (NSString *)CFPreferencesCopyAppValue((CFStringRef)key, (CFStringRef)kMCDomain);
+id MCDefaultFor(NSString *key, NSString *user, NSString *host) {
+    NSString *value = (NSString *)CFPreferencesCopyValue((CFStringRef)key, (CFStringRef)kMCDomain, (CFStringRef)user, (CFStringRef)host);
     return [value autorelease];
 }
 
-void MCSetDefaultFor(id value, NSString *key) {
-    CFPreferencesSetAppValue((CFStringRef)key, (CFPropertyListRef)value, (CFStringRef)kMCDomain);
-//    CFPreferencesSynchronize((CFStringRef)kMCDomain, (CFStringRef)user, (CFStringRef)host);
+id MCDefault(NSString *key) {
+    return [(id)CFPreferencesCopyAppValue((CFStringRef)key, (CFStringRef)kMCDomain) autorelease];
+}
+
+void MCSetDefaultFor(id value, NSString *key, NSString *user, NSString *host) {
+    CFPreferencesSetValue((CFStringRef)key, (CFPropertyListRef)value, (CFStringRef)kMCDomain, (CFStringRef)user, (CFStringRef)host);
+    //    CFPreferencesSynchronize((CFStringRef)kMCDomain, (CFStringRef)user, (CFStringRef)host);
 }
 
