@@ -64,8 +64,14 @@
 }
 
 - (void)imageView:(MMAnimatingImageView *)imageView didAcceptDroppedImages:(NSArray *)images {
-    CGFloat scale = imageView.scale;
-    [self.cursor setRepresentation:images.lastObject forScale:cursorScaleForScale(scale)];
+    MCCursorScale scale = cursorScaleForScale(imageView.scale);
+    
+    if (NSEvent.modifierFlags == NSAlternateKeyMask) {
+        [self.cursor addFrame:[MCCursor composeRepresentationWithFrames:images] forScale:scale];
+    } else {
+        [self.cursor setRepresentation:[MCCursor composeRepresentationWithFrames:images] forScale:scale];
+        self.cursor.frameCount = images.count;
+    }
 }
 
 - (void)imageView:(MMAnimatingImageView *)imageView didDragOutImage:(NSImage *)image {

@@ -26,13 +26,17 @@
         [self.animatingImageView bind:@"image" toObject:self withKeyPath:@"representedObject.imageWithAllReps" options:nil];
         [self.animatingImageView bind:@"frameCount" toObject:self withKeyPath:@"representedObject.frameCount" options:nil];
         [self.animatingImageView bind:@"frameDuration" toObject:self withKeyPath:@"representedObject.frameDuration" options:nil];
-
+        [self.animatingImageView bind:@"shouldFlipHorizontally"
+                             toObject:[NSUserDefaults standardUserDefaults]
+                          withKeyPath:MCPreferencesHandednessKey
+                              options:nil];
     }
 
     return self;
 }
 
 - (void)dealloc {
+    [self.animatingImageView unbind:@"shouldFlipHorizontally"];
     [self.animatingImageView unbind:@"image"];
     [self.animatingImageView unbind:@"frameCount"];
     [self.animatingImageView unbind:@"frameDuration"];

@@ -16,7 +16,8 @@
 
 NSString *appliedCapePathForUser(NSString *user) {
     NSString *home = NSHomeDirectoryForUser(user);
-    NSString *ident =     MCDefaultFor(@"MCAppliedCursor", user, (NSString *)kCFPreferencesCurrentHost);
+#warning help
+    NSString *ident =     MCDefaultFor(@"MCAppliedCursor");
     NSString *appSupport = [home stringByAppendingPathComponent:@"Library/Application Support"];
     return [[[appSupport stringByAppendingPathComponent:@"Mousecape/capes"] stringByAppendingPathComponent:ident] stringByAppendingPathExtension:@"cape"];
 }

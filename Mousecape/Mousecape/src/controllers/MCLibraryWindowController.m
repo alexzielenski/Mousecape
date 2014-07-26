@@ -14,6 +14,10 @@
 
 @implementation MCLibraryWindowController
 
+- (void)awakeFromNib {
+    [self composeAccessory];
+}
+
 - (id)initWithWindow:(NSWindow *)window {
     if ((self = [super initWithWindow:window])) {
         
@@ -22,9 +26,9 @@
 }
 
 - (void)windowDidLoad {
+    NSLog(@"window load");
     [super windowDidLoad];
     [self composeAccessory];
-    
 }
 
 - (NSString *)windowNibName {
@@ -122,6 +126,30 @@
         cape = self.libraryViewController.selectedCape;
     
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[ cape.fileURL ]];
+}
+
+- (IBAction)dumpCapeAction:(NSMenuItem *)sender {
+    [self.window beginSheet:self.progressBar.window completionHandler:nil];
+    __weak MCLibraryWindowController *weakSelf = self;
+    self.progressBar.doubleValue = 0.0;
+    [self.progressBar setIndeterminate:NO];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [weakSelf.libraryViewController.libraryController dumpCursorsWithProgressBlock:^BOOL (NSUInteger current, NSUInteger total) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                weakSelf.progressField.stringValue = [NSString stringWithFormat:@"%lu of %lu", (unsigned long)current, (unsigned long)total];
+                weakSelf.progressBar.minValue = 0;
+                weakSelf.progressBar.maxValue = total;
+                weakSelf.progressBar.doubleValue = current;
+            });
+            return YES;
+        }];
+
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [weakSelf.window endSheet:self.progressBar.window];
+            [[NSCursor arrowCursor] set];
+        });
+    });
+
 }
 
 @end

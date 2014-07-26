@@ -71,5 +71,5 @@ extern NSData *pngDataForImage(id image);
 extern NSString *MMGet();
 
 extern CGError MCIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered);
-
+extern BOOL MCCursorIsPointer(NSString *identifier);
 #endif

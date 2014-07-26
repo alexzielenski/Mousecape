@@ -19,6 +19,10 @@ There is an example cape file included in this Git Repo located [here for downlo
 
 You can create a new cape document in the Mousecape app by hitting &#8984;N (Command-N) and editing it with &#8984;E. Click the "+" button to add cursors to customize and symply drag your images into the fields provided.
 
+## How do animated cursors work?
+
+When you want to animate a cursor, change the value in the frames field in the edit window and make sure frame duration is how you want it. Next, create an image that has all of your cursor frames stacked on top of each other vertically. Mousecape will traverse down the image for each frame, using a box the same size as whatever you put in the size field.
+
 ## How can I say thanks?
 
 Tell your friends.

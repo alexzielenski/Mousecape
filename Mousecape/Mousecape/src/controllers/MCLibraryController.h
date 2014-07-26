@@ -28,6 +28,7 @@
 - (NSURL *)URLForCape:(MCCursorLibrary *)cape;
 
 - (NSSet *)capesWithIdentifier:(NSString *)identifier;
+- (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block;
 
 @end
 

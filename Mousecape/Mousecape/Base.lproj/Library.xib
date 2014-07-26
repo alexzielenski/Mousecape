@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MCLibraryWindowController">
             <connections>
                 <outlet property="appliedAccessory" destination="3Ui-b0-Yod" id="2Ik-Bo-djE"/>
                 <outlet property="libraryViewController" destination="zL4-Ay-t4Q" id="DE1-rb-MWQ"/>
+                <outlet property="progressBar" destination="F5l-qD-fvC" id="VNK-If-Tfi"/>
+                <outlet property="progressField" destination="Ui8-vk-7P8" id="Esy-lZ-9RN"/>
                 <outlet property="window" destination="1" id="3"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Mousecape" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" frameAutosaveName="LibraryWindow" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="196" y="240" width="711" height="311"/>
@@ -247,6 +249,37 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
         </view>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="DeD-dq-yBF" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="272" y="172" width="452" height="58"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="me1-hA-pTT">
+                <rect key="frame" x="0.0" y="0.0" width="452" height="58"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <progressIndicator maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="F5l-qD-fvC">
+                        <rect key="frame" x="15" y="19" width="343" height="20"/>
+                    </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ui8-vk-7P8">
+                        <rect key="frame" x="364" y="21" width="75" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="000 of 129" id="sq0-HM-mp6">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="F5l-qD-fvC" firstAttribute="leading" secondItem="me1-hA-pTT" secondAttribute="leading" constant="15" id="1rr-uN-NwK"/>
+                    <constraint firstItem="F5l-qD-fvC" firstAttribute="centerY" secondItem="Ui8-vk-7P8" secondAttribute="centerY" constant="0.5" id="FgD-90-fQk"/>
+                    <constraint firstAttribute="trailing" secondItem="Ui8-vk-7P8" secondAttribute="trailing" constant="15" id="OgP-qZ-5ss"/>
+                    <constraint firstItem="Ui8-vk-7P8" firstAttribute="leading" secondItem="F5l-qD-fvC" secondAttribute="trailing" constant="8" id="Q6O-6O-84O"/>
+                    <constraint firstAttribute="centerY" secondItem="F5l-qD-fvC" secondAttribute="centerY" id="yZk-CB-OJj"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="499" y="-470"/>
+        </window>
     </objects>
     <resources>
         <image name="HDTemplate" width="30" height="18"/>

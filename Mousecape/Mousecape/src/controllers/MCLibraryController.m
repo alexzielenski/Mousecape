@@ -10,8 +10,7 @@
 #import "NSOrderedSet+AZSortedInsert.h"
 #import "apply.h"
 #import "restore.h"
-
-const char MCLibraryIdentifierContext;
+#import "create.h"
 
 @interface MCLibraryController ()
 @property (nonatomic, readwrite, strong) NSUndoManager *undoManager;
@@ -19,18 +18,21 @@ const char MCLibraryIdentifierContext;
 @property (readwrite, copy) NSURL *libraryURL;
 @property (readwrite, weak) MCCursorLibrary *appliedCape;
 - (void)loadLibrary;
+- (void)willSaveNotification:(NSNotification *)note;
 @end
 
 @implementation MCLibraryController
 
 - (NSURL *)URLForCape:(MCCursorLibrary *)cape {
-    return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];
+    return [NSURL fileURLWithPathComponents:@[ self.libraryURL.path, [cape.identifier stringByAppendingPathExtension:@"cape"] ]];;
 }
 
 - (instancetype)initWithURL:(NSURL *)url {
     if ((self = [self init])) {
         self.libraryURL = url;
         self.undoManager = [[NSUndoManager alloc] init];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willSaveNotification:) name:MCLibraryWillSaveNotificationName object:nil];
         [self loadLibrary];
     }
     
@@ -64,17 +66,14 @@ const char MCLibraryIdentifierContext;
 }
 
 - (void)importCapeAtURL:(NSURL *)url {
-    MCCursorLibrary *lib = [MCCursorLibrary cursorLibraryWithContentsOfURL:url];
-    NSURL *destinationURL = [self URLForCape:lib];
-    NSError *error = nil;
-    [[NSFileManager defaultManager] copyItemAtURL:lib.fileURL toURL:destinationURL error:&error];
-    if (!error) {
-        lib.fileURL = destinationURL;
-        [self addCape:lib];
-    }    
+    [self importCape:[MCCursorLibrary cursorLibraryWithContentsOfURL:url]];
 }
 
 - (void)importCape:(MCCursorLibrary *)lib {
+    if ([[self.capes valueForKeyPath:@"identifier"] containsObject:lib.identifier]) {
+        lib.identifier = [lib.identifier stringByAppendingFormat:@".%@", UUID()];
+    }
+
     lib.fileURL = [self URLForCape:lib];
     [lib writeToFile:lib.fileURL.path atomically:NO];
     
@@ -83,7 +82,7 @@ const char MCLibraryIdentifierContext;
 
 
 - (void)addCape:(MCCursorLibrary *)cape {
-    if ([self.capes containsObject:cape]) {
+    if ([self.capes containsObject:cape] || [[self.capes valueForKeyPath:@"identifier"] containsObject:cape.identifier]) {
         NSLog(@"Not adding %@ to the library because an object with that identifier already exists", cape.identifier);
         return;
     }
@@ -95,18 +94,18 @@ const char MCLibraryIdentifierContext;
 
     NSSet *change = [NSSet setWithObject:cape];
     [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
-    
-    [cape addObserver:self forKeyPath:@"identifier" options:NSKeyValueObservingOptionOld context:(void *)&MCLibraryIdentifierContext];
-    
+
     cape.library = self;
     [self.capes addObject:cape];
-    
+
     [[self.undoManager prepareWithInvocationTarget:self] removeCape:cape];
     if (!self.undoManager.isUndoing) {
         [self.undoManager setActionName:[@"Add " stringByAppendingString:cape.name]];
     }
     
     [self didChangeValueForKey:@"capes" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
+
+    [cape.undoManager removeAllActions];
 }
 
 
@@ -116,9 +115,7 @@ const char MCLibraryIdentifierContext;
     [self willChangeValueForKey:@"capes" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
     if (cape == self.appliedCape)
         [self restoreCape];
-    
-    [cape removeObserver:self forKeyPath:@"identifier" context:(void *)&MCLibraryIdentifierContext];
-    
+
     if (cape.library == self)
         cape.library = nil;
     
@@ -155,21 +152,30 @@ const char MCLibraryIdentifierContext;
     return [self.capes filteredSetUsingPredicate:pred];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == &MCLibraryIdentifierContext) {
-        // change the file url to reflect the new identifier
-        MCCursorLibrary *cape = object;
-        NSURL *oldURL = cape.fileURL;
-        [cape setFileURL:[self URLForCape:cape]];
-        
-        NSError *error = nil;
-        [[NSFileManager defaultManager] moveItemAtURL:oldURL toURL:cape.fileURL error:&error];
-        if (error) {
-            NSLog(@"Failed to rename the identifier of the cape %@. Reverting to %@...", cape.identifier, change[NSKeyValueChangeOldKey]);
-            cape.identifier = change[NSKeyValueChangeOldKey];
-            cape.fileURL = [self URLForCape:cape];
-        }
+- (void)willSaveNotification:(NSNotification *)note {
+    MCCursorLibrary *cape = note.object;
+    NSURL *oldURL = cape.fileURL;
+    [cape setFileURL:[self URLForCape:cape]];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtURL:oldURL error:&error];
+
+    if (error) {
+        NSLog(@"error removing cape after rename: %@", error);
     }
+
+}
+
+- (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block {
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat: @"Mousecape Dump (%f).cape", NSDate.date.timeIntervalSince1970]];
+    if (dumpCursorsToFile(path, block)) {
+        __weak MCLibraryController *weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf importCapeAtURL:[NSURL fileURLWithPath:path]];
+        });
+        return YES;
+    }
+
+    return NO;
 }
 
 @end

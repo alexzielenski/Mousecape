@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "MCCursor.h"
 
+extern NSString *const MCLibraryWillSaveNotificationName;
+extern NSString *const MCLibraryDidSaveNotificationName;
+
 @class MCLibraryController;
 @interface MCCursorLibrary : NSObject <NSCopying>
 @property (nonatomic, copy)   NSString *name;

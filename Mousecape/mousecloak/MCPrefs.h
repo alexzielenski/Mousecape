@@ -15,13 +15,14 @@ extern NSString *MCPreferencesAppliedCursorKey;
 extern NSString *MCPreferencesAppliedClickActionKey;
 extern NSString *MCPreferencesCursorScaleKey;
 extern NSString *MCPreferencesDoubleActionKey;
+extern NSString *MCPreferencesHandednessKey;
 extern NSString *MCSuppressDeleteLibraryConfirmationKey;
 extern NSString *MCSuppressDeleteCursorConfirmationKey;
-extern id MCDefaultFor(NSString *key, NSString *user, NSString *host);
-#define MCDefault(key) MCDefaultFor(key, (__bridge NSString *)kCFPreferencesCurrentUser, (__bridge NSString *)kCFPreferencesCurrentHost)
+extern id MCDefaultFor(NSString *key);
+#define MCDefault(key) MCDefaultFor(key)
 #define MCFlag(key) [MCDefault(key) boolValue]
 
-extern void MCSetDefaultFor(id value, NSString *key, NSString *user, NSString *host);
-#define MCSetDefault(value, key) MCSetDefaultFor(value, key, (__bridge NSString *)kCFPreferencesCurrentUser, (__bridge NSString *)kCFPreferencesCurrentHost)
+extern void MCSetDefaultFor(id value, NSString *key);
+#define MCSetDefault(value, key) MCSetDefaultFor(value, key)
 #define MCSetFlag(value, key) MCSetDefault(@(value), key)
 #endif

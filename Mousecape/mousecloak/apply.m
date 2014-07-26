@@ -35,10 +35,14 @@ BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPo
     return (err == kCGErrorSuccess);
 }
 
-BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
-    if (!cursor)
+BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL restore) {
+    if (!cursor || !identifier) {
+        NSLog(@"bad seed");
         return NO;
-    
+    }
+
+    BOOL lefty = MCFlag(MCPreferencesHandednessKey);
+    BOOL pointer = MCCursorIsPointer(identifier);
     NSNumber *frameCount    = cursor[MCCursorDictionaryFrameCountKey];
     NSNumber *frameDuration = cursor[MCCursorDictionaryFrameDuratiomKey];
     //    NSNumber *repeatCount   = cursor[MCCursorDictionaryRepeatCountKey];
@@ -48,27 +52,66 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier) {
     CGSize size             = CGSizeMake([cursor[MCCursorDictionaryPointsWideKey] doubleValue],
                                          [cursor[MCCursorDictionaryPointsHighKey] doubleValue]);
     NSArray *reps           = cursor[MCCursorDictionaryRepresentationsKey];
-    
     NSMutableArray *images  = [NSMutableArray array];
-    
+
+    if (lefty && !restore && pointer) {
+        MMLog("Lefty mode for %s", identifier.UTF8String);
+        hotSpot.x = size.width - hotSpot.x - 1;
+    }
+
     for (id object in reps) {
         CFTypeID type = CFGetTypeID((__bridge CFTypeRef)object);
-        
-        // special case if array has a type of CGImage already there is no need to convert it
-        if (type == CGImageGetTypeID()) {
-            images[images.count] = object;
-            continue;
+
+        if (!lefty || restore || !pointer) {
+            // special case if array has a type of CGImage already there is no need to convert it
+            if (type == CGImageGetTypeID()) {
+                images[images.count] = object;
+                continue;
+            }
+
+            CFDataRef pngData = (__bridge CFDataRef)object;
+            CGDataProviderRef pngProvider = CGDataProviderCreateWithCFData(pngData);
+            CGImageRef rep = CGImageCreateWithPNGDataProvider(pngProvider, NULL, false, kCGRenderingIntentDefault);
+            CGDataProviderRelease(pngProvider);
+
+            images[images.count] = (__bridge id)rep;
+
+            CGImageRelease(rep);
+        } else {
+            NSBitmapImageRep *rep;
+            if (type == CGImageGetTypeID()) {
+                rep = [[NSBitmapImageRep alloc] initWithCGImage:(__bridge CGImageRef)object];
+            } else {
+                rep = [[NSBitmapImageRep alloc] initWithData:object];
+            }
+
+            NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+                                                                               pixelsWide:rep.pixelsWide
+                                                                               pixelsHigh:rep.pixelsHigh
+                                                                            bitsPerSample:8
+                                                                          samplesPerPixel:4
+                                                                                 hasAlpha:YES
+                                                                                 isPlanar:NO
+                                                                           colorSpaceName:NSDeviceRGBColorSpace
+                                                                              bytesPerRow:4 * rep.pixelsWide
+                                                                             bitsPerPixel:32];
+            NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:newRep];
+            [NSGraphicsContext saveGraphicsState];
+            [NSGraphicsContext setCurrentContext:ctx];
+            NSAffineTransform *transform = [NSAffineTransform transform];
+            [transform translateXBy:rep.pixelsWide yBy:0];
+            [transform scaleXBy:-1 yBy:1];
+            [transform concat];
+
+            [rep drawInRect:NSMakeRect(0, 0, rep.pixelsWide, rep.pixelsHigh)
+                   fromRect:NSZeroRect
+                  operation:NSCompositeSourceOver
+                   fraction:1.0
+             respectFlipped:NO
+                      hints:nil];
+            [NSGraphicsContext restoreGraphicsState];
+            images[images.count] = (__bridge id)[newRep CGImage];
         }
-        
-        CFDataRef pngData = (__bridge CFDataRef)object;
-        
-        CGDataProviderRef pngProvider = CGDataProviderCreateWithCFData(pngData);
-        CGImageRef rep = CGImageCreateWithPNGDataProvider(pngProvider, NULL, false, kCGRenderingIntentDefault);
-        CGDataProviderRelease(pngProvider);
-        
-        images[images.count] = (__bridge id)rep;
-        
-        CGImageRelease(rep);
     }
     
     return applyCursorForIdentifier(frameCount.unsignedIntegerValue, frameDuration.doubleValue, hotSpot, size, images, identifier, 0);
@@ -89,7 +132,7 @@ BOOL applyCape(NSDictionary *dictionary) {
             NSDictionary *cape = cursors[key];
             MMLog("Hooking for %s", key.UTF8String);
             
-            BOOL success = applyCapeForIdentifier(cape, key);
+            BOOL success = applyCapeForIdentifier(cape, key, NO);
             if (!success) {
                 MMLog(BOLD RED "Failed to hook identifier %s for some unknown reason. Bailing out..." RESET, key.UTF8String);
                 return NO;

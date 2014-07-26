@@ -10,8 +10,10 @@
 #import "MCLibraryViewController.h"
 
 @interface MCLibraryWindowController : NSWindowController <NSWindowDelegate>
-@property (assign) IBOutlet MCLibraryViewController *libraryViewController;
-@property (assign) IBOutlet NSView *appliedAccessory;
+@property (weak) IBOutlet MCLibraryViewController *libraryViewController;
+@property (weak) IBOutlet NSView *appliedAccessory;
+@property (weak) IBOutlet NSProgressIndicator *progressBar;
+@property (weak) IBOutlet NSTextField *progressField;
 @end
 
 @interface MCAppliedCapeValueTransformer : NSValueTransformer

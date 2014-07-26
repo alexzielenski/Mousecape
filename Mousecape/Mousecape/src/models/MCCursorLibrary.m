@@ -8,12 +8,16 @@
 
 #import "MCCursorLibrary.h"
 
+NSString *const MCLibraryWillSaveNotificationName = @"MCLibraryWillSave";
+NSString *const MCLibraryDidSaveNotificationName = @"MCLibraryDidSave";
+
 @interface MCCursorLibrary ()
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, readwrite, strong) NSMutableSet *cursors;
 @property (nonatomic, assign) NSUInteger changeCount;
 @property (nonatomic, assign) NSUInteger lastChangeCount;
 @property (nonatomic, strong) NSArray *observers;
+@property (nonatomic, copy) NSString *oldIdentifier;
 
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary;
 - (void)addCursorsFromDictionary:(NSDictionary *)cursorDicts ofVersion:(CGFloat)doubleVersion;
@@ -244,6 +248,10 @@ const char MCCursorPropertiesContext;
         if (!self.undoManager.isUndoing) {
             [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
         }
+
+        if ([keyPath isEqualToString:@"identifier"]) {
+            self.oldIdentifier = oldValue;
+        }
     }
 }
 
@@ -348,11 +356,13 @@ const char MCCursorPropertiesContext;
                                                                                                            NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", nil),
                                                                                                            NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedString(@"Multiple cursors with the name(s): %@ exist.", nil), duplicates] }];
     }
-    
-//    [self.undoManager removeAllActions];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:MCLibraryWillSaveNotificationName object:self];
+
     BOOL success = [self writeToFile:self.fileURL.path atomically:NO];
     if (success) {
         [self updateChangeCount:NSChangeCleared];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MCLibraryDidSaveNotificationName object:self];
         return nil;
     }
     return [NSError errorWithDomain:MCErrorDomain code:MCErrorWriteFailCode userInfo:@{
