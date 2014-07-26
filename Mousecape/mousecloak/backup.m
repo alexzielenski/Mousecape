@@ -29,7 +29,7 @@ void backupCursorForIdentifier(NSString *ident) {
         return;
     
     NSDictionary *cape = capeWithIdentifier(ident);
-    (void)applyCapeForIdentifier(cape, backupIdent);
+    (void)applyCapeForIdentifier(cape, backupIdent, YES);
     
 }
 

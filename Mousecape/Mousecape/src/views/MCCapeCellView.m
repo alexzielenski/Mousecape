@@ -20,7 +20,7 @@
 - (void)viewDidMoveToWindow {
     self.collectionView.itemPrototype = [MCCapePreviewItem new];
     [self.collectionView bind:NSContentBinding toObject:self withKeyPath:@"objectValue.cursors" options:@{ NSValueTransformerBindingOption: [MCSortValueTransformer new] }];
-
+    
     self.collectionView.minItemSize = self.collectionView.itemPrototype.view.frame.size;
     self.collectionView.maxItemSize = self.collectionView.minItemSize;
 }

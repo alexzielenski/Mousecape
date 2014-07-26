@@ -19,6 +19,7 @@ const char MCInvalidateContext;
 - (void)_initialize;
 - (void)_invalidateFrame;
 - (void)_invalidateAnimation;
+- (void)_resetTransform;
 - (void)registerTypes;
 - (void)_dragAnimationEnded:(id)sender;
 @end
@@ -84,6 +85,7 @@ const char MCInvalidateContext;
     [self addObserver:self forKeyPath:@"frameCount" options:0 context:(void *)&MCInvalidateContext];
     [self addObserver:self forKeyPath:@"frameDuration" options:0 context:(void *)&MCInvalidateContext];
     [self addObserver:self forKeyPath:@"shouldAnimate" options:0 context:NULL];
+    [self addObserver:self forKeyPath:@"shouldFlipHorizontally" options:0 context:NULL];
 }
 
 - (void)dealloc {
@@ -104,6 +106,8 @@ const char MCInvalidateContext;
         [self _invalidateAnimation];
     } else if ([keyPath isEqualToString:@"shouldAnimate"]) {
         [self _invalidateAnimation];
+    } else if ([keyPath isEqualToString:@"shouldFlipHorizontally"]) {
+        [self _resetTransform];
     }
 }
 
@@ -134,6 +138,14 @@ const char MCInvalidateContext;
 
 #pragma mark - Invalidators
 
+- (void)_resetTransform {
+    if (self.shouldFlipHorizontally) {
+        self.layer.transform = CATransform3DMakeAffineTransform(CGAffineTransformMake(-1, 0, 0, 1, self.layer.bounds.size.width, 0));
+    } else {
+        self.layer.transform = CATransform3DIdentity;
+    }
+}
+
 - (void)_invalidateFrame {
     CGFloat scale = self.scale;
     if (!self.scale || !self.image) {
@@ -162,6 +174,8 @@ const char MCInvalidateContext;
     } else {
         self.hotSpotLayer.opacity = 0.0;
     }
+
+    [self _resetTransform];
 }
 
 - (void)_invalidateAnimation {

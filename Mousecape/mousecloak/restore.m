@@ -23,7 +23,7 @@ void restoreCursorForIdentifier(NSString *ident) {
     
     MMLog("Restoring cursor %s from %s", restoreIdent.UTF8String, ident.UTF8String);
     if (cape && registered) {
-        applyCapeForIdentifier(cape, restoreIdent);
+        applyCapeForIdentifier(cape, restoreIdent, YES);
     }
 
     CGSRemoveRegisteredCursor(CGSMainConnectionID(), (char *)ident.UTF8String, false);
