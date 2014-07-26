@@ -14,6 +14,10 @@
 
 @implementation MCLibraryWindowController
 
+- (void)awakeFromNib {
+    [self composeAccessory];
+}
+
 - (id)initWithWindow:(NSWindow *)window {
     if ((self = [super initWithWindow:window])) {
         
@@ -22,9 +26,9 @@
 }
 
 - (void)windowDidLoad {
+    NSLog(@"window load");
     [super windowDidLoad];
     [self composeAccessory];
-    
 }
 
 - (NSString *)windowNibName {
