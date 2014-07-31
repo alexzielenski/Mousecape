@@ -10,5 +10,5 @@
 #import "MMAnimatingImageView.h"
 
 @interface MCCapePreviewItem : NSCollectionViewItem
-@property (nonatomic, assign) IBOutlet MMAnimatingImageView *animatingImageView;
+@property (nonatomic, weak) IBOutlet MMAnimatingImageView *animatingImageView;
 @end
