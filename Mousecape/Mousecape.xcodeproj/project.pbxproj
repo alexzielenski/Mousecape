@@ -55,6 +55,8 @@
 		FAC69FDD189D636700BC829D /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
 		FADBC15118CE51C000B9510F /* DTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FADBC15018CE51C000B9510F /* DTScrollView.m */; };
 		FADBC15418CE535200B9510F /* MCCapePreviewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FADBC15318CE535200B9510F /* MCCapePreviewItem.m */; };
+		FADF0143198A2C9200006228 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FADF013A198A2C7500006228 /* Sparkle.framework */; };
+		FADF0147198A2CAD00006228 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FADF013A198A2C7500006228 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FAE5D56C1952700B007620DE /* MCDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FDB189D636700BC829D /* MCDefs.m */; };
 		FAE5D56D1952700B007620DE /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
 		FAE5D5701952700B007620DE /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
@@ -90,6 +92,48 @@
 			remoteGlobalIDString = FAC69FAC189D608900BC829D;
 			remoteInfo = mousecloak;
 		};
+		FADF0139198A2C7500006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		FADF013B198A2C7500006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
+			remoteInfo = "Sparkle Test App";
+		};
+		FADF013D198A2C7500006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612279D90DB5470200AB99EA;
+			remoteInfo = "Sparkle Unit Tests";
+		};
+		FADF013F198A2C7500006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06E8D00FD68C7C005AE3F6;
+			remoteInfo = BinaryDelta;
+		};
+		FADF0141198A2C7500006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C14BB7136EEF1500649790;
+			remoteInfo = Autoupdate;
+		};
+		FADF0144198A2CA100006228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,6 +146,17 @@
 				FAC69FB5189D608900BC829D /* mousecloak.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		FADF0146198A2CA600006228 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FADF0147198A2CAD00006228 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FAE5D57D1952734F007620DE /* Copy Tool */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -218,6 +273,7 @@
 		FADBC15018CE51C000B9510F /* DTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTScrollView.m; sourceTree = "<group>"; };
 		FADBC15218CE535200B9510F /* MCCapePreviewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCapePreviewItem.h; sourceTree = "<group>"; };
 		FADBC15318CE535200B9510F /* MCCapePreviewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCapePreviewItem.m; sourceTree = "<group>"; };
+		FADF012E198A2C7400006228 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		FAE5D54919526F82007620DE /* com.alexzielenski.mousecloakhelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.alexzielenski.mousecloakhelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE5D54C19526F82007620DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAE5D57519527245007620DE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -260,6 +316,7 @@
 			files = (
 				FAAEF8F7189EB34700145DF8 /* QuartzCore.framework in Frameworks */,
 				FA35984D189DC55A00288163 /* ServiceManagement.framework in Frameworks */,
+				FADF0143198A2C9200006228 /* Sparkle.framework in Frameworks */,
 				FA359849189DC40100288163 /* Security.framework in Frameworks */,
 				FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */,
 			);
@@ -324,6 +381,7 @@
 		FAAEF8EE189EB32700145DF8 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				FADF012E198A2C7400006228 /* Sparkle.xcodeproj */,
 				FA14DE8818CE596B00A73BF4 /* Rebel */,
 				FADBC14E18CE51C000B9510F /* DTScrollView */,
 				FA5107DD18A823BD00917185 /* MASPreferences */,
@@ -515,6 +573,18 @@
 			path = DTScrollView;
 			sourceTree = "<group>";
 		};
+		FADF012F198A2C7400006228 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FADF013A198A2C7500006228 /* Sparkle.framework */,
+				FADF013C198A2C7500006228 /* Sparkle Test App.app */,
+				FADF013E198A2C7500006228 /* Sparkle Unit Tests.xctest */,
+				FADF0140198A2C7500006228 /* BinaryDelta */,
+				FADF0142198A2C7500006228 /* Autoupdate.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		FAE5D54A19526F82007620DE /* mousecloakHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,10 +688,12 @@
 				FA359841189DAAF900288163 /* Build Number */,
 				FAE5D57D1952734F007620DE /* Copy Tool */,
 				FAE5D57F1952737F007620DE /* Copy Helper */,
+				FADF0146198A2CA600006228 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FADF0145198A2CA100006228 /* PBXTargetDependency */,
 				FA359847189DBEB700288163 /* PBXTargetDependency */,
 			);
 			name = Mousecape;
@@ -689,10 +761,50 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				ca,
+				cs,
+				cy,
+				da,
+				de,
+				el,
+				es,
+				fi,
+				fr,
+				he,
+				hu,
+				id,
+				is,
+				it,
+				ja,
+				ko,
+				nb,
+				nl,
+				no,
+				pl,
+				pt_BR,
+				pt_PT,
+				ro,
+				ru,
+				sk,
+				sl,
+				sv,
+				th,
+				tr,
+				uk,
+				zh_CN,
+				zh_TW,
+				English,
 			);
 			mainGroup = FAC69F58189D603C00BC829D;
 			productRefGroup = FAC69F62189D603C00BC829D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FADF012F198A2C7400006228 /* Products */;
+					ProjectRef = FADF012E198A2C7400006228 /* Sparkle.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				FAC69F60189D603C00BC829D /* Mousecape */,
@@ -701,6 +813,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FADF013A198A2C7500006228 /* Sparkle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sparkle.framework;
+			remoteRef = FADF0139198A2C7500006228 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FADF013C198A2C7500006228 /* Sparkle Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Sparkle Test App.app";
+			remoteRef = FADF013B198A2C7500006228 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FADF013E198A2C7500006228 /* Sparkle Unit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Sparkle Unit Tests.xctest";
+			remoteRef = FADF013D198A2C7500006228 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FADF0140198A2C7500006228 /* BinaryDelta */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = BinaryDelta;
+			remoteRef = FADF013F198A2C7500006228 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FADF0142198A2C7500006228 /* Autoupdate.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Autoupdate.app;
+			remoteRef = FADF0141198A2C7500006228 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FAC69F5F189D603C00BC829D /* Resources */ = {
@@ -826,6 +976,11 @@
 			isa = PBXTargetDependency;
 			target = FAC69FAC189D608900BC829D /* mousecloak */;
 			targetProxy = FA359846189DBEB700288163 /* PBXContainerItemProxy */;
+		};
+		FADF0145198A2CA100006228 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = FADF0144198A2CA100006228 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

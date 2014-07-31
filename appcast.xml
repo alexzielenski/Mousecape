@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Mousecape Changelog</title>
+    <link>https://raw.githubusercontent.com/alexzielenski/Mousecape/master/appcast.xml</link>
+    <description>Most recent changes with links to updates.</description>
+    <language>en</language>
+      <item>
+        <title>Version 0.0.5</title>
+        <description>
+          <![CDATA[
+            <ul>
+              <li>New information in read me on how to animate cursors</li>
+              <li>[New] Ability to export cursors by holding the alt key when dragging from the edit window</li>
+              <li>[New] Ability to dump currently applied cursors from Capes menu</li>
+              <li>[Fix] Checking for existing identifiers already in library</li>
+              <li>[Fix] Inaccurate hotspot dot in edit window</li>
+              <li>[New] First image dragged in to edit window drop zone defines the cursor size</li>
+              <li>[New] Drag in multiple images of the same size to animate</li>
+              <li>[New] Holt alt key while dragging a cursor image in to add it as a frame</li>
+              <li>[Fix] Adding a cursor to the library by opening it without the app open</li>
+              <li>[Fix] Identifier renames not being saved</li>
+              <li>[New] Sort cursors within a cape by name in library window</li>
+              <li>[New] Preference for left-handed users that flips all pointer images</li>
+            </ul>
+          ]]>
+        </description>
+        <pubDate>Sat, 26 Jul 2014 15:20:11 +0000</pubDate>
+        <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/0.0.5/Mousecape.zip" sparkle:version="0.0.5" length="269044" type="application/octet-stream" />
+      </item>
+  </channel>
+</rss>
