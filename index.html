@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Mousecape by alexzielenski</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Mousecape</h1>
+          <h2>Cursor Manager for OS X</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/alexzielenski/Mousecape/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/alexzielenski/Mousecape/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/alexzielenski/Mousecape" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="mousecape" class="anchor" href="#mousecape"><span class="octicon octicon-link"></span></a>Mousecape</h1>
+
+<p>A free cursor manager for Mac OS 10.8+ built using private, nonintrusive CoreGraphics APIs.</p>
+
+<h2>
+<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h2>
+
+<p>Mousecape works by calling the API calls that Apple uses to initialize the system cursors in the system and it registers a daemon that will automatically apply the cursor on login and when cursors get unregistered.</p>
+
+<p>It is unintrusive and works in the background. You just need to open, install the helper tool, apply your cursor and you're done!</p>
+
+<h2>
+<a name="where-do-i-get-cursors" class="anchor" href="#where-do-i-get-cursors"><span class="octicon octicon-link"></span></a>Where do I get cursors?</h2>
+
+<p>A pack of cursors in Mousecape is called a cape, each cape contains a multiple scales of representations of many cursors. For example, the Arrow cursor can have 1x, 2x, 5x, and 10x representations while the Wait cursor can have 1x, and 2x. </p>
+
+<p>There is an example cape file included in this Git Repo located <a href="https://github.com/alexzielenski/Mousecape/blob/master/Mousecape/com.maxrudberg.svanslosbluehazard.cape">here for download</a>. It is a remake of <a href="http://maxrudberg.com/">Max Rudberg's</a> loved Svanslös cursors generously crafted by Max for us to use. Simply double click the cape file with Mousecape on your system and it will be imported into your library.</p>
+
+<h2>
+<a name="how-can-i-create-my-own-cape" class="anchor" href="#how-can-i-create-my-own-cape"><span class="octicon octicon-link"></span></a>How can I create my own cape?</h2>
+
+<p>You can create a new cape document in the Mousecape app by hitting ⌘N (Command-N) and editing it with ⌘E. Click the "+" button to add cursors to customize and symply drag your images into the fields provided.</p>
+
+<h2>
+<a name="how-do-animated-cursors-work" class="anchor" href="#how-do-animated-cursors-work"><span class="octicon octicon-link"></span></a>How do animated cursors work?</h2>
+
+<p>When you want to animate a cursor, change the value in the frames field in the edit window and make sure frame duration is how you want it. Next, create an image that has all of your cursor frames stacked on top of each other vertically. Mousecape will traverse down the image for each frame, using a box the same size as whatever you put in the size field.</p>
+
+<h2>
+<a name="how-can-i-say-thanks" class="anchor" href="#how-can-i-say-thanks"><span class="octicon octicon-link"></span></a>How can I say thanks?</h2>
+
+<p>Tell your friends.</p>
+
+<h2>
+<a name="where-can-i-get-a-copy-of-this-sweet-tool" class="anchor" href="#where-can-i-get-a-copy-of-this-sweet-tool"><span class="octicon octicon-link"></span></a>Where can I get a copy of this sweet tool?</h2>
+
+<p>In the <a href="https://github.com/alexzielenski/Mousecape/releases">releases section</a> of this GitHub page. There are stable reases there. <strong>The current version is 0.0.5</strong>.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>LICENSE</h2>
+
+<p>I worked very hard researching the private methods used in Mousecape and creating this app. Please respect me and my work by not using any of the information provided here for commercial purposes.</p>
+
+<p>Copyright (c) 2013-2014, Alex Zielenski
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Any redistribution, use, or modification is done solely for personal benefit and not for any commercial purpose or for monetary gain</li>
+</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+        </section>
+
+        <footer>
+          Mousecape is maintained by <a href="https://github.com/alexzielenski">alexzielenski</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
