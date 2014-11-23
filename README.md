@@ -7,7 +7,7 @@ A free cursor manager for Mac OS 10.8+ built using private, nonintrusive CoreGra
 
 Mousecape works by calling the API calls that Apple uses to initialize the system cursors in the system and it registers a daemon that will automatically apply the cursor on login and when cursors get unregistered.
 
-It is unintrusive and works in the background. You just need to open, install the helper tool, apply your cursor and you're done!
+It is unintrusive and works in the background. You just need to open the app, click **Mousecape --> Install Helper Tool**, apply your cursor and you're done!
 
 ## Where do I get cursors?
 
