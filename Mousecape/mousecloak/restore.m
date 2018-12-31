@@ -44,6 +44,11 @@ void resetAllCursors() {
     MMLog("Restoring core cursors...");
     if (CoreCursorUnregisterAll(CGSMainConnectionID()) == 0) {
         MCSetDefault(NULL, MCPreferencesAppliedCursorKey);
+        
+        for (int x = 0; x < 45; x++) {
+            CoreCursorSet(CGSMainConnectionID(), x);
+        }
+        
         MMLog(BOLD GREEN "Successfully restored all cursors." RESET);
     } else
         MMLog(BOLD RED "Received an error while restoring core cursors." RESET);
