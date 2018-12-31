@@ -105,7 +105,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-                [self setRepresentation:rep.ensuredSRGBSpace forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
+                [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
             }
             
             return YES;
@@ -183,7 +183,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
     [self willChangeValueForKey:key];
     if (imageRep)
-        [self.representations setObject:imageRep forKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
+        [self.representations setObject:imageRep.ensuredSRGBSpace forKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
     else
         [self.representations removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
 
