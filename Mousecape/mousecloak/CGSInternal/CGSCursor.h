@@ -38,7 +38,7 @@ CG_EXTERN CGError CoreCursorCopyImages(CGSConnectionID cid, CGSCursorID cursorID
 #pragma mark - Cursor APIs reversed by Alex Zielenski on Lion 10.7.3
 #pragma mark -
 
-CG_EXTERN CGError CGSIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered) __attribute__((weak_import));
+//CG_EXTERN CGError CGSIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered) __attribute__((weak_import));
 
 #if defined(MAC_OS_X_VERSION_10_8)
 CG_EXTERN CGError CGSCopyRegisteredCursorImages(CGSConnectionID cid, char *cursorName, CGSize *imageSize, CGPoint *hotSpot, NSUInteger *frameCount, CGFloat *frameDuration, CFArrayRef *imageArray);

@@ -85,7 +85,7 @@ void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
 
 NSData *pngDataForImage(id image) {
     if ([image isKindOfClass:[NSBitmapImageRep class]]) {
-        return [(NSBitmapImageRep *)image representationUsingType:NSPNGFileType properties:nil];
+        return [(NSBitmapImageRep *)image representationUsingType:NSPNGFileType properties:@{}];
     }
     
     // CGImage
@@ -203,9 +203,9 @@ NSString *cursorIdentifierForName(NSString *name) {
 }
 
 CGError MCIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered) {
-    if (CGSIsCursorRegistered != NULL) {
-        return CGSIsCursorRegistered(cid, cursorName, registered);
-    }
+//    if (CGSIsCursorRegistered != NULL) {
+//        return CGSIsCursorRegistered(cid, cursorName, registered);
+//    }
     
     size_t size = 0;
     CGError err = 0;

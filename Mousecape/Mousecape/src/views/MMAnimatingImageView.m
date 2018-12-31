@@ -9,7 +9,7 @@
 #import "MMAnimatingImageView.h"
 #import "MCSpriteLayer.h"
 
-#define SHOULDCOPY NSEvent.modifierFlags & NSAlternateKeyMask
+#define SHOULDCOPY NSEvent.modifierFlags & NSEventModifierFlagOption
 
 const char MCInvalidateContext;
 
@@ -278,12 +278,23 @@ const char MCInvalidateContext;
     if ([type compare: NSPasteboardTypeTIFF] == NSOrderedSame) {
         [sender setData:[self.image TIFFRepresentation] forType:NSPasteboardTypeTIFF];
     } else if ([type compare: NSPasteboardTypePNG] == NSOrderedSame) {
-        [sender setData:[self.image.representations.lastObject representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
+        NSImageRep *rep =self.image.representations.lastObject;
+        if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
+            [sender setData:[(NSBitmapImageRep *)rep representationUsingType:NSPNGFileType properties:@{}] forType:NSPasteboardTypePNG];
+        } else {
+            abort();
+        }
     } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];
     } else if ([type compare:(__bridge NSString *)kPasteboardTypeFileURLPromise] == NSOrderedSame && SHOULDCOPY) {
         NSURL *url = [[NSURL URLWithString:[item stringForType:@"com.apple.pastelocation"]] URLByAppendingPathComponent:[NSString stringWithFormat:@"Mousecape Image (%f).png", NSDate.date.timeIntervalSince1970]];
-        [[self.image.representations.firstObject representationUsingType:NSPNGFileType properties:nil] writeToFile:url.path atomically:NO];
+        NSImageRep *rep =self.image.representations.firstObject;
+
+        if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
+            [[(NSBitmapImageRep *)rep representationUsingType:NSPNGFileType properties:@{}] writeToFile:url.path atomically:NO];
+        } else {
+            abort();
+        }
     }
 
 }
