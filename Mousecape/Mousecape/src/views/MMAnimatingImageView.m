@@ -282,7 +282,7 @@ const char MCInvalidateContext;
         if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
             [sender setData:[(NSBitmapImageRep *)rep representationUsingType:NSPNGFileType properties:@{}] forType:NSPasteboardTypePNG];
         } else {
-            abort();
+            // abort();
         }
     } else if ([type compare:@"public.image"] == NSOrderedSame) {
         [sender writeObjects:@[ self.image ]];

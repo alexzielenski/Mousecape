@@ -38,6 +38,8 @@
 		FAAEF951189F0CC300145DF8 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAAEF957189F4ED300145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
 		FAAEF958189F4F8200145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FABA44D421D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */; };
+		FABA44D521D9D947009B10D9 /* NSBitmapImageRep+ColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */; };
 		FAC69F65189D603C00BC829D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAC69F64189D603C00BC829D /* Cocoa.framework */; };
 		FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F6D189D603C00BC829D /* InfoPlist.strings */; };
 		FAC69F71189D603C00BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69F70189D603C00BC829D /* main.m */; };
@@ -223,6 +225,8 @@
 		FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FAAEF955189F4ECC00145DF8 /* scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
 		FAAEF956189F4ED300145DF8 /* scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scale.m; sourceTree = "<group>"; };
+		FABA44D221D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBitmapImageRep+ColorSpace.h"; sourceTree = "<group>"; };
+		FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBitmapImageRep+ColorSpace.m"; sourceTree = "<group>"; };
 		FAC69F61189D603C00BC829D /* Mousecape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mousecape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC69F64189D603C00BC829D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FAC69F67189D603C00BC829D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -508,6 +512,8 @@
 				FAC69FCB189D609B00BC829D /* NSCursor_Private.h */,
 				FAC69FB4189D608900BC829D /* mousecloak.1 */,
 				FAC69FB2189D608900BC829D /* Supporting Files */,
+				FABA44D221D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.h */,
+				FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */,
 			);
 			path = mousecloak;
 			sourceTree = "<group>";
@@ -905,6 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FABA44D521D9D947009B10D9 /* NSBitmapImageRep+ColorSpace.m in Sources */,
 				FAEE653018A047E8003AA182 /* MCLibraryViewController.m in Sources */,
 				FAEE653618A047E8003AA182 /* MMAnimatingImageView.m in Sources */,
 				FAEE653318A047E8003AA182 /* MCCursorLibrary.m in Sources */,
@@ -957,6 +964,7 @@
 				FAC69FDD189D636700BC829D /* MCDefs.m in Sources */,
 				FAC69FD4189D609B00BC829D /* GBCommandLineParser.m in Sources */,
 				FA8FF774189D67B100750E51 /* create.m in Sources */,
+				FABA44D421D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 #import "backup.h"
 #import "restore.h"
 #import "MCPrefs.h"
+#import "NSBitmapImageRep+ColorSpace.h"
 
 BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPoint hotSpot, CGSize size, NSArray *images, NSString *ident, NSUInteger repeatCount) {
     if (frameCount > 24 || frameCount < 1) {
@@ -61,30 +62,22 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
 
     for (id object in reps) {
         CFTypeID type = CFGetTypeID((__bridge CFTypeRef)object);
-
+        NSBitmapImageRep *rep;
+        if (type == CGImageGetTypeID()) {
+            rep = [[NSBitmapImageRep alloc] initWithCGImage:(__bridge CGImageRef)object];
+        } else {
+            rep = [[NSBitmapImageRep alloc] initWithData:object];
+        }
         if (!lefty || restore || !pointer) {
             // special case if array has a type of CGImage already there is no need to convert it
             if (type == CGImageGetTypeID()) {
                 images[images.count] = object;
                 continue;
             }
-
-            CFDataRef pngData = (__bridge CFDataRef)object;
-            CGDataProviderRef pngProvider = CGDataProviderCreateWithCFData(pngData);
-            CGImageRef rep = CGImageCreateWithPNGDataProvider(pngProvider, NULL, false, kCGRenderingIntentDefault);
-            CGDataProviderRelease(pngProvider);
-
-            images[images.count] = (__bridge id)rep;
-
-            CGImageRelease(rep);
+            
+            images[images.count] = (__bridge id)[rep.ensuredSRGBSpace CGImage];
+            
         } else {
-            NSBitmapImageRep *rep;
-            if (type == CGImageGetTypeID()) {
-                rep = [[NSBitmapImageRep alloc] initWithCGImage:(__bridge CGImageRef)object];
-            } else {
-                rep = [[NSBitmapImageRep alloc] initWithData:object];
-            }
-
             NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
                                                                                pixelsWide:rep.pixelsWide
                                                                                pixelsHigh:rep.pixelsHigh
@@ -92,7 +85,7 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
                                                                           samplesPerPixel:4
                                                                                  hasAlpha:YES
                                                                                  isPlanar:NO
-                                                                           colorSpaceName:NSDeviceRGBColorSpace
+                                                                           colorSpaceName:NSCalibratedRGBColorSpace
                                                                               bytesPerRow:4 * rep.pixelsWide
                                                                              bitsPerPixel:32];
             NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:newRep];
@@ -105,12 +98,12 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
 
             [rep drawInRect:NSMakeRect(0, 0, rep.pixelsWide, rep.pixelsHigh)
                    fromRect:NSZeroRect
-                  operation:NSCompositeSourceOver
+                  operation:NSCompositingOperationSourceOver
                    fraction:1.0
              respectFlipped:NO
                       hints:nil];
             [NSGraphicsContext restoreGraphicsState];
-            images[images.count] = (__bridge id)[newRep CGImage];
+            images[images.count] = (__bridge id)[newRep.ensuredSRGBSpace CGImage];
         }
     }
     

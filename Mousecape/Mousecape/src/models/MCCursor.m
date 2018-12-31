@@ -7,7 +7,7 @@
 //
 
 #import "MCCursor.h"
-
+#import "NSBitmapImageRep+ColorSpace.h"
 MCCursorScale cursorScaleForScale(CGFloat scale) {
     if (scale < 0.0)
         return MCCursorScaleNone;
@@ -16,7 +16,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 }
 
 @interface MCCursor ()
-@property (readwrite, strong) NSMutableDictionary *representations;
+@property (readwrite, strong) NSMutableDictionary<NSString *, NSBitmapImageRep *> *representations;
 - (NSInteger)framesForScale:(MCCursorScale)scale;
 - (BOOL)_readFromDictionary:(NSDictionary *)dictionary ofVersion:(CGFloat)version;
 @end
@@ -105,7 +105,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-                [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
+                [self setRepresentation:rep.ensuredSRGBSpace forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
             }
             
             return YES;
@@ -127,7 +127,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     NSMutableArray *pngs = [NSMutableArray array];
     for (NSString *key in self.representations) {
         NSBitmapImageRep *rep = self.representations[key];
-        pngs[pngs.count] = [rep representationUsingType:NSPNGFileType properties:nil];
+        pngs[pngs.count] = [rep representationUsingType:NSPNGFileType properties:@{}];
     }
     
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
@@ -177,7 +177,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     [super setValue:value forUndefinedKey:key];
 }
 
-- (void)setRepresentation:(NSImageRep *)imageRep forScale:(MCCursorScale)scale {
+- (void)setRepresentation:(NSBitmapImageRep *)imageRep forScale:(MCCursorScale)scale {
     [self willChangeValueForKey:@"representations"];
     
     NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
@@ -185,7 +185,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     if (imageRep)
         [self.representations setObject:imageRep forKey:@(scale)];
     else
-        [self.representations removeObjectForKey:@(scale)];
+        [self.representations removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
 
     if (self.representations.count == 1) {
         // This is the first object, set the image size to this
@@ -212,7 +212,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     [self setRepresentation:newRep forScale:scale];
 }
 
-+ (NSImageRep *)composeRepresentationWithFrames:(NSArray *)frames {
++ (NSBitmapImageRep *)composeRepresentationWithFrames:(NSArray<NSBitmapImageRep *> *)frames {
     if (frames.count == 0)
         return nil;
     if (frames.count == 1)
@@ -228,7 +228,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                                                                   samplesPerPixel:4
                                                                          hasAlpha:YES
                                                                          isPlanar:NO
-                                                                   colorSpaceName:NSDeviceRGBColorSpace
+                                                                   colorSpaceName:NSCalibratedRGBColorSpace
                                                                       bytesPerRow:4 * width
                                                                      bitsPerPixel:32];
     NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep:newRep];
@@ -237,15 +237,15 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
     NSUInteger currentY = 0;
     for (NSInteger idx = frames.count - 1; idx >= 0; idx--) {
-        NSImageRep *rep = frames[idx];
+        NSBitmapImageRep *rep = frames[idx];
         if (rep.pixelsWide != width) {
             NSLog(@"Can't create representation from images of different widths");
             return nil;
         }
-
+        
         [rep drawInRect:NSMakeRect(0, currentY, rep.pixelsWide, rep.pixelsHigh)
                fromRect:NSZeroRect
-              operation:NSCompositeSourceOver
+              operation:NSCompositingOperationSourceOver
                fraction:1.0
          respectFlipped:YES
                   hints:nil];
@@ -255,7 +255,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
     [NSGraphicsContext restoreGraphicsState];
 
-    return newRep;
+    return [newRep ensuredSRGBSpace];
 }
 
 - (NSInteger)framesForScale:(MCCursorScale)scale {
@@ -267,7 +267,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 }
 
 - (NSImageRep *)representationForScale:(MCCursorScale)scale {
-    return self.representations[@(scale)];
+    return self.representations[[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
 }
 
 - (NSImageRep *)representationWithScale:(CGFloat)scale {

@@ -8,6 +8,7 @@
 
 #import "create.h"
 #import "NSCursor_Private.h"
+#import "NSBitmapImageRep+ColorSpace.h"
 
 NSError *createCape(NSString *input, NSString *output, BOOL convert) {
     NSDictionary *cape;
@@ -111,9 +112,8 @@ NSDictionary *createCapeFromDirectory(NSString *path) {
                 continue;
             
             NSBitmapImageRep *image = [NSBitmapImageRep imageRepWithData:[NSData dataWithContentsOfFile:repPath]];
-            
             if (image) {
-                NSData *pngData = [image representationUsingType:NSPNGFileType properties:nil];
+                NSData *pngData = [image.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}];
                 [representations addObject:pngData];
             }
             
@@ -186,12 +186,12 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary 
                                                                    samplesPerPixel:spp.integerValue
                                                                           hasAlpha:YES
                                                                           isPlanar:NO
-                                                                    colorSpaceName:NSDeviceRGBColorSpace
+                                                                    colorSpaceName:NSCalibratedRGBColorSpace
                                                                       bitmapFormat:NSAlphaFirstBitmapFormat | kCGBitmapByteOrder32Big
                                                                        bytesPerRow:bpr.integerValue
                                                                       bitsPerPixel:bpp.integerValue];
         
-        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep representationUsingType:NSPNGFileType properties:nil] ];
+        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep representationUsingType:NSPNGFileType properties:@{}] ];
         currentCursor[MCCursorDictionaryPointsWideKey]      = wide;
         currentCursor[MCCursorDictionaryPointsHighKey]      = high;
         currentCursor[MCCursorDictionaryHotSpotXKey]        = hotX;
@@ -246,7 +246,10 @@ NSDictionary *processedCapeWithIdentifier(NSString *identifier) {
     NSMutableArray *reps = [NSMutableArray array];
     
     for (id image in cursors) {
-        reps[reps.count] = pngDataForImage(image);
+        CGImageRef im = (__bridge CGImageRef)image;
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithCGImage:im];
+    
+        reps[reps.count] = pngDataForImage(rep.ensuredSRGBSpace);
     }
     
     dict[MCCursorDictionaryRepresentationsKey] = reps;
