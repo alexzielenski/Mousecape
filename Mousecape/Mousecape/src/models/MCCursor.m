@@ -98,16 +98,17 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
             self.frameCount    = frameCount.unsignedIntegerValue;
             self.frameDuration = frameDuration.doubleValue;
             self.hotSpot       = NSMakePoint(hotSpotX.doubleValue, hotSpotY.doubleValue);
-            self.size          = NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
             //            self.repeatCount   = repeatCount.unsignedIntegerValue;
             
             for (NSData *data in reps) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-                [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / self.size.width)];
+                [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / pointsWide.doubleValue)];
             }
             
+            self.size          = NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
+
             return YES;
         }
     }
