@@ -32,6 +32,11 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [self configureHelperToolMenuItem];
     [self.libraryWindowController showWindow:self];
+    
+    // Re-apply currently applied cape
+    if (self.libraryWindowController.libraryViewController.libraryController.appliedCape != NULL) {
+        [self.libraryWindowController.libraryViewController.libraryController applyCape:self.libraryWindowController.libraryViewController.libraryController.appliedCape];
+    }
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
