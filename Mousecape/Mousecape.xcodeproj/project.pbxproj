@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		962C7C4721DF126700C0DCD1 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 962C7C4921DF126700C0DCD1 /* GeneralPreferences.xib */; };
 		FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA048868189F58B1001F3AB5 /* Edit.xib */; };
 		FA04886D189F58B1001F3AB5 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04886A189F58B1001F3AB5 /* Library.xib */; };
 		FA14DE8D18CE596B00A73BF4 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -23,7 +24,6 @@
 		FA5107E718A823BD00917185 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5107E118A823BD00917185 /* MASPreferencesWindow.xib */; };
 		FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */; };
 		FA5107ED18A8253600917185 /* MCGeneralPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */; };
-		FA5107EE18A8253600917185 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5107EC18A8253600917185 /* GeneralPreferences.xib */; };
 		FA7582B8193D377300CE223C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7582B7193D377300CE223C /* ApplicationServices.framework */; };
 		FA8FF76B189D664400750E51 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
@@ -185,6 +185,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		962C7C4821DF126700C0DCD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GeneralPreferences.xib; sourceTree = "<group>"; };
+		962C7C4B21DF126900C0DCD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/GeneralPreferences.strings; sourceTree = "<group>"; };
+		962C7C4D21DF126D00C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/GeneralPreferences.strings"; sourceTree = "<group>"; };
+		962C7C5021DF12A900C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Edit.strings"; sourceTree = "<group>"; };
+		962C7C5221DF12B300C0DCD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Edit.strings; sourceTree = "<group>"; };
+		962C7C5421DF12D000C0DCD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Library.strings; sourceTree = "<group>"; };
+		962C7C5621DF12D500C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Library.strings"; sourceTree = "<group>"; };
+		962C7C5821DF12EF00C0DCD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		962C7C5A21DF12F300C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		962C7C5B21DF131F00C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		962C7C5C21DF132700C0DCD1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = "zh-Hans"; path = "zh-Hans.lproj/Credits.rtf"; sourceTree = "<group>"; };
 		FA048869189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Edit.xib; sourceTree = "<group>"; };
 		FA04886B189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Library.xib; sourceTree = "<group>"; };
 		FA14DE8918CE596B00A73BF4 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
@@ -208,7 +219,6 @@
 		FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
 		FA5107EA18A8253600917185 /* MCGeneralPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeneralPreferencesController.h; path = Preferences/MCGeneralPreferencesController.h; sourceTree = "<group>"; };
 		FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGeneralPreferencesController.m; path = Preferences/MCGeneralPreferencesController.m; sourceTree = "<group>"; };
-		FA5107EC18A8253600917185 /* GeneralPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralPreferences.xib; path = Preferences/GeneralPreferences.xib; sourceTree = "<group>"; };
 		FA7582B7193D377300CE223C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = ../../../../../../../../../System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
@@ -377,7 +387,7 @@
 			children = (
 				FA5107EA18A8253600917185 /* MCGeneralPreferencesController.h */,
 				FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */,
-				FA5107EC18A8253600917185 /* GeneralPreferences.xib */,
+				962C7C4921DF126700C0DCD1 /* GeneralPreferences.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -807,6 +817,8 @@
 				zh_CN,
 				zh_TW,
 				English,
+				zh,
+				"zh-Hans",
 			);
 			mainGroup = FAC69F58189D603C00BC829D;
 			productRefGroup = FAC69F62189D603C00BC829D /* Products */;
@@ -872,7 +884,7 @@
 				FAC69F6F189D603C00BC829D /* InfoPlist.strings in Resources */,
 				FA04886D189F58B1001F3AB5 /* Library.xib in Resources */,
 				FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */,
-				FA5107EE18A8253600917185 /* GeneralPreferences.xib in Resources */,
+				962C7C4721DF126700C0DCD1 /* GeneralPreferences.xib in Resources */,
 				FAC69F7D189D603C00BC829D /* Images.xcassets in Resources */,
 				FAC69F75189D603C00BC829D /* Credits.rtf in Resources */,
 				FA5107E718A823BD00917185 /* MASPreferencesWindow.xib in Resources */,
@@ -999,10 +1011,23 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		962C7C4921DF126700C0DCD1 /* GeneralPreferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				962C7C4821DF126700C0DCD1 /* Base */,
+				962C7C4B21DF126900C0DCD1 /* en */,
+				962C7C4D21DF126D00C0DCD1 /* zh-Hans */,
+			);
+			name = GeneralPreferences.xib;
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		FA048868189F58B1001F3AB5 /* Edit.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FA048869189F58B1001F3AB5 /* Base */,
+				962C7C5021DF12A900C0DCD1 /* zh-Hans */,
+				962C7C5221DF12B300C0DCD1 /* en */,
 			);
 			name = Edit.xib;
 			sourceTree = "<group>";
@@ -1011,6 +1036,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FA04886B189F58B1001F3AB5 /* Base */,
+				962C7C5421DF12D000C0DCD1 /* en */,
+				962C7C5621DF12D500C0DCD1 /* zh-Hans */,
 			);
 			name = Library.xib;
 			sourceTree = "<group>";
@@ -1019,6 +1046,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FAC69F6E189D603C00BC829D /* en */,
+				962C7C5B21DF131F00C0DCD1 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1027,6 +1055,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FAC69F74189D603C00BC829D /* en */,
+				962C7C5C21DF132700C0DCD1 /* zh-Hans */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -1035,6 +1064,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FAC69F7A189D603C00BC829D /* Base */,
+				962C7C5821DF12EF00C0DCD1 /* en */,
+				962C7C5A21DF12F300C0DCD1 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

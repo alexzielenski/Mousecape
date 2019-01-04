@@ -1,0 +1,27 @@
+
+/* Class = "NSSegmentedCell"; Hdu-Yg-F0d.ibShadowedLabels[0] = "right"; ObjectID = "Hdu-Yg-F0d"; */
+"Hdu-Yg-F0d.ibShadowedLabels[0]" = "右";
+
+/* Class = "NSSegmentedCell"; Hdu-Yg-F0d.ibShadowedLabels[1] = "left"; ObjectID = "Hdu-Yg-F0d"; */
+"Hdu-Yg-F0d.ibShadowedLabels[1]" = "左";
+
+/* Class = "NSTextFieldCell"; title = "handed"; ObjectID = "L0R-Jd-0pF"; */
+"L0R-Jd-0pF.title" = "撇子";
+
+/* Class = "NSTextFieldCell"; title = "capes"; ObjectID = "PAA-Qd-rHg"; */
+"PAA-Qd-rHg.title" = "外观";
+
+/* Class = "NSTextFieldCell"; title = "I am... "; ObjectID = "a3X-1e-eOG"; */
+"a3X-1e-eOG.title" = "我是... ";
+
+/* Class = "NSTextFieldCell"; title = "Cursor Scale"; ObjectID = "gxo-nh-UCg"; */
+"gxo-nh-UCg.title" = "鼠标比例";
+
+/* Class = "NSTextFieldCell"; title = "Double Clicks"; ObjectID = "mFs-6l-Guo"; */
+"mFs-6l-Guo.title" = "双击";
+
+/* Class = "NSSegmentedCell"; oXj-Hj-PSJ.ibShadowedLabels[0] = "apply"; ObjectID = "oXj-Hj-PSJ"; */
+"oXj-Hj-PSJ.ibShadowedLabels[0]" = "应用";
+
+/* Class = "NSSegmentedCell"; oXj-Hj-PSJ.ibShadowedLabels[1] = "edit"; ObjectID = "oXj-Hj-PSJ"; */
+"oXj-Hj-PSJ.ibShadowedLabels[1]" = "编辑";
