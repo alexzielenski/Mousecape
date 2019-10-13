@@ -35,7 +35,7 @@
 		FAAEF8F7189EB34700145DF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */; };
 		FAAEF94E189EFC9300145DF8 /* create.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF773189D67B100750E51 /* create.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAAEF94F189EFC9600145DF8 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FAAEF950189EFC9800145DF8 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
+		FAAEF950189EFC9800145DF8 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAAEF951189F0CC300145DF8 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FAAEF957189F4ED300145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; };
 		FAAEF958189F4F8200145DF8 /* scale.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF956189F4ED300145DF8 /* scale.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };

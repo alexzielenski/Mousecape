@@ -68,7 +68,7 @@ int main(int argc, char * argv[]) {
         options.applicationVersion = ^{ return @"2.0"; };
         options.applicationBuild = ^{ return @""; };
         options.printHelpHeader = ^{ return @(BOLD WHITE "%APPNAME v%APPVERSION" RESET); };
-        options.printHelpFooter = ^{ return @(BOLD WHITE "Copyright © 2013-14 Alex Zielenski" RESET); };
+        options.printHelpFooter = ^{ return @(BOLD WHITE "Copyright © 2013-20 Alex Zielenski" RESET); };
         
         GBCommandLineParser *parser = [[[GBCommandLineParser alloc] init] autorelease];
         [options registerOptionsToCommandLineParser:parser];
@@ -81,7 +81,7 @@ int main(int argc, char * argv[]) {
                     MMLog(BOLD RED "Missing value for command line option %s, try --help!" RESET, option.UTF8String);
                     break;
                 case GBParseFlagArgument:
-                    [settings addArgument:value];
+                    [settings setObject:@YES forKey:value];
                     break;
                 case GBParseFlagOption:
                     [settings setObject:value forKey:option];
