@@ -29,6 +29,7 @@
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
 		FA8FF771189D66D800750E51 /* apply.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF770189D66D800750E51 /* apply.m */; };
 		FA8FF774189D67B100750E51 /* create.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF773189D67B100750E51 /* create.m */; };
+		FA9A48AB2353C6EF009CF05E /* NSBitmapImageRep+ColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */; };
 		FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8F1189EB32700145DF8 /* BTRClipView.m */; };
 		FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAAEF8F3189EB32700145DF8 /* BTRScrollView.m */; };
 		FAAEF8F7189EB34700145DF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAEF8F6189EB34700145DF8 /* QuartzCore.framework */; };
@@ -980,6 +981,7 @@
 				FAE5D5701952700B007620DE /* apply.m in Sources */,
 				FAE5D5721952700B007620DE /* listen.m in Sources */,
 				FAE5D578195272DD007620DE /* scale.m in Sources */,
+				FA9A48AB2353C6EF009CF05E /* NSBitmapImageRep+ColorSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
