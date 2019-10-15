@@ -3,6 +3,8 @@ Mousecape
 
 A free cursor manager for Mac OS 10.8+ built using private, nonintrusive CoreGraphics APIs.
 
+![](https://github.com/alexzielenski/Mousecape/raw/master/screenshot.png)
+
 ## How it works
 
 Mousecape works by calling the API calls that Apple uses to initialize the system cursors in the system and it registers a daemon that will automatically apply the cursor on login and when cursors get unregistered.
