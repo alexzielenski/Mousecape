@@ -5,6 +5,20 @@
     <link>https://raw.githubusercontent.com/alexzielenski/Mousecape/master/appcast.xml</link>
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
+        <item>
+          <title>Version 0.0.6</title>
+          <description>
+            <![CDATA[
+              <ul>
+                <li>[New] We now have an icon! Courtesy of long-time user and artist Allan Nyholm Nielson</li>
+                <li>[Fix] Change backgrounding type of helper tool causing problems with Catalina</li>
+                <li>[Fix] Patch memory leak in helper tool when applying or restoring capes</li>
+              </ul>
+            ]]>
+          </description>
+          <pubDate>Mon, 14 Oct 2019 20:38:11 +0800</pubDate>
+          <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/0.0.6/Mousecape-0.0.6.zip" sparkle:version="1710" sparkle:shortVersionString="0.0.6" length="4387249" type="application/octet-stream" />
+        </item>
       <item>
         <title>Version 0.0.5</title>
         <description>
