@@ -11,6 +11,6 @@
 
 extern NSString *restoreStringForIdentifier(NSString *identifier);
 extern void restoreCursorForIdentifier(NSString *ident);
-extern void resetAllCursors();
+extern void resetAllCursors(void);
 
 #endif

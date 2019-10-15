@@ -17,7 +17,8 @@
     IMP objectAtIndexImp = [self methodForSelector:@selector(objectAtIndex:)];
     while (index < topIndex) {
         NSUInteger midIndex = (index + topIndex) / 2;
-        id testObject = objectAtIndexImp(self, @selector(objectAtIndex:), midIndex);
+        id testObject = [self objectAtIndex:midIndex];
+//        id testObject = objectAtIndexImp(self, @selector(objectAtIndex:), midIndex);
         if (compare(anObject, testObject, context) > 0) {
             index = midIndex + 1;
         } else {
@@ -28,7 +29,8 @@
 }
 
 static NSComparisonResult cw_SelectorCompare(id a, id b, void* aSelector) {
-	return (NSComparisonResult)objc_msgSend(a, (SEL)aSelector, b);
+    return (NSComparisonResult)[a performSelector:aSelector withObject:b];
+//	return (NSComparisonResult)objc_msgSend(a, (SEL)aSelector, b);
 }
 
 static NSComparisonResult az_comparatorCompare(id a, id b, NSComparator comparator) {
@@ -54,7 +56,8 @@ static IMP cw_ascendingImp = NULL;
 static NSComparisonResult cw_DescriptorCompare(id a, id b, void* descriptors) {
 	NSComparisonResult result = NSOrderedSame;
     for (NSSortDescriptor* sortDescriptor in (NSArray *)descriptors) {
-		result = (NSComparisonResult)cw_compareObjectToObjectImp(sortDescriptor, @selector(compareObject:toObject:), a, b);
+        result = [sortDescriptor compareObject:a toObject:b];
+//		result = (NSComparisonResult)cw_compareObjectToObjectImp(sortDescriptor, @selector(compareObject:toObject:), a, b);
         if (result != NSOrderedSame) {
             break;
         }

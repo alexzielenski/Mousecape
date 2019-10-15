@@ -11,6 +11,6 @@
 
 extern NSString *backupStringForIdentifier(NSString *identifier);
 extern void backupCursorForIdentifier(NSString *ident);
-extern void backupAllCursors();
+extern void backupAllCursors(void);
 
 #endif

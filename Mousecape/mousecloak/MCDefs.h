@@ -60,7 +60,7 @@ extern const NSString *MCCursorDictionaryPointsWideKey;
 extern const NSString *MCCursorDictionaryPointsHighKey;
 extern const NSString *MCCursorDictionaryRepresentationsKey;
 
-extern NSDictionary *cursorMap();
+extern NSDictionary *cursorMap(void);
 extern NSString *nameForCursorIdentifier(NSString *identifier);
 extern NSString *cursorIdentifierForName(NSString *name);
 
@@ -68,7 +68,7 @@ extern NSString *UUID(void);
 extern NSDictionary *capeWithIdentifier(NSString *identifier);
 extern void CGImageWriteToFile(CGImageRef image, CFStringRef path);
 extern NSData *pngDataForImage(id image);
-extern NSString *MMGet();
+extern NSString *MMGet(NSString *prompt);
 
 extern CGError MCIsCursorRegistered(CGSConnectionID cid, char *cursorName, bool *registered);
 extern BOOL MCCursorIsPointer(NSString *identifier);
