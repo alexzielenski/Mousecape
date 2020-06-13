@@ -6,6 +6,21 @@
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
         <item>
+          <title>Version 1813</title>
+          <description>
+            <![CDATA[
+              <ul>
+                <li>[New] Switched Version numbering system to build number</li>
+                <li>[New] Update to fresher new icon courtesy of Allan Nyholm</li>
+                <li>[Fix] Dragging out cursor images washes out color</li>
+                <li>[Fix] Adding frames to animated cursor washes out color</li>
+              </ul>
+            ]]>
+          </description>
+          <pubDate>Mon, 13 Jun 2020 20:38:11 +0800</pubDate>
+          <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/1813/Mousecape-1813.zip" sparkle:version="1813" sparkle:shortVersionString="1813" length="4560238 " type="application/octet-stream" />
+        </item>
+        <item>
           <title>Version 0.0.6</title>
           <description>
             <![CDATA[
