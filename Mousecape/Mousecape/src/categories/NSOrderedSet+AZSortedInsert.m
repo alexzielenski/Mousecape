@@ -14,7 +14,7 @@
 - (NSUInteger)indexForInsertingObject:(id)anObject sortedUsingfunction:(NSInteger (*)(id, id, void *))compare context:(void *)context; {
     NSUInteger index = 0;
 	NSUInteger topIndex = [self count];
-    IMP objectAtIndexImp = [self methodForSelector:@selector(objectAtIndex:)];
+//    IMP objectAtIndexImp = [self methodForSelector:@selector(objectAtIndex:)];
     while (index < topIndex) {
         NSUInteger midIndex = (index + topIndex) / 2;
         id testObject = [self objectAtIndex:midIndex];

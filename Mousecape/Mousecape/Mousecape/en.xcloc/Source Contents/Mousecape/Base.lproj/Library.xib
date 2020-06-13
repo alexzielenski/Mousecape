@@ -26,9 +26,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView wantsLayer="YES" canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="84" horizontalPageScroll="10" verticalLineScroll="84" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
+                    <scrollView canDrawConcurrently="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="84" horizontalPageScroll="10" verticalLineScroll="84" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-MC-n6O" customClass="BTRScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
-                        <clipView key="contentView" wantsLayer="YES" copiesOnScroll="NO" id="VhH-tn-4Sf" customClass="BTRClipView">
+                        <clipView key="contentView" copiesOnScroll="NO" id="VhH-tn-4Sf" customClass="BTRClipView">
                             <rect key="frame" x="0.0" y="0.0" width="711" height="311"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -81,9 +81,9 @@
                                                                 </binding>
                                                             </connections>
                                                         </imageView>
-                                                        <scrollView wantsLayer="YES" canDrawConcurrently="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="odP-lr-hJH" customClass="DTScrollView">
+                                                        <scrollView canDrawConcurrently="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="odP-lr-hJH" customClass="DTScrollView">
                                                             <rect key="frame" x="20" y="4" width="668" height="44"/>
-                                                            <clipView key="contentView" wantsLayer="YES" copiesOnScroll="NO" id="pc3-Zb-Oqk" customClass="RBLClipView">
+                                                            <clipView key="contentView" copiesOnScroll="NO" id="pc3-Zb-Oqk">
                                                                 <rect key="frame" x="1" y="1" width="666" height="42"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
@@ -127,7 +127,6 @@
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="jdV-zx-iTs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bEa-BS-ghQ" secondAttribute="trailing" constant="8" symbolic="YES" id="26b-X6-0Yk"/>
                                                         <constraint firstItem="Hfe-RO-hVE" firstAttribute="leading" secondItem="syZ-Eq-Lt2" secondAttribute="leading" constant="20" symbolic="YES" id="OHp-3c-ujO"/>
                                                         <constraint firstItem="QMa-EX-Son" firstAttribute="leading" secondItem="jdV-zx-iTs" secondAttribute="trailing" constant="8" symbolic="YES" id="QfE-A7-Oc8"/>
                                                         <constraint firstItem="jdV-zx-iTs" firstAttribute="centerY" secondItem="QMa-EX-Son" secondAttribute="centerY" id="YLI-IS-v1N"/>

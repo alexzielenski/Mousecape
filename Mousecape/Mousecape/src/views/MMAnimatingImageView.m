@@ -13,7 +13,7 @@
 
 const char MCInvalidateContext;
 
-@interface MMAnimatingImageView ()
+@interface MMAnimatingImageView () <CALayerDelegate>
 @property (weak) MCSpriteLayer *spriteLayer;
 @property (weak) CALayer *hotSpotLayer;
 - (void)_initialize;

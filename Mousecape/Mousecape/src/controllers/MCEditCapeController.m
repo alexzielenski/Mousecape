@@ -26,7 +26,7 @@
     if ([inKeyPath isEqualToString:@"cursorLibrary.identifier"]) {
         BOOL valid = [self.cursorLibrary.library capesWithIdentifier:*ioValue].count == 0;
         if (!valid) {
-            *outError = [NSError errorWithDomain:MCErrorDomain code:MCErrorMultipleCursorIdentifiersCode userInfo:@{ NSLocalizedDescriptionKey: @"A cape with this identifier already exists" }];
+            *outError = [NSError errorWithDomain:MCErrorDomain code:MCErrorMultipleCursorIdentifiersCode userInfo:@{ NSLocalizedDescriptionKey: NSLocalizedString(@"A cape with this identifier already exists", "Duplicate cape identifier error") }];
         }
         return valid;
     }

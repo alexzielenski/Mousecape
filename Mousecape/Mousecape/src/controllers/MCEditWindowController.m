@@ -47,7 +47,17 @@
         return NO;
     }
     
-    NSBeginAlertSheet(@"Do you want to save your changes?", @"Save", @"Cancel", @"Discard Changes", self.window, self, NULL, @selector(sheetDidDismiss:returnCode:contextInfo:), (__bridge void *)nextLibrary, @"Your changes will be discarded if you don't save them.");
+    NSBeginAlertSheet(
+                      NSLocalizedString(@"Do you want to save your changes?", "Save Prompt Title"),
+                      NSLocalizedString(@"Save", "Save Prompt Button"),
+                      NSLocalizedString(@"Cancel", "Save Prompt Button"),
+                      NSLocalizedString(@"Discard Changes", "Save Prompt Button"),
+                      self.window,
+                      self,
+                      NULL,
+                      @selector(sheetDidDismiss:returnCode:contextInfo:),
+                      (__bridge void *)nextLibrary,
+                      NSLocalizedString(@"Your changes will be discarded if you don't save them.", "Save prompt threat"));
     return YES;
 }
 

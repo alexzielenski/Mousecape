@@ -166,7 +166,10 @@
 }
 
 - (BOOL)dumpCursorsWithProgressBlock:(BOOL (^)(NSUInteger current, NSUInteger total))block {
-    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat: @"Mousecape Dump (%f).cape", NSDate.date.timeIntervalSince1970]];
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:
+                      [NSString stringWithFormat: @"%@ (%f).cape",
+                       NSLocalizedString(@"Mousecape Dump", @"Mousecape dump cursor file name"),
+                       NSDate.date.timeIntervalSince1970]];
     if (dumpCursorsToFile(path, block)) {
         __weak MCLibraryController *weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{

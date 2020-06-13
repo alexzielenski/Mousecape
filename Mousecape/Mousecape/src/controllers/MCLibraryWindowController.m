@@ -136,7 +136,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [weakSelf.libraryViewController.libraryController dumpCursorsWithProgressBlock:^BOOL (NSUInteger current, NSUInteger total) {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                weakSelf.progressField.stringValue = [NSString stringWithFormat:@"%lu of %lu", (unsigned long)current, (unsigned long)total];
+                weakSelf.progressField.stringValue = [NSString stringWithFormat:@"%lu %@ %lu", (unsigned long)current, NSLocalizedString(@"of", @"Dump cursor progress separator (eg: 5 of 129)"), (unsigned long)total];
                 weakSelf.progressBar.minValue = 0;
                 weakSelf.progressBar.maxValue = total;
                 weakSelf.progressBar.doubleValue = current;
@@ -161,7 +161,9 @@
 }
 
 - (id)transformedValue:(id)value {
-    return [NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape") stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Accessory label for when no cape is applied")];
+    return [
+            NSLocalizedString(@"Applied Cape: ", @"Accessory label for applied cape")
+            stringByAppendingString:value ? value : NSLocalizedString(@"None", @"Window Titlebar Accessory label for when no cape is applied")];
 }
 
 @end

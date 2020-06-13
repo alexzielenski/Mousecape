@@ -654,7 +654,6 @@
             <connections>
                 <outlet property="nextKeyView" destination="yz7-y5-TxE" id="WHy-Vl-LGY"/>
             </connections>
-            <point key="canvasLocation" x="715" y="459"/>
         </customView>
         <menu id="vy8-Pj-2Jg">
             <items>
@@ -687,7 +686,6 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="139" y="286"/>
         </menu>
     </objects>
     <resources>

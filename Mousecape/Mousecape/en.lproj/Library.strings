@@ -1,0 +1,42 @@
+
+/* Class = "NSWindow"; title = "Mousecape"; ObjectID = "1"; */
+"1.title" = "Mousecape";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "0kt-g0-cQb"; */
+"0kt-g0-cQb.title" = "Table View Cell";
+
+/* Class = "NSMenuItem"; title = "Show in Finder"; ObjectID = "2WM-EN-kiI"; */
+"2WM-EN-kiI.title" = "Show in Finder";
+
+/* Class = "NSMenuItem"; title = "Remove"; ObjectID = "Aig-wl-ivn"; */
+"Aig-wl-ivn.title" = "Remove";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "DeD-dq-yBF"; */
+"DeD-dq-yBF.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "HJc-SX-JjZ"; */
+"HJc-SX-JjZ.title" = "Edit";
+
+/* Class = "NSTextFieldCell"; title = "Subtitle"; ObjectID = "NXa-Ze-OX2"; */
+"NXa-Ze-OX2.title" = "Subtitle";
+
+/* Class = "NSMenuItem"; title = "Duplicate"; ObjectID = "PhG-Ll-nqz"; */
+"PhG-Ll-nqz.title" = "Duplicate";
+
+/* Class = "NSMenuItem"; title = "Apply"; ObjectID = "aI1-E0-bnW"; */
+"aI1-E0-bnW.title" = "Apply";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "bXC-ob-CUQ"; */
+"bXC-ob-CUQ.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; title = "by"; ObjectID = "jWt-I0-CSL"; */
+"jWt-I0-CSL.title" = "by";
+
+/* Class = "NSTextFieldCell"; title = "000 of 129"; ObjectID = "sq0-HM-mp6"; */
+"sq0-HM-mp6.title" = "000 of 129";
+
+/* Class = "NSTextFieldCell"; title = "Applied Cursor: None"; ObjectID = "vZ3-2R-psO"; */
+"vZ3-2R-psO.title" = "Applied Cursor: None";
+
+/* Class = "NSViewController"; title = "Library"; ObjectID = "zL4-Ay-t4Q"; */
+"zL4-Ay-t4Q.title" = "Library";

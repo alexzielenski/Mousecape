@@ -28,19 +28,35 @@ NSString *const MCLibraryDidSaveNotificationName = @"MCLibraryDidSave";
 - (void)startObservingCursor:(MCCursor *)cursor;
 - (void)stopObservingCursor:(MCCursor *)cursor;
 
-+ (NSArray *)cursorUndoProperties;
-+ (NSArray *)undoProperties;
++ (NSDictionary<NSString *, NSString *> *)cursorUndoProperties;
++ (NSDictionary<NSString *, NSString *> *)undoProperties;
 @end
 
 @implementation MCCursorLibrary
 @dynamic dirty;
 
-+ (NSArray *)undoProperties {
-    return @[ @"identifier", @"name", @"author", @"hiDPI", @"version", @"inCloud" ];
++ (NSDictionary<NSString *, NSString *> *)undoProperties {
+    return @{
+        @"identifier": NSLocalizedString(@"identifier", @"Undo change cape identifier suffix"),
+        @"name":       NSLocalizedString(@"name", @"Undo change cape name suffix"),
+        @"author":     NSLocalizedString(@"author", @"Undo change cape author suffix"),
+        @"hiDPI":      NSLocalizedString(@"hiDPI", @"Undo change cape hidpi suffix"),
+        @"version":    NSLocalizedString(@"version", @"Undo change cape version suffix")
+    };
 }
 
-+ (NSArray *)cursorUndoProperties {
-    return @[ @"identifier", @"frameDuration", @"frameCount", @"size", @"hotSpot", @"cursorRep100", @"cursorRep200", @"cursorRep500", @"cursorRep1000" ];
++ (NSDictionary<NSString *, NSString *> *)cursorUndoProperties {
+    return @{
+        @"identifier"   : NSLocalizedString(@"cursor type", @"Undo change cursor type suffix"),
+        @"frameDuration": NSLocalizedString(@"frame duration", @"Undo change cursor frame duraiton suffix"),
+        @"frameCount"   : NSLocalizedString(@"frame count", @"Undo change cursor frame count suffix"),
+        @"size"         : NSLocalizedString(@"dimensions", @"Undo change cursor image dimensions suffix"),
+        @"hotSpot"      : NSLocalizedString(@"hotspot", @"Undo change cursor hotspot suffix"),
+        @"cursorRep100" : NSLocalizedString(@"1x Representation", @"Undo change cursor 1x rep suffix"),
+        @"cursorRep200" : NSLocalizedString(@"2x Rep", "Undo change cursor 2x rep suffix"),
+        @"cursorRep500" : NSLocalizedString(@"2x Rep", "Undo change cursor 5x rep suffix"),
+        @"cursorRep1000": NSLocalizedString(@"2x Rep", "Undo change cursor 10x rep suffix")
+    };
 }
 
 + (MCCursorLibrary *)cursorLibraryWithContentsOfFile:(NSString *)path {
@@ -107,14 +123,14 @@ NSString *const MCLibraryDidSaveNotificationName = @"MCLibraryDidSave";
         
         self.observers = @[ob1, ob2, ob3];
         
-        self.name = @"Unnamed";
-        self.author = NSUserName();
-        self.hiDPI = NO;
-        self.inCloud = NO;
-        self.identifier = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
-        self.version = @1.0;
-        self.cursors = [NSMutableSet set];
-        self.changeCount = 0;
+        self.name           = NSLocalizedString(@"Unnamed", "Default New Cape Name");
+        self.author         = NSUserName();
+        self.hiDPI          = NO;
+        self.inCloud        = NO;
+        self.identifier     = [NSString stringWithFormat:@"local.%@.Unnamed.%f", self.author, [NSDate timeIntervalSinceReferenceDate]];
+        self.version        = @1.0;
+        self.cursors        = [NSMutableSet set];
+        self.changeCount    = 0;
         self.lastChangeCount = 0;
         [self startObservingProperties];
     }
@@ -234,10 +250,12 @@ const char MCCursorPropertiesContext;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == &MCCursorLibraryPropertiesContext || context == &MCCursorPropertiesContext) {
-        NSString *decamelized = [keyPath stringByReplacingOccurrencesOfString:@"([a-z])([A-Z])"
-                                                                   withString:@"$1 $2"
-                                                                      options:NSRegularExpressionSearch
-                                                                        range:NSMakeRange(0, keyPath.length)];
+        NSString *decamelized = NULL;
+        if (context == &MCCursorLibraryPropertiesContext) {
+            decamelized = [self.class undoProperties][keyPath];
+        } else {
+            decamelized = [self.class cursorUndoProperties][keyPath];
+        }
         
         id oldValue = change[NSKeyValueChangeOldKey];
         if ([oldValue isKindOfClass:[NSNull class]])
@@ -246,7 +264,7 @@ const char MCCursorPropertiesContext;
         [[self.undoManager prepareWithInvocationTarget: object] setValue:oldValue forKeyPath:keyPath];
         
         if (!self.undoManager.isUndoing) {
-            [self.undoManager setActionName:[[@"Change " stringByAppendingString:decamelized] capitalizedString]];
+            [self.undoManager setActionName:[[NSLocalizedString(@"Change ", "Undo Change Prefix") stringByAppendingString:decamelized] capitalizedString]];
         }
 
         if ([keyPath isEqualToString:@"identifier"]) {
@@ -283,7 +301,7 @@ const char MCCursorPropertiesContext;
     
     [[self.undoManager prepareWithInvocationTarget:self] removeCursor:cursor];
     if (!self.undoManager.isUndoing) {
-        [self.undoManager setActionName:@"Add Cursor"];
+        [self.undoManager setActionName:NSLocalizedString(@"Add Cursor", "Add Cursor Undo Title")];
     }
     
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueUnionSetMutation usingObjects:change];
@@ -297,7 +315,7 @@ const char MCCursorPropertiesContext;
     
     [[self.undoManager prepareWithInvocationTarget:self] addCursor:cursor];
     if (!self.undoManager.isUndoing) {
-        [self.undoManager setActionName:@"Remove Cursor"];
+        [self.undoManager setActionName:NSLocalizedString(@"Remove Cursor", @"Remove Cursor Undo Title")];
     }
     
     [self willChangeValueForKey:@"cursors" withSetMutation:NSKeyValueMinusSetMutation usingObjects:change];
@@ -353,8 +371,8 @@ const char MCCursorPropertiesContext;
         
     if (duplicates.count > 0) {
         return [NSError errorWithDomain:MCErrorDomain code:MCErrorMultipleCursorIdentifiersCode userInfo:@{
-                                                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", nil),
-                                                                                                           NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedString(@"Multiple cursors with the name(s): %@ exist.", nil), duplicates] }];
+                                                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", @"New Cape Failure Title"),
+                                                                                                           NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedString(@"Multiple cursors with the name(s): %@ exist.", @"New Cape Failure Duplicate cursor name error"), duplicates] }];
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:MCLibraryWillSaveNotificationName object:self];
@@ -366,8 +384,8 @@ const char MCCursorPropertiesContext;
         return nil;
     }
     return [NSError errorWithDomain:MCErrorDomain code:MCErrorWriteFailCode userInfo:@{
-                                                                                       NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", nil),
-                                                                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error writing cape to disk.", nil) }];
+                                                                                       NSLocalizedDescriptionKey: NSLocalizedString(@"Save failed", @"New Cape Failure Title"),
+                                                                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Error writing cape to disk.", @"New Cape Filure Filesystem Error") }];
 }
 
 - (void)updateChangeCount:(NSDocumentChangeType)change {

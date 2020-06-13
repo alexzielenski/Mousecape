@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="Failed to create cape file" xml:space="preserve">
+        <source>Failed to create cape file</source>
+        <target>Failed to create cape file</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The destination, %@, is not writable." xml:space="preserve">
+        <source>The destination, %@, is not writable.</source>
+        <target>The destination, %@, is not writable.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unabled to create a cape from the directory specified." xml:space="preserve">
+        <source>Unabled to create a cape from the directory specified.</source>
+        <target>Unabled to create a cape from the directory specified.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unabled to create a cape from the file specified." xml:space="preserve">
+        <source>Unabled to create a cape from the file specified.</source>
+        <target>Unabled to create a cape from the file specified.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/Base.lproj/Edit.xib" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="1.title" xml:space="preserve">
+        <source>Window</source>
+        <target>Window</target>
+        <note>Class = "NSWindow"; title = "Window"; ObjectID = "1";</note>
+      </trans-unit>
+      <trans-unit id="2aq-Lm-1Lm.ibShadowedIsNilPlaceholder" xml:space="preserve">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "Unknown"; ObjectID = "2aq-Lm-1Lm";</note>
+      </trans-unit>
+      <trans-unit id="2aq-Lm-1Lm.ibShadowedMultipleValuesPlaceholder" xml:space="preserve">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>Class = "CocoaBindingsConnection"; ibShadowedMultipleValuesPlaceholder = "Unknown"; ObjectID = "2aq-Lm-1Lm";</note>
+      </trans-unit>
+      <trans-unit id="2aq-Lm-1Lm.ibShadowedNoSelectionPlaceholder" xml:space="preserve">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>Class = "CocoaBindingsConnection"; ibShadowedNoSelectionPlaceholder = "Unknown"; ObjectID = "2aq-Lm-1Lm";</note>
+      </trans-unit>
+      <trans-unit id="2aq-Lm-1Lm.ibShadowedNotApplicablePlaceholder" xml:space="preserve">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>Class = "CocoaBindingsConnection"; ibShadowedNotApplicablePlaceholder = "Unknown"; ObjectID = "2aq-Lm-1Lm";</note>
+      </trans-unit>
+      <trans-unit id="4fS-Q1-prn.title" xml:space="preserve">
+        <source>5x</source>
+        <target>5x</target>
+        <note>Class = "NSTextFieldCell"; title = "5x"; ObjectID = "4fS-Q1-prn";</note>
+      </trans-unit>
+      <trans-unit id="5Wb-pc-8jV.title" xml:space="preserve">
+        <source>Frame Duration:</source>
+        <target>Frame Duration:</target>
+        <note>Class = "NSTextFieldCell"; title = "Frame Duration:"; ObjectID = "5Wb-pc-8jV";</note>
+      </trans-unit>
+      <trans-unit id="8bB-Ws-20v.title" xml:space="preserve">
+        <source>Table View Cell</source>
+        <target>Table View Cell</target>
+        <note>Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "8bB-Ws-20v";</note>
+      </trans-unit>
+      <trans-unit id="8fp-Ws-ruA.title" xml:space="preserve">
+        <source>10x</source>
+        <target>10x</target>
+        <note>Class = "NSTextFieldCell"; title = "10x"; ObjectID = "8fp-Ws-ruA";</note>
+      </trans-unit>
+      <trans-unit id="8we-kW-bNk.title" xml:space="preserve">
+        <source>Table View Cell</source>
+        <target>Table View Cell</target>
+        <note>Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "8we-kW-bNk";</note>
+      </trans-unit>
+      <trans-unit id="98i-gH-tf4.title" xml:space="preserve">
+        <source>Version:</source>
+        <target>Version:</target>
+        <note>Class = "NSTextFieldCell"; title = "Version:"; ObjectID = "98i-gH-tf4";</note>
+      </trans-unit>
+      <trans-unit id="BWu-hw-sDX.placeholderString" xml:space="preserve">
+        <source>{0,0}</source>
+        <target>{0,0}</target>
+        <note>Class = "NSTextFieldCell"; placeholderString = "{0,0}"; ObjectID = "BWu-hw-sDX";</note>
+      </trans-unit>
+      <trans-unit id="Bu6-lg-x1j.title" xml:space="preserve">
+        <source>Cape</source>
+        <target>Cape</target>
+        <note>Class = "NSViewController"; title = "Cape"; ObjectID = "Bu6-lg-x1j";</note>
+      </trans-unit>
+      <trans-unit id="EOd-L3-If3.title" xml:space="preserve">
+        <source>Text Cell</source>
+        <target>Text Cell</target>
+        <note>Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "EOd-L3-If3";</note>
+      </trans-unit>
+      <trans-unit id="FZ3-qB-kDI.title" xml:space="preserve">
+        <source>1x</source>
+        <target>1x</target>
+        <note>Class = "NSTextFieldCell"; title = "1x"; ObjectID = "FZ3-qB-kDI";</note>
+      </trans-unit>
+      <trans-unit id="FrC-7p-0Bq.title" xml:space="preserve">
+        <source>Size:</source>
+        <target>Size:</target>
+        <note>Class = "NSTextFieldCell"; title = "Size:"; ObjectID = "FrC-7p-0Bq";</note>
+      </trans-unit>
+      <trans-unit id="G4c-OI-avP.title" xml:space="preserve">
+        <source>Frames:</source>
+        <target>Frames:</target>
+        <note>Class = "NSTextFieldCell"; title = "Frames:"; ObjectID = "G4c-OI-avP";</note>
+      </trans-unit>
+      <trans-unit id="HFS-GR-guB.title" xml:space="preserve">
+        <source>Retina:</source>
+        <target>Retina:</target>
+        <note>Class = "NSTextFieldCell"; title = "Retina:"; ObjectID = "HFS-GR-guB";</note>
+      </trans-unit>
+      <trans-unit id="KQs-oD-CRg.title" xml:space="preserve">
+        <source>New Cursor</source>
+        <target>New Cursor</target>
+        <note>Class = "NSMenuItem"; title = "New Cursor"; ObjectID = "KQs-oD-CRg";</note>
+      </trans-unit>
+      <trans-unit id="OmM-g8-Kyd.placeholderString" xml:space="preserve">
+        <source>{0,0}</source>
+        <target>{0,0}</target>
+        <note>Class = "NSTextFieldCell"; placeholderString = "{0,0}"; ObjectID = "OmM-g8-Kyd";</note>
+      </trans-unit>
+      <trans-unit id="Oyi-AW-60U.title" xml:space="preserve">
+        <source>Author:</source>
+        <target>Author:</target>
+        <note>Class = "NSTextFieldCell"; title = "Author:"; ObjectID = "Oyi-AW-60U";</note>
+      </trans-unit>
+      <trans-unit id="WI8-sV-4D6.title" xml:space="preserve">
+        <source>2x</source>
+        <target>2x</target>
+        <note>Class = "NSTextFieldCell"; title = "2x"; ObjectID = "WI8-sV-4D6";</note>
+      </trans-unit>
+      <trans-unit id="Xzj-Uq-4bW.title" xml:space="preserve">
+        <source>Identifier:</source>
+        <target>Identifier:</target>
+        <note>Class = "NSTextFieldCell"; title = "Identifier:"; ObjectID = "Xzj-Uq-4bW";</note>
+      </trans-unit>
+      <trans-unit id="dcq-3r-2DB.title" xml:space="preserve">
+        <source>Hot Spot:</source>
+        <target>Hot Spot:</target>
+        <note>Class = "NSTextFieldCell"; title = "Hot Spot:"; ObjectID = "dcq-3r-2DB";</note>
+      </trans-unit>
+      <trans-unit id="dy9-JM-4d7.title" xml:space="preserve">
+        <source>Type:</source>
+        <target>Type:</target>
+        <note>Class = "NSTextFieldCell"; title = "Type:"; ObjectID = "dy9-JM-4d7";</note>
+      </trans-unit>
+      <trans-unit id="gnE-s8-eO8.title" xml:space="preserve">
+        <source>Remove Cursor</source>
+        <target>Remove Cursor</target>
+        <note>Class = "NSMenuItem"; title = "Remove Cursor"; ObjectID = "gnE-s8-eO8";</note>
+      </trans-unit>
+      <trans-unit id="j3S-Me-3x5.title" xml:space="preserve">
+        <source>OtherViews</source>
+        <target>OtherViews</target>
+        <note>Class = "NSMenu"; title = "OtherViews"; ObjectID = "j3S-Me-3x5";</note>
+      </trans-unit>
+      <trans-unit id="oMS-dL-nZj.title" xml:space="preserve">
+        <source>Name:</source>
+        <target>Name:</target>
+        <note>Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "oMS-dL-nZj";</note>
+      </trans-unit>
+      <trans-unit id="oUs-Nv-PHw.title" xml:space="preserve">
+        <source>List</source>
+        <target>List</target>
+        <note>Class = "NSViewController"; title = "List"; ObjectID = "oUs-Nv-PHw";</note>
+      </trans-unit>
+      <trans-unit id="pqX-MB-QME.placeholderString" xml:space="preserve">
+        <source>0.0</source>
+        <target>0.0</target>
+        <note>Class = "NSTextFieldCell"; placeholderString = "0.0"; ObjectID = "pqX-MB-QME";</note>
+      </trans-unit>
+      <trans-unit id="swO-bv-qRE.title" xml:space="preserve">
+        <source>Duplicate</source>
+        <target>Duplicate</target>
+        <note>Class = "NSMenuItem"; title = "Duplicate"; ObjectID = "swO-bv-qRE";</note>
+      </trans-unit>
+      <trans-unit id="tKY-dX-ibT.placeholderString" xml:space="preserve">
+        <source>1</source>
+        <target>1</target>
+        <note>Class = "NSTextFieldCell"; placeholderString = "1"; ObjectID = "tKY-dX-ibT";</note>
+      </trans-unit>
+      <trans-unit id="tMj-cQ-hK0.title" xml:space="preserve">
+        <source>Detail</source>
+        <target>Detail</target>
+        <note>Class = "NSViewController"; title = "Detail"; ObjectID = "tMj-cQ-hK0";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/Base.lproj/Library.xib" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="0kt-g0-cQb.title" xml:space="preserve">
+        <source>Table View Cell</source>
+        <target>Table View Cell</target>
+        <note>Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "0kt-g0-cQb";</note>
+      </trans-unit>
+      <trans-unit id="1.title" xml:space="preserve">
+        <source>Mousecape</source>
+        <target>Mousecape</target>
+        <note>Class = "NSWindow"; title = "Mousecape"; ObjectID = "1";</note>
+      </trans-unit>
+      <trans-unit id="2WM-EN-kiI.title" xml:space="preserve">
+        <source>Show in Finder</source>
+        <target>Show in Finder</target>
+        <note>Class = "NSMenuItem"; title = "Show in Finder"; ObjectID = "2WM-EN-kiI";</note>
+      </trans-unit>
+      <trans-unit id="Aig-wl-ivn.title" xml:space="preserve">
+        <source>Remove</source>
+        <target>Remove</target>
+        <note>Class = "NSMenuItem"; title = "Remove"; ObjectID = "Aig-wl-ivn";</note>
+      </trans-unit>
+      <trans-unit id="DeD-dq-yBF.title" xml:space="preserve">
+        <source>Window</source>
+        <target>Window</target>
+        <note>Class = "NSWindow"; title = "Window"; ObjectID = "DeD-dq-yBF";</note>
+      </trans-unit>
+      <trans-unit id="HJc-SX-JjZ.title" xml:space="preserve">
+        <source>Edit</source>
+        <target>Edit</target>
+        <note>Class = "NSMenuItem"; title = "Edit"; ObjectID = "HJc-SX-JjZ";</note>
+      </trans-unit>
+      <trans-unit id="NXa-Ze-OX2.title" xml:space="preserve">
+        <source>Subtitle</source>
+        <target>Subtitle</target>
+        <note>Class = "NSTextFieldCell"; title = "Subtitle"; ObjectID = "NXa-Ze-OX2";</note>
+      </trans-unit>
+      <trans-unit id="PhG-Ll-nqz.title" xml:space="preserve">
+        <source>Duplicate</source>
+        <target>Duplicate</target>
+        <note>Class = "NSMenuItem"; title = "Duplicate"; ObjectID = "PhG-Ll-nqz";</note>
+      </trans-unit>
+      <trans-unit id="aI1-E0-bnW.title" xml:space="preserve">
+        <source>Apply</source>
+        <target>Apply</target>
+        <note>Class = "NSMenuItem"; title = "Apply"; ObjectID = "aI1-E0-bnW";</note>
+      </trans-unit>
+      <trans-unit id="bXC-ob-CUQ.title" xml:space="preserve">
+        <source>Text Cell</source>
+        <target>Text Cell</target>
+        <note>Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "bXC-ob-CUQ";</note>
+      </trans-unit>
+      <trans-unit id="jWt-I0-CSL.title" xml:space="preserve">
+        <source>by</source>
+        <target>by</target>
+        <note>Class = "NSTextFieldCell"; title = "by"; ObjectID = "jWt-I0-CSL";</note>
+      </trans-unit>
+      <trans-unit id="sq0-HM-mp6.title" xml:space="preserve">
+        <source>000 of 129</source>
+        <target>000 of 129</target>
+        <note>Class = "NSTextFieldCell"; title = "000 of 129"; ObjectID = "sq0-HM-mp6";</note>
+      </trans-unit>
+      <trans-unit id="vZ3-2R-psO.title" xml:space="preserve">
+        <source>Applied Cursor: None</source>
+        <target>Applied Cursor: None</target>
+        <note>Class = "NSTextFieldCell"; title = "Applied Cursor: None"; ObjectID = "vZ3-2R-psO";</note>
+      </trans-unit>
+      <trans-unit id="zL4-Ay-t4Q.title" xml:space="preserve">
+        <source>Library</source>
+        <target>Library</target>
+        <note>Class = "NSViewController"; title = "Library"; ObjectID = "zL4-Ay-t4Q";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/Base.lproj/MainMenu.xib" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="5.title" xml:space="preserve">
+        <source>Bring All to Front</source>
+        <target>Bring All to Front</target>
+        <note>Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "5";</note>
+      </trans-unit>
+      <trans-unit id="5qb-Dw-38q.title" xml:space="preserve">
+        <source>Edit Cape</source>
+        <target>Edit Cape</target>
+        <note>Class = "NSMenuItem"; title = "Edit Cape"; ObjectID = "5qb-Dw-38q";</note>
+      </trans-unit>
+      <trans-unit id="19.title" xml:space="preserve">
+        <source>Window</source>
+        <target>Window</target>
+        <note>Class = "NSMenuItem"; title = "Window"; ObjectID = "19";</note>
+      </trans-unit>
+      <trans-unit id="23.title" xml:space="preserve">
+        <source>Minimize</source>
+        <target>Minimize</target>
+        <note>Class = "NSMenuItem"; title = "Minimize"; ObjectID = "23";</note>
+      </trans-unit>
+      <trans-unit id="24.title" xml:space="preserve">
+        <source>Window</source>
+        <target>Window</target>
+        <note>Class = "NSMenu"; title = "Window"; ObjectID = "24";</note>
+      </trans-unit>
+      <trans-unit id="29.title" xml:space="preserve">
+        <source>AMainMenu</source>
+        <target>AMainMenu</target>
+        <note>Class = "NSMenu"; title = "AMainMenu"; ObjectID = "29";</note>
+      </trans-unit>
+      <trans-unit id="56.title" xml:space="preserve">
+        <source>Mousecape</source>
+        <target>Mousecape</target>
+        <note>Class = "NSMenuItem"; title = "Mousecape"; ObjectID = "56";</note>
+      </trans-unit>
+      <trans-unit id="57.title" xml:space="preserve">
+        <source>Mousecape</source>
+        <target>Mousecape</target>
+        <note>Class = "NSMenu"; title = "Mousecape"; ObjectID = "57";</note>
+      </trans-unit>
+      <trans-unit id="58.title" xml:space="preserve">
+        <source>About Mousecape</source>
+        <target>About Mousecape</target>
+        <note>Class = "NSMenuItem"; title = "About Mousecape"; ObjectID = "58";</note>
+      </trans-unit>
+      <trans-unit id="73.title" xml:space="preserve">
+        <source>Close</source>
+        <target>Close</target>
+        <note>Class = "NSMenuItem"; title = "Close"; ObjectID = "73";</note>
+      </trans-unit>
+      <trans-unit id="75.title" xml:space="preserve">
+        <source>Save…</source>
+        <target>Save…</target>
+        <note>Class = "NSMenuItem"; title = "Save…"; ObjectID = "75";</note>
+      </trans-unit>
+      <trans-unit id="81.title" xml:space="preserve">
+        <source>File</source>
+        <target>File</target>
+        <note>Class = "NSMenu"; title = "File"; ObjectID = "81";</note>
+      </trans-unit>
+      <trans-unit id="82.title" xml:space="preserve">
+        <source>New Cape</source>
+        <target>New Cape</target>
+        <note>Class = "NSMenuItem"; title = "New Cape"; ObjectID = "82";</note>
+      </trans-unit>
+      <trans-unit id="83.title" xml:space="preserve">
+        <source>File</source>
+        <target>File</target>
+        <note>Class = "NSMenuItem"; title = "File"; ObjectID = "83";</note>
+      </trans-unit>
+      <trans-unit id="112.title" xml:space="preserve">
+        <source>Revert to Saved</source>
+        <target>Revert to Saved</target>
+        <note>Class = "NSMenuItem"; title = "Revert to Saved"; ObjectID = "112";</note>
+      </trans-unit>
+      <trans-unit id="129.title" xml:space="preserve">
+        <source>Preferences…</source>
+        <target>Preferences…</target>
+        <note>Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "129";</note>
+      </trans-unit>
+      <trans-unit id="130.title" xml:space="preserve">
+        <source>Services</source>
+        <target>Services</target>
+        <note>Class = "NSMenu"; title = "Services"; ObjectID = "130";</note>
+      </trans-unit>
+      <trans-unit id="131.title" xml:space="preserve">
+        <source>Services</source>
+        <target>Services</target>
+        <note>Class = "NSMenuItem"; title = "Services"; ObjectID = "131";</note>
+      </trans-unit>
+      <trans-unit id="134.title" xml:space="preserve">
+        <source>Hide Mousecape</source>
+        <target>Hide Mousecape</target>
+        <note>Class = "NSMenuItem"; title = "Hide Mousecape"; ObjectID = "134";</note>
+      </trans-unit>
+      <trans-unit id="136.title" xml:space="preserve">
+        <source>Quit Mousecape</source>
+        <target>Quit Mousecape</target>
+        <note>Class = "NSMenuItem"; title = "Quit Mousecape"; ObjectID = "136";</note>
+      </trans-unit>
+      <trans-unit id="145.title" xml:space="preserve">
+        <source>Hide Others</source>
+        <target>Hide Others</target>
+        <note>Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "145";</note>
+      </trans-unit>
+      <trans-unit id="150.title" xml:space="preserve">
+        <source>Show All</source>
+        <target>Show All</target>
+        <note>Class = "NSMenuItem"; title = "Show All"; ObjectID = "150";</note>
+      </trans-unit>
+      <trans-unit id="195.title" xml:space="preserve">
+        <source>Stop Speaking</source>
+        <target>Stop Speaking</target>
+        <note>Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "195";</note>
+      </trans-unit>
+      <trans-unit id="196.title" xml:space="preserve">
+        <source>Start Speaking</source>
+        <target>Start Speaking</target>
+        <note>Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "196";</note>
+      </trans-unit>
+      <trans-unit id="197.title" xml:space="preserve">
+        <source>Copy</source>
+        <target>Copy</target>
+        <note>Class = "NSMenuItem"; title = "Copy"; ObjectID = "197";</note>
+      </trans-unit>
+      <trans-unit id="198.title" xml:space="preserve">
+        <source>Select All</source>
+        <target>Select All</target>
+        <note>Class = "NSMenuItem"; title = "Select All"; ObjectID = "198";</note>
+      </trans-unit>
+      <trans-unit id="199.title" xml:space="preserve">
+        <source>Cut</source>
+        <target>Cut</target>
+        <note>Class = "NSMenuItem"; title = "Cut"; ObjectID = "199";</note>
+      </trans-unit>
+      <trans-unit id="200.title" xml:space="preserve">
+        <source>Spelling and Grammar</source>
+        <target>Spelling and Grammar</target>
+        <note>Class = "NSMenu"; title = "Spelling and Grammar"; ObjectID = "200";</note>
+      </trans-unit>
+      <trans-unit id="201.title" xml:space="preserve">
+        <source>Check Document Now</source>
+        <target>Check Document Now</target>
+        <note>Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "201";</note>
+      </trans-unit>
+      <trans-unit id="202.title" xml:space="preserve">
+        <source>Delete</source>
+        <target>Delete</target>
+        <note>Class = "NSMenuItem"; title = "Delete"; ObjectID = "202";</note>
+      </trans-unit>
+      <trans-unit id="203.title" xml:space="preserve">
+        <source>Paste</source>
+        <target>Paste</target>
+        <note>Class = "NSMenuItem"; title = "Paste"; ObjectID = "203";</note>
+      </trans-unit>
+      <trans-unit id="204.title" xml:space="preserve">
+        <source>Show Spelling and Grammar</source>
+        <target>Show Spelling and Grammar</target>
+        <note>Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "204";</note>
+      </trans-unit>
+      <trans-unit id="205.title" xml:space="preserve">
+        <source>Edit</source>
+        <target>Edit</target>
+        <note>Class = "NSMenu"; title = "Edit"; ObjectID = "205";</note>
+      </trans-unit>
+      <trans-unit id="207.title" xml:space="preserve">
+        <source>Undo</source>
+        <target>Undo</target>
+        <note>Class = "NSMenuItem"; title = "Undo"; ObjectID = "207";</note>
+      </trans-unit>
+      <trans-unit id="208.title" xml:space="preserve">
+        <source>Find Next</source>
+        <target>Find Next</target>
+        <note>Class = "NSMenuItem"; title = "Find Next"; ObjectID = "208";</note>
+      </trans-unit>
+      <trans-unit id="209.title" xml:space="preserve">
+        <source>Find…</source>
+        <target>Find…</target>
+        <note>Class = "NSMenuItem"; title = "Find…"; ObjectID = "209";</note>
+      </trans-unit>
+      <trans-unit id="210.title" xml:space="preserve">
+        <source>Jump to Selection</source>
+        <target>Jump to Selection</target>
+        <note>Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "210";</note>
+      </trans-unit>
+      <trans-unit id="211.title" xml:space="preserve">
+        <source>Speech</source>
+        <target>Speech</target>
+        <note>Class = "NSMenuItem"; title = "Speech"; ObjectID = "211";</note>
+      </trans-unit>
+      <trans-unit id="212.title" xml:space="preserve">
+        <source>Speech</source>
+        <target>Speech</target>
+        <note>Class = "NSMenu"; title = "Speech"; ObjectID = "212";</note>
+      </trans-unit>
+      <trans-unit id="213.title" xml:space="preserve">
+        <source>Find Previous</source>
+        <target>Find Previous</target>
+        <note>Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "213";</note>
+      </trans-unit>
+      <trans-unit id="215.title" xml:space="preserve">
+        <source>Redo</source>
+        <target>Redo</target>
+        <note>Class = "NSMenuItem"; title = "Redo"; ObjectID = "215";</note>
+      </trans-unit>
+      <trans-unit id="216.title" xml:space="preserve">
+        <source>Spelling and Grammar</source>
+        <target>Spelling and Grammar</target>
+        <note>Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "216";</note>
+      </trans-unit>
+      <trans-unit id="217.title" xml:space="preserve">
+        <source>Edit</source>
+        <target>Edit</target>
+        <note>Class = "NSMenuItem"; title = "Edit"; ObjectID = "217";</note>
+      </trans-unit>
+      <trans-unit id="218.title" xml:space="preserve">
+        <source>Find</source>
+        <target>Find</target>
+        <note>Class = "NSMenuItem"; title = "Find"; ObjectID = "218";</note>
+      </trans-unit>
+      <trans-unit id="219.title" xml:space="preserve">
+        <source>Check Spelling While Typing</source>
+        <target>Check Spelling While Typing</target>
+        <note>Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "219";</note>
+      </trans-unit>
+      <trans-unit id="220.title" xml:space="preserve">
+        <source>Find</source>
+        <target>Find</target>
+        <note>Class = "NSMenu"; title = "Find"; ObjectID = "220";</note>
+      </trans-unit>
+      <trans-unit id="221.title" xml:space="preserve">
+        <source>Use Selection for Find</source>
+        <target>Use Selection for Find</target>
+        <note>Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "221";</note>
+      </trans-unit>
+      <trans-unit id="239.title" xml:space="preserve">
+        <source>Zoom</source>
+        <target>Zoom</target>
+        <note>Class = "NSMenuItem"; title = "Zoom"; ObjectID = "239";</note>
+      </trans-unit>
+      <trans-unit id="346.title" xml:space="preserve">
+        <source>Check Grammar With Spelling</source>
+        <target>Check Grammar With Spelling</target>
+        <note>Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "346";</note>
+      </trans-unit>
+      <trans-unit id="348.title" xml:space="preserve">
+        <source>Substitutions</source>
+        <target>Substitutions</target>
+        <note>Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "348";</note>
+      </trans-unit>
+      <trans-unit id="349.title" xml:space="preserve">
+        <source>Substitutions</source>
+        <target>Substitutions</target>
+        <note>Class = "NSMenu"; title = "Substitutions"; ObjectID = "349";</note>
+      </trans-unit>
+      <trans-unit id="350.title" xml:space="preserve">
+        <source>Smart Copy/Paste</source>
+        <target>Smart Copy/Paste</target>
+        <note>Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "350";</note>
+      </trans-unit>
+      <trans-unit id="351.title" xml:space="preserve">
+        <source>Smart Quotes</source>
+        <target>Smart Quotes</target>
+        <note>Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "351";</note>
+      </trans-unit>
+      <trans-unit id="354.title" xml:space="preserve">
+        <source>Smart Links</source>
+        <target>Smart Links</target>
+        <note>Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "354";</note>
+      </trans-unit>
+      <trans-unit id="450.title" xml:space="preserve">
+        <source>Transformations</source>
+        <target>Transformations</target>
+        <note>Class = "NSMenuItem"; title = "Transformations"; ObjectID = "450";</note>
+      </trans-unit>
+      <trans-unit id="451.title" xml:space="preserve">
+        <source>Transformations</source>
+        <target>Transformations</target>
+        <note>Class = "NSMenu"; title = "Transformations"; ObjectID = "451";</note>
+      </trans-unit>
+      <trans-unit id="452.title" xml:space="preserve">
+        <source>Make Upper Case</source>
+        <target>Make Upper Case</target>
+        <note>Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "452";</note>
+      </trans-unit>
+      <trans-unit id="454.title" xml:space="preserve">
+        <source>Correct Spelling Automatically</source>
+        <target>Correct Spelling Automatically</target>
+        <note>Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "454";</note>
+      </trans-unit>
+      <trans-unit id="457.title" xml:space="preserve">
+        <source>Show Substitutions</source>
+        <target>Show Substitutions</target>
+        <note>Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "457";</note>
+      </trans-unit>
+      <trans-unit id="460.title" xml:space="preserve">
+        <source>Smart Dashes</source>
+        <target>Smart Dashes</target>
+        <note>Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "460";</note>
+      </trans-unit>
+      <trans-unit id="462.title" xml:space="preserve">
+        <source>Text Replacement</source>
+        <target>Text Replacement</target>
+        <note>Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "462";</note>
+      </trans-unit>
+      <trans-unit id="465.title" xml:space="preserve">
+        <source>Make Lower Case</source>
+        <target>Make Lower Case</target>
+        <note>Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "465";</note>
+      </trans-unit>
+      <trans-unit id="466.title" xml:space="preserve">
+        <source>Capitalize</source>
+        <target>Capitalize</target>
+        <note>Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "466";</note>
+      </trans-unit>
+      <trans-unit id="485.title" xml:space="preserve">
+        <source>Paste and Match Style</source>
+        <target>Paste and Match Style</target>
+        <note>Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "485";</note>
+      </trans-unit>
+      <trans-unit id="490.title" xml:space="preserve">
+        <source>Help</source>
+        <target>Help</target>
+        <note>Class = "NSMenuItem"; title = "Help"; ObjectID = "490";</note>
+      </trans-unit>
+      <trans-unit id="491.title" xml:space="preserve">
+        <source>Help</source>
+        <target>Help</target>
+        <note>Class = "NSMenu"; title = "Help"; ObjectID = "491";</note>
+      </trans-unit>
+      <trans-unit id="492.title" xml:space="preserve">
+        <source>Mousecape Help</source>
+        <target>Mousecape Help</target>
+        <note>Class = "NSMenuItem"; title = "Mousecape Help"; ObjectID = "492";</note>
+      </trans-unit>
+      <trans-unit id="534.title" xml:space="preserve">
+        <source>Find and Replace…</source>
+        <target>Find and Replace…</target>
+        <note>Class = "NSMenuItem"; title = "Find and Replace…"; ObjectID = "534";</note>
+      </trans-unit>
+      <trans-unit id="CYY-iE-0bP.title" xml:space="preserve">
+        <source>Dump Cursors…</source>
+        <target>Dump Cursors…</target>
+        <note>Class = "NSMenuItem"; title = "Dump Cursors…"; ObjectID = "CYY-iE-0bP";</note>
+      </trans-unit>
+      <trans-unit id="LHh-1u-bK8.title" xml:space="preserve">
+        <source>Remove Cape</source>
+        <target>Remove Cape</target>
+        <note>Class = "NSMenuItem"; title = "Remove Cape"; ObjectID = "LHh-1u-bK8";</note>
+      </trans-unit>
+      <trans-unit id="PAd-kz-Eoi.title" xml:space="preserve">
+        <source>Show in Finder</source>
+        <target>Show in Finder</target>
+        <note>Class = "NSMenuItem"; title = "Show in Finder"; ObjectID = "PAd-kz-Eoi";</note>
+      </trans-unit>
+      <trans-unit id="Ui2-VN-tbP.title" xml:space="preserve">
+        <source>Install Helper Tool</source>
+        <target>Install Helper Tool</target>
+        <note>Class = "NSMenuItem"; title = "Install Helper Tool"; ObjectID = "Ui2-VN-tbP";</note>
+      </trans-unit>
+      <trans-unit id="XTi-86-ese.title" xml:space="preserve">
+        <source>Check for Updates</source>
+        <target>Check for Updates</target>
+        <note>Class = "NSMenuItem"; title = "Check for Updates"; ObjectID = "XTi-86-ese";</note>
+      </trans-unit>
+      <trans-unit id="d9b-6w-ubr.title" xml:space="preserve">
+        <source>Duplicate Cape</source>
+        <target>Duplicate Cape</target>
+        <note>Class = "NSMenuItem"; title = "Duplicate Cape"; ObjectID = "d9b-6w-ubr";</note>
+      </trans-unit>
+      <trans-unit id="g8O-f8-aKi.title" xml:space="preserve">
+        <source>Capes</source>
+        <target>Capes</target>
+        <note>Class = "NSMenuItem"; title = "Capes"; ObjectID = "g8O-f8-aKi";</note>
+      </trans-unit>
+      <trans-unit id="ieJ-T1-eH7.title" xml:space="preserve">
+        <source>Apply Cape</source>
+        <target>Apply Cape</target>
+        <note>Class = "NSMenuItem"; title = "Apply Cape"; ObjectID = "ieJ-T1-eH7";</note>
+      </trans-unit>
+      <trans-unit id="igk-i0-oH0.title" xml:space="preserve">
+        <source>Check for Updates...</source>
+        <target>Check for Updates...</target>
+        <note>Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "igk-i0-oH0";</note>
+      </trans-unit>
+      <trans-unit id="kdx-d9-Lek.title" xml:space="preserve">
+        <source>Import Cape</source>
+        <target>Import Cape</target>
+        <note>Class = "NSMenuItem"; title = "Import Cape"; ObjectID = "kdx-d9-Lek";</note>
+      </trans-unit>
+      <trans-unit id="l3B-n8-21Z.title" xml:space="preserve">
+        <source>Import MightyMouse</source>
+        <target>Import MightyMouse</target>
+        <note>Class = "NSMenuItem"; title = "Import MightyMouse"; ObjectID = "l3B-n8-21Z";</note>
+      </trans-unit>
+      <trans-unit id="ttR-pS-Pk1.title" xml:space="preserve">
+        <source>Capes</source>
+        <target>Capes</target>
+        <note>Class = "NSMenu"; title = "Capes"; ObjectID = "ttR-pS-Pk1";</note>
+      </trans-unit>
+      <trans-unit id="uCE-YB-8VL.title" xml:space="preserve">
+        <source>Restore Defaults</source>
+        <target>Restore Defaults</target>
+        <note>Class = "NSMenuItem"; title = "Restore Defaults"; ObjectID = "uCE-YB-8VL";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/en.lproj/Errors.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="No path found for directory in domain." xml:space="preserve">
+        <source>No path found for directory in domain.</source>
+        <target>No path found for directory in domain.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Mousecape</source>
+        <target>Mousecape</target>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="Mouse Cape" xml:space="preserve">
+        <source>Mouse Cape</source>
+        <target>Mouse Cape</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
+        <source>Copyright © 2014-2019 Alex Zielenski. All rights reserved.</source>
+        <target>Copyright © 2014-2019 Alex Zielenski. All rights reserved.</target>
+        <note>Copyright (human-readable)</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Mousecape/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="1x Representation" xml:space="preserve">
+        <source>1x Representation</source>
+        <target>1x Representation</target>
+        <note>Undo change cursor 1x rep suffix</note>
+      </trans-unit>
+      <trans-unit id="2x Rep" xml:space="preserve">
+        <source>2x Rep</source>
+        <target>2x Rep</target>
+        <note>Undo change cursor 10x rep suffix
+   Undo change cursor 2x rep suffix
+   Undo change cursor 5x rep suffix</note>
+      </trans-unit>
+      <trans-unit id="A cape with this identifier already exists" xml:space="preserve">
+        <source>A cape with this identifier already exists</source>
+        <target>A cape with this identifier already exists</target>
+        <note>Duplicate cape identifier error</note>
+      </trans-unit>
+      <trans-unit id="Add Cursor" xml:space="preserve">
+        <source>Add Cursor</source>
+        <target>Add Cursor</target>
+        <note>Add Cursor Undo Title</note>
+      </trans-unit>
+      <trans-unit id="Applied Cape: " xml:space="preserve">
+        <source>Applied Cape: </source>
+        <target>Applied Cape: </target>
+        <note>Accessory label for applied cape</note>
+      </trans-unit>
+      <trans-unit id="Cancel" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>Save Prompt Button</note>
+      </trans-unit>
+      <trans-unit id="Change " xml:space="preserve">
+        <source>Change </source>
+        <target>Change </target>
+        <note>Undo Change Prefix</note>
+      </trans-unit>
+      <trans-unit id="Choose a MightyMouse file to import" xml:space="preserve">
+        <source>Choose a MightyMouse file to import</source>
+        <target>Choose a MightyMouse file to import</target>
+        <note>MightyMouse Import Panel useless description</note>
+      </trans-unit>
+      <trans-unit id="Choose a Mousecape to import" xml:space="preserve">
+        <source>Choose a Mousecape to import</source>
+        <target>Choose a Mousecape to import</target>
+        <note>Mousecape Import useless description</note>
+      </trans-unit>
+      <trans-unit id="Discard Changes" xml:space="preserve">
+        <source>Discard Changes</source>
+        <target>Discard Changes</target>
+        <note>Save Prompt Button</note>
+      </trans-unit>
+      <trans-unit id="Do you want to save your changes?" xml:space="preserve">
+        <source>Do you want to save your changes?</source>
+        <target>Do you want to save your changes?</target>
+        <note>Save Prompt Title</note>
+      </trans-unit>
+      <trans-unit id="Error writing cape to disk." xml:space="preserve">
+        <source>Error writing cape to disk.</source>
+        <target>Error writing cape to disk.</target>
+        <note>New Cape Filure Filesystem Error</note>
+      </trans-unit>
+      <trans-unit id="Failed to create cape file" xml:space="preserve">
+        <source>Failed to create cape file</source>
+        <target>Failed to create cape file</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Failure" xml:space="preserve">
+        <source>Failure</source>
+        <target>Failure</target>
+        <note>Helper Tool Result Title Failure</note>
+      </trans-unit>
+      <trans-unit id="Fuck" xml:space="preserve">
+        <source>Fuck</source>
+        <target>Fuck</target>
+        <note>Helper Tool Result Failure Expletive</note>
+      </trans-unit>
+      <trans-unit id="General" xml:space="preserve">
+        <source>General</source>
+        <target>General</target>
+        <note>Toolbar item name for the General preference pane</note>
+      </trans-unit>
+      <trans-unit id="Import" xml:space="preserve">
+        <source>Import</source>
+        <target>Import</target>
+        <note>MightyMouse Import Panel Prompt
+   MightyMouse Import Panel Title
+   Mousecape Import Prompt
+   Mousecape Import Title</note>
+      </trans-unit>
+      <trans-unit id="Install Helper Tool" xml:space="preserve">
+        <source>Install Helper Tool</source>
+        <target>Install Helper Tool</target>
+        <note>Install Helper Tool Menu Item</note>
+      </trans-unit>
+      <trans-unit id="Invalid format" xml:space="preserve">
+        <source>Invalid format</source>
+        <target>Invalid format</target>
+        <note>Invalid format error description in edit window</note>
+      </trans-unit>
+      <trans-unit id="Mousecape Dump" xml:space="preserve">
+        <source>Mousecape Dump</source>
+        <target>Mousecape Dump</target>
+        <note>Mousecape dump cursor file name</note>
+      </trans-unit>
+      <trans-unit id="Multiple cursors with the name(s): %@ exist." xml:space="preserve">
+        <source>Multiple cursors with the name(s): %@ exist.</source>
+        <target>Multiple cursors with the name(s): %@ exist.</target>
+        <note>New Cape Failure Duplicate cursor name error</note>
+      </trans-unit>
+      <trans-unit id="Must follow format of: &quot;{0.0, 0.0}&quot;." xml:space="preserve">
+        <source>Must follow format of: "{0.0, 0.0}".</source>
+        <target>Must follow format of: "{0.0, 0.0}".</target>
+        <note>Invalid format error reason in edit window</note>
+      </trans-unit>
+      <trans-unit id="None" xml:space="preserve">
+        <source>None</source>
+        <target>None</target>
+        <note>Window Titlebar Accessory label for when no cape is applied</note>
+      </trans-unit>
+      <trans-unit id="Preferences" xml:space="preserve">
+        <source>Preferences</source>
+        <target>Preferences</target>
+        <note>Preferences Window Title</note>
+      </trans-unit>
+      <trans-unit id="Remove Cursor" xml:space="preserve">
+        <source>Remove Cursor</source>
+        <target>Remove Cursor</target>
+        <note>Remove Cursor Undo Title</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <target>Save</target>
+        <note>Save Prompt Button</note>
+      </trans-unit>
+      <trans-unit id="Save failed" xml:space="preserve">
+        <source>Save failed</source>
+        <target>Save failed</target>
+        <note>New Cape Failure Title</note>
+      </trans-unit>
+      <trans-unit id="Sucess" xml:space="preserve">
+        <source>Sucess</source>
+        <target>Sucess</target>
+        <note>Helper Tool Install Result Title Success
+   Helper Tool Uninstall Result Title Success</note>
+      </trans-unit>
+      <trans-unit id="Sweet" xml:space="preserve">
+        <source>Sweet</source>
+        <target>Sweet</target>
+        <note>Helper Tool Install Result Gratitude 1
+   Helper Tool Uninstall Result Gratitude 1</note>
+      </trans-unit>
+      <trans-unit id="Thanks" xml:space="preserve">
+        <source>Thanks</source>
+        <target>Thanks</target>
+        <note>Helper Tool Install Result Gratitude 2
+   Helper Tool Uninstall Result Gratitude 2</note>
+      </trans-unit>
+      <trans-unit id="The Mousecape helper was successfully installed" xml:space="preserve">
+        <source>The Mousecape helper was successfully installed</source>
+        <target>The Mousecape helper was successfully installed</target>
+        <note>Helper Tool Install Success Result useless description</note>
+      </trans-unit>
+      <trans-unit id="The Mousecape helper was successfully uninstalled" xml:space="preserve">
+        <source>The Mousecape helper was successfully uninstalled</source>
+        <target>The Mousecape helper was successfully uninstalled</target>
+        <note>Helper Tool Uninstall Success Result useless description</note>
+      </trans-unit>
+      <trans-unit id="The action did not complete successfully" xml:space="preserve">
+        <source>The action did not complete successfully</source>
+        <target>The action did not complete successfully</target>
+        <note>Helper Tool Result Useless Failure Description</note>
+      </trans-unit>
+      <trans-unit id="The destination, %@, is not writable." xml:space="preserve">
+        <source>The destination, %@, is not writable.</source>
+        <target>The destination, %@, is not writable.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unabled to create a cape from the directory specified." xml:space="preserve">
+        <source>Unabled to create a cape from the directory specified.</source>
+        <target>Unabled to create a cape from the directory specified.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unabled to create a cape from the file specified." xml:space="preserve">
+        <source>Unabled to create a cape from the file specified.</source>
+        <target>Unabled to create a cape from the file specified.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Uninstall Helper Tool" xml:space="preserve">
+        <source>Uninstall Helper Tool</source>
+        <target>Uninstall Helper Tool</target>
+        <note>Uninstall Helper Tool Menu Item</note>
+      </trans-unit>
+      <trans-unit id="Unknown" xml:space="preserve">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>MightyMouse Import Default Author</note>
+      </trans-unit>
+      <trans-unit id="Unnamed" xml:space="preserve">
+        <source>Unnamed</source>
+        <target>Unnamed</target>
+        <note>Default New Cape Name</note>
+      </trans-unit>
+      <trans-unit id="Your changes will be discarded if you don't save them." xml:space="preserve">
+        <source>Your changes will be discarded if you don't save them.</source>
+        <target>Your changes will be discarded if you don't save them.</target>
+        <note>Save prompt threat</note>
+      </trans-unit>
+      <trans-unit id="author" xml:space="preserve">
+        <source>author</source>
+        <target>author</target>
+        <note>Undo change cape author suffix</note>
+      </trans-unit>
+      <trans-unit id="cursor type" xml:space="preserve">
+        <source>cursor type</source>
+        <target>cursor type</target>
+        <note>Undo change cursor type suffix</note>
+      </trans-unit>
+      <trans-unit id="dimensions" xml:space="preserve">
+        <source>dimensions</source>
+        <target>dimensions</target>
+        <note>Undo change cursor image dimensions suffix</note>
+      </trans-unit>
+      <trans-unit id="frame count" xml:space="preserve">
+        <source>frame count</source>
+        <target>frame count</target>
+        <note>Undo change cursor frame count suffix</note>
+      </trans-unit>
+      <trans-unit id="frame duration" xml:space="preserve">
+        <source>frame duration</source>
+        <target>frame duration</target>
+        <note>Undo change cursor frame duraiton suffix</note>
+      </trans-unit>
+      <trans-unit id="hiDPI" xml:space="preserve">
+        <source>hiDPI</source>
+        <target>hiDPI</target>
+        <note>Undo change cape hidpi suffix</note>
+      </trans-unit>
+      <trans-unit id="hotspot" xml:space="preserve">
+        <source>hotspot</source>
+        <target>hotspot</target>
+        <note>Undo change cursor hotspot suffix</note>
+      </trans-unit>
+      <trans-unit id="identifier" xml:space="preserve">
+        <source>identifier</source>
+        <target>identifier</target>
+        <note>Undo change cape identifier suffix</note>
+      </trans-unit>
+      <trans-unit id="name" xml:space="preserve">
+        <source>name</source>
+        <target>name</target>
+        <note>Undo change cape name suffix</note>
+      </trans-unit>
+      <trans-unit id="of" xml:space="preserve">
+        <source>of</source>
+        <target>of</target>
+        <note>Dump cursor progress separator (eg: 5 of 129)</note>
+      </trans-unit>
+      <trans-unit id="version" xml:space="preserve">
+        <source>version</source>
+        <target>version</target>
+        <note>Undo change cape version suffix</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="mousecloakHelper/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.4.1" build-num="11E503a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>com.alexzielenski.mousecloakhelper</source>
+        <target>com.alexzielenski.mousecloakhelper</target>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
+        <source>Copyright © 2014 Alex Zielenski. All rights reserved.</source>
+        <target>Copyright © 2014 Alex Zielenski. All rights reserved.</target>
+        <note>Copyright (human-readable)</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

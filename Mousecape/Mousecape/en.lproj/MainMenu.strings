@@ -1,0 +1,243 @@
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "5"; */
+"5.title" = "Bring All to Front";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "19"; */
+"19.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "23"; */
+"23.title" = "Minimize";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "24"; */
+"24.title" = "Window";
+
+/* Class = "NSMenu"; title = "AMainMenu"; ObjectID = "29"; */
+"29.title" = "AMainMenu";
+
+/* Class = "NSMenuItem"; title = "Mousecape"; ObjectID = "56"; */
+"56.title" = "Mousecape";
+
+/* Class = "NSMenu"; title = "Mousecape"; ObjectID = "57"; */
+"57.title" = "Mousecape";
+
+/* Class = "NSMenuItem"; title = "About Mousecape"; ObjectID = "58"; */
+"58.title" = "About Mousecape";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "73"; */
+"73.title" = "Close";
+
+/* Class = "NSMenuItem"; title = "Save…"; ObjectID = "75"; */
+"75.title" = "Save…";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
+"81.title" = "File";
+
+/* Class = "NSMenuItem"; title = "New Cape"; ObjectID = "82"; */
+"82.title" = "New Cape";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "83"; */
+"83.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Revert to Saved"; ObjectID = "112"; */
+"112.title" = "Revert to Saved";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "129"; */
+"129.title" = "Preferences…";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "130"; */
+"130.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "131"; */
+"131.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Hide Mousecape"; ObjectID = "134"; */
+"134.title" = "Hide Mousecape";
+
+/* Class = "NSMenuItem"; title = "Quit Mousecape"; ObjectID = "136"; */
+"136.title" = "Quit Mousecape";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "145"; */
+"145.title" = "Hide Others";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "150"; */
+"150.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "195"; */
+"195.title" = "Stop Speaking";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "196"; */
+"196.title" = "Start Speaking";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "197"; */
+"197.title" = "Copy";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "198"; */
+"198.title" = "Select All";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "199"; */
+"199.title" = "Cut";
+
+/* Class = "NSMenu"; title = "Spelling and Grammar"; ObjectID = "200"; */
+"200.title" = "Spelling and Grammar";
+
+/* Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "201"; */
+"201.title" = "Check Document Now";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "202"; */
+"202.title" = "Delete";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "203"; */
+"203.title" = "Paste";
+
+/* Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "204"; */
+"204.title" = "Show Spelling and Grammar";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "205"; */
+"205.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "207"; */
+"207.title" = "Undo";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "208"; */
+"208.title" = "Find Next";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "209"; */
+"209.title" = "Find…";
+
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "210"; */
+"210.title" = "Jump to Selection";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "211"; */
+"211.title" = "Speech";
+
+/* Class = "NSMenu"; title = "Speech"; ObjectID = "212"; */
+"212.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "213"; */
+"213.title" = "Find Previous";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "215"; */
+"215.title" = "Redo";
+
+/* Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "216"; */
+"216.title" = "Spelling and Grammar";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "217"; */
+"217.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "218"; */
+"218.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "219"; */
+"219.title" = "Check Spelling While Typing";
+
+/* Class = "NSMenu"; title = "Find"; ObjectID = "220"; */
+"220.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "221"; */
+"221.title" = "Use Selection for Find";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "239"; */
+"239.title" = "Zoom";
+
+/* Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "346"; */
+"346.title" = "Check Grammar With Spelling";
+
+/* Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "348"; */
+"348.title" = "Substitutions";
+
+/* Class = "NSMenu"; title = "Substitutions"; ObjectID = "349"; */
+"349.title" = "Substitutions";
+
+/* Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "350"; */
+"350.title" = "Smart Copy/Paste";
+
+/* Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "351"; */
+"351.title" = "Smart Quotes";
+
+/* Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "354"; */
+"354.title" = "Smart Links";
+
+/* Class = "NSMenuItem"; title = "Transformations"; ObjectID = "450"; */
+"450.title" = "Transformations";
+
+/* Class = "NSMenu"; title = "Transformations"; ObjectID = "451"; */
+"451.title" = "Transformations";
+
+/* Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "452"; */
+"452.title" = "Make Upper Case";
+
+/* Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "454"; */
+"454.title" = "Correct Spelling Automatically";
+
+/* Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "457"; */
+"457.title" = "Show Substitutions";
+
+/* Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "460"; */
+"460.title" = "Smart Dashes";
+
+/* Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "462"; */
+"462.title" = "Text Replacement";
+
+/* Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "465"; */
+"465.title" = "Make Lower Case";
+
+/* Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "466"; */
+"466.title" = "Capitalize";
+
+/* Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "485"; */
+"485.title" = "Paste and Match Style";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "490"; */
+"490.title" = "Help";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "491"; */
+"491.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "Mousecape Help"; ObjectID = "492"; */
+"492.title" = "Mousecape Help";
+
+/* Class = "NSMenuItem"; title = "Find and Replace…"; ObjectID = "534"; */
+"534.title" = "Find and Replace…";
+
+/* Class = "NSMenuItem"; title = "Edit Cape"; ObjectID = "5qb-Dw-38q"; */
+"5qb-Dw-38q.title" = "Edit Cape";
+
+/* Class = "NSMenuItem"; title = "Dump Cursors…"; ObjectID = "CYY-iE-0bP"; */
+"CYY-iE-0bP.title" = "Dump Cursors…";
+
+/* Class = "NSMenuItem"; title = "Remove Cape"; ObjectID = "LHh-1u-bK8"; */
+"LHh-1u-bK8.title" = "Remove Cape";
+
+/* Class = "NSMenuItem"; title = "Show in Finder"; ObjectID = "PAd-kz-Eoi"; */
+"PAd-kz-Eoi.title" = "Show in Finder";
+
+/* Class = "NSMenuItem"; title = "Install Helper Tool"; ObjectID = "Ui2-VN-tbP"; */
+"Ui2-VN-tbP.title" = "Install Helper Tool";
+
+/* Class = "NSMenuItem"; title = "Check for Updates"; ObjectID = "XTi-86-ese"; */
+"XTi-86-ese.title" = "Check for Updates";
+
+/* Class = "NSMenuItem"; title = "Duplicate Cape"; ObjectID = "d9b-6w-ubr"; */
+"d9b-6w-ubr.title" = "Duplicate Cape";
+
+/* Class = "NSMenuItem"; title = "Capes"; ObjectID = "g8O-f8-aKi"; */
+"g8O-f8-aKi.title" = "Capes";
+
+/* Class = "NSMenuItem"; title = "Apply Cape"; ObjectID = "ieJ-T1-eH7"; */
+"ieJ-T1-eH7.title" = "Apply Cape";
+
+/* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "igk-i0-oH0"; */
+"igk-i0-oH0.title" = "Check for Updates...";
+
+/* Class = "NSMenuItem"; title = "Import Cape"; ObjectID = "kdx-d9-Lek"; */
+"kdx-d9-Lek.title" = "Import Cape";
+
+/* Class = "NSMenuItem"; title = "Import MightyMouse"; ObjectID = "l3B-n8-21Z"; */
+"l3B-n8-21Z.title" = "Import MightyMouse";
+
+/* Class = "NSMenu"; title = "Capes"; ObjectID = "ttR-pS-Pk1"; */
+"ttR-pS-Pk1.title" = "Capes";
+
+/* Class = "NSMenuItem"; title = "Restore Defaults"; ObjectID = "uCE-YB-8VL"; */
+"uCE-YB-8VL.title" = "Restore Defaults";
