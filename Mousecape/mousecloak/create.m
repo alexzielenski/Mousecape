@@ -113,7 +113,7 @@ NSDictionary *createCapeFromDirectory(NSString *path) {
             
             NSBitmapImageRep *image = [NSBitmapImageRep imageRepWithData:[NSData dataWithContentsOfFile:repPath]];
             if (image) {
-                NSData *pngData = [image.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}];
+                NSData *pngData = [image.ensuredSRGBSpace TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:1.0];
                 [representations addObject:pngData];
             }
             
@@ -191,7 +191,7 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary 
                                                                        bytesPerRow:bpr.integerValue
                                                                       bitsPerPixel:bpp.integerValue];
         
-        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}] ];
+        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep.ensuredSRGBSpace TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:1.0] ];
         currentCursor[MCCursorDictionaryPointsWideKey]      = wide;
         currentCursor[MCCursorDictionaryPointsHighKey]      = high;
         currentCursor[MCCursorDictionaryHotSpotXKey]        = hotX;

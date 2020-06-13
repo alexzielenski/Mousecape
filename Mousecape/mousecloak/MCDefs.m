@@ -85,7 +85,7 @@ void CGImageWriteToFile(CGImageRef image, CFStringRef path) {
 
 NSData *pngDataForImage(id image) {
     if ([image isKindOfClass:[NSBitmapImageRep class]]) {
-        return [(NSBitmapImageRep *)image representationUsingType:NSPNGFileType properties:@{}];
+        return [(NSBitmapImageRep *)image TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:1.0];
     }
     
     // CGImage

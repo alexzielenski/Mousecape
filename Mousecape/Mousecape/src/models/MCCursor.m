@@ -105,8 +105,6 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
 
-                // PNGCodec ignores colorspace information. As an invariant to our cape files we make sure
-                //  all images are converted to sRGB so we retag it beforehand
                 [self setRepresentation:rep.retaggedSRGBSpace forScale:cursorScaleForScale(rep.pixelsWide / pointsWide.doubleValue)];
             }
             
@@ -131,7 +129,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     NSMutableArray *pngs = [NSMutableArray array];
     for (NSString *key in self.representations) {
         NSBitmapImageRep *rep = self.representations[key];
-        pngs[pngs.count] = [rep.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}];
+        pngs[pngs.count] = [rep.ensuredSRGBSpace TIFFRepresentationUsingCompression:NSTIFFCompressionLZW factor:1.0];
     }
     
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
