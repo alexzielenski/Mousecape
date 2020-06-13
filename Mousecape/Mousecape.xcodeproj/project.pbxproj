@@ -49,7 +49,6 @@
 		FAC69F7B189D603C00BC829D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F79189D603C00BC829D /* MainMenu.xib */; };
 		FAC69F7D189D603C00BC829D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC69F7C189D603C00BC829D /* Images.xcassets */; };
 		FAC69FB1189D608900BC829D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FB0189D608900BC829D /* main.m */; };
-		FAC69FB5189D608900BC829D /* mousecloak.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAC69FB4189D608900BC829D /* mousecloak.1 */; };
 		FAC69FD4189D609B00BC829D /* GBCommandLineParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FCF189D609B00BC829D /* GBCommandLineParser.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		FAC69FD5189D609B00BC829D /* GBOptionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FD1189D609B00BC829D /* GBOptionsHelper.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		FAC69FD6189D609B00BC829D /* GBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC69FD3189D609B00BC829D /* GBSettings.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -146,7 +145,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				FAC69FB5189D608900BC829D /* mousecloak.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -213,6 +211,7 @@
 		FA57339424954AB000103FCF /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
 		FA57339524954AB000103FCF /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
 		FA57339624954AB000103FCF /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLScrollView.m; sourceTree = "<group>"; };
+		FA5733A32495667900103FCF /* Mousecape.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mousecape.entitlements; sourceTree = "<group>"; };
 		FA7582B7193D377300CE223C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = ../../../../../../../../../System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 		FAC69FAD189D608900BC829D /* mousecloak */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mousecloak; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC69FB0189D608900BC829D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAC69FB3189D608900BC829D /* mousecloak-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mousecloak-Prefix.pch"; sourceTree = "<group>"; };
-		FAC69FB4189D608900BC829D /* mousecloak.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = mousecloak.1; sourceTree = "<group>"; };
 		FAC69FBA189D609B00BC829D /* CarbonHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarbonHelpers.h; sourceTree = "<group>"; };
 		FAC69FBB189D609B00BC829D /* CGSAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSAccessibility.h; sourceTree = "<group>"; };
 		FAC69FBC189D609B00BC829D /* CGSCIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSCIFilter.h; sourceTree = "<group>"; };
@@ -461,6 +459,7 @@
 		FAC69F6A189D603C00BC829D /* Mousecape */ = {
 			isa = PBXGroup;
 			children = (
+				FA5733A32495667900103FCF /* Mousecape.entitlements */,
 				FAEE650818A047E8003AA182 /* categories */,
 				FAEE650D18A047E8003AA182 /* controllers */,
 				FAEE651C18A047E8003AA182 /* models */,
@@ -514,7 +513,6 @@
 				FAAEF955189F4ECC00145DF8 /* scale.h */,
 				FAAEF956189F4ED300145DF8 /* scale.m */,
 				FAC69FCB189D609B00BC829D /* NSCursor_Private.h */,
-				FAC69FB4189D608900BC829D /* mousecloak.1 */,
 				FAC69FB2189D608900BC829D /* Supporting Files */,
 				FABA44D221D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.h */,
 				FABA44D321D9D7D0009B10D9 /* NSBitmapImageRep+ColorSpace.m */,
@@ -873,7 +871,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nbuildPlist=${INFOPLIST_FILE}\nCFBundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nBuildNumberINCR=$((CFBundleVersion + 1))\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumberINCR\" $buildPlist\n";
+			shellScript = "#!/bin/bash\n\nbuildPlist=${INFOPLIST_FILE}\nCFBundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nBuildNumberINCR=$((CFBundleVersion + 1))\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BuildNumberINCR\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $BuildNumberINCR\" $buildPlist\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1123,7 +1121,8 @@
 		FAC69F93189D603C00BC829D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon2;
+				CODE_SIGN_ENTITLEMENTS = Mousecape/Mousecape.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1144,7 +1143,8 @@
 		FAC69F94189D603C00BC829D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon2;
+				CODE_SIGN_ENTITLEMENTS = Mousecape/Mousecape.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1184,6 +1184,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1205,6 +1206,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1240,6 +1242,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1272,6 +1275,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
