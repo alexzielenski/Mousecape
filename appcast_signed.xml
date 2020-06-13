@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Mousecape Changelog</title>
+    <link>https://raw.githubusercontent.com/alexzielenski/Mousecape/master/appcast_signed.xml</link>
+    <description>Most recent changes with links to updates.</description>
+    <language>en</language>
+        <item>
+          <title>Version 1813</title>
+          <description>
+            <![CDATA[
+              <ul>
+                <li>[New] Switched Version numbering system to build number</li>
+                <li>[New] Update to fresher new icon courtesy of Allan Nyholm</li>
+                <li>[New] Change to using EdDSA for signing future updates</li>
+                <li>[Fix] Dragging out cursor images washes out color</li>
+                <li>[Fix] Adding frames to animated cursor washes out color</li>
+              </ul>
+            ]]>
+          </description>
+          <pubDate>Mon, 13 Jun 2020 20:38:11 +0800</pubDate>
+          <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/1813/Mousecape_1813.zip" sparkle:version="1813" sparkle:shortVersionString="1813" length="4560238 " type="application/octet-stream" />
+        </item>
+        <item>
+          <title>Version 0.0.6</title>
+          <description>
+            <![CDATA[
+              <ul>
+                <li>[New] We now have an icon! Courtesy of long-time user and artist Allan Nyholm Nielson</li>
+                <li>[Fix] Change backgrounding type of helper tool causing problems with Catalina</li>
+                <li>[Fix] Patch memory leak in helper tool when applying or restoring capes</li>
+              </ul>
+            ]]>
+          </description>
+          <pubDate>Mon, 14 Oct 2019 20:38:11 +0800</pubDate>
+          <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/0.0.6/Mousecape-0.0.6.zip" sparkle:version="1710" sparkle:shortVersionString="0.0.6" length="4387249" type="application/octet-stream" />
+        </item>
+      <item>
+        <title>Version 0.0.5</title>
+        <description>
+          <![CDATA[
+            <ul>
+              <li>New information in read me on how to animate cursors</li>
+              <li>[New] Ability to export cursors by holding the alt key when dragging from the edit window</li>
+              <li>[New] Ability to dump currently applied cursors from Capes menu</li>
+              <li>[Fix] Checking for existing identifiers already in library</li>
+              <li>[Fix] Inaccurate hotspot dot in edit window</li>
+              <li>[New] First image dragged in to edit window drop zone defines the cursor size</li>
+              <li>[New] Drag in multiple images of the same size to animate</li>
+              <li>[New] Holt alt key while dragging a cursor image in to add it as a frame</li>
+              <li>[Fix] Adding a cursor to the library by opening it without the app open</li>
+              <li>[Fix] Identifier renames not being saved</li>
+              <li>[New] Sort cursors within a cape by name in library window</li>
+              <li>[New] Preference for left-handed users that flips all pointer images</li>
+            </ul>
+          ]]>
+        </description>
+        <pubDate>Sat, 26 Jul 2014 15:20:11 +0000</pubDate>
+        <enclosure url="https://github.com/alexzielenski/Mousecape/releases/download/0.0.5/Mousecape.zip" sparkle:version="1579" sparkle:shortVersionString="0.0.5" length="269044" type="application/octet-stream" />
+      </item>
+  </channel>
+</rss>
