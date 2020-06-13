@@ -16,8 +16,10 @@
             targetSpace = [NSColorSpace genericGamma22GrayColorSpace];
         }
     }
-    return [self bitmapImageRepByRetaggingWithColorSpace:targetSpace];
+    return [self bitmapImageRepByConvertingToColorSpace:targetSpace
+                                        renderingIntent:NSColorRenderingIntentDefault];
 }
+
 - (CGImageRef)copyEnsuredCGImage {
     CGImageRef ref = self.ensuredSRGBSpace.CGImage;
     CGColorSpaceRef space = CGImageGetColorSpace(ref);
