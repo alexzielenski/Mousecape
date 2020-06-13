@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		FA04886C189F58B1001F3AB5 /* Edit.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA048868189F58B1001F3AB5 /* Edit.xib */; };
 		FA04886D189F58B1001F3AB5 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA04886A189F58B1001F3AB5 /* Library.xib */; };
-		FA14DE8D18CE596B00A73BF4 /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FA14DE8E18CE596B00A73BF4 /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */; };
-		FA14DE9118CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA1DC01919527A73009E879C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA359844189DBA3800288163 /* SystemConfiguration.framework */; };
 		FA1DC01A19527A79009E879C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA254779189D85890038E1D9 /* ApplicationServices.framework */; };
 		FA35983F189DA3BC00288163 /* MCPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = FA35983E189DA3BC00288163 /* MCPrefs.m */; };
@@ -24,6 +21,9 @@
 		FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107E318A823BD00917185 /* MASPreferencesWindowController.m */; };
 		FA5107ED18A8253600917185 /* MCGeneralPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */; };
 		FA5107EE18A8253600917185 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5107EC18A8253600917185 /* GeneralPreferences.xib */; };
+		FA57339724954AB000103FCF /* RBLClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA57339124954AB000103FCF /* RBLClipView.m */; };
+		FA57339824954AB000103FCF /* NSColor+RBLCGColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA57339224954AB000103FCF /* NSColor+RBLCGColorAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA57339924954AB000103FCF /* RBLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA57339624954AB000103FCF /* RBLScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA7582B8193D377300CE223C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7582B7193D377300CE223C /* ApplicationServices.framework */; };
 		FA8FF76B189D664400750E51 /* restore.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76A189D664400750E51 /* restore.m */; };
 		FA8FF76E189D66CB00750E51 /* backup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8FF76D189D66CB00750E51 /* backup.m */; };
@@ -188,12 +188,6 @@
 /* Begin PBXFileReference section */
 		FA048869189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Edit.xib; sourceTree = "<group>"; };
 		FA04886B189F58B1001F3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Library.xib; sourceTree = "<group>"; };
-		FA14DE8918CE596B00A73BF4 /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
-		FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLClipView.m; sourceTree = "<group>"; };
-		FA14DE8B18CE596B00A73BF4 /* RBLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLScrollView.h; sourceTree = "<group>"; };
-		FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLScrollView.m; sourceTree = "<group>"; };
-		FA14DE8F18CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
-		FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RBLCGColorAdditions.m"; sourceTree = "<group>"; };
 		FA1DC01719527A56009E879C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FA254779189D85890038E1D9 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		FA35983D189DA3BC00288163 /* MCPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPrefs.h; sourceTree = "<group>"; };
@@ -210,6 +204,15 @@
 		FA5107EA18A8253600917185 /* MCGeneralPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeneralPreferencesController.h; path = Preferences/MCGeneralPreferencesController.h; sourceTree = "<group>"; };
 		FA5107EB18A8253600917185 /* MCGeneralPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGeneralPreferencesController.m; path = Preferences/MCGeneralPreferencesController.m; sourceTree = "<group>"; };
 		FA5107EC18A8253600917185 /* GeneralPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralPreferences.xib; path = Preferences/GeneralPreferences.xib; sourceTree = "<group>"; };
+		FA57338B2495473A00103FCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		FA57338D2495474200103FCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Library.strings; sourceTree = "<group>"; };
+		FA57338F2495474800103FCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Edit.strings; sourceTree = "<group>"; };
+		FA57339124954AB000103FCF /* RBLClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLClipView.m; sourceTree = "<group>"; };
+		FA57339224954AB000103FCF /* NSColor+RBLCGColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RBLCGColorAdditions.m"; sourceTree = "<group>"; };
+		FA57339324954AB000103FCF /* RBLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLScrollView.h; sourceTree = "<group>"; };
+		FA57339424954AB000103FCF /* RBLClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLClipView.h; sourceTree = "<group>"; };
+		FA57339524954AB000103FCF /* NSColor+RBLCGColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RBLCGColorAdditions.h"; sourceTree = "<group>"; };
+		FA57339624954AB000103FCF /* RBLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLScrollView.m; sourceTree = "<group>"; };
 		FA7582B7193D377300CE223C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = ../../../../../../../../../System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<group>"; };
 		FA8FF769189D663B00750E51 /* restore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = restore.h; sourceTree = "<group>"; };
 		FA8FF76A189D664400750E51 /* restore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = restore.m; sourceTree = "<group>"; };
@@ -349,19 +352,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA14DE8818CE596B00A73BF4 /* Rebel */ = {
-			isa = PBXGroup;
-			children = (
-				FA14DE8918CE596B00A73BF4 /* RBLClipView.h */,
-				FA14DE8A18CE596B00A73BF4 /* RBLClipView.m */,
-				FA14DE8B18CE596B00A73BF4 /* RBLScrollView.h */,
-				FA14DE8C18CE596B00A73BF4 /* RBLScrollView.m */,
-				FA14DE8F18CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.h */,
-				FA14DE9018CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m */,
-			);
-			path = Rebel;
-			sourceTree = "<group>";
-		};
 		FA5107DD18A823BD00917185 /* MASPreferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,11 +373,24 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		FA57339024954AB000103FCF /* Rebel */ = {
+			isa = PBXGroup;
+			children = (
+				FA57339124954AB000103FCF /* RBLClipView.m */,
+				FA57339224954AB000103FCF /* NSColor+RBLCGColorAdditions.m */,
+				FA57339324954AB000103FCF /* RBLScrollView.h */,
+				FA57339424954AB000103FCF /* RBLClipView.h */,
+				FA57339524954AB000103FCF /* NSColor+RBLCGColorAdditions.h */,
+				FA57339624954AB000103FCF /* RBLScrollView.m */,
+			);
+			path = Rebel;
+			sourceTree = "<group>";
+		};
 		FAAEF8EE189EB32700145DF8 /* external */ = {
 			isa = PBXGroup;
 			children = (
 				FADF012E198A2C7400006228 /* Sparkle.xcodeproj */,
-				FA14DE8818CE596B00A73BF4 /* Rebel */,
+				FA57339024954AB000103FCF /* Rebel */,
 				FADBC14E18CE51C000B9510F /* DTScrollView */,
 				FA5107DD18A823BD00917185 /* MASPreferences */,
 				FAAEF8EF189EB32700145DF8 /* BTRKit */,
@@ -749,7 +752,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MC;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Alex Zielenski";
 				TargetAttributes = {
 					FAC69F60189D603C00BC829D = {
@@ -769,45 +772,12 @@
 			};
 			buildConfigurationList = FAC69F5C189D603C00BC829D /* Build configuration list for PBXProject "Mousecape" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
-				ar,
-				ca,
-				cs,
-				cy,
-				da,
-				de,
-				el,
-				es,
-				fi,
-				fr,
-				he,
-				hu,
-				id,
-				is,
-				it,
-				ja,
-				ko,
-				nb,
-				nl,
 				no,
-				pl,
-				pt_BR,
-				pt_PT,
-				ro,
-				ru,
-				sk,
-				sl,
-				sv,
-				th,
-				tr,
-				uk,
-				zh_CN,
-				zh_TW,
-				English,
 			);
 			mainGroup = FAC69F58189D603C00BC829D;
 			productRefGroup = FAC69F62189D603C00BC829D /* Products */;
@@ -923,18 +893,18 @@
 				FAAEF94E189EFC9300145DF8 /* create.m in Sources */,
 				FAEE652C18A047E8003AA182 /* MCEditDetailController.m in Sources */,
 				FAAEF94F189EFC9600145DF8 /* backup.m in Sources */,
+				FA57339724954AB000103FCF /* RBLClipView.m in Sources */,
 				FA5107ED18A8253600917185 /* MCGeneralPreferencesController.m in Sources */,
 				FAAEF951189F0CC300145DF8 /* restore.m in Sources */,
+				FA57339824954AB000103FCF /* NSColor+RBLCGColorAdditions.m in Sources */,
 				FAAEF950189EFC9800145DF8 /* apply.m in Sources */,
 				FAEE652918A047E8003AA182 /* NSFileManager+DirectoryLocations.m in Sources */,
-				FA14DE9118CE59A600A73BF4 /* NSColor+RBLCGColorAdditions.m in Sources */,
 				FA5107E818A823BD00917185 /* MASPreferencesWindowController.m in Sources */,
 				FAEE652D18A047E8003AA182 /* MCEditListController.m in Sources */,
 				FAC69F71189D603C00BC829D /* main.m in Sources */,
 				FAEE653218A047E8003AA182 /* MCCursor.m in Sources */,
 				FAAEF958189F4F8200145DF8 /* scale.m in Sources */,
 				FAEE653418A047E8003AA182 /* MCFormatters.m in Sources */,
-				FA14DE8E18CE596B00A73BF4 /* RBLScrollView.m in Sources */,
 				FAAEF8F4189EB32700145DF8 /* BTRClipView.m in Sources */,
 				FAAEF8F5189EB32700145DF8 /* BTRScrollView.m in Sources */,
 				FAC69FDC189D636700BC829D /* MCDefs.m in Sources */,
@@ -942,9 +912,9 @@
 				FA359840189DA3C100288163 /* MCPrefs.m in Sources */,
 				FAEE652B18A047E8003AA182 /* MCEditCapeController.m in Sources */,
 				FADBC15418CE535200B9510F /* MCCapePreviewItem.m in Sources */,
+				FA57339924954AB000103FCF /* RBLScrollView.m in Sources */,
 				FAEE652A18A047E8003AA182 /* NSOrderedSet+AZSortedInsert.m in Sources */,
 				FADBC15118CE51C000B9510F /* DTScrollView.m in Sources */,
-				FA14DE8D18CE596B00A73BF4 /* RBLClipView.m in Sources */,
 				FAEE653518A047E8003AA182 /* MCCapeCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1005,6 +975,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FA048869189F58B1001F3AB5 /* Base */,
+				FA57338F2495474800103FCF /* en */,
 			);
 			name = Edit.xib;
 			sourceTree = "<group>";
@@ -1013,6 +984,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FA04886B189F58B1001F3AB5 /* Base */,
+				FA57338D2495474200103FCF /* en */,
 			);
 			name = Library.xib;
 			sourceTree = "<group>";
@@ -1037,6 +1009,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FAC69F7A189D603C00BC829D /* Base */,
+				FA57338B2495473A00103FCF /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -1048,6 +1021,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1102,6 +1076,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1149,7 +1124,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3GD8ABJ22W;
@@ -1170,7 +1145,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3GD8ABJ22W;
@@ -1241,10 +1216,10 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 3GD8ABJ22W;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1276,8 +1251,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = 3GD8ABJ22W;
