@@ -191,7 +191,7 @@ NSDictionary *createCapeFromMightyMouse(NSDictionary *mightyMouse, NSDictionary 
                                                                        bytesPerRow:bpr.integerValue
                                                                       bitsPerPixel:bpp.integerValue];
         
-        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep representationUsingType:NSPNGFileType properties:@{}] ];
+        currentCursor[MCCursorDictionaryRepresentationsKey] = @[ [rep.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}] ];
         currentCursor[MCCursorDictionaryPointsWideKey]      = wide;
         currentCursor[MCCursorDictionaryPointsHighKey]      = high;
         currentCursor[MCCursorDictionaryHotSpotXKey]        = hotX;

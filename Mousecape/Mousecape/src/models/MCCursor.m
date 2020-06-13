@@ -104,7 +104,10 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
                 // data in v2.0 documents are saved as PNGs
                 NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:data];
                 rep.size = NSMakeSize(self.size.width, self.size.height * self.frameCount);
-                [self setRepresentation:rep forScale:cursorScaleForScale(rep.pixelsWide / pointsWide.doubleValue)];
+
+                // PNGCodec ignores colorspace information. As an invariant to our cape files we make sure
+                //  all images are converted to sRGB so we retag it beforehand
+                [self setRepresentation:rep.retaggedSRGBSpace forScale:cursorScaleForScale(rep.pixelsWide / pointsWide.doubleValue)];
             }
             
             self.size          = NSMakeSize(pointsWide.doubleValue, pointsHigh.doubleValue);
@@ -128,7 +131,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     NSMutableArray *pngs = [NSMutableArray array];
     for (NSString *key in self.representations) {
         NSBitmapImageRep *rep = self.representations[key];
-        pngs[pngs.count] = [rep representationUsingType:NSPNGFileType properties:@{}];
+        pngs[pngs.count] = [rep.ensuredSRGBSpace representationUsingType:NSPNGFileType properties:@{}];
     }
     
     drep[MCCursorDictionaryRepresentationsKey] = pngs;
@@ -184,7 +187,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
     NSString *key = [@"cursorRep" stringByAppendingFormat:@"%lu", scale];
     [self willChangeValueForKey:key];
     if (imageRep)
-        [self.representations setObject:imageRep.ensuredSRGBSpace forKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
+        [self.representations setObject:imageRep forKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
     else
         [self.representations removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)scale, nil]];
 
@@ -256,7 +259,7 @@ MCCursorScale cursorScaleForScale(CGFloat scale) {
 
     [NSGraphicsContext restoreGraphicsState];
 
-    return [newRep ensuredSRGBSpace];
+    return newRep;
 }
 
 - (NSInteger)framesForScale:(MCCursorScale)scale {

@@ -68,6 +68,8 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
         } else {
             rep = [[[NSBitmapImageRep alloc] initWithData:object] autorelease];
         }
+        rep = rep.retaggedSRGBSpace;
+
         if (!lefty || restore || !pointer) {
             // special case if array has a type of CGImage already there is no need to convert it
             if (type == CGImageGetTypeID()) {
@@ -75,7 +77,7 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
                 continue;
             }
             
-            images[images.count] = (__bridge id)[rep.ensuredSRGBSpace CGImage];
+            images[images.count] = (__bridge id)[rep CGImage];
             
         } else {
             NSBitmapImageRep *newRep = [[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
@@ -103,7 +105,7 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
              respectFlipped:NO
                       hints:nil];
             [NSGraphicsContext restoreGraphicsState];
-            images[images.count] = (__bridge id)[newRep.ensuredSRGBSpace CGImage];
+            images[images.count] = (__bridge id)[newRep CGImage];
         }
     }
     

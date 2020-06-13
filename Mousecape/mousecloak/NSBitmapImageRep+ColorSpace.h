@@ -12,8 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSBitmapImageRep (ColorSpace)
 
+- (NSBitmapImageRep *)retaggedSRGBSpace;
 - (NSBitmapImageRep *)ensuredSRGBSpace;
-- (CGImageRef)copyEnsuredCGImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

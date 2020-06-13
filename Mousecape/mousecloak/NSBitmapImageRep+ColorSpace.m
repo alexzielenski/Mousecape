@@ -9,6 +9,9 @@
 #import "NSBitmapImageRep+ColorSpace.h"
 
 @implementation NSBitmapImageRep (ColorSpace)
+
+// Must be careful with this because the PNGFileType representationForType of NSBitmapImageRep
+//  does not encode the colorspace :(
 - (NSBitmapImageRep *)ensuredSRGBSpace {
     NSColorSpace *targetSpace = [NSColorSpace sRGBColorSpace];
     if (self.colorSpace != NULL) {
@@ -20,16 +23,14 @@
                                         renderingIntent:NSColorRenderingIntentDefault];
 }
 
-- (CGImageRef)copyEnsuredCGImage {
-    CGImageRef ref = self.ensuredSRGBSpace.CGImage;
-    CGColorSpaceRef space = CGImageGetColorSpace(ref);
+- (NSBitmapImageRep *)retaggedSRGBSpace {
     NSColorSpace *targetSpace = [NSColorSpace sRGBColorSpace];
-    if (space != NULL) {
-        if (CGColorSpaceGetNumberOfComponents(space) == 1) {
+    if (self.colorSpace != NULL) {
+        if (self.colorSpace.numberOfColorComponents == 1) {
             targetSpace = [NSColorSpace genericGamma22GrayColorSpace];
         }
     }
-    
-    return CGImageCreateCopyWithColorSpace(ref, space);
+    return [self bitmapImageRepByRetaggingWithColorSpace:targetSpace];
 }
+
 @end
