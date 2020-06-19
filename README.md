@@ -31,7 +31,7 @@ Tell your friends.
 
 ## Where can I get a copy of this sweet tool?
 
-In the [releases section](https://github.com/alexzielenski/Mousecape/releases) of this GitHub page. There are stable reases there. **The current version is 0.0.5**.
+In the [releases section](https://github.com/alexzielenski/Mousecape/releases) of this GitHub page. There are stable reases there. **The current version is 1813**.
 
 ## LICENSE
 
