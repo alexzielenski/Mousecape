@@ -33,6 +33,10 @@ Tell your friends.
 
 In the [releases section](https://github.com/alexzielenski/Mousecape/releases) of this GitHub page. There are stable reases there. **The current version is 1813**.
 
+## There's now the beginning of a wiki
+
+Look for the wiki symbol in the toolbar here on this GitHub page or through here [wiki section](https://github.com/alexzielenski/Mousecape/wiki)
+
 ## LICENSE
 
 I worked very hard researching the private methods used in Mousecape and creating this app. Please respect me and my work by not using any of the information provided here for commercial purposes.
