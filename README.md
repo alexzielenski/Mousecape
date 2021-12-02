@@ -25,6 +25,8 @@ You can create a new cape document in the Mousecape app by hitting &#8984;N (Com
 
 When you want to animate a cursor, change the value in the frames field in the edit window and make sure frame duration is how you want it. Next, create an image that has all of your cursor frames stacked on top of each other vertically. Mousecape will traverse down the image for each frame, using a box the same size as whatever you put in the size field.
 
+If you don't understand, please check out the [wiki page.](https://github.com/alexzielenski/Mousecape/wiki/Convert-ANI-files)
+
 ## How can I say thanks?
 
 Tell your friends.
