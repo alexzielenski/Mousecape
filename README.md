@@ -1,11 +1,11 @@
-Mousecape
+幻标（Mousecape）
 ===
 
-A free cursor manager for Mac OS 10.8+ built using private, nonintrusive CoreGraphics APIs.
+‎一个免费的指针管理器（适用于MacOS 10.8+）。使用私有、非侵入式 CoreGraphics API 构建。‎
 
 ![](https://github.com/alexzielenski/Mousecape/raw/master/screenshot.png)
 
-## How it works
+## 工作原理
 
 Mousecape works by calling the API calls that Apple uses to initialize the system cursors in the system and it registers a daemon that will automatically apply the cursor on login and when cursors get unregistered.
 
