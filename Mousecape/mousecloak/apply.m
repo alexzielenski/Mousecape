@@ -19,19 +19,17 @@ BOOL applyCursorForIdentifier(NSUInteger frameCount, CGFloat frameDuration, CGPo
     }
 
     char *idenfifier = (char *)ident.UTF8String;
-    int seed;
+    int seed = 0;
     CGError err = CGSRegisterCursorWithImages(CGSMainConnectionID(),
                                               idenfifier,
                                               true,
                                               true,
-                                              frameCount,
-                                              (__bridge CFArrayRef)images,
                                               size,
                                               hotSpot,
-                                              &seed,
-                                              CGRectMake(hotSpot.x, hotSpot.y, size.width, size.height),
+                                              frameCount,
                                               frameDuration,
-                                              0);
+                                              (__bridge CFArrayRef)images,
+                                              &seed);
     
     return (err == kCGErrorSuccess);
 }

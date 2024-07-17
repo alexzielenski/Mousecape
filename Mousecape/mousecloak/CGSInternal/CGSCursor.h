@@ -49,7 +49,7 @@ CG_EXTERN CGError CGSGetRegisteredCursorImages(CGSConnectionID cid, char *cursor
 
 // Verified, stable
 /*! Registers a cursor in the current CGSConnection or globally */
-CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, NSUInteger frameCount, CFArrayRef imageArray, CGSize cursorSize, CGPoint hotspot, int *seed, CGRect bounds, CGFloat frameDuration, NSInteger repeatCount);
+CG_EXTERN CGError CGSRegisterCursorWithImages(CGSConnectionID cid, char *cursorName, bool setGlobally, bool instantly, CGSize cursorSize, CGPoint hotspot, NSUInteger frameCount, CGFloat frameDuration, CFArrayRef imageArray, int *seed);
 
 CG_EXTERN CGError CGSSetSystemDefinedCursor(CGSConnectionID cid, CGSCursorID cursor);
 
