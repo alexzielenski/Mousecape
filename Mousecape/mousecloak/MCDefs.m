@@ -12,7 +12,9 @@
 
 NSString *defaultCursors[] = {
     @"com.apple.coregraphics.Arrow",
+    @"com.apple.coregraphics.ArrowS",
     @"com.apple.coregraphics.IBeam",
+    @"com.apple.coregraphics.IBeamS",
     @"com.apple.coregraphics.IBeamXOR",
     @"com.apple.coregraphics.Alias",
     @"com.apple.coregraphics.Copy",
@@ -159,6 +161,8 @@ extern NSDictionary *cursorMap() {
                           @"IBeamXOR", @"com.apple.coregraphics.IBeamXOR",
                           @"Copy", @"com.apple.coregraphics.Copy",
                           @"Arrow", @"com.apple.coregraphics.Arrow",
+                          @"Arrow (Tahoe)", @"com.apple.coregraphics.ArrowS",
+                          @"IBeam (Tahoe)", @"com.apple.coregraphics.IBeamS",
                           @"Counting Up/Down", @"com.apple.cursor.16",
                           @"Window S", @"com.apple.cursor.36",
                           @"Resize Square", @"com.apple.cursor.39",
@@ -221,7 +225,7 @@ BOOL MCCursorIsPointer(NSString *identifier) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSDictionary *c = cursorMap();
-        pointers = [@[ [c allKeysForObject:@"Alias"][0], [c allKeysForObject:@"Arrow"][0], [c allKeysForObject:@"Busy"][0], [c allKeysForObject:@"Closed"][0], [c allKeysForObject:@"Copy Drag"][0], [c allKeysForObject:@"Counting Down"][0], [c allKeysForObject:@"Counting Up"][0], [c allKeysForObject:@"Counting Up/Down"][0], [c allKeysForObject:@"Ctx Menu"][0], [c allKeysForObject:@"Forbidden"][0], [c allKeysForObject:@"Link"][0], [c allKeysForObject:@"Move"][0], [c allKeysForObject:@"Open"][0], [c allKeysForObject:@"Pointing"][0], [c allKeysForObject:@"Poof"][0], [c allKeysForObject:@"Wait"][0], [c allKeysForObject:@"Zoom In"][0], [c allKeysForObject:@"Zoom Out"] ] retain];
+        pointers = [@[ [c allKeysForObject:@"Alias"][0], [c allKeysForObject:@"Arrow"][0], [c allKeysForObject:@"Arrow (Tahoe)"][0], [c allKeysForObject:@"Busy"][0], [c allKeysForObject:@"Closed"][0], [c allKeysForObject:@"Copy Drag"][0], [c allKeysForObject:@"Counting Down"][0], [c allKeysForObject:@"Counting Up"][0], [c allKeysForObject:@"Counting Up/Down"][0], [c allKeysForObject:@"Ctx Menu"][0], [c allKeysForObject:@"Forbidden"][0], [c allKeysForObject:@"Link"][0], [c allKeysForObject:@"Move"][0], [c allKeysForObject:@"Open"][0], [c allKeysForObject:@"Pointing"][0], [c allKeysForObject:@"Poof"][0], [c allKeysForObject:@"Wait"][0], [c allKeysForObject:@"Zoom In"][0], [c allKeysForObject:@"Zoom Out"] ] retain];
     });
 
     return [pointers containsObject:identifier];

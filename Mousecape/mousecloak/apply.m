@@ -110,32 +110,59 @@ BOOL applyCapeForIdentifier(NSDictionary *cursor, NSString *identifier, BOOL res
     return applyCursorForIdentifier(frameCount.unsignedIntegerValue, frameDuration.doubleValue, hotSpot, size, images, identifier, 0);
 }
 
+// macOS 26 (Tahoe) introduced new cursor identifiers for the Arrow and I-beam
+// families; existing capes only define the legacy keys, so the new identifiers
+// fall back to system defaults. Mirror legacy → Tahoe keys at apply time.
+static NSDictionary *MCTahoeAliasMap(void) {
+    static NSDictionary *map = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        map = [@{
+            @"com.apple.coregraphics.Arrow": @"com.apple.coregraphics.ArrowS",
+            @"com.apple.coregraphics.IBeam": @"com.apple.coregraphics.IBeamS",
+        } retain];
+    });
+    return map;
+}
+
 BOOL applyCape(NSDictionary *dictionary) {
     @autoreleasepool {
         NSDictionary *cursors = dictionary[MCCursorDictionaryCursorsKey];
         NSString *name = dictionary[MCCursorDictionaryCapeNameKey];
         NSNumber *version = dictionary[MCCursorDictionaryCapeVersionKey];
-        
+
         resetAllCursors();
         backupAllCursors();
-        
+
         MMLog("Applying cape: %s %.02f", name.UTF8String, version.floatValue);
-        
+
         for (NSString *key in cursors) {
             NSDictionary *cape = cursors[key];
             MMLog("Hooking for %s", key.UTF8String);
-            
+
             BOOL success = applyCapeForIdentifier(cape, key, NO);
             if (!success) {
                 MMLog(BOLD RED "Failed to hook identifier %s for some unknown reason. Bailing out..." RESET, key.UTF8String);
                 return NO;
             }
         }
-        
+
+        NSDictionary *aliases = MCTahoeAliasMap();
+        for (NSString *legacyKey in aliases) {
+            NSString *aliasKey = aliases[legacyKey];
+            if (cursors[legacyKey] && !cursors[aliasKey]) {
+                MMLog("Aliasing %s -> %s for macOS 26", legacyKey.UTF8String, aliasKey.UTF8String);
+                if (!applyCapeForIdentifier(cursors[legacyKey], aliasKey, NO)) {
+                    MMLog(BOLD RED "Failed to hook alias %s. Bailing out..." RESET, aliasKey.UTF8String);
+                    return NO;
+                }
+            }
+        }
+
         MCSetDefault(dictionary[MCCursorDictionaryIdentifierKey], MCPreferencesAppliedCursorKey);
-        
+
         MMLog(BOLD GREEN "Applied %s successfully!" RESET, name.UTF8String);
-        
+
         return YES;
     }
 }
